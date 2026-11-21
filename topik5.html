@@ -1,0 +1,3803 @@
+<!DOCTYPE html>
+
+<html lang="ms">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+  <title>PinyinGo Tempat - Hanzi, Pinyin & Audio Topik 5</title>
+
+  <!-- Tailwind CSS CDN -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Outfit, Plus Jakarta Sans, Noto Sans SC -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Noto+Sans+SC:wght@500;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+
+    tailwind.config = {
+
+      theme: {
+
+        extend: {
+
+          fontFamily: {
+
+            outfit: ['"Outfit"', 'sans-serif'],
+
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+
+            hanzi: ['"Noto Sans SC"', 'sans-serif'],
+
+          },
+
+          colors: {
+
+            brandIndigo: {
+
+              50: '#eef2ff',
+
+              100: '#e0e7ff',
+
+              500: '#6366f1',
+
+              600: '#4f46e5',
+
+              700: '#4338ca',
+
+            },
+
+            accentCyan: '#06b6d4',
+
+            accentEmerald: '#10b981',
+
+          }
+
+        }
+
+      }
+
+    }
+
+  </script>
+
+  <style>
+
+    body {
+
+      font-family: 'Plus Jakarta Sans', sans-serif;
+
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+
+      -webkit-tap-highlight-color: transparent;
+
+      user-select: none;
+
+    }
+
+    .font-outfit {
+
+      font-family: 'Outfit', sans-serif;
+
+    }
+
+    .font-hanzi {
+
+      font-family: 'Noto Sans SC', sans-serif;
+
+    }
+
+    /* Ruby Pinyin styling */
+
+    ruby {
+
+      ruby-align: center;
+
+      ruby-position: over;
+
+    }
+
+    rt {
+
+      font-size: 0.58em;
+
+      font-weight: 700;
+
+      color: #4f46e5;
+
+      letter-spacing: 0.5px;
+
+      transform: translateY(-2px);
+
+    }
+
+    /* Glass card modern styling */
+
+    .glass-card {
+
+      background: rgba(255, 255, 255, 0.96);
+
+      backdrop-filter: blur(14px);
+
+      border: 1px solid rgba(226, 232, 240, 0.9);
+
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+
+    }
+
+    /* Option Tiles */
+
+    .option-tile {
+
+      transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    }
+
+    .option-tile:hover {
+
+      transform: translateY(-2px);
+
+      border-color: #6366f1;
+
+      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.18);
+
+    }
+
+    .option-tile:active, .option-tile.selected {
+
+      transform: scale(0.97);
+
+      border-color: #4f46e5;
+
+      background-color: #f5f3ff;
+
+    }
+
+    /* Buttons */
+
+    .btn-gradient-primary {
+
+      background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+
+      box-shadow: 0 6px 18px -3px rgba(79, 70, 229, 0.35);
+
+      transition: all 0.15s ease-in-out;
+
+    }
+
+    .btn-gradient-primary:active {
+
+      transform: scale(0.98);
+
+      box-shadow: 0 2px 8px -2px rgba(79, 70, 229, 0.4);
+
+    }
+
+    .btn-gradient-success {
+
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+      box-shadow: 0 6px 18px -3px rgba(16, 185, 129, 0.35);
+
+    }
+
+    .btn-gradient-success:active {
+
+      transform: scale(0.98);
+
+    }
+
+    /* Audio Wave Animation */
+
+    @keyframes wave-bar {
+
+      0%, 100% { height: 4px; }
+
+      50% { height: 16px; }
+
+    }
+
+    .wave-anim {
+
+      animation: wave-bar 0.8s ease-in-out infinite;
+
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+
+      display: none;
+
+    }
+
+    .no-scrollbar {
+
+      -ms-overflow-style: none;
+
+      scrollbar-width: none;
+
+    }
+
+  </style>
+
+</head>
+
+<body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
+
+
+
+  <!-- ==================== HEADER ==================== -->
+
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+
+    <div class="max-w-md sm:max-w-xl mx-auto px-4 py-2.5 flex items-center justify-between">
+
+      
+
+      <!-- Brand & Title -->
+
+      <div class="flex items-center space-x-2.5">
+
+        <a href="index.html" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-600 border border-slate-200 flex items-center justify-center text-sm font-bold transition shadow-2xs" title="Kembali ke Laman Utama">
+
+          🏠
+
+        </a>
+
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white font-black text-lg shadow-md shadow-indigo-500/25">
+
+          地
+
+        </div>
+
+        <div>
+
+          <div class="flex items-center space-x-1.5">
+
+            <h1 class="font-outfit font-black text-base text-slate-900 tracking-tight">PinyinGo</h1>
+
+            <span class="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">Topik 5</span>
+
+          </div>
+
+          <p class="text-[11px] text-slate-400 font-semibold leading-tight">Nama Tempat • 地名 (dì míng)</p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Controls: Audio Speed & Drawer -->
+
+      <div class="flex items-center space-x-2">
+
+        <button onclick="toggleAudioSpeed()" class="h-8 px-2.5 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/60 flex items-center space-x-1 text-xs font-bold transition" title="Laras Kelajuan Suara Mandarin">
+
+          <span>🔊</span>
+
+          <span id="speed-badge">1.0x</span>
+
+        </button>
+
+        <button onclick="openVocabDrawer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center text-sm font-bold transition" title="Kamus 23 Kosa Kata">
+
+          📖
+
+        </button>
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <!-- SUB-NAV: 3 TABS -->
+
+    <div class="max-w-md sm:max-w-xl mx-auto px-4 pb-2">
+
+      <div class="bg-slate-100/90 p-1 rounded-2xl flex text-xs font-extrabold text-slate-500 gap-1">
+
+        <button onclick="switchAppMode('vocabChallenge')" id="nav-mode-vocab" class="flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold">
+
+          <span>🧩</span>
+
+          <span>Bina Kata (20 Soalan)</span>
+
+        </button>
+
+        <button onclick="switchAppMode('sentenceChallenge')" id="nav-mode-sentence" class="flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 hover:text-slate-800">
+
+          <span>📐</span>
+
+          <span>Pola Ayat</span>
+
+        </button>
+
+        <button onclick="switchAppMode('chatRoleplay')" id="nav-mode-chat" class="flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 hover:text-slate-800">
+
+          <span>💬</span>
+
+          <span>Simulasi Chat</span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+
+  <main class="w-full max-w-md sm:max-w-xl mx-auto px-4 py-3 flex-grow flex flex-col justify-between">
+
+
+
+    <!-- ==================== VIEW 1: CABARAN 20 SOALAN (HANZI + PINYIN + AUDIO) ==================== -->
+
+    <div id="view-vocab-challenge" class="app-view flex flex-col justify-between flex-grow">
+
+      
+
+      <div>
+
+        <!-- Top Status Bar: Soalan /20 -->
+
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1.5 px-0.5">
+
+          <div class="flex items-center space-x-1.5">
+
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-pulse"></span>
+
+            <span id="level-title-vocab" class="text-indigo-700 font-extrabold text-sm">Soalan 1 / 20</span>
+
+          </div>
+
+          <div class="flex items-center space-x-1 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-full text-xs font-bold text-amber-900">
+
+            <span>🔥</span>
+
+            <span id="streak-counter">0 Streak</span>
+
+            <span class="text-slate-300">|</span>
+
+            <span id="xp-counter" class="text-emerald-700 font-extrabold">+0 XP</span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Progress Bar (1 to 20) -->
+
+        <div class="w-full h-2.5 bg-slate-200/80 rounded-full overflow-hidden p-0.5 mb-4">
+
+          <div id="progress-bar-vocab" class="h-full bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-400 rounded-full transition-all duration-300" style="width: 5%;"></div>
+
+        </div>
+
+
+
+        <!-- Question Card -->
+
+        <div class="glass-card rounded-3xl p-5 mb-4 text-center relative overflow-hidden" id="hero-question-card">
+
+          
+
+          <!-- Audio Speaker Button & Prompt Header -->
+
+          <div class="flex items-center justify-between mb-2">
+
+            <span class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold inline-flex items-center space-x-1">
+
+              <span>🎯</span>
+
+              <span>Bina Kata Hanzi & Pinyin</span>
+
+            </span>
+
+
+
+            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
+
+              <span>🔊</span>
+
+              <span>Dengar Audio</span>
+
+            </button>
+
+          </div>
+
+
+
+          <!-- Malay Meaning Prompt -->
+
+          <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mt-1">Maksud Bahasa Melayu:</div>
+
+          <h2 class="text-xl sm:text-2xl font-outfit font-black text-slate-900 mt-0.5 mb-4" id="hero-target-meaning">
+
+            "pekerja / staf"
+
+          </h2>
+
+
+
+          <!-- Interactive Character Capsule Arena -->
+
+          <div class="flex items-center justify-center gap-2.5 sm:gap-3 py-1">
+
+            
+
+            <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
+
+            <button onclick="speakCurrentPart(1)" class="group w-24 h-28 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
+
+              <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
+
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
+
+              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
+
+                <span>🔊</span>
+
+                <span>Dengar</span>
+
+              </span>
+
+            </button>
+
+
+
+            <!-- Plus Sign Bubble -->
+
+            <div class="w-8 h-8 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-600 font-black text-sm flex items-center justify-center shadow-xs">
+
+              +
+
+            </div>
+
+
+
+            <!-- Capsule 2: Target Slot (Dashed / Active) -->
+
+            <div id="target-slot-capsule" onclick="clearSlot()" class="w-24 h-28 sm:w-28 sm:h-32 bg-slate-50/90 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center shadow-inner cursor-pointer transition">
+
+              <span class="text-xs font-bold text-slate-400 font-sans" id="capsule-slot-pinyin">pilih pinyin</span>
+
+              <span class="text-3xl sm:text-4xl font-black text-slate-300 font-hanzi mt-0.5" id="capsule-slot-char">?</span>
+
+              <span class="text-[10px] text-slate-400 mt-1">tekan kad</span>
+
+            </div>
+
+
+
+          </div>
+
+
+
+          <!-- Bottom Real-time Preview Pill -->
+
+          <div id="solution-preview-chip" class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-center space-x-2 text-xs font-semibold text-slate-400">
+
+            <span>Pilih kad aksara di bawah yang mempunyai Hanzi & Pinyin yang betul.</span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Options: 4 Interactive Tiles with Hanzi, Pinyin & Individual Audio -->
+
+        <div class="grid grid-cols-2 gap-3 mb-4" id="vocab-options-grid">
+
+          <!-- Populated by JS -->
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Action Button Area -->
+
+      <div>
+
+        <!-- Feedback Banner -->
+
+        <div id="action-feedback-box" class="hidden mb-3 p-3.5 rounded-2xl border transition">
+
+          <div class="flex items-start space-x-2.5">
+
+            <span class="text-2xl" id="feedback-status-icon">🎉</span>
+
+            <div class="flex-grow text-xs leading-relaxed">
+
+              <div class="font-bold text-sm" id="feedback-status-title">Hebat! Tepat Sekali</div>
+
+              <div class="mt-0.5" id="feedback-status-body">
+
+                <!-- Hanzi, Pinyin, Malay meaning -->
+
+              </div>
+
+            </div>
+
+            <button onclick="speakFullWord()" class="px-2.5 py-1.5 bg-white rounded-xl border border-slate-200 text-indigo-700 font-bold text-xs hover:bg-indigo-50 shadow-xs flex items-center space-x-1">
+
+              <span>🔊</span>
+
+              <span>Sebut</span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <button id="btn-primary-action" onclick="handlePrimaryAction()" class="w-full py-4 rounded-2xl text-white font-outfit font-extrabold text-base sm:text-lg tracking-wide btn-gradient-primary flex items-center justify-center space-x-2 shadow-lg">
+
+          <span id="btn-primary-text">Semak Jawapan</span>
+
+          <span id="btn-primary-icon">➔</span>
+
+        </button>
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <!-- ==================== VIEW 2: POLA AYAT (HANZI + PINYIN + AUDIO) ==================== -->
+
+    <div id="view-sentence-challenge" class="app-view hidden flex flex-col justify-between flex-grow">
+
+      <div>
+
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1.5 px-0.5">
+
+          <span id="level-title-sentence" class="text-indigo-700 font-extrabold text-sm">Ayat 1 / 8</span>
+
+          <span class="text-indigo-600 font-extrabold">Formula Kedudukan Pejabat</span>
+
+        </div>
+
+        <div class="w-full h-2.5 bg-slate-200/80 rounded-full overflow-hidden p-0.5 mb-4">
+
+          <div id="progress-bar-sentence" class="h-full bg-gradient-to-r from-teal-500 to-indigo-500 rounded-full transition-all duration-300" style="width: 12%;"></div>
+
+        </div>
+
+
+
+        <!-- Prompt Card -->
+
+        <div class="glass-card rounded-3xl p-5 mb-4 text-center">
+
+          <div class="inline-block px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold mb-1.5">
+
+            Susun Ayat Mandarin (Hanzi + Pinyin):
+
+          </div>
+
+          <h2 class="text-lg sm:text-xl font-outfit font-black text-slate-900 mb-3" id="sentence-target-my">
+
+            "Tempat duduk saya di mana?"
+
+          </h2>
+
+
+
+          <!-- Drop Area for Sentence Chips -->
+
+          <div id="sentence-dropzone" class="min-h-[68px] bg-slate-100/80 border-2 border-dashed border-slate-300 rounded-2xl p-2.5 flex flex-wrap items-center justify-center gap-2">
+
+            <span class="text-xs text-slate-400 italic" id="sentence-placeholder">Pilih blok perkataan di bawah mengikut urutan...</span>
+
+          </div>
+
+
+
+          <div class="mt-3 flex items-center justify-between text-[11px] text-slate-400 px-1">
+
+            <span id="sentence-grammar-hint">Formula: Kata Nama + 在哪儿？</span>
+
+            <button onclick="resetSentenceBuilder()" class="text-indigo-600 font-bold hover:underline">
+
+              🔄 Padam & Susun Semula
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Word Pool Chips with Hanzi & Pinyin -->
+
+        <div class="flex flex-wrap gap-2.5 justify-center mb-5" id="sentence-pool-chips">
+
+          <!-- Populated by JS -->
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Bottom action button -->
+
+      <div>
+
+        <div id="sentence-feedback-box" class="hidden mb-3 p-3.5 rounded-2xl border transition">
+
+          <!-- Feedback filled by JS -->
+
+        </div>
+
+
+
+        <button id="btn-sentence-action" onclick="checkSentenceAction()" class="w-full py-4 rounded-2xl text-white font-outfit font-extrabold text-base sm:text-lg tracking-wide btn-gradient-primary flex items-center justify-center space-x-2 shadow-lg">
+
+          <span id="btn-sentence-text">Semak Susunan Ayat</span>
+
+          <span>✔</span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ==================== VIEW 3: SIMULASI CHAT DIALOG ==================== -->
+
+    <div id="view-chat-roleplay" class="app-view hidden flex flex-col justify-between flex-grow">
+
+      <div>
+
+        <div class="flex items-center justify-between mb-3 px-1">
+
+          <div>
+
+            <h3 class="font-outfit font-black text-slate-900 text-base" id="chat-scenario-title">Situasi: Hari Pertama Hasan</h3>
+
+            <p class="text-xs text-slate-500">Tekan mana-mana mesej untuk dengar sebutan jelas.</p>
+
+          </div>
+
+          <div class="flex bg-slate-200/80 p-0.5 rounded-xl text-xs font-bold">
+
+            <button onclick="loadChatScenario(1)" id="chat-tab-1" class="px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs">Dialog 1</button>
+
+            <button onclick="loadChatScenario(2)" id="chat-tab-2" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900">Dialog 2</button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Chat Bubble Container -->
+
+        <div class="glass-card rounded-3xl p-4 sm:p-5 space-y-3.5 max-h-[58vh] overflow-y-auto pr-1" id="chat-messages-container">
+
+          <!-- Populated by JS -->
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Full Audio Playback Bar -->
+
+      <div class="pt-3">
+
+        <button onclick="playFullChatAudio()" class="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs sm:text-sm tracking-wide flex items-center justify-center space-x-2 shadow-md transition">
+
+          <span>🔊</span>
+
+          <span>Mainkan Keseluruhan Perbualan (Auto-Play)</span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+  </main>
+
+
+
+  <!-- ==================== DRAWER: KAMUS 23 KOSA KATA ==================== -->
+
+  <div id="vocab-drawer" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-end sm:items-center justify-center transition-opacity">
+
+    <div class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl max-h-[85vh] flex flex-col justify-between">
+
+      
+
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-2">
+
+        <div class="flex items-center space-x-2">
+
+          <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">📋</span>
+
+          <div>
+
+            <h4 class="font-outfit font-black text-slate-900 text-base">Senarai 23 Kosa Kata Topik 4</h4>
+
+            <p class="text-[11px] text-slate-400">Lengkap dengan Hanzi, Pinyin & Audio Sebutan</p>
+
+          </div>
+
+        </div>
+
+        <button onclick="closeVocabDrawer()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm hover:bg-slate-200">
+
+          ✕
+
+        </button>
+
+      </div>
+
+
+
+      <!-- Search in Drawer -->
+
+      <div class="my-2">
+
+        <input type="text" id="drawer-search" oninput="filterDrawerVocab()" placeholder="Cari perkataan (cth: meja, fail, depan, zhíyuán)..." class="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-100 border-none focus:ring-2 focus:ring-indigo-500 text-slate-800">
+
+      </div>
+
+
+
+      <!-- List -->
+
+      <div class="overflow-y-auto space-y-2 flex-grow pr-1 my-1" id="drawer-vocab-list">
+
+        <!-- JS builds cards -->
+
+      </div>
+
+
+
+      <div class="pt-3 border-t border-slate-100">
+
+        <button onclick="closeVocabDrawer()" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700">
+
+          Tutup Kamus
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+
+  <script>
+
+    /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
+
+    const VOCAB_20_QUESTIONS = [
+  {
+    "targetMy": "berasal dari",
+    "char1": "来",
+    "py1": "lái",
+    "char2": "自",
+    "py2": "zì",
+    "fullHz": "来自",
+    "fullPy": "lái zì",
+    "explain": "来 (lái - datang) + 自 (zì - dari) = 来自 (láizì - berasal dari).",
+    "options": [
+      {
+        "char": "自",
+        "py": "zì",
+        "isCorrect": true
+      },
+      {
+        "char": "去",
+        "py": "qù",
+        "isCorrect": false
+      },
+      {
+        "char": "到",
+        "py": "dào",
+        "isCorrect": false
+      },
+      {
+        "char": "出",
+        "py": "chū",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "negeri (wilayah)",
+    "char1": "州",
+    "py1": "zhōu",
+    "char2": "属",
+    "py2": "shǔ",
+    "fullHz": "州属",
+    "fullPy": "zhōu shǔ",
+    "explain": "州 (zhōu - negeri) + 属 (shǔ) = 州属 (zhōushǔ - negeri di Malaysia).",
+    "options": [
+      {
+        "char": "属",
+        "py": "shǔ",
+        "isCorrect": true
+      },
+      {
+        "char": "市",
+        "py": "shì",
+        "isCorrect": false
+      },
+      {
+        "char": "区",
+        "py": "qū",
+        "isCorrect": false
+      },
+      {
+        "char": "国",
+        "py": "guó",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "ibu negeri",
+    "char1": "首",
+    "py1": "shǒu",
+    "char2": "府",
+    "py2": "fǔ",
+    "fullHz": "首府",
+    "fullPy": "shǒu fǔ",
+    "explain": "首 (shǒu - utama) + 府 (fǔ - pusat) = 首府 (shǒufǔ - ibu negeri).",
+    "options": [
+      {
+        "char": "府",
+        "py": "fǔ",
+        "isCorrect": true
+      },
+      {
+        "char": "都",
+        "py": "dū",
+        "isCorrect": false
+      },
+      {
+        "char": "城",
+        "py": "chéng",
+        "isCorrect": false
+      },
+      {
+        "char": "市",
+        "py": "shì",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "anggota polis",
+    "char1": "警",
+    "py1": "jǐng",
+    "char2": "察",
+    "py2": "chá",
+    "fullHz": "警察",
+    "fullPy": "jǐng chá",
+    "explain": "警 (jǐng) + 察 (chá - siasat) = 警察 (jǐngchá - polis).",
+    "options": [
+      {
+        "char": "察",
+        "py": "chá",
+        "isCorrect": true
+      },
+      {
+        "char": "方",
+        "py": "fāng",
+        "isCorrect": false
+      },
+      {
+        "char": "署",
+        "py": "shǔ",
+        "isCorrect": false
+      },
+      {
+        "char": "官",
+        "py": "guān",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "perkhidmatan pos",
+    "char1": "邮",
+    "py1": "yóu",
+    "char2": "政",
+    "py2": "zhèng",
+    "fullHz": "邮政",
+    "fullPy": "yóu zhèng",
+    "explain": "邮 (yóu - kiriman) + 政 (zhèng) = 邮政 (yóuzhèng - pos).",
+    "options": [
+      {
+        "char": "政",
+        "py": "zhèng",
+        "isCorrect": true
+      },
+      {
+        "char": "局",
+        "py": "jú",
+        "isCorrect": false
+      },
+      {
+        "char": "信",
+        "py": "xìn",
+        "isCorrect": false
+      },
+      {
+        "char": "包",
+        "py": "bāo",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "ahli bomba",
+    "char1": "消",
+    "py1": "xiāo",
+    "char2": "防",
+    "py2": "fáng",
+    "fullHz": "消防",
+    "fullPy": "xiāo fáng",
+    "explain": "消 (xiāo - padam) + 防 (fáng - cegah) = 消防 (xiāofáng - bomba).",
+    "options": [
+      {
+        "char": "防",
+        "py": "fáng",
+        "isCorrect": true
+      },
+      {
+        "char": "火",
+        "py": "huǒ",
+        "isCorrect": false
+      },
+      {
+        "char": "水",
+        "py": "shuǐ",
+        "isCorrect": false
+      },
+      {
+        "char": "局",
+        "py": "jú",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "institusi bank",
+    "char1": "银",
+    "py1": "yín",
+    "char2": "行",
+    "py2": "háng",
+    "fullHz": "银行",
+    "fullPy": "yín háng",
+    "explain": "银 (yín - perak/wang) + 行 (háng - firma) = 银行 (yínháng - bank).",
+    "options": [
+      {
+        "char": "行",
+        "py": "háng",
+        "isCorrect": true
+      },
+      {
+        "char": "号",
+        "py": "hào",
+        "isCorrect": false
+      },
+      {
+        "char": "库",
+        "py": "kù",
+        "isCorrect": false
+      },
+      {
+        "char": "店",
+        "py": "diàn",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "sekolah",
+    "char1": "学",
+    "py1": "xué",
+    "char2": "校",
+    "py2": "xiào",
+    "fullHz": "学校",
+    "fullPy": "xué xiào",
+    "explain": "学 (xué - belajar) + 校 (xiào - institusi) = 学校 (xuéxiào - sekolah).",
+    "options": [
+      {
+        "char": "校",
+        "py": "xiào",
+        "isCorrect": true
+      },
+      {
+        "char": "院",
+        "py": "yuàn",
+        "isCorrect": false
+      },
+      {
+        "char": "堂",
+        "py": "táng",
+        "isCorrect": false
+      },
+      {
+        "char": "生",
+        "py": "shēng",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "hospital",
+    "char1": "医",
+    "py1": "yī",
+    "char2": "院",
+    "py2": "yuàn",
+    "fullHz": "医院",
+    "fullPy": "yī yuàn",
+    "explain": "医 (yī - perubatan) + 院 (yuàn - kompleks) = 医院 (yīyuàn - hospital).",
+    "options": [
+      {
+        "char": "院",
+        "py": "yuàn",
+        "isCorrect": true
+      },
+      {
+        "char": "生",
+        "py": "shēng",
+        "isCorrect": false
+      },
+      {
+        "char": "室",
+        "py": "shì",
+        "isCorrect": false
+      },
+      {
+        "char": "所",
+        "py": "suǒ",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "kedai perniagaan",
+    "char1": "商",
+    "py1": "shāng",
+    "char2": "店",
+    "py2": "diàn",
+    "fullHz": "商店",
+    "fullPy": "shāng diàn",
+    "explain": "商 (shāng - niaga) + 店 (diàn - premis) = 商店 (shāngdiàn - kedai).",
+    "options": [
+      {
+        "char": "店",
+        "py": "diàn",
+        "isCorrect": true
+      },
+      {
+        "char": "铺",
+        "py": "pù",
+        "isCorrect": false
+      },
+      {
+        "char": "场",
+        "py": "chǎng",
+        "isCorrect": false
+      },
+      {
+        "char": "家",
+        "py": "jiā",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "padang sukan",
+    "char1": "操",
+    "py1": "cāo",
+    "char2": "场",
+    "py2": "chǎng",
+    "fullHz": "操场",
+    "fullPy": "cāo chǎng",
+    "explain": "操 (cāo - riadah) + 场 (chǎng - medan) = 操场 (cāochǎng - padang).",
+    "options": [
+      {
+        "char": "场",
+        "py": "chǎng",
+        "isCorrect": true
+      },
+      {
+        "char": "地",
+        "py": "dì",
+        "isCorrect": false
+      },
+      {
+        "char": "草",
+        "py": "cǎo",
+        "isCorrect": false
+      },
+      {
+        "char": "馆",
+        "py": "guǎn",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "berhampiran / berdekatan",
+    "char1": "附",
+    "py1": "fù",
+    "char2": "近",
+    "py2": "jìn",
+    "fullHz": "附近",
+    "fullPy": "fù jìn",
+    "explain": "附 (fù) + 近 (jìn - dekat) = 附近 (fùjìn - berdekatan).",
+    "options": [
+      {
+        "char": "近",
+        "py": "jìn",
+        "isCorrect": true
+      },
+      {
+        "char": "旁",
+        "py": "páng",
+        "isCorrect": false
+      },
+      {
+        "char": "边",
+        "py": "biān",
+        "isCorrect": false
+      },
+      {
+        "char": "邻",
+        "py": "lín",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "bertentangan / seberang",
+    "char1": "对",
+    "py1": "duì",
+    "char2": "面",
+    "py2": "miàn",
+    "fullHz": "对面",
+    "fullPy": "duì miàn",
+    "explain": "对 (duì - hadap) + 面 (miàn - arah) = 对面 (duìmiàn - seberang).",
+    "options": [
+      {
+        "char": "面",
+        "py": "miàn",
+        "isCorrect": true
+      },
+      {
+        "char": "方",
+        "py": "fāng",
+        "isCorrect": false
+      },
+      {
+        "char": "边",
+        "py": "biān",
+        "isCorrect": false
+      },
+      {
+        "char": "头",
+        "py": "tóu",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "sebelah",
+    "char1": "旁",
+    "py1": "páng",
+    "char2": "边",
+    "py2": "biān",
+    "fullHz": "旁边",
+    "fullPy": "páng biān",
+    "explain": "旁 (páng - sisi) + 边 (biān - tepi) = 旁边 (pángbiān - sebelah/tepi).",
+    "options": [
+      {
+        "char": "边",
+        "py": "biān",
+        "isCorrect": true
+      },
+      {
+        "char": "面",
+        "py": "miàn",
+        "isCorrect": false
+      },
+      {
+        "char": "角",
+        "py": "jiǎo",
+        "isCorrect": false
+      },
+      {
+        "char": "侧",
+        "py": "cè",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "bahagian hadapan",
+    "char1": "前",
+    "py1": "qián",
+    "char2": "面",
+    "py2": "miàn",
+    "fullHz": "前面",
+    "fullPy": "qián miàn",
+    "explain": "前 (qián - depan) + 面 (miàn) = 前面 (qiánmiàn - hadapan).",
+    "options": [
+      {
+        "char": "面",
+        "py": "miàn",
+        "isCorrect": true
+      },
+      {
+        "char": "边",
+        "py": "biān",
+        "isCorrect": false
+      },
+      {
+        "char": "头",
+        "py": "tóu",
+        "isCorrect": false
+      },
+      {
+        "char": "方",
+        "py": "fāng",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "bahagian belakang",
+    "char1": "后",
+    "py1": "hòu",
+    "char2": "面",
+    "py2": "miàn",
+    "fullHz": "后面",
+    "fullPy": "hòu miàn",
+    "explain": "后 (hòu - belakang) + 面 (miàn) = 后面 (hòumiàn - belakang).",
+    "options": [
+      {
+        "char": "面",
+        "py": "miàn",
+        "isCorrect": true
+      },
+      {
+        "char": "边",
+        "py": "biān",
+        "isCorrect": false
+      },
+      {
+        "char": "尾",
+        "py": "wěi",
+        "isCorrect": false
+      },
+      {
+        "char": "背",
+        "py": "bèi",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "pulang ke rumah",
+    "char1": "回",
+    "py1": "huí",
+    "char2": "家",
+    "py2": "jiā",
+    "fullHz": "回家",
+    "fullPy": "huí jiā",
+    "explain": "回 (huí - balik) + 家 (jiā - rumah) = 回家 (huíjiā - balik rumah).",
+    "options": [
+      {
+        "char": "家",
+        "py": "jiā",
+        "isCorrect": true
+      },
+      {
+        "char": "屋",
+        "py": "wū",
+        "isCorrect": false
+      },
+      {
+        "char": "门",
+        "py": "mén",
+        "isCorrect": false
+      },
+      {
+        "char": "室",
+        "py": "shì",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "barang keperluan",
+    "char1": "用",
+    "py1": "yòng",
+    "char2": "品",
+    "py2": "pǐn",
+    "fullHz": "用品",
+    "fullPy": "yòng pǐn",
+    "explain": "用 (yòng - guna) + 品 (pǐn - barangan) = 用品 (yòngpǐn - keperluan).",
+    "options": [
+      {
+        "char": "品",
+        "py": "pǐn",
+        "isCorrect": true
+      },
+      {
+        "char": "物",
+        "py": "wù",
+        "isCorrect": false
+      },
+      {
+        "char": "具",
+        "py": "jù",
+        "isCorrect": false
+      },
+      {
+        "char": "件",
+        "py": "jiàn",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "Malaysia",
+    "char1": "马",
+    "py1": "mǎ",
+    "char2": "来",
+    "py2": "lái",
+    "fullHz": "马来",
+    "fullPy": "mǎ lái",
+    "explain": "马来 (Mǎlái) + 西亚 = 马来西亚 (Mǎláixīyà - Malaysia).",
+    "options": [
+      {
+        "char": "来",
+        "py": "lái",
+        "isCorrect": true
+      },
+      {
+        "char": "国",
+        "py": "guó",
+        "isCorrect": false
+      },
+      {
+        "char": "西",
+        "py": "xī",
+        "isCorrect": false
+      },
+      {
+        "char": "亚",
+        "py": "yà",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "targetMy": "Kuala Lumpur",
+    "char1": "吉",
+    "py1": "jí",
+    "char2": "隆",
+    "py2": "lóng",
+    "fullHz": "吉隆",
+    "fullPy": "jí lóng",
+    "explain": "吉隆 (Jílóng) + 坡 (pō) = 吉隆坡 (Jílóngpō - Kuala Lumpur).",
+    "options": [
+      {
+        "char": "隆",
+        "py": "lóng",
+        "isCorrect": true
+      },
+      {
+        "char": "打",
+        "py": "dǎ",
+        "isCorrect": false
+      },
+      {
+        "char": "兰",
+        "py": "lán",
+        "isCorrect": false
+      },
+      {
+        "char": "新",
+        "py": "xīn",
+        "isCorrect": false
+      }
+    ]
+  }
+];
+
+    const SENTENCE_CHALLENGES = [
+  {
+    "targetMy": "Awak berasal dari negeri mana di Malaysia?",
+    "correctOrder": [
+      "你来自",
+      "马来西亚",
+      "哪个州属？"
+    ],
+    "pool": [
+      {
+        "hz": "你来自",
+        "py": "nǐ láizì"
+      },
+      {
+        "hz": "马来西亚",
+        "py": "Mǎláixīyà"
+      },
+      {
+        "hz": "哪个州属？",
+        "py": "nǎge zhōushǔ?"
+      },
+      {
+        "hz": "首府",
+        "py": "shǒufǔ"
+      },
+      {
+        "hz": "学校",
+        "py": "xuéxiào"
+      }
+    ],
+    "hint": "Subjek + 来自 + Negara + 哪个州属？",
+    "explain": "Nǐ láizì Mǎláixīyà nǎge zhōushǔ? (Awak berasal dari negeri mana di Malaysia?)"
+  },
+  {
+    "targetMy": "Saya berasal dari Johor, ibu negerinya ialah Johor Bahru.",
+    "correctOrder": [
+      "我来自柔佛，",
+      "首府是",
+      "新山。"
+    ],
+    "pool": [
+      {
+        "hz": "我来自柔佛，",
+        "py": "wǒ láizì Róufó,"
+      },
+      {
+        "hz": "首府是",
+        "py": "shǒufǔ shì"
+      },
+      {
+        "hz": "新山。",
+        "py": "Xīnshān."
+      },
+      {
+        "hz": "银行",
+        "py": "yínháng"
+      },
+      {
+        "hz": "对面",
+        "py": "duìmiàn"
+      }
+    ],
+    "hint": "Saya berasal dari + 首府是 + Nama Bandar.",
+    "explain": "Wǒ láizì Róufó, shǒufǔ shì Xīnshān. (Saya dari Johor, ibu negeri ialah Johor Bahru.)"
+  },
+  {
+    "targetMy": "Balai polis terletak di seberang sekolah.",
+    "correctOrder": [
+      "警察局",
+      "在学校的",
+      "对面。"
+    ],
+    "pool": [
+      {
+        "hz": "警察局",
+        "py": "jǐngchájú"
+      },
+      {
+        "hz": "在学校的",
+        "py": "zài xuéxiào de"
+      },
+      {
+        "hz": "对面。",
+        "py": "duìmiàn."
+      },
+      {
+        "hz": "医院",
+        "py": "yīyuàn"
+      },
+      {
+        "hz": "回家",
+        "py": "huíjiā"
+      }
+    ],
+    "hint": "Tempat 1 + 在 + Tempat 2 的 + Kedudukan (对面).",
+    "explain": "Jǐngchájú zài xuéxiào de duìmiàn. (Balai polis terletak di seberang sekolah.)"
+  },
+  {
+    "targetMy": "Berhampiran hospital ada sebuah bank besar.",
+    "correctOrder": [
+      "医院附近",
+      "有一间",
+      "大银行。"
+    ],
+    "pool": [
+      {
+        "hz": "医院附近",
+        "py": "yīyuàn fùjìn"
+      },
+      {
+        "hz": "有一间",
+        "py": "yǒu yī jiān"
+      },
+      {
+        "hz": "大银行。",
+        "py": "dà yínháng."
+      },
+      {
+        "hz": "操场",
+        "py": "cāochǎng"
+      },
+      {
+        "hz": "来自",
+        "py": "láizì"
+      }
+    ],
+    "hint": "Tempat + 附近 + 有 + Bangunan.",
+    "explain": "Yīyuàn fùjìn yǒu yī jiān dà yínháng. (Dekat hospital ada sebuah bank besar.)"
+  },
+  {
+    "targetMy": "Saya ingin pergi ke pejabat pos untuk menghantar surat.",
+    "correctOrder": [
+      "我想去",
+      "邮政局",
+      "寄一封信。"
+    ],
+    "pool": [
+      {
+        "hz": "我想去",
+        "py": "wǒ xiǎng qù"
+      },
+      {
+        "hz": "邮政局",
+        "py": "yóuzhèngjú"
+      },
+      {
+        "hz": "寄一封信。",
+        "py": "jì yī fēng xìn."
+      },
+      {
+        "hz": "消防局",
+        "py": "xiāofángjú"
+      },
+      {
+        "hz": "商店",
+        "py": "shāngdiàn"
+      }
+    ],
+    "hint": "Subjek + 想去 + Tempat + Tujuan.",
+    "explain": "Wǒ xiǎng qù yóuzhèngjú jì yī fēng xìn. (Saya mahu ke pejabat pos pos surat.)"
+  }
+];
+
+    const CHAT_SCENARIOS = {
+  "1": {
+    "title": "Dialog 1: 你来自哪儿？(Mengenal Asal & Tempat)",
+    "messages": [
+      {
+        "sender": "Aini",
+        "isMe": false,
+        "hz": "爱曼，你来自哪儿？",
+        "py": "Àimàn, nǐ láizì nǎr?",
+        "my": "Aiman, awak berasal dari mana?",
+        "tokens": []
+      },
+      {
+        "sender": "Aiman",
+        "isMe": true,
+        "hz": "你好！我来自雪兰莪州。",
+        "py": "Nǐ hǎo! Wǒ láizì Xuělán'é zhōu.",
+        "my": "Helo! Saya berasal dari negeri Selangor.",
+        "tokens": [
+          {
+            "hz": "你",
+            "py": "nǐ"
+          },
+          {
+            "hz": "好",
+            "py": "hǎo"
+          },
+          {
+            "hz": "我",
+            "py": "wǒ"
+          },
+          {
+            "hz": "来",
+            "py": "lái"
+          },
+          {
+            "hz": "自",
+            "py": "zì"
+          },
+          {
+            "hz": "雪",
+            "py": "xuě"
+          },
+          {
+            "hz": "兰",
+            "py": "lán"
+          },
+          {
+            "hz": "莪",
+            "py": "é"
+          },
+          {
+            "hz": "州",
+            "py": "zhōu"
+          }
+        ]
+      },
+      {
+        "sender": "Aini",
+        "isMe": false,
+        "hz": "雪兰莪州的首府是莎阿南吗？",
+        "py": "Xuělán'é zhōu de shǒufǔ shì Shā'ā'nán ma?",
+        "my": "Ibu negeri Selangor Shah Alam kah?",
+        "tokens": []
+      },
+      {
+        "sender": "Aiman",
+        "isMe": true,
+        "hz": "是的，请问这附近有警察局吗？",
+        "py": "Shì de, qǐngwèn zhè fùjìn yǒu jǐngchájú ma?",
+        "my": "Ya betul, tumpang tanya dekat sini ada balai polis?",
+        "tokens": [
+          {
+            "hz": "是",
+            "py": "shì"
+          },
+          {
+            "hz": "的",
+            "py": "de"
+          },
+          {
+            "hz": "请",
+            "py": "qǐng"
+          },
+          {
+            "hz": "问",
+            "py": "wèn"
+          },
+          {
+            "hz": "这",
+            "py": "zhè"
+          },
+          {
+            "hz": "附",
+            "py": "fù"
+          },
+          {
+            "hz": "近",
+            "py": "jìn"
+          },
+          {
+            "hz": "有",
+            "py": "yǒu"
+          },
+          {
+            "hz": "警",
+            "py": "jǐng"
+          },
+          {
+            "hz": "察",
+            "py": "chá"
+          },
+          {
+            "hz": "局",
+            "py": "jú"
+          },
+          {
+            "hz": "吗",
+            "py": "ma"
+          }
+        ]
+      },
+      {
+        "sender": "Aini",
+        "isMe": false,
+        "hz": "有的，警察局在前面大路旁边。",
+        "py": "Yǒu de, jǐngchájú zài qiánmiàn dàlù pángbiān.",
+        "my": "Ada, balai polis di hadapan sebelah jalan besar.",
+        "tokens": []
+      },
+      {
+        "sender": "Aiman",
+        "isMe": true,
+        "hz": "学校的旁边是邮政局和银行。",
+        "py": "Xuéxiào de pángbiān shì yóuzhèngjú hé yínháng.",
+        "my": "Sebelah sekolah ialah pejabat pos dan bank.",
+        "tokens": [
+          {
+            "hz": "学",
+            "py": "xué"
+          },
+          {
+            "hz": "校",
+            "py": "xiào"
+          },
+          {
+            "hz": "的",
+            "py": "de"
+          },
+          {
+            "hz": "旁",
+            "py": "páng"
+          },
+          {
+            "hz": "边",
+            "py": "biān"
+          },
+          {
+            "hz": "是",
+            "py": "shì"
+          },
+          {
+            "hz": "邮",
+            "py": "yóu"
+          },
+          {
+            "hz": "政",
+            "py": "zhèng"
+          },
+          {
+            "hz": "局",
+            "py": "jú"
+          },
+          {
+            "hz": "和",
+            "py": "hé"
+          },
+          {
+            "hz": "银",
+            "py": "yín"
+          },
+          {
+            "hz": "行",
+            "py": "háng"
+          }
+        ]
+      },
+      {
+        "sender": "Aini",
+        "isMe": false,
+        "hz": "没错，走过去只需五分钟。",
+        "py": "Méicuò, zǒu guòqù zhǐ xū wǔ fēnzhōng.",
+        "my": "Tepat sekali, jalan ke sana cuma perlu 5 minit.",
+        "tokens": []
+      },
+      {
+        "sender": "Aiman",
+        "isMe": true,
+        "hz": "谢谢你，我现在去银行办理业务。",
+        "py": "Xièxie nǐ, wǒ xiànzài qù yínháng bànlǐ yèwù.",
+        "my": "Terima kasih, saya sekarang ke bank uruskan urusan.",
+        "tokens": [
+          {
+            "hz": "谢",
+            "py": "xiè"
+          },
+          {
+            "hz": "谢",
+            "py": "xie"
+          },
+          {
+            "hz": "你",
+            "py": "nǐ"
+          },
+          {
+            "hz": "我",
+            "py": "wǒ"
+          },
+          {
+            "hz": "现",
+            "py": "xiàn"
+          },
+          {
+            "hz": "在",
+            "py": "zài"
+          },
+          {
+            "hz": "去",
+            "py": "qù"
+          },
+          {
+            "hz": "银",
+            "py": "yín"
+          },
+          {
+            "hz": "行",
+            "py": "háng"
+          },
+          {
+            "hz": "办",
+            "py": "bàn"
+          },
+          {
+            "hz": "理",
+            "py": "lǐ"
+          },
+          {
+            "hz": "业",
+            "py": "yè"
+          },
+          {
+            "hz": "务",
+            "py": "wù"
+          }
+        ]
+      }
+    ]
+  },
+  "2": {
+    "title": "Dialog 2: 警察局在前面 (Menunjuk Lokasi)",
+    "messages": [
+      {
+        "sender": "Pelawat",
+        "isMe": false,
+        "hz": "请问消防局在哪里？",
+        "py": "Qǐngwèn xiāofángjú zài nǎlǐ?",
+        "my": "Tumpang tanya di manakah balai bomba?",
+        "tokens": []
+      },
+      {
+        "sender": "Aiman",
+        "isMe": true,
+        "hz": "消防局在医院的对面。",
+        "py": "Xiāofángjú zài yīyuàn de duìmiàn.",
+        "my": "Balai bomba terletak di seberang hospital.",
+        "tokens": [
+          {
+            "hz": "消",
+            "py": "xiāo"
+          },
+          {
+            "hz": "防",
+            "py": "fáng"
+          },
+          {
+            "hz": "局",
+            "py": "jú"
+          },
+          {
+            "hz": "在",
+            "py": "zài"
+          },
+          {
+            "hz": "医",
+            "py": "yī"
+          },
+          {
+            "hz": "院",
+            "py": "yuàn"
+          },
+          {
+            "hz": "的",
+            "py": "de"
+          },
+          {
+            "hz": "对",
+            "py": "duì"
+          },
+          {
+            "hz": "面",
+            "py": "miàn"
+          }
+        ]
+      },
+      {
+        "sender": "Pelawat",
+        "isMe": false,
+        "hz": "离这里远不远？",
+        "py": "Lí zhèlǐ yuǎn bù yuǎn?",
+        "my": "Jauh atau tidak dari sini?",
+        "tokens": []
+      },
+      {
+        "sender": "Aiman",
+        "isMe": true,
+        "hz": "不远，直走两分钟就到了。",
+        "py": "Bù yuǎn, zhí zǒu liǎng fēnzhōng jiù dào le.",
+        "my": "Tak jauh, jalan terus dua minit dah sampai.",
+        "tokens": [
+          {
+            "hz": "不",
+            "py": "bù"
+          },
+          {
+            "hz": "远",
+            "py": "yuǎn"
+          },
+          {
+            "hz": "直",
+            "py": "zhí"
+          },
+          {
+            "hz": "走",
+            "py": "zǒu"
+          },
+          {
+            "hz": "两",
+            "py": "liǎng"
+          },
+          {
+            "hz": "分",
+            "py": "fēn"
+          },
+          {
+            "hz": "钟",
+            "py": "zhōng"
+          },
+          {
+            "hz": "就",
+            "py": "jiù"
+          },
+          {
+            "hz": "到",
+            "py": "dào"
+          },
+          {
+            "hz": "了",
+            "py": "le"
+          }
+        ]
+      }
+    ]
+  }
+};
+
+    const FULL_VOCAB = [
+  {
+    "hz": "来自",
+    "py": "lái zì",
+    "my": "berasal dari",
+    "type": "k.k"
+  },
+  {
+    "hz": "州属",
+    "py": "zhōu shǔ",
+    "my": "negeri (wilayah)",
+    "type": "k.n"
+  },
+  {
+    "hz": "首府",
+    "py": "shǒu fǔ",
+    "my": "ibu negeri",
+    "type": "k.n"
+  },
+  {
+    "hz": "警察局",
+    "py": "jǐng chá jú",
+    "my": "balai polis",
+    "type": "k.n"
+  },
+  {
+    "hz": "邮政局",
+    "py": "yóu zhèng jú",
+    "my": "pejabat pos",
+    "type": "k.n"
+  },
+  {
+    "hz": "消防局",
+    "py": "xiāo fáng jú",
+    "my": "balai bomba",
+    "type": "k.n"
+  },
+  {
+    "hz": "银行",
+    "py": "yín háng",
+    "my": "bank",
+    "type": "k.n"
+  },
+  {
+    "hz": "学校",
+    "py": "xué xiào",
+    "my": "sekolah",
+    "type": "k.n"
+  },
+  {
+    "hz": "医院",
+    "py": "yī yuàn",
+    "my": "hospital",
+    "type": "k.n"
+  },
+  {
+    "hz": "商店",
+    "py": "shāng diàn",
+    "my": "kedai perniagaan",
+    "type": "k.n"
+  },
+  {
+    "hz": "操场",
+    "py": "cāo chǎng",
+    "my": "padang sukan",
+    "type": "k.n"
+  },
+  {
+    "hz": "马来西亚",
+    "py": "Mǎ lái xī yà",
+    "my": "Malaysia",
+    "type": "k.n"
+  },
+  {
+    "hz": "吉隆坡",
+    "py": "Jí lóng pō",
+    "my": "Kuala Lumpur",
+    "type": "k.n"
+  },
+  {
+    "hz": "柔佛",
+    "py": "Róu fó",
+    "my": "Johor",
+    "type": "k.n"
+  },
+  {
+    "hz": "槟城",
+    "py": "Bīn chéng",
+    "my": "Pulau Pinang",
+    "type": "k.n"
+  },
+  {
+    "hz": "雪兰莪",
+    "py": "Xuě lán é",
+    "my": "Selangor",
+    "type": "k.n"
+  },
+  {
+    "hz": "附近",
+    "py": "fù jìn",
+    "my": "berdekatan / sekitar",
+    "type": "k.n"
+  },
+  {
+    "hz": "前面",
+    "py": "qián miàn",
+    "my": "hadapan",
+    "type": "k.n"
+  },
+  {
+    "hz": "后面",
+    "py": "hòu miàn",
+    "my": "belakang",
+    "type": "k.n"
+  },
+  {
+    "hz": "对面",
+    "py": "duì miàn",
+    "my": "bertentangan / seberang",
+    "type": "k.n"
+  },
+  {
+    "hz": "旁边",
+    "py": "páng biān",
+    "my": "sebelah / tepi",
+    "type": "k.n"
+  },
+  {
+    "hz": "日常用品",
+    "py": "rì cháng yòng pǐn",
+    "my": "barang keperluan harian",
+    "type": "k.n"
+  }
+];
+
+
+
+
+    /* ========== 2. AUDIO & FX ENGINE ========== */
+
+    let audioRate = 0.95;
+
+    const rates = [0.75, 0.95, 1.15];
+
+    let ratePointer = 1;
+
+
+
+    function toggleAudioSpeed() {
+
+      ratePointer = (ratePointer + 1) % rates.length;
+
+      audioRate = rates[ratePointer];
+
+      document.getElementById('speed-badge').innerText = audioRate + 'x';
+
+      playBeep('click');
+
+    }
+
+
+
+    function speakChinese(text) {
+
+      if (!('speechSynthesis' in window)) return;
+
+      window.speechSynthesis.cancel();
+
+      const u = new SpeechSynthesisUtterance(text);
+
+      u.lang = 'zh-CN';
+
+      u.rate = audioRate;
+
+      const voices = window.speechSynthesis.getVoices();
+
+      const zh = voices.find(v => v.lang && (v.lang.includes('zh') || v.lang.includes('cmn')));
+
+      if (zh) u.voice = zh;
+
+      window.speechSynthesis.speak(u);
+
+    }
+
+
+
+    let soundContext = null;
+
+    function playBeep(type) {
+
+      try {
+
+        if (!soundContext) {
+
+          soundContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        }
+
+        if (soundContext.state === 'suspended') soundContext.resume();
+
+
+
+        const osc = soundContext.createOscillator();
+
+        const gain = soundContext.createGain();
+
+        osc.connect(gain);
+
+        gain.connect(soundContext.destination);
+
+
+
+        const now = soundContext.currentTime;
+
+        if (type === 'success') {
+
+          osc.type = 'triangle';
+
+          osc.frequency.setValueAtTime(440, now);
+
+          osc.frequency.setValueAtTime(554.37, now + 0.1);
+
+          osc.frequency.setValueAtTime(659.25, now + 0.2);
+
+          osc.frequency.setValueAtTime(880, now + 0.3);
+
+          gain.gain.setValueAtTime(0.2, now);
+
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+
+          osc.start(now);
+
+          osc.stop(now + 0.5);
+
+        } else if (type === 'wrong') {
+
+          osc.type = 'sawtooth';
+
+          osc.frequency.setValueAtTime(240, now);
+
+          osc.frequency.setValueAtTime(170, now + 0.12);
+
+          gain.gain.setValueAtTime(0.2, now);
+
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+
+          osc.start(now);
+
+          osc.stop(now + 0.3);
+
+        } else {
+
+          osc.type = 'sine';
+
+          osc.frequency.setValueAtTime(540, now);
+
+          gain.gain.setValueAtTime(0.05, now);
+
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+
+          osc.start(now);
+
+          osc.stop(now + 0.08);
+
+        }
+
+      } catch (e) {}
+
+    }
+
+
+
+    /* ========== 3. STATE CONTROLLER ========== */
+
+    let currentAppMode = 'vocabChallenge';
+
+    let currentVocabQIdx = 0; // 0 to 19 (Soalan 1 / 20)
+
+    let selectedVocabOption = null;
+
+    let isVocabChecked = false;
+
+    let streakCount = 0;
+
+    let totalXp = 0;
+
+
+
+    function switchAppMode(mode) {
+
+      playBeep('click');
+
+      currentAppMode = mode;
+
+
+
+      document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
+
+      document.querySelectorAll('#nav-mode-vocab, #nav-mode-sentence, #nav-mode-chat').forEach(b => {
+
+        b.className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 hover:text-slate-800 text-slate-500";
+
+      });
+
+
+
+      if (mode === 'vocabChallenge') {
+
+        document.getElementById('view-vocab-challenge').classList.remove('hidden');
+
+        document.getElementById('nav-mode-vocab').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
+
+        loadVocabQuestion();
+
+      } else if (mode === 'sentenceChallenge') {
+
+        document.getElementById('view-sentence-challenge').classList.remove('hidden');
+
+        document.getElementById('nav-mode-sentence').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
+
+        loadSentenceChallenge();
+
+      } else {
+
+        document.getElementById('view-chat-roleplay').classList.remove('hidden');
+
+        document.getElementById('nav-mode-chat').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
+
+        loadChatScenario(1);
+
+      }
+
+    }
+
+
+
+    /* Helper Shuffle Array */
+
+    function shuffleArray(arr) {
+
+      const a = [...arr];
+
+      for (let i = a.length - 1; i > 0; i--) {
+
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [a[i], a[j]] = [a[j], a[i]];
+
+      }
+
+      return a;
+
+    }
+
+
+
+    /* ========== 4. VIEW 1: BINA KATA (HANZI, PINYIN & AUDIO) ========== */
+
+    function loadVocabQuestion() {
+
+      if (currentVocabQIdx >= VOCAB_20_QUESTIONS.length) {
+
+        showVocabCompletionScreen();
+
+        return;
+
+      }
+
+
+
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+
+      selectedVocabOption = null;
+
+      isVocabChecked = false;
+
+
+
+      // Update Top Status
+
+      document.getElementById('level-title-vocab').innerText = `Soalan ${currentVocabQIdx + 1} / 20`;
+
+      const pct = Math.round(((currentVocabQIdx + 1) / 20) * 100);
+
+      document.getElementById('progress-bar-vocab').style.width = `${pct}%`;
+
+
+
+      // Prompt Meaning
+
+      document.getElementById('hero-target-meaning').innerText = `"${q.targetMy}"`;
+
+
+
+      // Capsule 1: Hanzi & Pinyin
+
+      const c1 = document.getElementById('capsule-char1');
+
+      c1.innerText = q.char1;
+
+      if (q.char1.length > 2) {
+
+        c1.className = "text-xl sm:text-2xl font-black text-slate-900 font-hanzi mt-0.5";
+
+      } else {
+
+        c1.className = "text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5";
+
+      }
+
+      document.getElementById('capsule-pinyin1').innerText = q.py1;
+
+
+
+      // Slot Reset
+
+      clearSlot();
+
+
+
+      // Reset Action Button
+
+      setPrimaryButtonState('check');
+
+
+
+      // Hide Feedback
+
+      document.getElementById('action-feedback-box').className = "hidden mb-3 p-3.5 rounded-2xl border transition";
+
+
+
+      // Render 4 Options (Rawak / Shuffled)
+
+      renderVocabOptions(shuffleArray(q.options));
+
+
+
+      // Play audio of the first character automatically
+
+      setTimeout(() => speakChinese(q.char1), 250);
+
+    }
+
+
+
+    function renderVocabOptions(options) {
+
+      const grid = document.getElementById('vocab-options-grid');
+
+      grid.innerHTML = '';
+
+
+
+      options.forEach(opt => {
+
+        const card = document.createElement('button');
+
+        card.className = "option-tile glass-card rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center group cursor-pointer border border-slate-200/90 relative";
+
+        card.onclick = () => selectVocabOption(opt, card);
+
+
+
+        card.innerHTML = `
+
+          <div class="flex items-center space-x-1.5 mb-1">
+
+            <span class="text-xs sm:text-sm font-extrabold text-indigo-600 font-sans tracking-wide">${opt.py}</span>
+
+            <span class="text-[11px] text-slate-300 group-hover:text-indigo-500 transition">🔊</span>
+
+          </div>
+
+          <span class="text-3xl sm:text-4xl font-black text-slate-800 font-hanzi group-hover:text-indigo-600 transition-colors">${opt.char}</span>
+
+        `;
+
+        grid.appendChild(card);
+
+      });
+
+    }
+
+
+
+    function selectVocabOption(opt, cardEl) {
+
+      if (isVocabChecked) return;
+
+      playBeep('click');
+
+      selectedVocabOption = opt;
+
+
+
+      document.querySelectorAll('#vocab-options-grid .option-tile').forEach(c => {
+
+        c.classList.remove('selected', 'border-indigo-600', 'bg-indigo-50/70');
+
+      });
+
+      cardEl.classList.add('selected', 'border-indigo-600', 'bg-indigo-50/70');
+
+
+
+      // Update Slot Capsule
+
+      const slot = document.getElementById('target-slot-capsule');
+
+      slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-600 flex flex-col items-center justify-center shadow-md cursor-pointer transition transform scale-105";
+
+      
+
+      document.getElementById('capsule-slot-pinyin').innerText = opt.py;
+
+      document.getElementById('capsule-slot-pinyin').className = "text-xs font-black text-indigo-600 font-sans tracking-wide";
+
+
+
+      const slotChar = document.getElementById('capsule-slot-char');
+
+      slotChar.innerText = opt.char;
+
+      slotChar.className = opt.char.length > 2 
+
+        ? "text-xl sm:text-2xl font-black text-indigo-800 font-hanzi mt-0.5" 
+
+        : "text-3xl sm:text-4xl font-black text-indigo-800 font-hanzi mt-0.5";
+
+
+
+      // Realtime Preview with Hanzi & Pinyin
+
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+
+      document.getElementById('solution-preview-chip').innerHTML = `
+
+        <span class="font-bold text-indigo-700">Gabungan:</span>
+
+        <span class="font-hanzi font-black text-slate-900 text-sm sm:text-base">${q.char1 + opt.char}</span>
+
+        <span class="text-indigo-600 font-extrabold text-xs">(${q.py1} ${opt.py})</span>
+
+      `;
+
+
+
+      // Voice preview of selected option
+
+      speakChinese(opt.char);
+
+    }
+
+
+
+    function clearSlot() {
+
+      if (isVocabChecked) return;
+
+      selectedVocabOption = null;
+
+      document.querySelectorAll('#vocab-options-grid .option-tile').forEach(c => c.classList.remove('selected', 'border-indigo-600', 'bg-indigo-50/70'));
+
+
+
+      const slot = document.getElementById('target-slot-capsule');
+
+      slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-slate-50/90 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center shadow-inner cursor-pointer transition";
+
+      
+
+      document.getElementById('capsule-slot-pinyin').innerText = "pilih pinyin";
+
+      document.getElementById('capsule-slot-pinyin').className = "text-xs font-bold text-slate-400 font-sans";
+
+
+
+      document.getElementById('capsule-slot-char').innerText = "?";
+
+      document.getElementById('capsule-slot-char').className = "text-3xl sm:text-4xl font-black text-slate-300 font-sans mt-0.5";
+
+
+
+      document.getElementById('solution-preview-chip').innerText = "Pilih kad aksara di bawah yang mempunyai Hanzi & Pinyin yang betul.";
+
+    }
+
+
+
+    function handlePrimaryAction() {
+
+      if (isVocabChecked) {
+
+        // MAJU KE SOALAN SETERUSNYA (0 -> 19)
+
+        playBeep('click');
+
+        currentVocabQIdx++;
+
+        loadVocabQuestion();
+
+        return;
+
+      }
+
+
+
+      // CHECK
+
+      if (!selectedVocabOption) {
+
+        playBeep('wrong');
+
+        alert("Sila pilih satu kad aksara terlebih dahulu!");
+
+        return;
+
+      }
+
+
+
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+
+      const feedbackBox = document.getElementById('action-feedback-box');
+
+
+
+      if (selectedVocabOption.isCorrect) {
+
+        // SUCCESS
+
+        isVocabChecked = true;
+
+        playBeep('success');
+
+        streakCount++;
+
+        totalXp += 10;
+
+        document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
+
+        document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
+
+
+
+        // Highlight slot
+
+        const slot = document.getElementById('target-slot-capsule');
+
+        slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-emerald-50 rounded-2xl border-2 border-emerald-500 flex flex-col items-center justify-center shadow-md text-center";
+
+        document.getElementById('capsule-slot-char').className = "text-3xl sm:text-4xl font-black text-emerald-800 font-hanzi mt-0.5";
+
+        document.getElementById('capsule-slot-pinyin').className = "text-xs font-black text-emerald-700 font-sans tracking-wide";
+
+
+
+        // Feedback with Hanzi + Pinyin + Audio
+
+        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50/95 text-emerald-950 shadow-xs";
+
+        document.getElementById('feedback-status-icon').innerText = "🎉";
+
+        document.getElementById('feedback-status-title').innerText = "Tahniah! Sebutan & Cantuman Tepat.";
+
+        document.getElementById('feedback-status-body').innerHTML = `
+
+          <div class="flex items-baseline space-x-2 my-0.5">
+
+            <span class="font-hanzi font-black text-lg text-emerald-900">${q.fullHz}</span>
+
+            <span class="font-sans font-black text-sm text-emerald-700">(${q.fullPy})</span>
+
+          </div>
+
+          <span class="text-xs text-emerald-800 font-medium">${q.explain}</span>
+
+        `;
+
+
+
+        // Speak full word immediately with Chinese TTS
+
+        setTimeout(() => speakChinese(q.fullHz), 150);
+
+
+
+        setPrimaryButtonState('next');
+
+      } else {
+
+        // WRONG: Highlight Pinyin yang salah & Pinyin yang betul
+
+        playBeep('wrong');
+
+        streakCount = 0;
+
+        document.getElementById('streak-counter').innerText = `0 Streak`;
+
+
+
+        const correctOpt = q.options.find(o => o.isCorrect);
+
+
+
+        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border-2 border-rose-300 bg-rose-50/95 text-rose-950 shadow-xs animate-in fade-in duration-200";
+
+        document.getElementById('feedback-status-icon').innerText = "❌";
+
+        document.getElementById('feedback-status-title').innerText = "Pilihan Pinyin Kurang Tepat";
+
+        document.getElementById('feedback-status-body').innerHTML = `
+
+          <div class="mt-1 space-y-1 text-xs">
+
+            <div class="flex items-center space-x-2">
+
+              <span class="text-rose-700 font-semibold">Pinyin Pilihan Anda:</span>
+
+              <span class="px-2 py-0.5 rounded-lg bg-rose-200 text-rose-900 border border-rose-400 font-black font-sans line-through">
+
+                ${selectedVocabOption.py} (${selectedVocabOption.char})
+
+              </span>
+
+              <span class="text-[10px] text-rose-600 font-bold">❌ Salah</span>
+
+            </div>
+
+            <div class="flex items-center space-x-2">
+
+              <span class="text-emerald-800 font-semibold">Pinyin Yang Betul:</span>
+
+              <button onclick="speakChinese('${correctOpt.char}')" class="px-2 py-0.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-950 border border-emerald-400 font-black font-sans flex items-center space-x-1 shadow-2xs">
+
+                <span>${correctOpt.py} (${correctOpt.char})</span>
+
+                <span class="text-[10px] ml-1">🔊</span>
+
+              </button>
+
+              <span class="text-[10px] text-emerald-700 font-bold">✅ Nada ${correctOpt.py}</span>
+
+            </div>
+
+          </div>
+
+          <p class="text-[11px] text-slate-600 mt-2 pt-1 border-t border-rose-200/80 leading-relaxed">${q.explain}</p>
+
+        `;
+
+      }
+
+    }
+
+
+
+    function setPrimaryButtonState(state) {
+
+      const btn = document.getElementById('btn-primary-action');
+
+      const text = document.getElementById('btn-primary-text');
+
+      const icon = document.getElementById('btn-primary-icon');
+
+
+
+      if (state === 'next') {
+
+        btn.className = "w-full py-4 rounded-2xl text-white font-outfit font-extrabold text-base sm:text-lg tracking-wide btn-gradient-success flex items-center justify-center space-x-2 shadow-lg";
+
+        text.innerText = currentVocabQIdx === 19 ? "Lihat Keputusan Keseluruhan" : "Soalan Seterusnya";
+
+        icon.innerText = "➔";
+
+      } else {
+
+        btn.className = "w-full py-4 rounded-2xl text-white font-outfit font-extrabold text-base sm:text-lg tracking-wide btn-gradient-primary flex items-center justify-center space-x-2 shadow-lg";
+
+        text.innerText = "Semak Jawapan";
+
+        icon.innerText = "✔";
+
+      }
+
+    }
+
+
+
+    function speakCurrentQuestionPrompt() {
+
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+
+      speakChinese(q.fullHz);
+
+    }
+
+
+
+    function speakCurrentPart(part) {
+
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+
+      speakChinese(q.char1);
+
+    }
+
+
+
+    function speakFullWord() {
+
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+
+      speakChinese(q.fullHz);
+
+    }
+
+
+
+    function showVocabCompletionScreen() {
+
+      playBeep('success');
+
+      const view = document.getElementById('view-vocab-challenge');
+
+      view.innerHTML = `
+
+        <div class="glass-card rounded-3xl p-6 sm:p-8 text-center my-auto">
+
+          <div class="text-6xl mb-3">🏆</div>
+
+          <h2 class="text-2xl font-outfit font-black text-slate-900">Hebat! Selesai Kesemua 20 Soalan</h2>
+
+          <p class="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
+
+            Tahniah! Anda telah menguasai kesemua 20 perbendaharaan kata <strong>Hanzi & Pinyin</strong> bagi Topik 4: Di Pejabat tanpa sebarang ulangan.
+
+          </p>
+
+          <div class="my-6 grid grid-cols-2 gap-3 max-w-xs mx-auto">
+
+            <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-2xl">
+
+              <span class="text-xs text-slate-400 font-bold block">Jumlah XP</span>
+
+              <span class="text-xl font-black text-indigo-700">${totalXp} XP</span>
+
+            </div>
+
+            <div class="bg-amber-50 border border-amber-100 p-3 rounded-2xl">
+
+              <span class="text-xs text-slate-400 font-bold block">Pencapaian</span>
+
+              <span class="text-xl font-black text-amber-700">20 / 20 ⭐</span>
+
+            </div>
+
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-2.5 justify-center">
+
+            <button onclick="restartVocab20()" class="py-3 px-5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs tracking-wide shadow-md transition">
+
+              🔄 Mulakan Semula (20 Soalan)
+
+            </button>
+
+            <button onclick="switchAppMode('sentenceChallenge')" class="py-3 px-5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
+
+              📐 Teruskan ke Pola Ayat
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+
+    function restartVocab20() {
+
+      currentVocabQIdx = 0;
+
+      totalXp = 0;
+
+      streakCount = 0;
+
+      location.reload();
+
+    }
+
+
+
+    /* ========== 5. VIEW 2: SUSUN AYAT (HANZI + PINYIN + AUDIO - JAWAPAN RAWAK) ========== */
+
+    let sentenceIndex = 0;
+
+    let selectedSentenceTokens = [];
+
+    let isSentenceChecked = false;
+
+    let currentShuffledSentencePool = [];
+
+
+
+    function loadSentenceChallenge() {
+
+      const q = SENTENCE_CHALLENGES[sentenceIndex];
+
+      selectedSentenceTokens = [];
+
+      isSentenceChecked = false;
+
+      // Rawakkan susunan blok perkataan supaya TIDAK mengikut susunan jawapan
+
+      currentShuffledSentencePool = shuffleArray(q.pool);
+
+
+
+      document.getElementById('level-title-sentence').innerText = `Ayat ${sentenceIndex + 1} / ${SENTENCE_CHALLENGES.length}`;
+
+      const pct = Math.round(((sentenceIndex + 1) / SENTENCE_CHALLENGES.length) * 100);
+
+      document.getElementById('progress-bar-sentence').style.width = `${pct}%`;
+
+
+
+      document.getElementById('sentence-target-my').innerText = `"${q.targetMy}"`;
+
+      document.getElementById('sentence-grammar-hint').innerText = q.hint;
+
+      document.getElementById('sentence-feedback-box').className = "hidden mb-3 p-3.5 rounded-2xl border transition";
+
+
+
+      setSentenceBtnState('check');
+
+      renderSentenceChips();
+
+    }
+
+
+
+    function renderSentenceChips() {
+
+      const dropzone = document.getElementById('sentence-dropzone');
+
+      const pool = document.getElementById('sentence-pool-chips');
+
+
+
+      // Dropzone items (blok yang telah dipilih pelajar)
+
+      dropzone.innerHTML = '';
+
+      if (selectedSentenceTokens.length === 0) {
+
+        dropzone.innerHTML = `<span class="text-xs text-slate-400 italic" id="sentence-placeholder">Pilih blok perkataan rawak di bawah mengikut urutan...</span>`;
+
+      } else {
+
+        selectedSentenceTokens.forEach((item, idx) => {
+
+          const chip = document.createElement('button');
+
+          chip.className = "px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5 animate-in fade-in duration-150";
+
+          chip.innerHTML = `
+
+            <div class="text-left">
+
+              <span class="block text-[9px] text-indigo-200">${item.py}</span>
+
+              <span class="block font-hanzi font-black text-sm">${item.hz}</span>
+
+            </div>
+
+            <span class="text-indigo-200 text-xs ml-1 font-bold">×</span>
+
+          `;
+
+          chip.onclick = () => removeSentenceToken(idx);
+
+          dropzone.appendChild(chip);
+
+        });
+
+      }
+
+
+
+      // Pool items (pilihan blok perkataan yang telah dirawakkan)
+
+      pool.innerHTML = '';
+
+      const available = [...currentShuffledSentencePool];
+
+      selectedSentenceTokens.forEach(t => {
+
+        const found = available.findIndex(a => a.hz === t.hz);
+
+        if (found !== -1) available.splice(found, 1);
+
+      });
+
+
+
+      available.forEach(item => {
+
+        const btn = document.createElement('button');
+
+        btn.className = "glass-card hover:bg-indigo-50 border border-slate-200 hover:border-indigo-400 px-3.5 py-2 rounded-xl text-slate-800 transition active:scale-95 text-center shadow-xs";
+
+        btn.innerHTML = `
+
+          <span class="block text-[10px] font-bold text-indigo-500">${item.py}</span>
+
+          <span class="block text-base font-black font-hanzi text-slate-900">${item.hz}</span>
+
+        `;
+
+        btn.onclick = () => addSentenceToken(item);
+
+        pool.appendChild(btn);
+
+      });
+
+    }
+
+
+
+    function addSentenceToken(item) {
+
+      if (isSentenceChecked) return;
+
+      playBeep('click');
+
+      selectedSentenceTokens.push(item);
+
+      renderSentenceChips();
+
+      speakChinese(item.hz);
+
+    }
+
+
+
+    function removeSentenceToken(idx) {
+
+      if (isSentenceChecked) return;
+
+      playBeep('click');
+
+      selectedSentenceTokens.splice(idx, 1);
+
+      renderSentenceChips();
+
+    }
+
+
+
+    function resetSentenceBuilder() {
+
+      if (isSentenceChecked) return;
+
+      playBeep('click');
+
+      selectedSentenceTokens = [];
+
+      renderSentenceChips();
+
+    }
+
+
+
+    function checkSentenceAction() {
+
+      if (isSentenceChecked) {
+
+        playBeep('click');
+
+        sentenceIndex = (sentenceIndex + 1) % SENTENCE_CHALLENGES.length;
+
+        loadSentenceChallenge();
+
+        return;
+
+      }
+
+
+
+      const q = SENTENCE_CHALLENGES[sentenceIndex];
+
+      const feedback = document.getElementById('sentence-feedback-box');
+
+
+
+      if (selectedSentenceTokens.length !== q.correctOrder.length) {
+
+        playBeep('wrong');
+
+        alert("Sila lengkapkan semua bahagian ayat terlebih dahulu!");
+
+        return;
+
+      }
+
+
+
+      const isMatch = selectedSentenceTokens.every((t, i) => t.hz === q.correctOrder[i]);
+
+
+
+      if (isMatch) {
+
+        isSentenceChecked = true;
+
+        playBeep('success');
+
+        totalXp += 20;
+
+        streakCount++;
+
+        document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
+
+        document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
+
+
+
+        const fullSentenceHz = selectedSentenceTokens.map(t => t.hz).join('');
+
+        const fullSentencePy = selectedSentenceTokens.map(t => t.py).join(' ');
+
+        speakChinese(fullSentenceHz);
+
+
+
+        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950";
+
+        feedback.innerHTML = `
+
+          <div class="font-bold text-sm">🎉 Tepat Sekali!</div>
+
+          <div class="font-hanzi font-black text-emerald-900 text-base mt-0.5">${fullSentenceHz}</div>
+
+          <div class="text-xs font-bold text-emerald-700 mt-0.5">(${fullSentencePy})</div>
+
+          <p class="text-xs text-emerald-800 mt-1">${q.explain}</p>
+
+        `;
+
+
+
+        setSentenceBtnState('next');
+
+      } else {
+
+        playBeep('wrong');
+
+        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-rose-200 bg-rose-50 text-rose-950";
+
+        feedback.innerHTML = `
+
+          <div class="font-bold text-sm">Susunan Belum Tepat</div>
+
+          <p class="text-xs text-rose-700 mt-0.5">Sila semak semula susunan tatabahasa.</p>
+
+        `;
+
+      }
+
+    }
+
+
+
+    function setSentenceBtnState(state) {
+
+      const btn = document.getElementById('btn-sentence-action');
+
+      const text = document.getElementById('btn-sentence-text');
+
+
+
+      if (state === 'next') {
+
+        btn.className = "w-full py-4 rounded-2xl text-white font-outfit font-extrabold text-base sm:text-lg tracking-wide btn-gradient-success flex items-center justify-center space-x-2 shadow-lg";
+
+        text.innerText = "Ayat Seterusnya";
+
+      } else {
+
+        btn.className = "w-full py-4 rounded-2xl text-white font-outfit font-extrabold text-base sm:text-lg tracking-wide btn-gradient-primary flex items-center justify-center space-x-2 shadow-lg";
+
+        text.innerText = "Semak Susunan Ayat";
+
+      }
+
+    }
+
+
+
+    /* ========== 6. VIEW 3: SIMULASI CHAT & SEMAKAN SEBUTAN SUARA ========== */
+
+    let currentScenarioId = 1;
+
+    let activeSpeechRecognizer = null;
+
+    let activeEvaluatingIndex = null;
+
+
+
+    function loadChatScenario(id) {
+
+      playBeep('click');
+
+      currentScenarioId = id;
+
+      const data = CHAT_SCENARIOS[id];
+
+
+
+      document.getElementById('chat-scenario-title').innerText = data.title;
+
+      const tab1 = document.getElementById('chat-tab-1');
+
+      const tab2 = document.getElementById('chat-tab-2');
+
+
+
+      if (id === 1) {
+
+        tab1.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs";
+
+        tab2.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900";
+
+      } else {
+
+        tab2.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs";
+
+        tab1.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900";
+
+      }
+
+
+
+      const container = document.getElementById('chat-messages-container');
+
+      container.innerHTML = '';
+
+
+
+      data.messages.forEach((msg, idx) => {
+
+        const row = document.createElement('div');
+
+        row.className = `flex flex-col ${msg.isMe ? 'items-end' : 'items-start'} mb-1`;
+
+
+
+        row.innerHTML = `
+
+          <div class="text-[10px] font-bold text-slate-400 mb-1 px-1 flex items-center space-x-1">
+
+            <span>${msg.sender}</span>
+
+            <span id="badge-pass-${idx}" class="hidden text-[9px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.2 rounded-full border border-emerald-300">
+
+              ✅ Lulus Sebutan
+
+            </span>
+
+          </div>
+
+
+
+          <div class="max-w-[92%] sm:max-w-[85%] rounded-2xl p-3.5 transition shadow-xs border ${
+
+            msg.isMe
+
+              ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-br-none border-indigo-500'
+
+              : 'bg-white border-slate-200 text-slate-900 rounded-bl-none'
+
+          }">
+
+            <!-- Hanzi & Pinyin -->
+
+            <div class="text-base sm:text-lg font-black font-hanzi leading-snug">${msg.hz}</div>
+
+            <div class="text-xs ${msg.isMe ? 'text-indigo-200' : 'text-indigo-600'} font-semibold mt-0.5">${msg.py}</div>
+
+            <div class="text-[11px] ${msg.isMe ? 'text-indigo-100/90' : 'text-slate-500'} mt-1 pt-1 border-t ${msg.isMe ? 'border-indigo-400/30' : 'border-slate-100'}">
+
+              ${msg.my}
+
+            </div>
+
+
+
+            <!-- Action Controls: Dengar Audio & Semak Sebutan Suara -->
+
+            <div class="mt-2.5 pt-2 border-t ${msg.isMe ? 'border-indigo-400/40' : 'border-slate-100'} flex items-center justify-between gap-2">
+
+              <button onclick="speakChinese('${msg.hz}')" class="px-2.5 py-1 rounded-xl ${msg.isMe ? 'bg-indigo-800/80 hover:bg-indigo-900 text-indigo-100' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'} text-[11px] font-bold flex items-center space-x-1 transition active:scale-95">
+
+                <span>🔊</span>
+
+                <span>Dengar</span>
+
+              </button>
+
+
+
+              <button id="mic-btn-${idx}" onclick="startSpeechCheck('${msg.hz}', ${idx})" class="px-3 py-1 rounded-xl ${msg.isMe ? 'bg-white text-indigo-800 hover:bg-indigo-50' : 'bg-indigo-600 hover:bg-indigo-700 text-white'} text-[11px] font-extrabold flex items-center space-x-1 shadow-xs transition active:scale-95">
+
+                <span>🎙️</span>
+
+                <span>Uji Sebutan Saya</span>
+
+              </button>
+
+            </div>
+
+
+
+            <!-- Voice Feedback Area -->
+
+            <div id="mic-feedback-${idx}" class="hidden mt-2 p-2 rounded-xl text-xs font-semibold"></div>
+
+          </div>
+
+        `;
+
+        container.appendChild(row);
+
+      });
+
+    }
+
+
+
+    /* Pengecaman & Semakan Sebutan Suara (Speech Recognition) */
+
+    function startSpeechCheck(targetText, idx) {
+
+      playBeep('click');
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+
+
+      const feedbackEl = document.getElementById(`mic-feedback-${idx}`);
+
+      const micBtn = document.getElementById(`mic-btn-${idx}`);
+
+
+
+      if (!SpeechRecognition) {
+
+        feedbackEl.className = "block mt-2 p-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
+
+        feedbackEl.innerHTML = "⚠️ Pelayar peranti anda belum menyokong Web Speech Recognition secara langsung. Sila gunakan Google Chrome atau Safari terkini untuk fungsi mikrofon ini.";
+
+        return;
+
+      }
+
+
+
+      // If already running, abort
+
+      if (activeSpeechRecognizer) {
+
+        try { activeSpeechRecognizer.abort(); } catch (e) {}
+
+      }
+
+
+
+      const recognition = new SpeechRecognition();
+
+      activeSpeechRecognizer = recognition;
+
+      activeEvaluatingIndex = idx;
+
+
+
+      recognition.lang = 'zh-CN';
+
+      recognition.continuous = false;
+
+      recognition.interimResults = false;
+
+      recognition.maxAlternatives = 3;
+
+
+
+      // Status UI
+
+      micBtn.classList.add('animate-pulse', 'ring-2', 'ring-rose-400');
+
+      micBtn.innerHTML = `<span>🔴</span><span>Mendengar...</span>`;
+
+
+
+      feedbackEl.className = "block mt-2 p-2 rounded-xl bg-indigo-50 text-indigo-900 border border-indigo-200 text-xs flex items-center space-x-1.5";
+
+      feedbackEl.innerHTML = `
+
+        <span class="animate-spin text-sm">⏳</span>
+
+        <span>Sila sebut ayat ini dalam Mandarin sekarang...</span>
+
+      `;
+
+
+
+      recognition.onresult = (event) => {
+
+        const spoken = event.results[0][0].transcript.trim();
+
+        const cleanSpoken = spoken.replace(/[，。！？\s.,!?]/g, '');
+
+        const cleanTarget = targetText.replace(/[，。！？\s.,!?]/g, '');
+
+
+
+        const msgData = CHAT_SCENARIOS[currentScenarioId].messages[idx];
+
+        const tokens = msgData.tokens || [];
+
+
+
+        // Semak setiap suku kata Pinyin sama ada tepat disebut atau salah
+
+        const wrongTokens = [];
+
+        const tokenAnalysisHtml = tokens.map(tok => {
+
+          const isMatched = cleanSpoken.includes(tok.hz);
+
+          if (!isMatched) {
+
+            wrongTokens.push(tok);
+
+            return `
+
+              <button onclick="speakChinese('${tok.hz}')" class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-rose-100 hover:bg-rose-200 border-2 border-rose-500 shadow-xs transition active:scale-95 animate-pulse" title="Tekan untuk dengar Pinyin ${tok.py}">
+
+                <span class="text-xs font-black text-rose-950 font-sans tracking-tight">${tok.py}</span>
+
+                <span class="text-sm font-black font-hanzi text-rose-900 leading-none">${tok.hz}</span>
+
+                <span class="text-[9px] text-rose-700 font-bold mt-0.5">❌ Silap</span>
+
+              </button>
+
+            `;
+
+          } else {
+
+            return `
+
+              <span class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-emerald-50 border border-emerald-300 shadow-2xs">
+
+                <span class="text-xs font-black text-emerald-800 font-sans tracking-tight">${tok.py}</span>
+
+                <span class="text-sm font-black font-hanzi text-emerald-900 leading-none">${tok.hz}</span>
+
+                <span class="text-[9px] text-emerald-600 font-bold mt-0.5">✓ Betul</span>
+
+              </span>
+
+            `;
+
+          }
+
+        }).join('');
+
+
+
+        if (wrongTokens.length === 0) {
+
+          // 100% BETUL SEMUA PINYIN
+
+          playBeep('success');
+
+          totalXp += 25;
+
+          document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
+
+
+
+          feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-emerald-50 border border-emerald-300 text-xs shadow-xs animate-in fade-in duration-200";
+
+          feedbackEl.innerHTML = `
+
+            <div class="font-extrabold flex items-center space-x-1.5 text-emerald-800 mb-1.5">
+
+              <span>🎉</span>
+
+              <span>Sebutan Pinyin Sempurna (100% Tepat)!</span>
+
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 mb-2">${tokenAnalysisHtml}</div>
+
+            <div class="text-[11px] text-emerald-700">Dikesan suara: "<strong>${spoken}</strong>"</div>
+
+          `;
+
+
+
+          const passBadge = document.getElementById(`badge-pass-${idx}`);
+
+          if (passBadge) passBadge.classList.remove('hidden');
+
+
+
+        } else {
+
+          // ADA PINYIN YANG SALAH: HIGHLIGHT WARNA MERAH JELAS
+
+          playBeep('wrong');
+
+          const accuracyPct = Math.max(0, Math.round(((tokens.length - wrongTokens.length) / tokens.length) * 100));
+
+
+
+          feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-rose-50 border-2 border-rose-300 text-xs shadow-xs animate-in fade-in duration-200";
+
+          feedbackEl.innerHTML = `
+
+            <div class="flex items-center justify-between mb-1.5">
+
+              <span class="font-bold text-rose-900 flex items-center space-x-1">
+
+                <span>⚠️</span>
+
+                <span>Analisis Pinyin (${accuracyPct}% Tepat):</span>
+
+              </span>
+
+              <span class="text-[10px] font-bold text-rose-700 bg-rose-200/70 px-2 py-0.5 rounded-full border border-rose-300">
+
+                ${wrongTokens.length} Pinyin Perlu Dibaiki
+
+              </span>
+
+            </div>
+
+
+
+            <!-- Reben Suku Kata Pinyin (Hijau = Betul, Merah = Salah) -->
+
+            <div class="flex flex-wrap gap-1.5 my-2">
+
+              ${tokenAnalysisHtml}
+
+            </div>
+
+
+
+            <!-- Highlight Pinyin Yang Salah & Boleh Ditekan Untuk Dengar -->
+
+            <div class="bg-rose-100/90 border border-rose-300 rounded-xl p-2.5 text-[11px] text-rose-950 mt-1.5">
+
+              <strong>Pinyin Yang Dikesan Silap (Highlighted):</strong>
+
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+
+                ${wrongTokens.map(w => `
+
+                  <button onclick="speakChinese('${w.hz}')" class="px-2 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-black font-sans text-xs flex items-center space-x-1 shadow-xs transition active:scale-95" title="Tekan untuk dengar nada Pinyin ${w.py}">
+
+                    <span>${w.py}</span>
+
+                    <span class="font-hanzi font-normal opacity-90">(${w.hz})</span>
+
+                    <span class="text-[10px]">🔊</span>
+
+                  </button>
+
+                `).join('')}
+
+              </div>
+
+              <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul.</span>
+
+            </div>
+
+          `;
+
+        }
+
+      };
+
+
+
+      recognition.onerror = (event) => {
+
+        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
+
+        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
+
+
+
+        feedbackEl.className = "block mt-2 p-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
+
+        if (event.error === 'not-allowed') {
+
+          feedbackEl.innerText = "Sila benarkan akses mikrofon pelayar untuk membuat semakan sebutan.";
+
+        } else {
+
+          feedbackEl.innerText = "Tidak dapat mendengar suara dengan jelas. Sila cuba tekan dan sebut sekali lagi.";
+
+        }
+
+      };
+
+
+
+      recognition.onend = () => {
+
+        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
+
+        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
+
+      };
+
+
+
+      try {
+
+        recognition.start();
+
+      } catch (err) {
+
+        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
+
+        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
+
+      }
+
+    }
+
+
+
+    function playFullChatAudio() {
+
+      const messages = CHAT_SCENARIOS[currentScenarioId].messages;
+
+      let i = 0;
+
+      function next() {
+
+        if (i < messages.length) {
+
+          speakChinese(messages[i].hz);
+
+          i++;
+
+          setTimeout(next, 3200);
+
+        }
+
+      }
+
+      next();
+
+    }
+
+
+
+    /* ========== 7. KAMUS DRAWER ========== */
+
+    function openVocabDrawer() {
+
+      playBeep('click');
+
+      document.getElementById('vocab-drawer').classList.remove('hidden');
+
+      renderDrawerList(FULL_VOCAB);
+
+    }
+
+
+
+    function closeVocabDrawer() {
+
+      playBeep('click');
+
+      document.getElementById('vocab-drawer').classList.add('hidden');
+
+    }
+
+
+
+    function renderDrawerList(items) {
+
+      const container = document.getElementById('drawer-vocab-list');
+
+      container.innerHTML = '';
+
+
+
+      items.forEach((v, idx) => {
+
+        const item = document.createElement('div');
+
+        item.className = "bg-slate-50 hover:bg-indigo-50 border border-slate-200/80 p-2.5 rounded-xl flex items-center justify-between cursor-pointer transition";
+
+        item.onclick = () => speakChinese(v.hz);
+
+
+
+        item.innerHTML = `
+
+          <div class="flex items-center space-x-3">
+
+            <span class="w-5 text-[11px] font-bold text-slate-400 text-center">${idx + 1}</span>
+
+            <div>
+
+              <div class="flex items-baseline space-x-2">
+
+                <span class="text-lg font-black text-slate-900 font-hanzi">${v.hz}</span>
+
+                <span class="text-xs font-bold text-indigo-600 font-sans">${v.py}</span>
+
+              </div>
+
+              <div class="text-[11px] text-slate-500 font-medium">
+
+                ${v.my} <span class="text-[9px] bg-white px-1.5 py-0.2 rounded border text-slate-400 ml-1">${v.type}</span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <button class="text-xs bg-white border border-slate-200 text-indigo-600 px-2.5 py-1 rounded-lg font-bold hover:bg-indigo-100">
+
+            🔊 Sebut
+
+          </button>
+
+        `;
+
+        container.appendChild(item);
+
+      });
+
+    }
+
+
+
+    function filterDrawerVocab() {
+
+      const query = document.getElementById('drawer-search').value.toLowerCase().trim();
+
+      const filtered = FULL_VOCAB.filter(v => 
+
+        v.hz.includes(query) || 
+
+        v.py.toLowerCase().includes(query) || 
+
+        v.my.toLowerCase().includes(query)
+
+      );
+
+      renderDrawerList(filtered);
+
+    }
+
+
+
+    /* ========== 8. INIT ========== */
+
+    window.addEventListener('DOMContentLoaded', () => {
+
+      loadVocabQuestion();
+
+    });
+
+  </script>
+
+  <!-- WATERMARK (BOTTOM LEFT - AS REQUESTED) -->
+
+  <div class="fixed bottom-2.5 left-3 z-50 pointer-events-none select-none text-[11px] font-bold text-slate-600/80 bg-white/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-slate-200/80 shadow-xs flex items-center space-x-1.5">
+
+    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block"></span>
+
+    <span>Hajar Nur Atiqah Binti Mohd Adam</span>
+
+  </div>
+
+
+
+</body>
+
+</html>
+

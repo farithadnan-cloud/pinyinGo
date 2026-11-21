@@ -1,55 +1,57 @@
-# 📱 PinyinGo - Topik 4: Di Pejabat (在办公室)
+# 📱 PinyinGo - Portal Pembelajaran Bahasa Mandarin Kolej Vokasional (ELM 4322)
 
-Aplikasi web interaktif pembelajaran Bahasa Mandarin berasaskan **Modul ELM 4322 Kolej Vokasional (Topik 4: Di Pejabat)**.
-
----
-
-## 🌟 Ciri-Ciri Utama Aplikasi
-
-1. **Responsif Untuk Semua Peranti:**
-   - Sesuai untuk telefon pintar (Android & iPhone), tablet (iPad), Chromebook, dan PC/Laptop.
-2. **Audio Sebutan Asli (Text-to-Speech Mandarin):**
-   - Setiap perkataan Hanyu Pinyin dan dialog mempunyai butang audio sebutan jelas.
-   - Boleh laras kelajuan suara (0.75x, 0.9x, 1.1x).
-3. **Kad Kosa Kata Interaktif (23 Perkataan Lengkap):**
-   - Lengkap dengan Hanzi, Pinyin bertanda nada, jenis kata, dan terjemahan Bahasa Melayu.
-   - Penapis kategori (Kedudukan/Arah, Alatan Pejabat, Orang & Kata Kerja).
-4. **Formula Tatabahasa & Permainan Susun Ayat (Sentence Builder):**
-   - Formula kedudukan (`Kata Nama + 在 + 哪儿？` & `Objek + 在 + Rujukan + Kedudukan`).
-   - Formula kehadiran (`在吗？` & `在 / 不在`).
-   - Permainan interaktif susun kad perkataan menjadi ayat lengkap.
-5. **Simulasi Dialog Pejabat Berlakon Suara:**
-   - Dialog 1: *Pekerja Baru (新的职员)*
-   - Dialog 2: *Pengurus Wang Ada? (王经理在吗？)*
-   - Boleh mainkan satu per satu atau mainkan keseluruhan dialog (*autoplay*).
-6. **Aktiviti Terokai Peta Meja Pejabat:**
-   - Visual interaktif meja pejabat di mana pelajar boleh menekan setiap alatan (komputer, printer, fail, jam, kerusi) untuk melihat kedudukan dan ayat contoh.
-7. **3 Mod Kuiz & Latihan Interaktif:**
-   - 🎧 **Latihan Mendengar (听力):** Guru maya menyebut soalan mengikut skema Panduan Guru modul.
-   - 👀 **Latihan Membaca & Gambar (阅读):** Padanan alatan dan situasi.
-   - ✍️ **Latihan Ejaan Pinyin (书写):** Lengkapkan fonem awal/akhir dan nada.
-   - Dilengkapi sistem skor bintang (`localStorage`).
-8. **7 Etika Kerja Masyarakat Cina:**
-   - Infografik nilai murni & budaya kerja berintegriti di pejabat.
+Aplikasi web interaktif pembelajaran Bahasa Mandarin merangkumi kesemua **7 Topik Rasmi Modul ELM 4322 Kolej Vokasional**, dibangunkan khas untuk kemudahan guru dan pelajar di telefon pintar, tablet, dan komputer.
 
 ---
 
-## 🚀 Cara 'Deploy' ke Netlify (Percuma & Hanya 1 Minit)
+## 🌟 7 Topik Pembelajaran Lengkap
 
-### Kaedah 1: Cara Paling Mudah (Netlify Drop - Tanpa Coding)
-1. Pergi ke laman web **[app.netlify.com/drop](https://app.netlify.com/drop)** (daftar akaun percuma jika belum ada).
-2. Buka folder `PinyinGo` di komputer anda:
-   `C:\Users\Precision 3630\Documents\antigravity\PinyinGo`
-3. **Tarik (Drag & Drop)** keseluruhan folder `PinyinGo` ini ke dalam kotak muat naik di skrin Netlify.
-4. Siap! Dalam 5 saat, Netlify akan berikan anda pautan web rasmi (contohnya: `https://pinyingo-topik4.netlify.app`).
-5. Kongsikan link tersebut ke group WhatsApp / Telegram pelajar anda. Pelajar boleh terus buka dari telefon masing-masing tanpa perlu muat turun sebarang perisian.
+Setiap topik dibina dalam halaman web berasingan yang boleh diakses terus melalui Portal Utama (`index.html`):
 
-### Kaedah 2: Hubungkan dengan GitHub (Automatik Update)
-1. Muat naik folder ini ke repositori GitHub anda.
-2. Di Dashboard Netlify, tekan **"Add new site"** -> **"Import an existing project"** -> pilih repositori GitHub anda.
-3. Setiap kali anda kemaskini fail, Netlify akan automatik kemaskini laman web pelajar.
+1. **Topik 1: Membeli Makanan (买食物 Mǎi shíwù)** (`topik1.html`)
+   - Buah-buahan, makanan harian, pesanan restoran, dan sebutan harga dalam Ringgit Malaysia (令吉).
+2. **Topik 2: Membeli Pakaian (买服装 Mǎi fúzhuāng)** (`topik2.html`)
+   - Pakaian, saiz baju (大号, 中号, 小号), warna, penjodoh bilangan (件, 条, 双), dan diskaun.
+3. **Topik 3: Hobi Saya (我的爱好 Wǒ de àihào)** (`topik3.html`)
+   - Aktiviti sukan (badminton, bola sepak, takraw, renang), membaca, melukis, menyanyi, dan melayari internet.
+4. **Topik 4: Di Pejabat (在办公室 Zài bàngōngshì)** (`topik4.html`)
+   - Kedudukan alatan pejabat (atas, bawah, depan, belakang), rakan sekerja, telefon, mesin fotostat, dan pengurus.
+5. **Topik 5: Nama Tempat (地名 Dìmíng)** (`topik5.html`)
+   - Nama negeri di Malaysia, ibu negeri, balai polis, balai bomba, hospital, pejabat pos, sekolah, dan bank.
+6. **Topik 6: Kenderaan Awam & Arah (公共交通 Gōnggòng jiāotōng)** (`topik6.html`)
+   - Pengangkutan awam (bas, teksi, keretapi, LRT/MRT, kapal terbang), Menara Berkembar Petronas (KLCC), dan tunjuk arah (belok kiri, kanan, jalan terus).
+7. **Topik 7: Temuduga Kerjaya (面试 Miànshì)** (`topik7.html`)
+   - Pengenalan diri profesional, resume / CV, pengalaman latihan industri (praktikal), kelebihan diri, dan etika temuduga.
+
+---
+
+## 💎 Ciri-Ciri Khas Mengikut Kehendak Modul & Pelajar
+
+1. **20 Soalan Unik Bina Kata (/20):**
+   - Setiap topik mengandungi 20 soalan cabaran kosa kata tanpa ulangan soalan yang sama.
+   - Dilengkapi Hanzi, Pinyin bertanda nada, dan butang audio sebutan jelas.
+2. **Pola Ayat Rawak (Scrambled Sentence Builder):**
+   - Kad-kad jawapan disusun secara rawak (*Fisher-Yates shuffle*) bagi menguji kefahaman struktur tatabahasa pelajar yang sebenar.
+3. **Simulasi Chat & Semakan Sebutan Suara Pengguna (Web Speech Recognition):**
+   - Pelajar boleh menekan ikon mikrofon 🎤 dan menyebut ayat dalam Bahasa Mandarin standard (`zh-CN`).
+   - Sistem menganalisis sebutan suku kata demi suku kata secara langsung:
+     - 🟢 **Hijau**: Suku kata yang tepat disebut.
+     - 🔴 **Merah (High-Contrast Red Badge)**: Suku kata Pinyin yang salah atau tertinggal ditonjolkan dengan jelas. Pelajar boleh menekan badge merah tersebut untuk mendengar semula sebutan yang betul!
+4. **Kamus Kosa Kata Interaktif:**
+   - Senarai penuh kosa kata setiap topik lengkap dengan fungsi carian pantas dan butang sebutan suara (*Text-to-Speech*).
+5. **Watermark Guru / Pereka:**
+   - Watermark rasmi `Hajar Nur Atiqah Binti Mohd Adam` dipaparkan pada sudut bawah kiri (*bottom left*) setiap halaman HTML.
+
+---
+
+## 🚀 Cara 'Deploy' ke Netlify
+
+1. Sambungkan repositori GitHub `farithadnan-cloud/pinyinGo` terus ke akaun Netlify anda.
+2. Tetapan *Publish directory*: `.` (folder akar).
+3. Setiap kemas kini yang ditolak (*push*) ke GitHub akan automatik dikemas kini ke laman sesawang pelajar secara langsung.
 
 ---
 
 ## 💻 Cara Uji Secara Tempatan (Local Test)
-- Cukup sekadar **klik dua kali (double click) fail `index.html`** untuk membukanya di pelayar Google Chrome, Edge, atau Safari.
+
+- Buka fail `index.html` menggunakan pelayar web (Google Chrome, Microsoft Edge, atau Safari).
