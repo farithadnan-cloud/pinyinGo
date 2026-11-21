@@ -989,6 +989,16 @@
       }
     }
 
+    /* Helper Shuffle Array */
+    function shuffleArray(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
     /* ========== 4. VIEW 1: BINA KATA (HANZI, PINYIN & AUDIO) ========== */
     function loadVocabQuestion() {
       if (currentVocabQIdx >= VOCAB_20_QUESTIONS.length) {
@@ -1027,8 +1037,8 @@
       // Hide Feedback
       document.getElementById('action-feedback-box').className = "hidden mb-3 p-3.5 rounded-2xl border transition";
 
-      // Render 4 Options with Hanzi & Pinyin
-      renderVocabOptions(q.options);
+      // Render 4 Options (Rawak / Shuffled)
+      renderVocabOptions(shuffleArray(q.options));
 
       // Play audio of the first character automatically
       setTimeout(() => speakChinese(q.char1), 250);
@@ -1241,15 +1251,18 @@
       location.reload();
     }
 
-    /* ========== 5. VIEW 2: SUSUN AYAT (HANZI + PINYIN + AUDIO) ========== */
+    /* ========== 5. VIEW 2: SUSUN AYAT (HANZI + PINYIN + AUDIO - JAWAPAN RAWAK) ========== */
     let sentenceIndex = 0;
     let selectedSentenceTokens = [];
     let isSentenceChecked = false;
+    let currentShuffledSentencePool = [];
 
     function loadSentenceChallenge() {
       const q = SENTENCE_CHALLENGES[sentenceIndex];
       selectedSentenceTokens = [];
       isSentenceChecked = false;
+      // Rawakkan susunan blok perkataan supaya TIDAK mengikut susunan jawapan
+      currentShuffledSentencePool = shuffleArray(q.pool);
 
       document.getElementById('level-title-sentence').innerText = `Ayat ${sentenceIndex + 1} / ${SENTENCE_CHALLENGES.length}`;
       const pct = Math.round(((sentenceIndex + 1) / SENTENCE_CHALLENGES.length) * 100);
@@ -1264,18 +1277,17 @@
     }
 
     function renderSentenceChips() {
-      const q = SENTENCE_CHALLENGES[sentenceIndex];
       const dropzone = document.getElementById('sentence-dropzone');
       const pool = document.getElementById('sentence-pool-chips');
 
-      // Dropzone items
+      // Dropzone items (blok yang telah dipilih pelajar)
       dropzone.innerHTML = '';
       if (selectedSentenceTokens.length === 0) {
-        dropzone.innerHTML = `<span class="text-xs text-slate-400 italic" id="sentence-placeholder">Pilih blok perkataan di bawah mengikut urutan...</span>`;
+        dropzone.innerHTML = `<span class="text-xs text-slate-400 italic" id="sentence-placeholder">Pilih blok perkataan rawak di bawah mengikut urutan...</span>`;
       } else {
         selectedSentenceTokens.forEach((item, idx) => {
           const chip = document.createElement('button');
-          chip.className = "px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5";
+          chip.className = "px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5 animate-in fade-in duration-150";
           chip.innerHTML = `
             <div class="text-left">
               <span class="block text-[9px] text-indigo-200">${item.py}</span>
@@ -1288,9 +1300,9 @@
         });
       }
 
-      // Pool items
+      // Pool items (pilihan blok perkataan yang telah dirawakkan)
       pool.innerHTML = '';
-      const available = [...q.pool];
+      const available = [...currentShuffledSentencePool];
       selectedSentenceTokens.forEach(t => {
         const found = available.findIndex(a => a.hz === t.hz);
         if (found !== -1) available.splice(found, 1);
@@ -1298,7 +1310,7 @@
 
       available.forEach(item => {
         const btn = document.createElement('button');
-        btn.className = "glass-card hover:bg-indigo-50 border border-slate-200 hover:border-indigo-400 px-3.5 py-2 rounded-xl text-slate-800 transition active:scale-95 text-center";
+        btn.className = "glass-card hover:bg-indigo-50 border border-slate-200 hover:border-indigo-400 px-3.5 py-2 rounded-xl text-slate-800 transition active:scale-95 text-center shadow-xs";
         btn.innerHTML = `
           <span class="block text-[10px] font-bold text-indigo-500">${item.py}</span>
           <span class="block text-base font-black font-hanzi text-slate-900">${item.hz}</span>
