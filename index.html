@@ -1405,8 +1405,10 @@
       }
     }
 
-    /* ========== 6. VIEW 3: SIMULASI CHAT ========== */
+    /* ========== 6. VIEW 3: SIMULASI CHAT & SEMAKAN SEBUTAN SUARA ========== */
     let currentScenarioId = 1;
+    let activeSpeechRecognizer = null;
+    let activeEvaluatingIndex = null;
 
     function loadChatScenario(id) {
       playBeep('click');
@@ -1428,26 +1430,155 @@
       const container = document.getElementById('chat-messages-container');
       container.innerHTML = '';
 
-      data.messages.forEach(msg => {
+      data.messages.forEach((msg, idx) => {
         const row = document.createElement('div');
-        row.className = `flex flex-col ${msg.isMe ? 'items-end' : 'items-start'}`;
+        row.className = `flex flex-col ${msg.isMe ? 'items-end' : 'items-start'} mb-1`;
 
         row.innerHTML = `
-          <div class="text-[10px] font-bold text-slate-400 mb-1 px-1">${msg.sender}</div>
-          <div onclick="speakChinese('${msg.hz}')" class="max-w-[85%] rounded-2xl p-3.5 cursor-pointer transition transform active:scale-98 shadow-xs ${
+          <div class="text-[10px] font-bold text-slate-400 mb-1 px-1 flex items-center space-x-1">
+            <span>${msg.sender}</span>
+            <span id="badge-pass-${idx}" class="hidden text-[9px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.2 rounded-full border border-emerald-300">
+              ✅ Lulus Sebutan
+            </span>
+          </div>
+
+          <div class="max-w-[92%] sm:max-w-[85%] rounded-2xl p-3.5 transition shadow-xs border ${
             msg.isMe
-              ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-br-none'
-              : 'bg-white border border-slate-200 text-slate-900 rounded-bl-none'
+              ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-br-none border-indigo-500'
+              : 'bg-white border-slate-200 text-slate-900 rounded-bl-none'
           }">
-            <div class="text-base font-black font-hanzi leading-snug">${msg.hz}</div>
-            <div class="text-xs ${msg.isMe ? 'text-indigo-200' : 'text-indigo-600'} font-semibold mt-1">${msg.py}</div>
+            <!-- Hanzi & Pinyin -->
+            <div class="text-base sm:text-lg font-black font-hanzi leading-snug">${msg.hz}</div>
+            <div class="text-xs ${msg.isMe ? 'text-indigo-200' : 'text-indigo-600'} font-semibold mt-0.5">${msg.py}</div>
             <div class="text-[11px] ${msg.isMe ? 'text-indigo-100/90' : 'text-slate-500'} mt-1 pt-1 border-t ${msg.isMe ? 'border-indigo-400/30' : 'border-slate-100'}">
               ${msg.my}
             </div>
+
+            <!-- Action Controls: Dengar Audio & Semak Sebutan Suara -->
+            <div class="mt-2.5 pt-2 border-t ${msg.isMe ? 'border-indigo-400/40' : 'border-slate-100'} flex items-center justify-between gap-2">
+              <button onclick="speakChinese('${msg.hz}')" class="px-2.5 py-1 rounded-xl ${msg.isMe ? 'bg-indigo-800/80 hover:bg-indigo-900 text-indigo-100' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'} text-[11px] font-bold flex items-center space-x-1 transition active:scale-95">
+                <span>🔊</span>
+                <span>Dengar</span>
+              </button>
+
+              <button id="mic-btn-${idx}" onclick="startSpeechCheck('${msg.hz}', ${idx})" class="px-3 py-1 rounded-xl ${msg.isMe ? 'bg-white text-indigo-800 hover:bg-indigo-50' : 'bg-indigo-600 hover:bg-indigo-700 text-white'} text-[11px] font-extrabold flex items-center space-x-1 shadow-xs transition active:scale-95">
+                <span>🎙️</span>
+                <span>Uji Sebutan Saya</span>
+              </button>
+            </div>
+
+            <!-- Voice Feedback Area -->
+            <div id="mic-feedback-${idx}" class="hidden mt-2 p-2 rounded-xl text-xs font-semibold"></div>
           </div>
         `;
         container.appendChild(row);
       });
+    }
+
+    /* Pengecaman & Semakan Sebutan Suara (Speech Recognition) */
+    function startSpeechCheck(targetText, idx) {
+      playBeep('click');
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      const feedbackEl = document.getElementById(`mic-feedback-${idx}`);
+      const micBtn = document.getElementById(`mic-btn-${idx}`);
+
+      if (!SpeechRecognition) {
+        feedbackEl.className = "block mt-2 p-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
+        feedbackEl.innerHTML = "⚠️ Pelayar peranti anda belum menyokong Web Speech Recognition secara langsung. Sila gunakan Google Chrome atau Safari terkini untuk fungsi mikrofon ini.";
+        return;
+      }
+
+      // If already running, abort
+      if (activeSpeechRecognizer) {
+        try { activeSpeechRecognizer.abort(); } catch (e) {}
+      }
+
+      const recognition = new SpeechRecognition();
+      activeSpeechRecognizer = recognition;
+      activeEvaluatingIndex = idx;
+
+      recognition.lang = 'zh-CN';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 3;
+
+      // Status UI
+      micBtn.classList.add('animate-pulse', 'ring-2', 'ring-rose-400');
+      micBtn.innerHTML = `<span>🔴</span><span>Mendengar...</span>`;
+
+      feedbackEl.className = "block mt-2 p-2 rounded-xl bg-indigo-50 text-indigo-900 border border-indigo-200 text-xs flex items-center space-x-1.5";
+      feedbackEl.innerHTML = `
+        <span class="animate-spin text-sm">⏳</span>
+        <span>Sila sebut ayat ini dalam Mandarin sekarang...</span>
+      `;
+
+      recognition.onresult = (event) => {
+        const spoken = event.results[0][0].transcript.trim();
+        const cleanSpoken = spoken.replace(/[，。！？\s.,!?]/g, '');
+        const cleanTarget = targetText.replace(/[，。！？\s.,!?]/g, '');
+
+        // Evaluate Similarity
+        let isCorrect = cleanSpoken === cleanTarget;
+        let isClose = cleanSpoken.includes(cleanTarget) || cleanTarget.includes(cleanSpoken);
+
+        if (isCorrect || (cleanSpoken.length > 0 && isClose && cleanSpoken.length >= cleanTarget.length * 0.7)) {
+          // SEBUTAN BETUL / TEPAT
+          playBeep('success');
+          totalXp += 25;
+          document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
+
+          feedbackEl.className = "block mt-2 p-2 rounded-xl bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs";
+          feedbackEl.innerHTML = `
+            <div class="font-extrabold flex items-center space-x-1 text-emerald-800">
+              <span>🎉</span>
+              <span>Sebutan Anda Sangat Tepat! (100%)</span>
+            </div>
+            <div class="text-[11px] text-emerald-700 mt-0.5">Dikesan: "<strong>${spoken}</strong>"</div>
+          `;
+
+          // Show Pass Badge
+          const passBadge = document.getElementById(`badge-pass-${idx}`);
+          if (passBadge) passBadge.classList.remove('hidden');
+
+        } else {
+          // SEBUTAN KURANG TEPAT
+          playBeep('wrong');
+          feedbackEl.className = "block mt-2 p-2 rounded-xl bg-rose-50 text-rose-900 border border-rose-200 text-xs";
+          feedbackEl.innerHTML = `
+            <div class="font-bold flex items-center space-x-1 text-rose-700">
+              <span>🤔</span>
+              <span>Sebutan Kurang Tepat, Cuba Lagi!</span>
+            </div>
+            <div class="text-[11px] text-slate-600 mt-0.5">Dikesan: "<span class="text-rose-600 font-bold">${spoken}</span>"</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">Sasaran: "<strong class="font-hanzi">${targetText}</strong>"</div>
+          `;
+        }
+      };
+
+      recognition.onerror = (event) => {
+        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
+        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
+
+        feedbackEl.className = "block mt-2 p-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
+        if (event.error === 'not-allowed') {
+          feedbackEl.innerText = "Sila benarkan akses mikrofon pelayar untuk membuat semakan sebutan.";
+        } else {
+          feedbackEl.innerText = "Tidak dapat mendengar suara dengan jelas. Sila cuba tekan dan sebut sekali lagi.";
+        }
+      };
+
+      recognition.onend = () => {
+        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
+        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
+      };
+
+      try {
+        recognition.start();
+      } catch (err) {
+        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
+        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
+      }
     }
 
     function playFullChatAudio() {
