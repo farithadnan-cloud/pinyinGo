@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>PinyinGo Pejabat - Modul Bahasa Mandarin Topik 4</title>
+  <title>PinyinGo Pejabat - Hanzi, Pinyin & Audio Topik 4</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Outfit, Plus Jakarta Sans, Noto Sans SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Noto+Sans+SC:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Noto+Sans+SC:wght@500;700;800;900&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -28,7 +28,7 @@
               700: '#4338ca',
             },
             accentCyan: '#06b6d4',
-            accentAmber: '#f59e0b',
+            accentEmerald: '#10b981',
           }
         }
       }
@@ -47,28 +47,40 @@
     .font-hanzi {
       font-family: 'Noto Sans SC', sans-serif;
     }
-    /* Modern Glass Card */
+    /* Ruby Pinyin styling */
+    ruby {
+      ruby-align: center;
+      ruby-position: over;
+    }
+    rt {
+      font-size: 0.58em;
+      font-weight: 700;
+      color: #4f46e5;
+      letter-spacing: 0.5px;
+      transform: translateY(-2px);
+    }
+    /* Glass card modern styling */
     .glass-card {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(14px);
       border: 1px solid rgba(226, 232, 240, 0.9);
       box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
     }
-    /* Option Cards with Modern Micro-interaction */
+    /* Option Tiles */
     .option-tile {
       transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .option-tile:hover {
       transform: translateY(-2px);
       border-color: #6366f1;
-      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.15);
+      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.18);
     }
     .option-tile:active, .option-tile.selected {
       transform: scale(0.97);
       border-color: #4f46e5;
       background-color: #f5f3ff;
     }
-    /* Modern Gradient Action Buttons */
+    /* Buttons */
     .btn-gradient-primary {
       background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
       box-shadow: 0 6px 18px -3px rgba(79, 70, 229, 0.35);
@@ -85,7 +97,14 @@
     .btn-gradient-success:active {
       transform: scale(0.98);
     }
-    /* Scrollbars */
+    /* Audio Wave Animation */
+    @keyframes wave-bar {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+    .wave-anim {
+      animation: wave-bar 0.8s ease-in-out infinite;
+    }
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -97,11 +116,11 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
 
-  <!-- ==================== TOP NAVIGATION HEADER ==================== -->
+  <!-- ==================== HEADER ==================== -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
     <div class="max-w-md sm:max-w-xl mx-auto px-4 py-2.5 flex items-center justify-between">
       
-      <!-- Brand & Module Badge -->
+      <!-- Brand & Title -->
       <div class="flex items-center space-x-2.5">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white font-black text-lg shadow-md shadow-indigo-500/25">
           办
@@ -111,33 +130,24 @@
             <h1 class="font-outfit font-black text-base text-slate-900 tracking-tight">PinyinGo</h1>
             <span class="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">Topik 4</span>
           </div>
-          <p class="text-[11px] text-slate-400 font-semibold leading-tight">Di Pejabat • 在办公室</p>
+          <p class="text-[11px] text-slate-400 font-semibold leading-tight">Di Pejabat • 在办公室 (zài bàn gōng shì)</p>
         </div>
       </div>
 
-      <!-- Streak & Controls -->
+      <!-- Controls: Audio Speed & Drawer -->
       <div class="flex items-center space-x-2">
-        <!-- Streak / XP badge -->
-        <div class="flex items-center space-x-1 bg-amber-50 border border-amber-200/80 px-2.5 py-1 rounded-full text-xs font-bold text-amber-900">
-          <span>🔥</span>
-          <span id="streak-counter">0 Streak</span>
-        </div>
-
-        <!-- Audio Speed Controller -->
-        <button onclick="toggleAudioSpeed()" class="h-8 px-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center space-x-1 text-xs font-bold transition" title="Laras Kelajuan Sebutan Mandarin">
+        <button onclick="toggleAudioSpeed()" class="h-8 px-2.5 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/60 flex items-center space-x-1 text-xs font-bold transition" title="Laras Kelajuan Suara Mandarin">
           <span>🔊</span>
           <span id="speed-badge">1.0x</span>
         </button>
-
-        <!-- Vocab Drawer Button -->
-        <button onclick="openVocabDrawer()" class="w-8 h-8 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold transition" title="Kamus 23 Kosa Kata">
+        <button onclick="openVocabDrawer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center text-sm font-bold transition" title="Kamus 23 Kosa Kata">
           📖
         </button>
       </div>
 
     </div>
 
-    <!-- SUB-NAV: 3 DISTINCT GAMEPLAY MODES -->
+    <!-- SUB-NAV: 3 TABS -->
     <div class="max-w-md sm:max-w-xl mx-auto px-4 pb-2">
       <div class="bg-slate-100/90 p-1 rounded-2xl flex text-xs font-extrabold text-slate-500 gap-1">
         <button onclick="switchAppMode('vocabChallenge')" id="nav-mode-vocab" class="flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold">
@@ -156,70 +166,88 @@
     </div>
   </header>
 
-  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <!-- ==================== MAIN CONTENT ==================== -->
   <main class="w-full max-w-md sm:max-w-xl mx-auto px-4 py-3 flex-grow flex flex-col justify-between">
 
-    <!-- ==================== VIEW 1: BINA KATA 20 SOALAN (TANPA ULANGAN) ==================== -->
+    <!-- ==================== VIEW 1: CABARAN 20 SOALAN (HANZI + PINYIN + AUDIO) ==================== -->
     <div id="view-vocab-challenge" class="app-view flex flex-col justify-between flex-grow">
       
       <div>
-        <!-- Top Status: Level Progress /20 -->
+        <!-- Top Status Bar: Soalan /20 -->
         <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1.5 px-0.5">
           <div class="flex items-center space-x-1.5">
-            <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-pulse"></span>
             <span id="level-title-vocab" class="text-indigo-700 font-extrabold text-sm">Soalan 1 / 20</span>
           </div>
-          <span id="xp-counter" class="text-emerald-600 font-extrabold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">+0 XP</span>
+          <div class="flex items-center space-x-1 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-full text-xs font-bold text-amber-900">
+            <span>🔥</span>
+            <span id="streak-counter">0 Streak</span>
+            <span class="text-slate-300">|</span>
+            <span id="xp-counter" class="text-emerald-700 font-extrabold">+0 XP</span>
+          </div>
         </div>
 
-        <!-- Progress Bar -->
+        <!-- Progress Bar (1 to 20) -->
         <div class="w-full h-2.5 bg-slate-200/80 rounded-full overflow-hidden p-0.5 mb-4">
-          <div id="progress-bar-vocab" class="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full transition-all duration-300" style="width: 5%;"></div>
+          <div id="progress-bar-vocab" class="h-full bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-400 rounded-full transition-all duration-300" style="width: 5%;"></div>
         </div>
 
         <!-- Question Card -->
         <div class="glass-card rounded-3xl p-5 mb-4 text-center relative overflow-hidden" id="hero-question-card">
-          <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold mb-1.5">
-            <span>🎯</span>
-            <span id="hero-badge">Cantumkan Pasangan Aksara:</span>
+          
+          <!-- Audio Speaker Button & Prompt Header -->
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold inline-flex items-center space-x-1">
+              <span>🎯</span>
+              <span>Bina Kata Hanzi & Pinyin</span>
+            </span>
+
+            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
+              <span>🔊</span>
+              <span>Dengar Audio</span>
+            </button>
           </div>
 
-          <!-- Prompt Question (Bahasa Melayu) -->
-          <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Maksud Perkataan Pejabat:</div>
+          <!-- Malay Meaning Prompt -->
+          <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mt-1">Maksud Bahasa Melayu:</div>
           <h2 class="text-xl sm:text-2xl font-outfit font-black text-slate-900 mt-0.5 mb-4" id="hero-target-meaning">
             "pekerja / staf"
           </h2>
 
-          <!-- Interactive Character Fusion Capsules -->
-          <div class="flex items-center justify-center gap-3 py-1">
+          <!-- Interactive Character Capsule Arena -->
+          <div class="flex items-center justify-center gap-2.5 sm:gap-3 py-1">
             
-            <!-- Capsule 1: First Part (Click to listen) -->
-            <button onclick="speakCurrentPart(1)" class="group w-24 h-28 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95">
-              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
-              <span class="text-xs font-extrabold text-indigo-500 mt-1" id="capsule-pinyin1">zhí</span>
-              <span class="text-[9px] text-slate-400 mt-0.5">🔊 Dengar</span>
+            <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
+            <button onclick="speakCurrentPart(1)" class="group w-24 h-28 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
+              <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
+              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
+                <span>🔊</span>
+                <span>Dengar</span>
+              </span>
             </button>
 
-            <!-- Connector Bubble -->
-            <div class="w-8 h-8 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-600 font-black text-xs flex items-center justify-center shadow-xs">
+            <!-- Plus Sign Bubble -->
+            <div class="w-8 h-8 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-600 font-black text-sm flex items-center justify-center shadow-xs">
               +
             </div>
 
-            <!-- Capsule 2: Target Slot -->
+            <!-- Capsule 2: Target Slot (Dashed / Active) -->
             <div id="target-slot-capsule" onclick="clearSlot()" class="w-24 h-28 sm:w-28 sm:h-32 bg-slate-50/90 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center shadow-inner cursor-pointer transition">
-              <span class="text-3xl sm:text-4xl font-black text-slate-300 font-sans" id="capsule-slot-char">?</span>
-              <span class="text-xs font-bold text-slate-400 mt-1" id="capsule-slot-pinyin">pilih kad</span>
+              <span class="text-xs font-bold text-slate-400 font-sans" id="capsule-slot-pinyin">pilih pinyin</span>
+              <span class="text-3xl sm:text-4xl font-black text-slate-300 font-hanzi mt-0.5" id="capsule-slot-char">?</span>
+              <span class="text-[10px] text-slate-400 mt-1">tekan kad</span>
             </div>
 
           </div>
 
-          <!-- Real-time Preview Chip -->
+          <!-- Bottom Real-time Preview Pill -->
           <div id="solution-preview-chip" class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-center space-x-2 text-xs font-semibold text-slate-400">
-            <span>Tekan kad pilihan di bawah untuk melengkapkan perkataan.</span>
+            <span>Pilih kad aksara di bawah yang mempunyai Hanzi & Pinyin yang betul.</span>
           </div>
         </div>
 
-        <!-- Options: 4 Interactive Floating Tiles -->
+        <!-- Options: 4 Interactive Tiles with Hanzi, Pinyin & Individual Audio -->
         <div class="grid grid-cols-2 gap-3 mb-4" id="vocab-options-grid">
           <!-- Populated by JS -->
         </div>
@@ -227,18 +255,19 @@
 
       <!-- Action Button Area -->
       <div>
-        <!-- Feedback Callout -->
+        <!-- Feedback Banner -->
         <div id="action-feedback-box" class="hidden mb-3 p-3.5 rounded-2xl border transition">
           <div class="flex items-start space-x-2.5">
             <span class="text-2xl" id="feedback-status-icon">🎉</span>
             <div class="flex-grow text-xs leading-relaxed">
               <div class="font-bold text-sm" id="feedback-status-title">Hebat! Tepat Sekali</div>
-              <p class="text-slate-600 mt-0.5" id="feedback-status-body">
-                <strong>职员 (zhí yuán)</strong> merujuk kepada staf/pekerja di pejabat.
-              </p>
+              <div class="mt-0.5" id="feedback-status-body">
+                <!-- Hanzi, Pinyin, Malay meaning -->
+              </div>
             </div>
-            <button onclick="speakFullWord()" class="px-2.5 py-1 bg-white rounded-lg border border-slate-200 text-indigo-700 font-bold text-[11px] hover:bg-indigo-50 shadow-xs">
-              🔊 Ulang
+            <button onclick="speakFullWord()" class="px-2.5 py-1.5 bg-white rounded-xl border border-slate-200 text-indigo-700 font-bold text-xs hover:bg-indigo-50 shadow-xs flex items-center space-x-1">
+              <span>🔊</span>
+              <span>Sebut</span>
             </button>
           </div>
         </div>
@@ -251,7 +280,7 @@
 
     </div>
 
-    <!-- ==================== VIEW 2: POLA AYAT KEDUDUKAN ==================== -->
+    <!-- ==================== VIEW 2: POLA AYAT (HANZI + PINYIN + AUDIO) ==================== -->
     <div id="view-sentence-challenge" class="app-view hidden flex flex-col justify-between flex-grow">
       <div>
         <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1.5 px-0.5">
@@ -265,14 +294,14 @@
         <!-- Prompt Card -->
         <div class="glass-card rounded-3xl p-5 mb-4 text-center">
           <div class="inline-block px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold mb-1.5">
-            Susun Ayat Mandarin:
+            Susun Ayat Mandarin (Hanzi + Pinyin):
           </div>
           <h2 class="text-lg sm:text-xl font-outfit font-black text-slate-900 mb-3" id="sentence-target-my">
             "Tempat duduk saya di mana?"
           </h2>
 
           <!-- Drop Area for Sentence Chips -->
-          <div id="sentence-dropzone" class="min-h-[64px] bg-slate-100/80 border-2 border-dashed border-slate-300 rounded-2xl p-2.5 flex flex-wrap items-center justify-center gap-2">
+          <div id="sentence-dropzone" class="min-h-[68px] bg-slate-100/80 border-2 border-dashed border-slate-300 rounded-2xl p-2.5 flex flex-wrap items-center justify-center gap-2">
             <span class="text-xs text-slate-400 italic" id="sentence-placeholder">Pilih blok perkataan di bawah mengikut urutan...</span>
           </div>
 
@@ -284,7 +313,7 @@
           </div>
         </div>
 
-        <!-- Word Pool Chips -->
+        <!-- Word Pool Chips with Hanzi & Pinyin -->
         <div class="flex flex-wrap gap-2.5 justify-center mb-5" id="sentence-pool-chips">
           <!-- Populated by JS -->
         </div>
@@ -303,7 +332,7 @@
       </div>
     </div>
 
-    <!-- ==================== VIEW 3: SIMULASI CHAT PEJABAT ==================== -->
+    <!-- ==================== VIEW 3: SIMULASI CHAT DIALOG ==================== -->
     <div id="view-chat-roleplay" class="app-view hidden flex flex-col justify-between flex-grow">
       <div>
         <div class="flex items-center justify-between mb-3 px-1">
@@ -334,7 +363,7 @@
 
   </main>
 
-  <!-- ==================== DRAWER: KAMUS KOSA KATA MODUL ==================== -->
+  <!-- ==================== DRAWER: KAMUS 23 KOSA KATA ==================== -->
   <div id="vocab-drawer" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-end sm:items-center justify-center transition-opacity">
     <div class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl max-h-[85vh] flex flex-col justify-between">
       
@@ -343,7 +372,7 @@
           <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">📋</span>
           <div>
             <h4 class="font-outfit font-black text-slate-900 text-base">Senarai 23 Kosa Kata Topik 4</h4>
-            <p class="text-[11px] text-slate-400">Tekan mana-mana perkataan untuk dengar sebutan</p>
+            <p class="text-[11px] text-slate-400">Lengkap dengan Hanzi, Pinyin & Audio Sebutan</p>
           </div>
         </div>
         <button onclick="closeVocabDrawer()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm hover:bg-slate-200">
@@ -353,7 +382,7 @@
 
       <!-- Search in Drawer -->
       <div class="my-2">
-        <input type="text" id="drawer-search" oninput="filterDrawerVocab()" placeholder="Cari perkataan (cth: meja, fail, depan)..." class="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-100 border-none focus:ring-2 focus:ring-indigo-500 text-slate-800">
+        <input type="text" id="drawer-search" oninput="filterDrawerVocab()" placeholder="Cari perkataan (cth: meja, fail, depan, zhíyuán)..." class="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-100 border-none focus:ring-2 focus:ring-indigo-500 text-slate-800">
       </div>
 
       <!-- List -->
@@ -369,9 +398,9 @@
     </div>
   </div>
 
-  <!-- ==================== JAVASCRIPT APP LOGIC ==================== -->
+  <!-- ==================== JAVASCRIPT ==================== -->
   <script>
-    /* ========== 1. TEPAT 20 SOALAN BINA KATA (TANPA ULANGAN) ========== */
+    /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
     const VOCAB_20_QUESTIONS = [
       {
         targetMy: "pekerja / staf",
@@ -379,9 +408,9 @@
         py1: "zhí",
         char2: "员",
         py2: "yuán",
-        full: "职员",
+        fullHz: "职员",
         fullPy: "zhí yuán",
-        explain: "职 (zhí - tugas) + 员 (yuán - anggota/orang) = 职员 (pekerja/staf).",
+        explain: "职 (zhí - tugas) + 员 (yuán - anggota) = 职员 (zhíyuán - pekerja/staf).",
         options: [
           { char: "员", py: "yuán", isCorrect: true },
           { char: "事", py: "shì", isCorrect: false },
@@ -395,9 +424,9 @@
         py1: "tóng",
         char2: "事",
         py2: "shì",
-        full: "同事",
+        fullHz: "同事",
         fullPy: "tóng shì",
-        explain: "同 (tóng - bersama) + 事 (shì - urusan kerja) = 同事 (rakan kerja).",
+        explain: "同 (tóng - bersama) + 事 (shì - urusan kerja) = 同事 (tóngshì - rakan kerja).",
         options: [
           { char: "学", py: "xué", isCorrect: false },
           { char: "事", py: "shì", isCorrect: true },
@@ -411,9 +440,9 @@
         py1: "zuò",
         char2: "位",
         py2: "wèi",
-        full: "座位",
+        fullHz: "座位",
         fullPy: "zuò wèi",
-        explain: "座 (zuò - duduk) + 位 (wèi - tempat) = 座位 (tempat duduk).",
+        explain: "座 (zuò - duduk) + 位 (wèi - tempat) = 座位 (zuòwèi - tempat duduk).",
         options: [
           { char: "位", py: "wèi", isCorrect: true },
           { char: "子", py: "zi", isCorrect: false },
@@ -427,9 +456,9 @@
         py1: "qián",
         char2: "面",
         py2: "miàn",
-        full: "前面",
+        fullHz: "前面",
         fullPy: "qián miàn",
-        explain: "前 (qián - depan) + 面 (miàn - bahagian) = 前面 (bahagian depan).",
+        explain: "前 (qián - depan) + 面 (miàn - bahagian) = 前面 (qiánmiàn - bahagian depan).",
         options: [
           { char: "边", py: "biān", isCorrect: false },
           { char: "面", py: "miàn", isCorrect: true },
@@ -443,9 +472,9 @@
         py1: "hòu",
         char2: "面",
         py2: "miàn",
-        full: "后面",
+        fullHz: "后面",
         fullPy: "hòu miàn",
-        explain: "后 (hòu - belakang) + 面 (miàn - bahagian) = 后面 (bahagian belakang).",
+        explain: "后 (hòu - belakang) + 面 (miàn - bahagian) = 后面 (hòumiàn - bahagian belakang).",
         options: [
           { char: "面", py: "miàn", isCorrect: true },
           { char: "具", py: "jù", isCorrect: false },
@@ -459,9 +488,9 @@
         py1: "lǐ",
         char2: "面",
         py2: "miàn",
-        full: "里面",
+        fullHz: "里面",
         fullPy: "lǐ miàn",
-        explain: "里 (lǐ - dalam) + 面 (miàn - bahagian) = 里面 (bahagian dalam).",
+        explain: "里 (lǐ - dalam) + 面 (miàn - bahagian) = 里面 (lǐmiàn - bahagian dalam).",
         options: [
           { char: "面", py: "miàn", isCorrect: true },
           { char: "边", py: "biān", isCorrect: false },
@@ -475,9 +504,9 @@
         py1: "shàng",
         char2: "面",
         py2: "miàn",
-        full: "上面",
+        fullHz: "上面",
         fullPy: "shàng miàn",
-        explain: "上 (shàng - atas) + 面 (miàn - bahagian) = 上面 (bahagian atas).",
+        explain: "上 (shàng - atas) + 面 (miàn - bahagian) = 上面 (shàngmiàn - bahagian atas).",
         options: [
           { char: "面", py: "miàn", isCorrect: true },
           { char: "下", py: "xià", isCorrect: false },
@@ -491,9 +520,9 @@
         py1: "xià",
         char2: "面",
         py2: "miàn",
-        full: "下面",
+        fullHz: "下面",
         fullPy: "xià miàn",
-        explain: "下 (xià - bawah) + 面 (miàn - bahagian) = 下面 (bahagian bawah).",
+        explain: "下 (xià - bawah) + 面 (miàn - bahagian) = 下面 (xiàmiàn - bahagian bawah).",
         options: [
           { char: "面", py: "miàn", isCorrect: true },
           { char: "边", py: "biān", isCorrect: false },
@@ -507,9 +536,9 @@
         py1: "páng",
         char2: "边",
         py2: "biān",
-        full: "旁边",
+        fullHz: "旁边",
         fullPy: "páng biān",
-        explain: "旁 (páng - sisi) + 边 (biān - tepi) = 旁边 (sebelah / tepi).",
+        explain: "旁 (páng - sisi) + 边 (biān - tepi) = 旁边 (pángbiān - sebelah / tepi).",
         options: [
           { char: "边", py: "biān", isCorrect: true },
           { char: "面", py: "miàn", isCorrect: false },
@@ -523,9 +552,9 @@
         py1: "zhuō",
         char2: "子",
         py2: "zi",
-        full: "桌子",
+        fullHz: "桌子",
         fullPy: "zhuō zi",
-        explain: "桌 (zhuō - meja) + 子 (zi - imbuhan kata nama) = 桌子 (meja).",
+        explain: "桌 (zhuō - meja) + 子 (zi) = 桌子 (zhuōzi - meja).",
         options: [
           { char: "子", py: "zi", isCorrect: true },
           { char: "面", py: "miàn", isCorrect: false },
@@ -539,9 +568,9 @@
         py1: "yǐ",
         char2: "子",
         py2: "zi",
-        full: "椅子",
+        fullHz: "椅子",
         fullPy: "yǐ zi",
-        explain: "椅 (yǐ - kerusi) + 子 (zi) = 椅子 (kerusi).",
+        explain: "椅 (yǐ - kerusi) + 子 (zi) = 椅子 (yǐzi - kerusi).",
         options: [
           { char: "子", py: "zi", isCorrect: true },
           { char: "具", py: "jù", isCorrect: false },
@@ -555,9 +584,9 @@
         py1: "guì",
         char2: "子",
         py2: "zi",
-        full: "柜子",
+        fullHz: "柜子",
         fullPy: "guì zi",
-        explain: "柜 (guì - kabinet) + 子 (zi) = 柜子 (almari pejabat).",
+        explain: "柜 (guì - kabinet) + 子 (zi) = 柜子 (guìzi - almari pejabat).",
         options: [
           { char: "子", py: "zi", isCorrect: true },
           { char: "机", py: "jī", isCorrect: false },
@@ -571,9 +600,9 @@
         py1: "wén",
         char2: "具",
         py2: "jù",
-        full: "文具",
+        fullHz: "文具",
         fullPy: "wén jù",
-        explain: "文 (wén - tulisan) + 具 (jù - perkakas) = 文具 (alat tulis).",
+        explain: "文 (wén - tulisan) + 具 (jù - perkakas) = 文具 (wénjù - alat tulis).",
         options: [
           { char: "具", py: "jù", isCorrect: true },
           { char: "子", py: "zi", isCorrect: false },
@@ -587,9 +616,9 @@
         py1: "diàn",
         char2: "脑",
         py2: "nǎo",
-        full: "电脑",
+        fullHz: "电脑",
         fullPy: "diàn nǎo",
-        explain: "电 (diàn - elektrik) + 脑 (nǎo - otak) = 电脑 (komputer).",
+        explain: "电 (diàn - elektrik) + 脑 (nǎo - otak) = 电脑 (diànnǎo - komputer).",
         options: [
           { char: "脑", py: "nǎo", isCorrect: true },
           { char: "话", py: "huà", isCorrect: false },
@@ -603,9 +632,9 @@
         py1: "dǎ yìn",
         char2: "机",
         py2: "jī",
-        full: "打印机",
+        fullHz: "打印机",
         fullPy: "dǎ yìn jī",
-        explain: "打印 (dǎyìn - cetak) + 机 (jī - mesin) = 打印机 (printer).",
+        explain: "打印 (dǎyìn - mencetak) + 机 (jī - mesin) = 打印机 (dǎyìnjī - printer).",
         options: [
           { char: "机", py: "jī", isCorrect: true },
           { char: "具", py: "jù", isCorrect: false },
@@ -619,9 +648,9 @@
         py1: "fù yìn",
         char2: "机",
         py2: "jī",
-        full: "复印机",
+        fullHz: "复印机",
         fullPy: "fù yìn jī",
-        explain: "复印 (fùyìn - fotostat) + 机 (jī - mesin) = 复印机.",
+        explain: "复印 (fùyìn - salinan fotostat) + 机 (jī) = 复印机 (fùyìnjī).",
         options: [
           { char: "机", py: "jī", isCorrect: true },
           { char: "脑", py: "nǎo", isCorrect: false },
@@ -635,9 +664,9 @@
         py1: "wén jiàn",
         char2: "夹",
         py2: "jiā",
-        full: "文件夹",
+        fullHz: "文件夹",
         fullPy: "wén jiàn jiā",
-        explain: "文件 (wénjiàn - dokumen) + 夹 (jiā - pengepit) = 文件夹 (fail).",
+        explain: "文件 (wénjiàn - dokumen) + 夹 (jiā - pengepit) = 文件夹 (wénjiànjiā - fail).",
         options: [
           { char: "夹", py: "jiā", isCorrect: true },
           { char: "机", py: "jī", isCorrect: false },
@@ -651,9 +680,9 @@
         py1: "jīng",
         char2: "理",
         py2: "lǐ",
-        full: "经理",
+        fullHz: "经理",
         fullPy: "jīng lǐ",
-        explain: "经 (jīng) + 理 (lǐ) = 经理 (pengurus syarikat).",
+        explain: "经 (jīng) + 理 (lǐ) = 经理 (jīnglǐ - pengurus).",
         options: [
           { char: "理", py: "lǐ", isCorrect: true },
           { char: "人", py: "rén", isCorrect: false },
@@ -667,9 +696,9 @@
         py1: "bàn gōng",
         char2: "室",
         py2: "shì",
-        full: "办公室",
+        fullHz: "办公室",
         fullPy: "bàn gōng shì",
-        explain: "办公 (buat urusan rasmi) + 室 (bilik) = 办公室 (pejabat).",
+        explain: "办公 (urusan kerja) + 室 (bilik) = 办公室 (bàngōngshì - pejabat).",
         options: [
           { char: "室", py: "shì", isCorrect: true },
           { char: "房", py: "fáng", isCorrect: false },
@@ -683,9 +712,9 @@
         py1: "dǎ",
         char2: "电话",
         py2: "diàn huà",
-        full: "打电话",
+        fullHz: "打电话",
         fullPy: "dǎ diàn huà",
-        explain: "打 (dǎ - buat) + 电话 (diànhuà - telefon) = 打电话.",
+        explain: "打 (dǎ - membuat) + 电话 (diànhuà - panggilan telefon) = 打电话 (dǎ diànhuà).",
         options: [
           { char: "电话", py: "diàn huà", isCorrect: true },
           { char: "电脑", py: "diàn nǎo", isCorrect: false },
@@ -700,56 +729,108 @@
       {
         targetMy: "Tempat duduk saya di mana?",
         correctOrder: ["我的座位", "在", "哪儿？"],
-        pool: ["我的座位", "在", "哪儿？", "前面", "柜子"],
+        pool: [
+          { hz: "我的座位", py: "wǒ de zuòwèi" },
+          { hz: "在", py: "zài" },
+          { hz: "哪儿？", py: "nǎr?" },
+          { hz: "前面", py: "qiánmiàn" },
+          { hz: "柜子", py: "guìzi" }
+        ],
         hint: "Formula: Kata Nama + 在 + 哪儿？",
         explain: "Wǒ de zuòwèi zài nǎr? (Tempat duduk saya di mana?)"
       },
       {
         targetMy: "Komputer di atas meja.",
         correctOrder: ["电脑", "在", "桌子", "上面。"],
-        pool: ["电脑", "在", "桌子", "上面。", "下面。", "椅子"],
+        pool: [
+          { hz: "电脑", py: "diànnǎo" },
+          { hz: "在", py: "zài" },
+          { hz: "桌子", py: "zhuōzi" },
+          { hz: "上面。", py: "shàngmiàn." },
+          { hz: "下面。", py: "xiàmiàn." },
+          { hz: "椅子", py: "yǐzi" }
+        ],
         hint: "Formula: Objek + 在 + Rujukan + Kedudukan",
         explain: "Diànnǎo zài zhuōzi shàngmiàn. (Komputer di atas meja.)"
       },
       {
         targetMy: "Fail di dalam almari Pengurus Wang.",
         correctOrder: ["文件夹", "在", "王经理的柜子", "里面。"],
-        pool: ["文件夹", "在", "王经理的柜子", "里面。", "打印机", "后面。"],
+        pool: [
+          { hz: "文件夹", py: "wénjiànjiā" },
+          { hz: "在", py: "zài" },
+          { hz: "王经理的柜子", py: "Wáng jīnglǐ de guìzi" },
+          { hz: "里面。", py: "lǐmiàn." },
+          { hz: "打印机", py: "dǎyìnjī" },
+          { hz: "后面。", py: "hòumiàn." }
+        ],
         hint: "Wénjiànjiā zài Wáng jīnglǐ de guìzi lǐmiàn.",
         explain: "Fail dokumen berada di dalam almari Pengurus Wang."
       },
       {
         targetMy: "Adakah Pengurus Wang ada?",
         correctOrder: ["王经理", "在", "吗？"],
-        pool: ["王经理", "在", "吗？", "不在", "哪儿？"],
+        pool: [
+          { hz: "王经理", py: "Wáng jīnglǐ" },
+          { hz: "在", py: "zài" },
+          { hz: "吗？", py: "ma?" },
+          { hz: "不在", py: "bú zài" },
+          { hz: "哪儿？", py: "nǎr?" }
+        ],
         hint: "Formula: Nama Orang + 在吗？",
         explain: "Wáng jīnglǐ zài ma? (Tanya keberadaan seseorang)"
       },
       {
         targetMy: "Hari ini dia tidak ada di pejabat.",
         correctOrder: ["他今天", "不在", "办公室。"],
-        pool: ["他今天", "不在", "办公室。", "在", "明天"],
+        pool: [
+          { hz: "他今天", py: "tā jīntiān" },
+          { hz: "不在", py: "bú zài" },
+          { hz: "办公室。", py: "bàngōngshì." },
+          { hz: "在", py: "zài" },
+          { hz: "明天", py: "míngtiān" }
+        ],
         hint: "Tā jīntiān bú zài bàngōngshì.",
         explain: "Jawapan ketiadaan: 不在 (bú zài)."
       },
       {
         targetMy: "Mesin pencetak di bawah meja.",
         correctOrder: ["打印机", "在", "桌子", "下面。"],
-        pool: ["打印机", "在", "桌子", "下面。", "上面。", "复印机"],
+        pool: [
+          { hz: "打印机", py: "dǎyìnjī" },
+          { hz: "在", py: "zài" },
+          { hz: "桌子", py: "zhuōzi" },
+          { hz: "下面。", py: "xiàmiàn." },
+          { hz: "上面。", py: "shàngmiàn." },
+          { hz: "复印机", py: "fùyìnjī" }
+        ],
         hint: "Dǎyìnjī zài zhuōzi xiàmiàn.",
         explain: "Mesin cetak berada di bahagian bawah meja."
       },
       {
         targetMy: "Mesin fotostat di belakang kerusi.",
         correctOrder: ["复印机", "在", "椅子", "后面。"],
-        pool: ["复印机", "在", "椅子", "后面。", "前面。", "桌子"],
+        pool: [
+          { hz: "复印机", py: "fùyìnjī" },
+          { hz: "在", py: "zài" },
+          { hz: "椅子", py: "yǐzi" },
+          { hz: "后面。", py: "hòumiàn." },
+          { hz: "前面。", py: "qiánmiàn." },
+          { hz: "桌子", py: "zhuōzi" }
+        ],
         hint: "Fùyìnjī zài yǐzi hòumiàn.",
         explain: "Mesin fotostat berada di bahagian belakang kerusi."
       },
       {
         targetMy: "Tempat duduk awak di depan saya.",
         correctOrder: ["你的座位", "在", "我的前面。"],
-        pool: ["你的座位", "在", "我的前面。", "后面。", "哪儿？"],
+        pool: [
+          { hz: "你的座位", py: "nǐ de zuòwèi" },
+          { hz: "在", py: "zài" },
+          { hz: "我的前面。", py: "wǒ de qiánmiàn." },
+          { hz: "后面。", py: "hòumiàn." },
+          { hz: "哪儿？", py: "nǎr?" }
+        ],
         hint: "Nǐ de zuòwèi zài wǒ de qiánmiàn.",
         explain: "Tempat duduk awak berada di depan saya."
       }
@@ -849,10 +930,10 @@
         const now = soundContext.currentTime;
         if (type === 'success') {
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(440, now); // A4
-          osc.frequency.setValueAtTime(554.37, now + 0.1); // C#5
-          osc.frequency.setValueAtTime(659.25, now + 0.2); // E5
-          osc.frequency.setValueAtTime(880, now + 0.3); // A5
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.setValueAtTime(554.37, now + 0.1);
+          osc.frequency.setValueAtTime(659.25, now + 0.2);
+          osc.frequency.setValueAtTime(880, now + 0.3);
           gain.gain.setValueAtTime(0.2, now);
           gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
           osc.start(now);
@@ -866,7 +947,6 @@
           osc.start(now);
           osc.stop(now + 0.3);
         } else {
-          // click
           osc.type = 'sine';
           osc.frequency.setValueAtTime(540, now);
           gain.gain.setValueAtTime(0.05, now);
@@ -877,9 +957,9 @@
       } catch (e) {}
     }
 
-    /* ========== 3. STATE CONTROLLERS ========== */
+    /* ========== 3. STATE CONTROLLER ========== */
     let currentAppMode = 'vocabChallenge';
-    let currentVocabQIdx = 0; // Exactly 0 to 19 (1 to 20)
+    let currentVocabQIdx = 0; // 0 to 19 (Soalan 1 / 20)
     let selectedVocabOption = null;
     let isVocabChecked = false;
     let streakCount = 0;
@@ -909,9 +989,8 @@
       }
     }
 
-    /* ========== 4. VIEW 1: BINA KATA 20 SOALAN ========== */
+    /* ========== 4. VIEW 1: BINA KATA (HANZI, PINYIN & AUDIO) ========== */
     function loadVocabQuestion() {
-      // Check if finished all 20 questions
       if (currentVocabQIdx >= VOCAB_20_QUESTIONS.length) {
         showVocabCompletionScreen();
         return;
@@ -921,21 +1000,21 @@
       selectedVocabOption = null;
       isVocabChecked = false;
 
-      // Update Top Status (1 to 20)
+      // Update Top Status
       document.getElementById('level-title-vocab').innerText = `Soalan ${currentVocabQIdx + 1} / 20`;
       const pct = Math.round(((currentVocabQIdx + 1) / 20) * 100);
       document.getElementById('progress-bar-vocab').style.width = `${pct}%`;
 
-      // Prompt
+      // Prompt Meaning
       document.getElementById('hero-target-meaning').innerText = `"${q.targetMy}"`;
 
-      // Capsule 1
+      // Capsule 1: Hanzi & Pinyin
       const c1 = document.getElementById('capsule-char1');
       c1.innerText = q.char1;
       if (q.char1.length > 2) {
-        c1.className = "text-xl sm:text-2xl font-black text-slate-900 font-hanzi";
+        c1.className = "text-xl sm:text-2xl font-black text-slate-900 font-hanzi mt-0.5";
       } else {
-        c1.className = "text-3xl sm:text-4xl font-black text-slate-900 font-hanzi";
+        c1.className = "text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5";
       }
       document.getElementById('capsule-pinyin1').innerText = q.py1;
 
@@ -948,11 +1027,11 @@
       // Hide Feedback
       document.getElementById('action-feedback-box').className = "hidden mb-3 p-3.5 rounded-2xl border transition";
 
-      // Render 4 Options
+      // Render 4 Options with Hanzi & Pinyin
       renderVocabOptions(q.options);
 
-      // Voice preview given char
-      setTimeout(() => speakChinese(q.char1), 200);
+      // Play audio of the first character automatically
+      setTimeout(() => speakChinese(q.char1), 250);
     }
 
     function renderVocabOptions(options) {
@@ -961,12 +1040,15 @@
 
       options.forEach(opt => {
         const card = document.createElement('button');
-        card.className = "option-tile glass-card rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center group cursor-pointer border border-slate-200/90";
+        card.className = "option-tile glass-card rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center group cursor-pointer border border-slate-200/90 relative";
         card.onclick = () => selectVocabOption(opt, card);
 
         card.innerHTML = `
+          <div class="flex items-center space-x-1.5 mb-1">
+            <span class="text-xs sm:text-sm font-extrabold text-indigo-600 font-sans tracking-wide">${opt.py}</span>
+            <span class="text-[11px] text-slate-300 group-hover:text-indigo-500 transition">🔊</span>
+          </div>
           <span class="text-3xl sm:text-4xl font-black text-slate-800 font-hanzi group-hover:text-indigo-600 transition-colors">${opt.char}</span>
-          <span class="text-xs font-bold text-indigo-500 mt-1">${opt.py}</span>
         `;
         grid.appendChild(card);
       });
@@ -982,26 +1064,28 @@
       });
       cardEl.classList.add('selected', 'border-indigo-600', 'bg-indigo-50/70');
 
-      // Update Slot
+      // Update Slot Capsule
       const slot = document.getElementById('target-slot-capsule');
       slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-600 flex flex-col items-center justify-center shadow-md cursor-pointer transition transform scale-105";
       
+      document.getElementById('capsule-slot-pinyin').innerText = opt.py;
+      document.getElementById('capsule-slot-pinyin').className = "text-xs font-black text-indigo-600 font-sans tracking-wide";
+
       const slotChar = document.getElementById('capsule-slot-char');
       slotChar.innerText = opt.char;
       slotChar.className = opt.char.length > 2 
-        ? "text-xl sm:text-2xl font-black text-indigo-700 font-hanzi" 
-        : "text-3xl sm:text-4xl font-black text-indigo-700 font-hanzi";
-      document.getElementById('capsule-slot-pinyin').innerText = opt.py;
+        ? "text-xl sm:text-2xl font-black text-indigo-800 font-hanzi mt-0.5" 
+        : "text-3xl sm:text-4xl font-black text-indigo-800 font-hanzi mt-0.5";
 
-      // Update preview text
+      // Realtime Preview with Hanzi & Pinyin
       const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
       document.getElementById('solution-preview-chip').innerHTML = `
         <span class="font-bold text-indigo-700">Gabungan:</span>
-        <span class="font-hanzi font-black text-slate-800 text-sm">${q.char1 + opt.char}</span>
-        <span class="text-indigo-500 font-bold text-xs">(${q.py1} ${opt.py})</span>
+        <span class="font-hanzi font-black text-slate-900 text-sm sm:text-base">${q.char1 + opt.char}</span>
+        <span class="text-indigo-600 font-extrabold text-xs">(${q.py1} ${opt.py})</span>
       `;
 
-      // Voice preview
+      // Voice preview of selected option
       speakChinese(opt.char);
     }
 
@@ -1012,16 +1096,19 @@
 
       const slot = document.getElementById('target-slot-capsule');
       slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-slate-50/90 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center shadow-inner cursor-pointer transition";
-      document.getElementById('capsule-slot-char').innerText = "?";
-      document.getElementById('capsule-slot-char').className = "text-3xl sm:text-4xl font-black text-slate-300 font-sans";
-      document.getElementById('capsule-slot-pinyin').innerText = "pilih kad";
+      
+      document.getElementById('capsule-slot-pinyin').innerText = "pilih pinyin";
+      document.getElementById('capsule-slot-pinyin').className = "text-xs font-bold text-slate-400 font-sans";
 
-      document.getElementById('solution-preview-chip').innerText = "Tekan kad pilihan di bawah untuk melengkapkan perkataan.";
+      document.getElementById('capsule-slot-char').innerText = "?";
+      document.getElementById('capsule-slot-char').className = "text-3xl sm:text-4xl font-black text-slate-300 font-sans mt-0.5";
+
+      document.getElementById('solution-preview-chip').innerText = "Pilih kad aksara di bawah yang mempunyai Hanzi & Pinyin yang betul.";
     }
 
     function handlePrimaryAction() {
       if (isVocabChecked) {
-        // MAJU KE SOALAN SETERUSNYA (0 -> 1 -> 2 ... -> 19)
+        // MAJU KE SOALAN SETERUSNYA (0 -> 19)
         playBeep('click');
         currentVocabQIdx++;
         loadVocabQuestion();
@@ -1050,19 +1137,23 @@
         // Highlight slot
         const slot = document.getElementById('target-slot-capsule');
         slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-emerald-50 rounded-2xl border-2 border-emerald-500 flex flex-col items-center justify-center shadow-md text-center";
-        document.getElementById('capsule-slot-char').className = "text-3xl sm:text-4xl font-black text-emerald-800 font-hanzi";
+        document.getElementById('capsule-slot-char').className = "text-3xl sm:text-4xl font-black text-emerald-800 font-hanzi mt-0.5";
+        document.getElementById('capsule-slot-pinyin').className = "text-xs font-black text-emerald-700 font-sans tracking-wide";
 
-        // Feedback
-        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50/90 text-emerald-950 shadow-xs";
+        // Feedback with Hanzi + Pinyin + Audio
+        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50/95 text-emerald-950 shadow-xs";
         document.getElementById('feedback-status-icon').innerText = "🎉";
-        document.getElementById('feedback-status-title').innerText = "Tahniah! Jawapan Tepat.";
+        document.getElementById('feedback-status-title').innerText = "Tahniah! Sebutan & Cantuman Tepat.";
         document.getElementById('feedback-status-body').innerHTML = `
-          <span class="font-hanzi font-black text-base text-emerald-900">${q.full} (${q.fullPy})</span><br>
-          <span class="text-emerald-700">${q.explain}</span>
+          <div class="flex items-baseline space-x-2 my-0.5">
+            <span class="font-hanzi font-black text-lg text-emerald-900">${q.fullHz}</span>
+            <span class="font-sans font-black text-sm text-emerald-700">(${q.fullPy})</span>
+          </div>
+          <span class="text-xs text-emerald-800 font-medium">${q.explain}</span>
         `;
 
-        // Speak full word
-        setTimeout(() => speakChinese(q.full), 150);
+        // Speak full word immediately with Chinese TTS
+        setTimeout(() => speakChinese(q.fullHz), 150);
 
         setPrimaryButtonState('next');
       } else {
@@ -1071,10 +1162,12 @@
         streakCount = 0;
         document.getElementById('streak-counter').innerText = `0 Streak`;
 
-        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border border-rose-200 bg-rose-50/90 text-rose-950 shadow-xs";
+        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border border-rose-200 bg-rose-50/95 text-rose-950 shadow-xs";
         document.getElementById('feedback-status-icon').innerText = "💡";
         document.getElementById('feedback-status-title').innerText = "Cuba Lagi!";
-        document.getElementById('feedback-status-body').innerText = `Aksara "${selectedVocabOption.char}" tidak tepat untuk maksud "${q.targetMy}".`;
+        document.getElementById('feedback-status-body').innerHTML = `
+          Aksara <span class="font-hanzi font-bold">${selectedVocabOption.char}</span> (${selectedVocabOption.py}) tidak membentuk perkataan yang dicari untuk "${q.targetMy}".
+        `;
       }
     }
 
@@ -1094,15 +1187,30 @@
       }
     }
 
+    function speakCurrentQuestionPrompt() {
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+      speakChinese(q.fullHz);
+    }
+
+    function speakCurrentPart(part) {
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+      speakChinese(q.char1);
+    }
+
+    function speakFullWord() {
+      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
+      speakChinese(q.fullHz);
+    }
+
     function showVocabCompletionScreen() {
       playBeep('success');
       const view = document.getElementById('view-vocab-challenge');
       view.innerHTML = `
         <div class="glass-card rounded-3xl p-6 sm:p-8 text-center my-auto">
           <div class="text-6xl mb-3">🏆</div>
-          <h2 class="text-2xl font-outfit font-black text-slate-900">Hebat! Anda Selesai Semua 20/20 Soalan</h2>
+          <h2 class="text-2xl font-outfit font-black text-slate-900">Hebat! Selesai Kesemua 20 Soalan</h2>
           <p class="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
-            Tahniah! Anda telah berjaya menguasai kesemua 20 perbendaharaan kata rasmi <strong>Topik 4: Di Pejabat</strong> tanpa sebarang soalan berulang.
+            Tahniah! Anda telah menguasai kesemua 20 perbendaharaan kata <strong>Hanzi & Pinyin</strong> bagi Topik 4: Di Pejabat tanpa sebarang ulangan.
           </p>
           <div class="my-6 grid grid-cols-2 gap-3 max-w-xs mx-auto">
             <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-2xl">
@@ -1133,17 +1241,7 @@
       location.reload();
     }
 
-    function speakCurrentPart(part) {
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-      speakChinese(q.char1);
-    }
-
-    function speakFullWord() {
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-      speakChinese(q.full);
-    }
-
-    /* ========== 5. VIEW 2: SUSUN AYAT LOGIC ========== */
+    /* ========== 5. VIEW 2: SUSUN AYAT (HANZI + PINYIN + AUDIO) ========== */
     let sentenceIndex = 0;
     let selectedSentenceTokens = [];
     let isSentenceChecked = false;
@@ -1170,41 +1268,52 @@
       const dropzone = document.getElementById('sentence-dropzone');
       const pool = document.getElementById('sentence-pool-chips');
 
+      // Dropzone items
       dropzone.innerHTML = '';
       if (selectedSentenceTokens.length === 0) {
         dropzone.innerHTML = `<span class="text-xs text-slate-400 italic" id="sentence-placeholder">Pilih blok perkataan di bawah mengikut urutan...</span>`;
       } else {
-        selectedSentenceTokens.forEach((tok, idx) => {
+        selectedSentenceTokens.forEach((item, idx) => {
           const chip = document.createElement('button');
-          chip.className = "px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-hanzi font-bold text-sm shadow-xs flex items-center space-x-1";
-          chip.innerHTML = `<span>${tok}</span><span class="text-indigo-200 text-xs ml-1">×</span>`;
+          chip.className = "px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5";
+          chip.innerHTML = `
+            <div class="text-left">
+              <span class="block text-[9px] text-indigo-200">${item.py}</span>
+              <span class="block font-hanzi font-black text-sm">${item.hz}</span>
+            </div>
+            <span class="text-indigo-200 text-xs ml-1 font-bold">×</span>
+          `;
           chip.onclick = () => removeSentenceToken(idx);
           dropzone.appendChild(chip);
         });
       }
 
+      // Pool items
       pool.innerHTML = '';
       const available = [...q.pool];
       selectedSentenceTokens.forEach(t => {
-        const found = available.indexOf(t);
+        const found = available.findIndex(a => a.hz === t.hz);
         if (found !== -1) available.splice(found, 1);
       });
 
-      available.forEach(tok => {
+      available.forEach(item => {
         const btn = document.createElement('button');
-        btn.className = "glass-card hover:bg-indigo-50 border border-slate-200 hover:border-indigo-400 px-3.5 py-2 rounded-xl font-hanzi font-extrabold text-sm text-slate-800 transition active:scale-95";
-        btn.innerText = tok;
-        btn.onclick = () => addSentenceToken(tok);
+        btn.className = "glass-card hover:bg-indigo-50 border border-slate-200 hover:border-indigo-400 px-3.5 py-2 rounded-xl text-slate-800 transition active:scale-95 text-center";
+        btn.innerHTML = `
+          <span class="block text-[10px] font-bold text-indigo-500">${item.py}</span>
+          <span class="block text-base font-black font-hanzi text-slate-900">${item.hz}</span>
+        `;
+        btn.onclick = () => addSentenceToken(item);
         pool.appendChild(btn);
       });
     }
 
-    function addSentenceToken(tok) {
+    function addSentenceToken(item) {
       if (isSentenceChecked) return;
       playBeep('click');
-      selectedSentenceTokens.push(tok);
+      selectedSentenceTokens.push(item);
       renderSentenceChips();
-      speakChinese(tok);
+      speakChinese(item.hz);
     }
 
     function removeSentenceToken(idx) {
@@ -1238,7 +1347,7 @@
         return;
       }
 
-      const isMatch = selectedSentenceTokens.every((t, i) => t === q.correctOrder[i]);
+      const isMatch = selectedSentenceTokens.every((t, i) => t.hz === q.correctOrder[i]);
 
       if (isMatch) {
         isSentenceChecked = true;
@@ -1248,14 +1357,16 @@
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
-        const fullSentence = selectedSentenceTokens.join('');
-        speakChinese(fullSentence);
+        const fullSentenceHz = selectedSentenceTokens.map(t => t.hz).join('');
+        const fullSentencePy = selectedSentenceTokens.map(t => t.py).join(' ');
+        speakChinese(fullSentenceHz);
 
         feedback.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950";
         feedback.innerHTML = `
           <div class="font-bold text-sm">🎉 Tepat Sekali!</div>
-          <div class="font-hanzi font-black text-emerald-900 text-base mt-0.5">${fullSentence}</div>
-          <p class="text-xs text-emerald-700 mt-1">${q.explain}</p>
+          <div class="font-hanzi font-black text-emerald-900 text-base mt-0.5">${fullSentenceHz}</div>
+          <div class="text-xs font-bold text-emerald-700 mt-0.5">(${fullSentencePy})</div>
+          <p class="text-xs text-emerald-800 mt-1">${q.explain}</p>
         `;
 
         setSentenceBtnState('next');
@@ -1282,7 +1393,7 @@
       }
     }
 
-    /* ========== 6. VIEW 3: SIMULASI CHAT PEJABAT ========== */
+    /* ========== 6. VIEW 3: SIMULASI CHAT ========== */
     let currentScenarioId = 1;
 
     function loadChatScenario(id) {
@@ -1367,7 +1478,7 @@
             <div>
               <div class="flex items-baseline space-x-2">
                 <span class="text-lg font-black text-slate-900 font-hanzi">${v.hz}</span>
-                <span class="text-xs font-bold text-indigo-600">${v.py}</span>
+                <span class="text-xs font-bold text-indigo-600 font-sans">${v.py}</span>
               </div>
               <div class="text-[11px] text-slate-500 font-medium">
                 ${v.my} <span class="text-[9px] bg-white px-1.5 py-0.2 rounded border text-slate-400 ml-1">${v.type}</span>
@@ -1392,7 +1503,7 @@
       renderDrawerList(filtered);
     }
 
-    /* ========== 8. INITIALIZATION ========== */
+    /* ========== 8. INIT ========== */
     window.addEventListener('DOMContentLoaded', () => {
       loadVocabQuestion();
     });
