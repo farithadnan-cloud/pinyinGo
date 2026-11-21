@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>PinyinGo - Modul Bahasa Mandarin Topik 4: Di Pejabat</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Noto Sans SC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Noto+Sans+SC:wght@500;700;800;900&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            hanzi: ['"Noto Sans SC"', 'sans-serif'],
+            fun: ['"ZCOOL KuaiLe"', '"Noto Sans SC"', 'cursive']
+          },
+          colors: {
+            bgCream: '#fbf8f1',
+            cardCream: '#fdfbf7',
+            pine: {
+              800: '#153e35',
+              900: '#0e2e27',
+              DEFAULT: '#144238'
+            },
+            mint: {
+              100: '#dcf4ea',
+              200: '#c3ebdc',
+              DEFAULT: '#2a9d8f'
+            },
+            orangeBtn: {
+              500: '#f97316',
+              600: '#ea580c',
+              DEFAULT: '#e76f51'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #fbf8f1;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .font-hanzi {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    /* Subtle 3D Card Button Effect like Duolingo / HanziLab */
+    .btn-3d {
+      transition: all 0.12s ease-in-out;
+      box-shadow: 0 4px 0 #9ca3af;
+    }
+    .btn-3d:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #9ca3af;
+    }
+    .btn-tile {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 0 #d1d5db;
+    }
+    .btn-tile:hover {
+      border-color: #2a9d8f;
+      transform: translateY(-2px);
+    }
+    .btn-tile:active, .btn-tile.selected {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #2a9d8f;
+      border-color: #144238;
+      background-color: #f0faf5;
+    }
+    .btn-orange-3d {
+      background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+      box-shadow: 0 5px 0 #c2410c;
+    }
+    .btn-orange-3d:hover {
+      background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+    }
+    .btn-orange-3d:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #c2410c;
+    }
+    .btn-green-3d {
+      background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+      box-shadow: 0 5px 0 #047857;
+    }
+    .btn-green-3d:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #047857;
+    }
+    /* Dashed placeholder box */
+    .slot-dashed {
+      border: 2.5px dashed #2a9d8f;
+      background-color: rgba(220, 244, 234, 0.35);
+    }
+    .slot-solid {
+      border: 2.5px solid #2a9d8f;
+      background-color: #ffffff;
+    }
+    /* Scrollbar hide */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Bounce Animation */
+    @keyframes bounce-sm {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .animate-bounce-sm {
+      animation: bounce-sm 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-orange-500 selection:text-white pb-6">
+
+  <!-- ==================== MAIN MOBILE CONTAINER (Max 480px, scales up on iPad/Desktop) ==================== -->
+  <div class="w-full max-w-md mx-auto min-h-screen flex flex-col justify-between px-4 pt-3 pb-4">
+
+    <!-- TOP SECTION: HEADER & MODE SWITCHER -->
+    <div>
+      <!-- Top Browser/App Bar Title -->
+      <div class="flex items-center justify-between py-1 mb-2">
+        <div class="flex items-center space-x-1.5 text-xs text-slate-500 font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>PinyinGo • Topik 4: Di Pejabat</span>
+        </div>
+        <button onclick="toggleAudioSpeed()" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200 flex items-center space-x-1 hover:bg-amber-200 transition">
+          <span>🔊 Suara:</span>
+          <span id="speed-label" class="font-extrabold text-amber-800">1.0x</span>
+        </button>
+      </div>
+
+      <!-- Main Navigation Tabs (Same Style as Screenshot) -->
+      <div class="bg-white p-1 rounded-full border border-slate-200 flex shadow-sm mb-4">
+        <button onclick="switchMode('words')" id="tab-words" class="flex-1 py-2.5 rounded-full font-black text-xs sm:text-sm tracking-wide transition flex items-center justify-center space-x-1.5 bg-[#144238] text-white shadow">
+          <span>组词 · Bina Perkataan</span>
+        </button>
+        <button onclick="switchMode('sentences')" id="tab-sentences" class="flex-1 py-2.5 rounded-full font-black text-xs sm:text-sm tracking-wide transition flex items-center justify-center space-x-1.5 text-slate-600 hover:text-slate-900">
+          <span>组句 · Bina Ayat</span>
+        </button>
+      </div>
+
+      <!-- Sub Header: Progress Counter, Bar, Daily Goal, Shuffle -->
+      <div class="flex items-center justify-between gap-2 mb-4 px-1">
+        <!-- Progress Counter -->
+        <div class="font-black text-sm text-slate-800 tracking-tight whitespace-nowrap" id="progress-text">
+          1 / 20
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="flex-grow h-3 bg-slate-200/80 rounded-full overflow-hidden p-0.5">
+          <div id="progress-bar-fill" class="h-full bg-[#2a9d8f] rounded-full transition-all duration-300" style="width: 5%;"></div>
+        </div>
+
+        <!-- Today Goal -->
+        <div class="text-[11px] font-bold text-slate-500 whitespace-nowrap bg-white px-2.5 py-1 rounded-full border border-slate-200 shadow-xs flex items-center space-x-1">
+          <span>Hari Ini:</span>
+          <span id="today-score" class="font-extrabold text-emerald-700">0 / 10</span>
+        </div>
+
+        <!-- Shuffle Button 🔀 -->
+        <button onclick="shuffleQuestion()" class="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:border-slate-300 active:scale-95 text-slate-700 flex items-center justify-center text-sm shadow-xs transition" title="Rawakkan Soalan">
+          🔀
+        </button>
+      </div>
+
+      <!-- Target Prompt Card (Green Banner in Screenshot) -->
+      <div class="bg-[#e6f5ee] border border-[#bfe7d5] rounded-2xl py-3 px-4 text-center mb-5 shadow-xs">
+        <div class="text-xs font-bold text-[#144238] uppercase tracking-wider mb-0.5" id="prompt-subtitle">
+          Bina perkataan untuk:
+        </div>
+        <div class="text-lg sm:text-xl font-black text-[#144238]" id="prompt-target">
+          "pekerja / staf"
+        </div>
+      </div>
+
+      <!-- ==================== EQUATION DISPLAY AREA ==================== -->
+      <div class="flex items-center justify-center space-x-2 sm:space-x-3 mb-6" id="equation-container">
+        
+        <!-- Box 1: First Character (Fixed or Given) -->
+        <div onclick="speakGivenWord()" class="w-24 h-28 sm:w-28 sm:h-32 rounded-2xl bg-white border-2 border-[#2a9d8f] flex flex-col items-center justify-center shadow-sm cursor-pointer hover:bg-emerald-50/50 transition">
+          <span class="text-3xl sm:text-4xl font-black text-[#144238] font-hanzi" id="eq-char1">职</span>
+          <span class="text-xs sm:text-sm font-bold text-[#2a9d8f] mt-1" id="eq-pinyin1">zhí</span>
+          <span class="text-[9px] text-slate-400 mt-0.5">🔊 Dengar</span>
+        </div>
+
+        <!-- Plus Operator -->
+        <div class="text-2xl font-black text-amber-500 font-sans">+</div>
+
+        <!-- Box 2: Target Selection Slot (Dashed Border) -->
+        <div id="eq-slot-box" onclick="clearSelectedSlot()" class="w-24 h-28 sm:w-28 sm:h-32 rounded-2xl slot-dashed flex flex-col items-center justify-center shadow-inner cursor-pointer transition">
+          <span class="text-3xl sm:text-4xl font-black text-slate-400 font-sans" id="eq-slot-char">?</span>
+          <span class="text-xs sm:text-sm font-bold text-slate-400 mt-1" id="eq-slot-pinyin">pilih</span>
+        </div>
+
+        <!-- Equals Operator -->
+        <div class="text-2xl font-black text-amber-500 font-sans">=</div>
+
+        <!-- Box 3: Result Word (Solid Border) -->
+        <div id="eq-result-box" class="w-24 h-28 sm:w-28 sm:h-32 rounded-2xl bg-white border-2 border-slate-300 flex flex-col items-center justify-center shadow-sm text-center px-1">
+          <span class="text-3xl sm:text-4xl font-black text-slate-400 font-sans" id="eq-result-char">?</span>
+          <span class="text-[10px] sm:text-xs font-bold text-slate-400 mt-1" id="eq-result-pinyin">hasil</span>
+        </div>
+
+      </div>
+
+      <!-- ==================== 2x2 TILES SELECTION GRID ==================== -->
+      <div class="grid grid-cols-2 gap-3 mb-6" id="tiles-grid">
+        <!-- Populated dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- BOTTOM ACTION AREA: CHECK BUTTON & FOOTER -->
+    <div>
+      <!-- Big Orange Action Button (Check / Semak) -->
+      <button id="btn-action" onclick="handleActionButton()" class="w-full py-4 rounded-2xl text-white font-extrabold text-lg sm:text-xl tracking-wide btn-orange-3d mb-4 flex items-center justify-center space-x-2 transition">
+        <span id="btn-action-text">Semak Jawapan (Check)</span>
+        <span id="btn-action-icon">➔</span>
+      </button>
+
+      <!-- Feedback / Success Bottom Sheet (Hidden by default) -->
+      <div id="feedback-banner" class="hidden mb-4 p-4 rounded-2xl border transition">
+        <div class="flex items-start space-x-3">
+          <span class="text-2xl" id="feedback-icon">🎉</span>
+          <div class="flex-grow">
+            <h4 class="font-extrabold text-sm sm:text-base" id="feedback-title">Tahniah! Jawapan Tepat.</h4>
+            <p class="text-xs text-slate-600 mt-0.5" id="feedback-desc">
+              <strong>职员 (zhíyuán)</strong> bermaksud pekerja atau kakitangan pejabat.
+            </p>
+          </div>
+          <button onclick="speakFullCurrentWord()" class="p-2 rounded-xl bg-white/80 hover:bg-white text-emerald-800 text-xs font-bold shadow-xs">
+            🔊 Sebut
+          </button>
+        </div>
+      </div>
+
+      <!-- Educational Bottom Card with Festive Motif (From Screenshot) -->
+      <div class="bg-white/85 backdrop-blur border border-slate-200 rounded-2xl p-3.5 shadow-sm relative overflow-hidden">
+        <div class="flex items-start space-x-3">
+          <span class="text-2xl select-none">💡</span>
+          <div class="flex-grow text-xs text-slate-600 leading-relaxed pr-8">
+            <span class="font-bold text-slate-800">Petua Modul Topik 4:</span>
+            <span id="edu-tip-text">
+              Kebanyakan perkataan Mandarin di pejabat terbentuk daripada gabungan dua aksara (双音节词). Cantumkan aksara pertama dengan pasangannya yang betul.
+            </span>
+          </div>
+          <!-- Lantern Icon Motif -->
+          <div class="absolute right-2.5 bottom-2.5 text-2xl opacity-90 select-none">
+            🏮
+          </div>
+        </div>
+
+        <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+          <button onclick="openVocabModal()" class="font-bold text-emerald-700 hover:text-emerald-900 flex items-center space-x-1">
+            <span>📖 Buka Kamus Topik 4 (23 Perkataan)</span>
+          </button>
+          <div class="flex items-center space-x-1 font-semibold text-slate-500">
+            <span>✨ Powered by Netlify</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ==================== MODAL: SENARAI KOSA KATA TOPIK 4 ==================== -->
+  <div id="vocab-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl p-5 shadow-2xl max-h-[85vh] flex flex-col justify-between">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">📋</span>
+          <div>
+            <h3 class="font-black text-slate-900 text-base">Kamus Kosa Kata Topik 4: Di Pejabat</h3>
+            <p class="text-xs text-slate-500">Berdasarkan Modul ELM 4322 Kolej Vokasional</p>
+          </div>
+        </div>
+        <button onclick="closeVocabModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">
+          ✕
+        </button>
+      </div>
+
+      <!-- Scrollable Vocab List -->
+      <div class="overflow-y-auto space-y-2 pr-1 my-2 flex-grow" id="modal-vocab-list">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 text-center">
+        <button onclick="closeVocabModal()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 font-extrabold text-xs text-slate-700 rounded-xl transition">
+          Tutup Kamus
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    /* ========== 1. TOPIK 4 DATA BANK (BERDASARKAN MODUL ELM 4322) ========== */
+    
+    // Mode 1: 组词 · Bina Perkataan (Combine Character 1 + Character 2 = Word)
+    const WORDS_BANK = [
+      {
+        targetMy: "pekerja / staf",
+        char1: "职",
+        pinyin1: "zhí",
+        char2: "员",
+        pinyin2: "yuán",
+        fullWord: "职员",
+        fullPinyin: "zhí yuán",
+        meaning: "pekerja / kakitangan pejabat (k.n)",
+        options: [
+          { char: "员", py: "yuán", isCorrect: true },
+          { char: "事", py: "shì", isCorrect: false },
+          { char: "位", py: "wèi", isCorrect: false },
+          { char: "具", py: "jù", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "rakan sekerja",
+        char1: "同",
+        pinyin1: "tóng",
+        char2: "事",
+        pinyin2: "shì",
+        fullWord: "同事",
+        fullPinyin: "tóng shì",
+        meaning: "rakan sekerja pejabat (k.n)",
+        options: [
+          { char: "学", py: "xué", isCorrect: false },
+          { char: "事", py: "shì", isCorrect: true },
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "理", py: "lǐ", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "tempat duduk",
+        char1: "座",
+        pinyin1: "zuò",
+        char2: "位",
+        pinyin2: "wèi",
+        fullWord: "座位",
+        fullPinyin: "zuò wèi",
+        meaning: "tempat duduk di pejabat (k.n)",
+        options: [
+          { char: "位", py: "wèi", isCorrect: true },
+          { char: "机", py: "jī", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "bahagian hadapan (depan)",
+        char1: "前",
+        pinyin1: "qián",
+        char2: "面",
+        pinyin2: "miàn",
+        fullWord: "前面",
+        fullPinyin: "qián miàn",
+        meaning: "bahagian hadapan / depan (k.n)",
+        options: [
+          { char: "边", py: "biān", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "脑", py: "nǎo", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "bahagian belakang",
+        char1: "后",
+        pinyin1: "hòu",
+        char2: "面",
+        pinyin2: "miàn",
+        fullWord: "后面",
+        fullPinyin: "hòu miàn",
+        meaning: "bahagian belakang (k.n)",
+        options: [
+          { char: "具", py: "jù", isCorrect: false },
+          { char: "理", py: "lǐ", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "员", py: "yuán", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "bahagian dalam",
+        char1: "里",
+        pinyin1: "lǐ",
+        char2: "面",
+        pinyin2: "miàn",
+        fullWord: "里面",
+        fullPinyin: "lǐ miàn",
+        meaning: "bahagian dalam (k.n)",
+        options: [
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "边", py: "biān", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "夹", py: "jiā", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "bahagian atas",
+        char1: "上",
+        pinyin1: "shàng",
+        char2: "面",
+        pinyin2: "miàn",
+        fullWord: "上面",
+        fullPinyin: "shàng miàn",
+        meaning: "bahagian atas (k.n)",
+        options: [
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "下", py: "xià", isCorrect: false },
+          { char: "脑", py: "nǎo", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "bahagian bawah",
+        char1: "下",
+        pinyin1: "xià",
+        char2: "面",
+        pinyin2: "miàn",
+        fullWord: "下面",
+        fullPinyin: "xià miàn",
+        meaning: "bahagian bawah (k.n)",
+        options: [
+          { char: "边", py: "biān", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "事", py: "shì", isCorrect: false },
+          { char: "位", py: "wèi", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "di sebelah / tepi",
+        char1: "旁",
+        pinyin1: "páng",
+        char2: "边",
+        pinyin2: "biān",
+        fullWord: "旁边",
+        fullPinyin: "páng biān",
+        meaning: "sebelah / tepi (k.n)",
+        options: [
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "边", py: "biān", isCorrect: true },
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "机", py: "jī", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "meja pejabat",
+        char1: "桌",
+        pinyin1: "zhuō",
+        char2: "子",
+        pinyin2: "zi",
+        fullWord: "桌子",
+        fullPinyin: "zhuō zi",
+        meaning: "meja (k.n)",
+        options: [
+          { char: "子", py: "zi", isCorrect: true },
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "边", py: "biān", isCorrect: false },
+          { char: "理", py: "lǐ", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "kerusi pejabat",
+        char1: "椅",
+        pinyin1: "yǐ",
+        char2: "子",
+        pinyin2: "zi",
+        fullWord: "椅子",
+        fullPinyin: "yǐ zi",
+        meaning: "kerusi (k.n)",
+        options: [
+          { char: "子", py: "zi", isCorrect: true },
+          { char: "具", py: "jù", isCorrect: false },
+          { char: "位", py: "wèi", isCorrect: false },
+          { char: "员", py: "yuán", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "almari fail",
+        char1: "柜",
+        pinyin1: "guì",
+        char2: "子",
+        pinyin2: "zi",
+        fullWord: "柜子",
+        fullPinyin: "guì zi",
+        meaning: "almari (k.n)",
+        options: [
+          { char: "子", py: "zi", isCorrect: true },
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "机", py: "jī", isCorrect: false },
+          { char: "事", py: "shì", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "alat tulis (pen, pensel)",
+        char1: "文",
+        pinyin1: "wén",
+        char2: "具",
+        pinyin2: "jù",
+        fullWord: "文具",
+        fullPinyin: "wén jù",
+        meaning: "alat tulis (k.n)",
+        options: [
+          { char: "具", py: "jù", isCorrect: true },
+          { char: "字", py: "zì", isCorrect: false },
+          { char: "本", py: "běn", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "komputer / komputer riba",
+        char1: "电",
+        pinyin1: "diàn",
+        char2: "脑",
+        pinyin2: "nǎo",
+        fullWord: "电脑",
+        fullPinyin: "diàn nǎo",
+        meaning: "komputer / laptop (k.n)",
+        options: [
+          { char: "脑", py: "nǎo", isCorrect: true },
+          { char: "话", py: "huà", isCorrect: false },
+          { char: "机", py: "jī", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "mesin cetak (printer)",
+        char1: "打印",
+        pinyin1: "dǎ yìn",
+        char2: "机",
+        pinyin2: "jī",
+        fullWord: "打印机",
+        fullPinyin: "dǎ yìn jī",
+        meaning: "mesin pencetak / printer (k.n)",
+        options: [
+          { char: "机", py: "jī", isCorrect: true },
+          { char: "器", py: "qì", isCorrect: false },
+          { char: "具", py: "jù", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "mesin fotostat",
+        char1: "复印",
+        pinyin1: "fù yìn",
+        char2: "机",
+        pinyin2: "jī",
+        fullWord: "复印机",
+        fullPinyin: "fù yìn jī",
+        meaning: "mesin fotostat dokumen (k.n)",
+        options: [
+          { char: "机", py: "jī", isCorrect: true },
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "夹", py: "jiā", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "fail dokumen",
+        char1: "文件",
+        pinyin1: "wén jiàn",
+        char2: "夹",
+        pinyin2: "jiā",
+        fullWord: "文件夹",
+        fullPinyin: "wén jiàn jiā",
+        meaning: "fail dokumen pejabat (k.n)",
+        options: [
+          { char: "夹", py: "jiā", isCorrect: true },
+          { char: "包", py: "bāo", isCorrect: false },
+          { char: "箱", py: "xiāng", isCorrect: false },
+          { char: "机", py: "jī", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "pengurus (manager)",
+        char1: "经",
+        pinyin1: "jīng",
+        char2: "理",
+        pinyin2: "lǐ",
+        fullWord: "经理",
+        fullPinyin: "jīng lǐ",
+        meaning: "pengurus syarikat / manager (k.n)",
+        options: [
+          { char: "理", py: "lǐ", isCorrect: true },
+          { char: "人", py: "rén", isCorrect: false },
+          { char: "事", py: "shì", isCorrect: false },
+          { char: "员", py: "yuán", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "pejabat",
+        char1: "办公",
+        pinyin1: "bàn gōng",
+        char2: "室",
+        pinyin2: "shì",
+        fullWord: "办公室",
+        fullPinyin: "bàn gōng shì",
+        meaning: "ruang pejabat (k.n)",
+        options: [
+          { char: "室", py: "shì", isCorrect: true },
+          { char: "房", py: "fáng", isCorrect: false },
+          { char: "局", py: "jú", isCorrect: false },
+          { char: "店", py: "diàn", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "menelefon",
+        char1: "打",
+        pinyin1: "dǎ",
+        char2: "电话",
+        pinyin2: "diàn huà",
+        fullWord: "打电话",
+        fullPinyin: "dǎ diàn huà",
+        meaning: "membuat panggilan telefon (k.k)",
+        options: [
+          { char: "电话", py: "diàn huà", isCorrect: true },
+          { char: "电脑", py: "diàn nǎo", isCorrect: false },
+          { char: "信", py: "xìn", isCorrect: false },
+          { char: "字", py: "zì", isCorrect: false }
+        ]
+      }
+    ];
+
+    // Mode 2: 组句 · Bina Ayat (Sentence Equation from Modul Topik 4)
+    const SENTENCES_BANK = [
+      {
+        targetMy: "Tempat duduk saya di mana?",
+        char1: "我的座位",
+        pinyin1: "Wǒ de zuòwèi",
+        char2: "在哪儿？",
+        pinyin2: "zài nǎr?",
+        fullWord: "我的座位在哪儿？",
+        fullPinyin: "Wǒ de zuòwèi zài nǎr?",
+        meaning: "Pola: Kata Nama + 在哪儿？ (Tanya kedudukan)",
+        options: [
+          { char: "在哪儿？", py: "zài nǎr?", isCorrect: true },
+          { char: "在吗？", py: "zài ma?", isCorrect: false },
+          { char: "在后面", py: "zài hòumiàn", isCorrect: false },
+          { char: "在这里", py: "zài zhèlǐ", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "Alat tulis di dalam meja.",
+        char1: "文具在桌子",
+        pinyin1: "Wénjù zài zhuōzi",
+        char2: "里面。",
+        pinyin2: "lǐ miàn.",
+        fullWord: "文具在桌子里面。",
+        fullPinyin: "Wénjù zài zhuōzi lǐmiàn.",
+        meaning: "Pola: Kata Nama + 在 + penanda + kedudukan",
+        options: [
+          { char: "里面。", py: "lǐ miàn.", isCorrect: true },
+          { char: "哪儿？", py: "nǎr?", isCorrect: false },
+          { char: "在吗？", py: "zài ma?", isCorrect: false },
+          { char: "谁？", py: "shéi?", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "Adakah Pengurus Wang ada?",
+        char1: "王经理",
+        pinyin1: "Wáng jīnglǐ",
+        char2: "在吗？",
+        pinyin2: "zài ma?",
+        fullWord: "王经理在吗？",
+        fullPinyin: "Wáng jīnglǐ zài ma?",
+        meaning: "Pola: Nama Orang + 在吗？ (Tanya keberadaan seseorang)",
+        options: [
+          { char: "在吗？", py: "zài ma?", isCorrect: true },
+          { char: "在哪儿？", py: "zài nǎr?", isCorrect: false },
+          { char: "做什么？", py: "zuò shénme?", isCorrect: false },
+          { char: "来了。", py: "lái le.", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "Hari ini dia tidak ada di pejabat.",
+        char1: "他今天",
+        pinyin1: "Tā jīntiān",
+        char2: "不在。",
+        pinyin2: "bú zài.",
+        fullWord: "他今天不在。",
+        fullPinyin: "Tā jīntiān bú zài.",
+        meaning: "Jawapan: 在 (ada) / 不在 (tiada)",
+        options: [
+          { char: "不在。", py: "bú zài.", isCorrect: true },
+          { char: "哪儿？", py: "nǎr?", isCorrect: false },
+          { char: "在吗？", py: "zài ma?", isCorrect: false },
+          { char: "去哪儿？", py: "qù nǎr?", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "Mesin cetak di bawah meja.",
+        char1: "打印机在桌子",
+        pinyin1: "Dǎyìnjī zài zhuōzi",
+        char2: "下面。",
+        pinyin2: "xià miàn.",
+        fullWord: "打印机在桌子下面。",
+        fullPinyin: "Dǎyìnjī zài zhuōzi xiàmiàn.",
+        meaning: "Dǎyìnjī (printer) di bahagian bawah meja (xiàmiàn).",
+        options: [
+          { char: "下面。", py: "xià miàn.", isCorrect: true },
+          { char: "上面。", py: "shàng miàn.", isCorrect: false },
+          { char: "在哪儿？", py: "zài nǎr?", isCorrect: false },
+          { char: "不在。", py: "bú zài.", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "Fail di dalam almari Pengurus Wang.",
+        char1: "文件夹在王经理的柜子",
+        pinyin1: "Wénjiànjiā zài Wáng jīnglǐ de guìzi",
+        char2: "里面。",
+        pinyin2: "lǐ miàn.",
+        fullWord: "文件夹在王经理的柜子里面。",
+        fullPinyin: "Wénjiànjiā zài Wáng jīnglǐ de guìzi lǐmiàn.",
+        meaning: "Petikan Dialog 2 (m/s 50 modul).",
+        options: [
+          { char: "里面。", py: "lǐ miàn.", isCorrect: true },
+          { char: "后面。", py: "hòu miàn.", isCorrect: false },
+          { char: "在哪儿？", py: "zài nǎr?", isCorrect: false },
+          { char: "不在。", py: "bú zài.", isCorrect: false }
+        ]
+      }
+    ];
+
+    // Master 23 Vocab for modal lookup
+    const FULL_VOCAB_23 = [
+      { hz: "新", py: "xīn", my: "baru", type: "adjektif" },
+      { hz: "职员", py: "zhí yuán", my: "pekerja / staf", type: "kata nama" },
+      { hz: "同事", py: "tóng shì", my: "rakan sekerja", type: "kata nama" },
+      { hz: "座位", py: "zuò wèi", my: "tempat duduk", type: "kata nama" },
+      { hz: "前面", py: "qián miàn", my: "bahagian hadapan", type: "kata arah" },
+      { hz: "后面", py: "hòu miàn", my: "bahagian belakang", type: "kata arah" },
+      { hz: "里面", py: "lǐ miàn", my: "bahagian dalam", type: "kata arah" },
+      { hz: "上面", py: "shàng miàn", my: "bahagian atas", type: "kata arah" },
+      { hz: "下面", py: "xià miàn", my: "bahagian bawah", type: "kata arah" },
+      { hz: "旁边", py: "páng biān", my: "sebelah / tepi", type: "kata arah" },
+      { hz: "桌子", py: "zhuō zi", my: "meja", type: "kata nama" },
+      { hz: "椅子", py: "yǐ zi", my: "kerusi", type: "kata nama" },
+      { hz: "柜子", py: "guì zi", my: "almari", type: "kata nama" },
+      { hz: "文具", py: "wén jù", my: "alat tulis", type: "kata nama" },
+      { hz: "电脑", py: "diàn nǎo", my: "komputer", type: "kata nama" },
+      { hz: "打印机", py: "dǎ yìn jī", my: "mesin cetak (printer)", type: "kata nama" },
+      { hz: "复印机", py: "fù yìn jī", my: "mesin fotostat", type: "kata nama" },
+      { hz: "文件夹", py: "wén jiàn jiā", my: "fail dokumen", type: "kata nama" },
+      { hz: "拿", py: "ná", my: "ambil", type: "kata kerja" },
+      { hz: "经理", py: "jīng lǐ", my: "pengurus", type: "kata nama" },
+      { hz: "在", py: "zài", my: "ada (di tempatnya) / di", type: "kata kerja" },
+      { hz: "事", py: "shì", my: "perkara / hal", type: "kata nama" },
+      { hz: "打电话", py: "dǎ diàn huà", my: "menelefon", type: "kata kerja" }
+    ];
+
+    /* ========== 2. APPLICATION STATE ========== */
+    let currentMode = 'words'; // 'words' | 'sentences'
+    let currentIndex = 0;
+    let selectedOption = null;
+    let isAnswerChecked = false;
+    let dailyCompletedCount = 0;
+
+    /* ========== 3. WEB SPEECH & AUDIO FX ========== */
+    let speechRate = 0.95;
+    const rateOptions = [0.75, 0.95, 1.15];
+    let rateIdx = 1;
+
+    function toggleAudioSpeed() {
+      rateIdx = (rateIdx + 1) % rateOptions.length;
+      speechRate = rateOptions[rateIdx];
+      document.getElementById('speed-label').innerText = speechRate + 'x';
+      playFx('click');
+    }
+
+    function speakMandarin(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'zh-CN';
+      utter.rate = speechRate;
+      const voices = window.speechSynthesis.getVoices();
+      const zh = voices.find(v => v.lang && (v.lang.includes('zh') || v.lang.includes('cmn')));
+      if (zh) utter.voice = zh;
+      window.speechSynthesis.speak(utter);
+    }
+
+    let audioContext = null;
+    function playFx(type) {
+      try {
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioContext.state === 'suspended') audioContext.resume();
+
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        const now = audioContext.currentTime;
+        if (type === 'correct') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+          osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+          osc.frequency.setValueAtTime(1046.50, now + 0.3); // C6
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+          osc.start(now);
+          osc.stop(now + 0.55);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(260, now);
+          osc.frequency.setValueAtTime(190, now + 0.14);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.35);
+        } else {
+          // click
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(620, now);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        }
+      } catch (e) {}
+    }
+
+    /* ========== 4. CORE ENGINE & RENDERING ========== */
+    function getActiveBank() {
+      return currentMode === 'words' ? WORDS_BANK : SENTENCES_BANK;
+    }
+
+    function switchMode(mode) {
+      playFx('click');
+      currentMode = mode;
+      currentIndex = 0;
+      selectedOption = null;
+      isAnswerChecked = false;
+
+      const wordsTab = document.getElementById('tab-words');
+      const sentTab = document.getElementById('tab-sentences');
+
+      if (mode === 'words') {
+        wordsTab.className = "flex-1 py-2.5 rounded-full font-black text-xs sm:text-sm tracking-wide transition flex items-center justify-center space-x-1.5 bg-[#144238] text-white shadow";
+        sentTab.className = "flex-1 py-2.5 rounded-full font-black text-xs sm:text-sm tracking-wide transition flex items-center justify-center space-x-1.5 text-slate-600 hover:text-slate-900";
+        document.getElementById('prompt-subtitle').innerText = "Bina perkataan untuk:";
+        document.getElementById('edu-tip-text').innerText = "Kebanyakan perkataan Mandarin di pejabat terbentuk daripada gabungan dua aksara (双音节词). Cantumkan aksara pertama dengan pasangannya yang betul.";
+      } else {
+        sentTab.className = "flex-1 py-2.5 rounded-full font-black text-xs sm:text-sm tracking-wide transition flex items-center justify-center space-x-1.5 bg-[#144238] text-white shadow";
+        wordsTab.className = "flex-1 py-2.5 rounded-full font-black text-xs sm:text-sm tracking-wide transition flex items-center justify-center space-x-1.5 text-slate-600 hover:text-slate-900";
+        document.getElementById('prompt-subtitle').innerText = "Lengkapkan ayat pejabat untuk:";
+        document.getElementById('edu-tip-text').innerText = "Dalam Modul Topik 4, pola ayat kedudukan menggunakan: Kata Nama + 在 (zài) + penanda + kedudukan (shàngmiàn/xiàmiàn/lǐmiàn/pángbiān).";
+      }
+
+      loadCurrentQuestion();
+    }
+
+    function loadCurrentQuestion() {
+      const bank = getActiveBank();
+      const item = bank[currentIndex];
+      selectedOption = null;
+      isAnswerChecked = false;
+
+      // Update counters & progress bar
+      document.getElementById('progress-text').innerText = `${currentIndex + 1} / ${bank.length}`;
+      const pct = Math.round(((currentIndex + 1) / bank.length) * 100);
+      document.getElementById('progress-bar-fill').style.width = `${pct}%`;
+
+      // Prompt text
+      document.getElementById('prompt-target').innerText = `"${item.targetMy}"`;
+
+      // Box 1: Given first character/phrase
+      const char1El = document.getElementById('eq-char1');
+      char1El.innerText = item.char1;
+      if (item.char1.length > 2) {
+        char1El.className = "text-xl sm:text-2xl font-black text-[#144238] font-hanzi px-1 text-center";
+      } else {
+        char1El.className = "text-3xl sm:text-4xl font-black text-[#144238] font-hanzi";
+      }
+      document.getElementById('eq-pinyin1').innerText = item.pinyin1;
+
+      // Box 2: Slot (Reset to dashed ?)
+      const slotBox = document.getElementById('eq-slot-box');
+      slotBox.className = "w-24 h-28 sm:w-28 sm:h-32 rounded-2xl slot-dashed flex flex-col items-center justify-center shadow-inner cursor-pointer transition";
+      document.getElementById('eq-slot-char').innerText = "?";
+      document.getElementById('eq-slot-char').className = "text-3xl sm:text-4xl font-black text-slate-400 font-sans";
+      document.getElementById('eq-slot-pinyin').innerText = "pilih";
+
+      // Box 3: Result Box (Reset to ?)
+      const resBox = document.getElementById('eq-result-box');
+      resBox.className = "w-24 h-28 sm:w-28 sm:h-32 rounded-2xl bg-white border-2 border-slate-300 flex flex-col items-center justify-center shadow-sm text-center px-1";
+      document.getElementById('eq-result-char').innerText = "?";
+      document.getElementById('eq-result-char').className = "text-3xl sm:text-4xl font-black text-slate-400 font-sans";
+      document.getElementById('eq-result-pinyin').innerText = "hasil";
+
+      // Reset Action Button
+      resetActionButton('check');
+
+      // Hide feedback banner
+      document.getElementById('feedback-banner').className = "hidden mb-4 p-4 rounded-2xl border transition";
+
+      // Render 2x2 Choice Tiles
+      renderTiles(item.options);
+
+      // Play audio of the given first part
+      setTimeout(() => speakMandarin(item.char1), 250);
+    }
+
+    function renderTiles(options) {
+      const container = document.getElementById('tiles-grid');
+      container.innerHTML = '';
+
+      options.forEach((opt, idx) => {
+        const tile = document.createElement('button');
+        tile.className = "btn-tile bg-white border-2 border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center cursor-pointer group text-center";
+        tile.onclick = () => selectTile(opt, tile);
+
+        tile.innerHTML = `
+          <span class="text-3xl sm:text-4xl font-black text-[#144238] font-hanzi group-hover:scale-105 transition-transform duration-150">${opt.char}</span>
+          <span class="text-xs sm:text-sm font-bold text-[#2a9d8f] mt-1.5">${opt.py}</span>
+        `;
+        container.appendChild(tile);
+      });
+    }
+
+    function selectTile(opt, tileElement) {
+      if (isAnswerChecked) return;
+      playFx('click');
+      selectedOption = opt;
+
+      // Update tiles visual state
+      document.querySelectorAll('.btn-tile').forEach(t => t.classList.remove('selected', 'border-[#144238]', 'bg-[#f0faf5]'));
+      tileElement.classList.add('selected');
+
+      // Put selected character into Box 2 (Slot)
+      const slotBox = document.getElementById('eq-slot-box');
+      slotBox.className = "w-24 h-28 sm:w-28 sm:h-32 rounded-2xl slot-solid flex flex-col items-center justify-center shadow-sm cursor-pointer transition animate-bounce-sm";
+      
+      const charEl = document.getElementById('eq-slot-char');
+      charEl.innerText = opt.char;
+      if (opt.char.length > 2) {
+        charEl.className = "text-lg sm:text-xl font-black text-[#144238] font-hanzi px-1 text-center";
+      } else {
+        charEl.className = "text-3xl sm:text-4xl font-black text-[#144238] font-hanzi";
+      }
+      document.getElementById('eq-slot-pinyin').innerText = opt.py;
+
+      // Preview combination in Box 3
+      const item = getActiveBank()[currentIndex];
+      const combined = item.char1 + opt.char;
+      const resCharEl = document.getElementById('eq-result-char');
+      resCharEl.innerText = combined;
+      if (combined.length > 2) {
+        resCharEl.className = "text-sm sm:text-base font-black text-slate-600 font-hanzi px-1";
+      } else {
+        resCharEl.className = "text-2xl sm:text-3xl font-black text-slate-600 font-hanzi";
+      }
+      document.getElementById('eq-result-pinyin').innerText = item.pinyin1 + ' ' + opt.py;
+
+      // Voice preview of selected character
+      speakMandarin(opt.char);
+    }
+
+    function clearSelectedSlot() {
+      if (isAnswerChecked) return;
+      playFx('click');
+      selectedOption = null;
+      document.querySelectorAll('.btn-tile').forEach(t => t.classList.remove('selected'));
+      
+      const slotBox = document.getElementById('eq-slot-box');
+      slotBox.className = "w-24 h-28 sm:w-28 sm:h-32 rounded-2xl slot-dashed flex flex-col items-center justify-center shadow-inner cursor-pointer transition";
+      document.getElementById('eq-slot-char').innerText = "?";
+      document.getElementById('eq-slot-char').className = "text-3xl sm:text-4xl font-black text-slate-400 font-sans";
+      document.getElementById('eq-slot-pinyin').innerText = "pilih";
+
+      document.getElementById('eq-result-char').innerText = "?";
+      document.getElementById('eq-result-char').className = "text-3xl sm:text-4xl font-black text-slate-400 font-sans";
+      document.getElementById('eq-result-pinyin').innerText = "hasil";
+    }
+
+    function handleActionButton() {
+      if (isAnswerChecked) {
+        // NEXT QUESTION
+        playFx('click');
+        const bank = getActiveBank();
+        currentIndex = (currentIndex + 1) % bank.length;
+        loadCurrentQuestion();
+        return;
+      }
+
+      // CHECK ANSWER
+      if (!selectedOption) {
+        playFx('wrong');
+        alert("Sila pilih satu aksara dari pilihan di bawah terlebih dahulu!");
+        return;
+      }
+
+      const item = getActiveBank()[currentIndex];
+      const banner = document.getElementById('feedback-banner');
+
+      if (selectedOption.isCorrect) {
+        // CORRECT!
+        isAnswerChecked = true;
+        playFx('correct');
+        dailyCompletedCount++;
+        document.getElementById('today-score').innerText = `${dailyCompletedCount} / 10`;
+
+        // Update Box 3 to Full Verified Word
+        const resBox = document.getElementById('eq-result-box');
+        resBox.className = "w-24 h-28 sm:w-28 sm:h-32 rounded-2xl bg-emerald-50 border-2 border-emerald-500 flex flex-col items-center justify-center shadow-md text-center px-1 animate-bounce-sm";
+        const resCharEl = document.getElementById('eq-result-char');
+        resCharEl.innerText = item.fullWord;
+        resCharEl.className = item.fullWord.length > 2 
+          ? "text-sm sm:text-base font-black text-emerald-900 font-hanzi px-1" 
+          : "text-2xl sm:text-3xl font-black text-emerald-900 font-hanzi";
+        document.getElementById('eq-result-pinyin').innerText = item.fullPinyin;
+
+        // Speak full word in native Chinese TTS
+        setTimeout(() => speakMandarin(item.fullWord), 200);
+
+        // Feedback Banner
+        banner.className = "block mb-4 p-4 rounded-2xl border border-emerald-300 bg-emerald-50 text-emerald-950 shadow-sm animate-bounce-sm";
+        document.getElementById('feedback-icon').innerText = "🎉";
+        document.getElementById('feedback-title').innerText = "Tahniah! Cantuman Tepat Sekali.";
+        document.getElementById('feedback-desc').innerHTML = `
+          <span class="font-hanzi font-black text-emerald-800 text-sm sm:text-base">${item.fullWord} (${item.fullPinyin})</span><br>
+          <span class="text-xs text-emerald-700">${item.meaning}</span>
+        `;
+
+        // Change button to Seterusnya (Next)
+        resetActionButton('next');
+      } else {
+        // WRONG
+        playFx('wrong');
+        banner.className = "block mb-4 p-4 rounded-2xl border border-rose-300 bg-rose-50 text-rose-950 shadow-sm";
+        document.getElementById('feedback-icon').innerText = "🤔";
+        document.getElementById('feedback-title').innerText = "Kurang Tepat, Cuba Lagi!";
+        document.getElementById('feedback-desc').innerText = `Aksara "${selectedOption.char}" tidak membentuk perkataan yang dicari untuk "${item.targetMy}".`;
+      }
+    }
+
+    function resetActionButton(state) {
+      const btn = document.getElementById('btn-action');
+      const text = document.getElementById('btn-action-text');
+      const icon = document.getElementById('btn-action-icon');
+
+      if (state === 'next') {
+        btn.className = "w-full py-4 rounded-2xl text-white font-extrabold text-lg sm:text-xl tracking-wide btn-green-3d mb-4 flex items-center justify-center space-x-2 transition";
+        text.innerText = "Seterusnya (Next)";
+        icon.innerText = "➔";
+      } else {
+        btn.className = "w-full py-4 rounded-2xl text-white font-extrabold text-lg sm:text-xl tracking-wide btn-orange-3d mb-4 flex items-center justify-center space-x-2 transition";
+        text.innerText = "Semak Jawapan (Check)";
+        icon.innerText = "✔";
+      }
+    }
+
+    function shuffleQuestion() {
+      playFx('click');
+      const bank = getActiveBank();
+      currentIndex = Math.floor(Math.random() * bank.length);
+      loadCurrentQuestion();
+    }
+
+    function speakGivenWord() {
+      const item = getActiveBank()[currentIndex];
+      speakMandarin(item.char1);
+    }
+
+    function speakFullCurrentWord() {
+      const item = getActiveBank()[currentIndex];
+      speakMandarin(item.fullWord);
+    }
+
+    /* ========== 5. VOCAB MODAL (KAMUS 23 PERKATAAN) ========== */
+    function openVocabModal() {
+      playFx('click');
+      const container = document.getElementById('modal-vocab-list');
+      container.innerHTML = '';
+
+      FULL_VOCAB_23.forEach((v, i) => {
+        const item = document.createElement('div');
+        item.className = "bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 p-2.5 rounded-xl flex items-center justify-between cursor-pointer transition";
+        item.onclick = () => speakMandarin(v.hz);
+        item.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <span class="w-6 text-xs font-bold text-slate-400 text-center">${i + 1}</span>
+            <div>
+              <div class="flex items-baseline space-x-2">
+                <span class="text-lg font-black text-slate-900 font-hanzi">${v.hz}</span>
+                <span class="text-xs font-bold text-[#2a9d8f]">${v.py}</span>
+              </div>
+              <div class="text-[11px] text-slate-500 font-medium">
+                ${v.my} <span class="text-[9px] bg-white px-1.5 py-0.5 rounded border text-slate-400">${v.type}</span>
+              </div>
+            </div>
+          </div>
+          <button class="text-xs bg-white border border-slate-200 text-emerald-700 px-2.5 py-1 rounded-lg font-bold hover:bg-emerald-100">
+            🔊 Sebut
+          </button>
+        `;
+        container.appendChild(item);
+      });
+
+      document.getElementById('vocab-modal').classList.remove('hidden');
+    }
+
+    function closeVocabModal() {
+      playFx('click');
+      document.getElementById('vocab-modal').classList.add('hidden');
+    }
+
+    /* ========== 6. INITIALIZATION ========== */
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCurrentQuestion();
+
+      // Keyboard support: Enter to check / next
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          handleActionButton();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
