@@ -836,30 +836,188 @@
       }
     ];
 
-    // Data Dialog Topik 4
+    // Data Dialog Topik 4 dengan Token Pecahan Hanzi & Pinyin
     const CHAT_SCENARIOS = {
       1: {
         title: "Dialog 1: 新的职员 (Pekerja Baharu)",
         messages: [
-          { sender: "Hasan", isMe: true, hz: "您好！我叫哈山。我是新的职员。", py: "Nín hǎo! Wǒ jiào Hā shān. Wǒ shì xīn de zhí yuán.", my: "Helo! Nama saya Hasan. Saya pekerja baru." },
-          { sender: "Xiao Ming", isMe: false, hz: "您好！我叫小明，我是您的同事。", py: "Nín hǎo! Wǒ jiào Xiǎo Míng, wǒ shì nín de tóng shì.", my: "Helo! Nama saya Xiao Ming, saya rakan sekerja awak." },
-          { sender: "Hasan", isMe: true, hz: "请问，我的座位在哪儿？", py: "Qǐng wèn, wǒ de zuò wèi zài nǎr?", my: "Tumpang tanya, tempat duduk saya di mana?" },
-          { sender: "Xiao Ming", isMe: false, hz: "你的座位在我的前面。你的桌子上面有文具和电脑。", py: "Nǐ de zuò wèi zài wǒ de qián miàn. Nǐ de zhuō zi shàng miàn yǒu wén jù hé diàn nǎo.", my: "Tempat duduk awak di depan saya. Di atas meja awak ada alat tulis dan komputer." },
-          { sender: "Hasan", isMe: true, hz: "请问，打印机和复印机在哪儿？", py: "Qǐng wèn, dǎ yìn jī hé fù yìn jī zài nǎr?", my: "Tumpang tanya, mesin cetak dan mesin fotostat di mana?" },
-          { sender: "Xiao Ming", isMe: false, hz: "打印机在桌子下面。复印机在椅子后面。", py: "Dǎ yìn jī zài zhuō zi xià miàn. Fù yìn jī zài yǐ zi hòu miàn.", my: "Mesin pencetak di bawah meja. Mesin fotostat di belakang kerusi." },
-          { sender: "Hasan", isMe: true, hz: "好的，谢谢您！", py: "Hǎo de, xiè xie nín!", my: "Baiklah, terima kasih!" },
-          { sender: "Xiao Ming", isMe: false, hz: "不客气！", py: "Bú kè qì!", my: "Sama-sama!" }
+          {
+            sender: "Hasan",
+            isMe: true,
+            hz: "您好！我叫哈山。我是新的职员。",
+            py: "Nín hǎo! Wǒ jiào Hā shān. Wǒ shì xīn de zhí yuán.",
+            my: "Helo! Nama saya Hasan. Saya pekerja baru.",
+            tokens: [
+              { hz: "您", py: "nín" }, { hz: "好", py: "hǎo" },
+              { hz: "我", py: "wǒ" }, { hz: "叫", py: "jiào" }, { hz: "哈", py: "hā" }, { hz: "山", py: "shān" },
+              { hz: "我", py: "wǒ" }, { hz: "是", py: "shì" }, { hz: "新", py: "xīn" }, { hz: "的", py: "de" },
+              { hz: "职", py: "zhí" }, { hz: "员", py: "yuán" }
+            ]
+          },
+          {
+            sender: "Xiao Ming",
+            isMe: false,
+            hz: "您好！我叫小明，我是您的同事。",
+            py: "Nín hǎo! Wǒ jiào Xiǎo Míng, wǒ shì nín de tóng shì.",
+            my: "Helo! Nama saya Xiao Ming, saya rakan sekerja awak.",
+            tokens: [
+              { hz: "您", py: "nín" }, { hz: "好", py: "hǎo" },
+              { hz: "我", py: "wǒ" }, { hz: "叫", py: "jiào" }, { hz: "小", py: "xiǎo" }, { hz: "明", py: "míng" },
+              { hz: "我", py: "wǒ" }, { hz: "是", py: "shì" }, { hz: "您", py: "nín" }, { hz: "的", py: "de" },
+              { hz: "同", py: "tóng" }, { hz: "事", py: "shì" }
+            ]
+          },
+          {
+            sender: "Hasan",
+            isMe: true,
+            hz: "请问，我的座位在哪儿？",
+            py: "Qǐng wèn, wǒ de zuò wèi zài nǎr?",
+            my: "Tumpang tanya, tempat duduk saya di mana?",
+            tokens: [
+              { hz: "请", py: "qǐng" }, { hz: "问", py: "wèn" },
+              { hz: "我", py: "wǒ" }, { hz: "的", py: "de" }, { hz: "座", py: "zuò" }, { hz: "位", py: "wèi" },
+              { hz: "在", py: "zài" }, { hz: "哪", py: "nǎ" }, { hz: "儿", py: "r" }
+            ]
+          },
+          {
+            sender: "Xiao Ming",
+            isMe: false,
+            hz: "你的座位在我的前面。你的桌子上面有文具和电脑。",
+            py: "Nǐ de zuò wèi zài wǒ de qián miàn. Nǐ de zhuō zi shàng miàn yǒu wén jù hé diàn nǎo.",
+            my: "Tempat duduk awak di depan saya. Di atas meja awak ada alat tulis dan komputer.",
+            tokens: [
+              { hz: "你", py: "nǐ" }, { hz: "的", py: "de" }, { hz: "座", py: "zuò" }, { hz: "位", py: "wèi" },
+              { hz: "在", py: "zài" }, { hz: "我", py: "wǒ" }, { hz: "的", py: "de" }, { hz: "前", py: "qián" }, { hz: "面", py: "miàn" },
+              { hz: "你", py: "nǐ" }, { hz: "的", py: "de" }, { hz: "桌", py: "zhuō" }, { hz: "子", py: "zi" },
+              { hz: "上", py: "shàng" }, { hz: "面", py: "miàn" }, { hz: "有", py: "yǒu" },
+              { hz: "文", py: "wén" }, { hz: "具", py: "jù" }, { hz: "和", py: "hé" },
+              { hz: "电", py: "diàn" }, { hz: "脑", py: "nǎo" }
+            ]
+          },
+          {
+            sender: "Hasan",
+            isMe: true,
+            hz: "请问，打印机和复印机在哪儿？",
+            py: "Qǐng wèn, dǎ yìn jī hé fù yìn jī zài nǎr?",
+            my: "Tumpang tanya, mesin cetak dan mesin fotostat di mana?",
+            tokens: [
+              { hz: "请", py: "qǐng" }, { hz: "问", py: "wèn" },
+              { hz: "打", py: "dǎ" }, { hz: "印", py: "yìn" }, { hz: "机", py: "jī" },
+              { hz: "和", py: "hé" },
+              { hz: "复", py: "fù" }, { hz: "印", py: "yìn" }, { hz: "机", py: "jī" },
+              { hz: "在", py: "zài" }, { hz: "哪", py: "nǎ" }, { hz: "儿", py: "r" }
+            ]
+          },
+          {
+            sender: "Xiao Ming",
+            isMe: false,
+            hz: "打印机在桌子下面。复印机在椅子后面。",
+            py: "Dǎ yìn jī zài zhuō zi xià miàn. Fù yìn jī zài yǐ zi hòu miàn.",
+            my: "Mesin pencetak di bawah meja. Mesin fotostat di belakang kerusi.",
+            tokens: [
+              { hz: "打", py: "dǎ" }, { hz: "印", py: "yìn" }, { hz: "机", py: "jī" },
+              { hz: "在", py: "zài" }, { hz: "桌", py: "zhuō" }, { hz: "子", py: "zi" }, { hz: "下", py: "xià" }, { hz: "面", py: "miàn" },
+              { hz: "复", py: "fù" }, { hz: "印", py: "yìn" }, { hz: "机", py: "jī" },
+              { hz: "在", py: "zài" }, { hz: "椅", py: "yǐ" }, { hz: "子", py: "zi" }, { hz: "后", py: "hòu" }, { hz: "面", py: "miàn" }
+            ]
+          },
+          {
+            sender: "Hasan",
+            isMe: true,
+            hz: "好的，谢谢您！",
+            py: "Hǎo de, xiè xie nín!",
+            my: "Baiklah, terima kasih!",
+            tokens: [
+              { hz: "好", py: "hǎo" }, { hz: "的", py: "de" },
+              { hz: "谢", py: "xiè" }, { hz: "谢", py: "xie" }, { hz: "您", py: "nín" }
+            ]
+          },
+          {
+            sender: "Xiao Ming",
+            isMe: false,
+            hz: "不客气！",
+            py: "Bú kè qì!",
+            my: "Sama-sama!",
+            tokens: [
+              { hz: "不", py: "bú" }, { hz: "客", py: "kè" }, { hz: "气", py: "qì" }
+            ]
+          }
         ]
       },
       2: {
         title: "Dialog 2: 王经理在吗？ (Pengurus Wang Ada?)",
         messages: [
-          { sender: "Hasan", isMe: true, hz: "小明，在哪儿可以拿文件夹？", py: "Xiǎo Míng, zài nǎr kě yǐ ná wén jiàn jiā?", my: "Xiao Ming, di mana saya boleh ambil fail?" },
-          { sender: "Xiao Ming", isMe: false, hz: "文件夹在王经理的柜子里面。", py: "Wén jiàn jiā zài Wáng jīng lǐ de guì zi lǐ miàn.", my: "Fail berada di dalam almari Pengurus Wang." },
-          { sender: "Hasan", isMe: true, hz: "王经理在吗？", py: "Wáng jīng lǐ zài ma?", my: "Adakah Pengurus Wang ada?" },
-          { sender: "Xiao Ming", isMe: false, hz: "他今天不在。有什么事，可以给他打电话。", py: "Tā jīn tiān bú zài. Yǒu shén me shì, kě yǐ gěi tā dǎ diàn huà.", my: "Dia tiada hari ini. Jika ada apa-apa hal, boleh telefon beliau." },
-          { sender: "Hasan", isMe: true, hz: "好的，谢谢你！", py: "Hǎo de, xiè xie nǐ!", my: "Baiklah, terima kasih awak!" },
-          { sender: "Xiao Ming", isMe: false, hz: "没事的。", py: "Méi shì de.", my: "Tiada masalah / sama-sama." }
+          {
+            sender: "Hasan",
+            isMe: true,
+            hz: "小明，在哪儿可以拿文件夹？",
+            py: "Xiǎo Míng, zài nǎr kě yǐ ná wén jiàn jiā?",
+            my: "Xiao Ming, di mana saya boleh ambil fail?",
+            tokens: [
+              { hz: "小", py: "xiǎo" }, { hz: "明", py: "míng" },
+              { hz: "在", py: "zài" }, { hz: "哪", py: "nǎ" }, { hz: "儿", py: "r" },
+              { hz: "可", py: "kě" }, { hz: "以", py: "yǐ" }, { hz: "拿", py: "ná" },
+              { hz: "文", py: "wén" }, { hz: "件", py: "jiàn" }, { hz: "夹", py: "jiā" }
+            ]
+          },
+          {
+            sender: "Xiao Ming",
+            isMe: false,
+            hz: "文件夹在王经理的柜子里面。",
+            py: "Wén jiàn jiā zài Wáng jīng lǐ de guì zi lǐ miàn.",
+            my: "Fail berada di dalam almari Pengurus Wang.",
+            tokens: [
+              { hz: "文", py: "wén" }, { hz: "件", py: "jiàn" }, { hz: "夹", py: "jiā" },
+              { hz: "在", py: "zài" }, { hz: "王", py: "wáng" }, { hz: "经", py: "jīng" }, { hz: "理", py: "lǐ" },
+              { hz: "的", py: "de" }, { hz: "柜", py: "guì" }, { hz: "子", py: "zi" }, { hz: "里", py: "lǐ" }, { hz: "面", py: "miàn" }
+            ]
+          },
+          {
+            sender: "Hasan",
+            isMe: true,
+            hz: "王经理在吗？",
+            py: "Wáng jīng lǐ zài ma?",
+            my: "Adakah Pengurus Wang ada?",
+            tokens: [
+              { hz: "王", py: "wáng" }, { hz: "经", py: "jīng" }, { hz: "理", py: "lǐ" },
+              { hz: "在", py: "zài" }, { hz: "吗", py: "ma" }
+            ]
+          },
+          {
+            sender: "Xiao Ming",
+            isMe: false,
+            hz: "他今天不在。有什么事，可以给他打电话。",
+            py: "Tā jīn tiān bú zài. Yǒu shén me shì, kě yǐ gěi tā dǎ diàn huà.",
+            my: "Dia tiada hari ini. Jika ada apa-apa hal, boleh telefon beliau.",
+            tokens: [
+              { hz: "他", py: "tā" }, { hz: "今", py: "jīn" }, { hz: "天", py: "tiān" },
+              { hz: "不", py: "bú" }, { hz: "在", py: "zài" },
+              { hz: "有", py: "yǒu" }, { hz: "什", py: "shén" }, { hz: "么", py: "me" }, { hz: "事", py: "shì" },
+              { hz: "可", py: "kě" }, { hz: "以", py: "yǐ" }, { hz: "给", py: "gěi" }, { hz: "他", py: "tā" },
+              { hz: "打", py: "dǎ" }, { hz: "电", py: "diàn" }, { hz: "话", py: "huà" }
+            ]
+          },
+          {
+            sender: "Hasan",
+            isMe: true,
+            hz: "好的，谢谢你！",
+            py: "Hǎo de, xiè xie nǐ!",
+            my: "Baiklah, terima kasih awak!",
+            tokens: [
+              { hz: "好", py: "hǎo" }, { hz: "的", py: "de" },
+              { hz: "谢", py: "xiè" }, { hz: "谢", py: "xie" }, { hz: "你", py: "nǐ" }
+            ]
+          },
+          {
+            sender: "Xiao Ming",
+            isMe: false,
+            hz: "没事的。",
+            py: "Méi shì de.",
+            my: "Tiada masalah / sama-sama.",
+            tokens: [
+              { hz: "没", py: "méi" }, { hz: "事", py: "shì" }, { hz: "的", py: "de" }
+            ]
+          }
         ]
       }
     };
@@ -1167,16 +1325,35 @@
 
         setPrimaryButtonState('next');
       } else {
-        // WRONG
+        // WRONG: Highlight Pinyin yang salah & Pinyin yang betul
         playBeep('wrong');
         streakCount = 0;
         document.getElementById('streak-counter').innerText = `0 Streak`;
 
-        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border border-rose-200 bg-rose-50/95 text-rose-950 shadow-xs";
-        document.getElementById('feedback-status-icon').innerText = "💡";
-        document.getElementById('feedback-status-title').innerText = "Cuba Lagi!";
+        const correctOpt = q.options.find(o => o.isCorrect);
+
+        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border-2 border-rose-300 bg-rose-50/95 text-rose-950 shadow-xs animate-in fade-in duration-200";
+        document.getElementById('feedback-status-icon').innerText = "❌";
+        document.getElementById('feedback-status-title').innerText = "Pilihan Pinyin Kurang Tepat";
         document.getElementById('feedback-status-body').innerHTML = `
-          Aksara <span class="font-hanzi font-bold">${selectedVocabOption.char}</span> (${selectedVocabOption.py}) tidak membentuk perkataan yang dicari untuk "${q.targetMy}".
+          <div class="mt-1 space-y-1 text-xs">
+            <div class="flex items-center space-x-2">
+              <span class="text-rose-700 font-semibold">Pinyin Pilihan Anda:</span>
+              <span class="px-2 py-0.5 rounded-lg bg-rose-200 text-rose-900 border border-rose-400 font-black font-sans line-through">
+                ${selectedVocabOption.py} (${selectedVocabOption.char})
+              </span>
+              <span class="text-[10px] text-rose-600 font-bold">❌ Salah</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-emerald-800 font-semibold">Pinyin Yang Betul:</span>
+              <button onclick="speakChinese('${correctOpt.char}')" class="px-2 py-0.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-950 border border-emerald-400 font-black font-sans flex items-center space-x-1 shadow-2xs">
+                <span>${correctOpt.py} (${correctOpt.char})</span>
+                <span class="text-[10px] ml-1">🔊</span>
+              </button>
+              <span class="text-[10px] text-emerald-700 font-bold">✅ Nada ${correctOpt.py}</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-600 mt-2 pt-1 border-t border-rose-200/80 leading-relaxed">${q.explain}</p>
         `;
       }
     }
@@ -1518,40 +1695,88 @@
         const cleanSpoken = spoken.replace(/[，。！？\s.,!?]/g, '');
         const cleanTarget = targetText.replace(/[，。！？\s.,!?]/g, '');
 
-        // Evaluate Similarity
-        let isCorrect = cleanSpoken === cleanTarget;
-        let isClose = cleanSpoken.includes(cleanTarget) || cleanTarget.includes(cleanSpoken);
+        const msgData = CHAT_SCENARIOS[currentScenarioId].messages[idx];
+        const tokens = msgData.tokens || [];
 
-        if (isCorrect || (cleanSpoken.length > 0 && isClose && cleanSpoken.length >= cleanTarget.length * 0.7)) {
-          // SEBUTAN BETUL / TEPAT
+        // Semak setiap suku kata Pinyin sama ada tepat disebut atau salah
+        const wrongTokens = [];
+        const tokenAnalysisHtml = tokens.map(tok => {
+          const isMatched = cleanSpoken.includes(tok.hz);
+          if (!isMatched) {
+            wrongTokens.push(tok);
+            return `
+              <button onclick="speakChinese('${tok.hz}')" class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-rose-100 hover:bg-rose-200 border-2 border-rose-500 shadow-xs transition active:scale-95 animate-pulse" title="Tekan untuk dengar Pinyin ${tok.py}">
+                <span class="text-xs font-black text-rose-950 font-sans tracking-tight">${tok.py}</span>
+                <span class="text-sm font-black font-hanzi text-rose-900 leading-none">${tok.hz}</span>
+                <span class="text-[9px] text-rose-700 font-bold mt-0.5">❌ Silap</span>
+              </button>
+            `;
+          } else {
+            return `
+              <span class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-emerald-50 border border-emerald-300 shadow-2xs">
+                <span class="text-xs font-black text-emerald-800 font-sans tracking-tight">${tok.py}</span>
+                <span class="text-sm font-black font-hanzi text-emerald-900 leading-none">${tok.hz}</span>
+                <span class="text-[9px] text-emerald-600 font-bold mt-0.5">✓ Betul</span>
+              </span>
+            `;
+          }
+        }).join('');
+
+        if (wrongTokens.length === 0) {
+          // 100% BETUL SEMUA PINYIN
           playBeep('success');
           totalXp += 25;
           document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
 
-          feedbackEl.className = "block mt-2 p-2 rounded-xl bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs";
+          feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-emerald-50 border border-emerald-300 text-xs shadow-xs animate-in fade-in duration-200";
           feedbackEl.innerHTML = `
-            <div class="font-extrabold flex items-center space-x-1 text-emerald-800">
+            <div class="font-extrabold flex items-center space-x-1.5 text-emerald-800 mb-1.5">
               <span>🎉</span>
-              <span>Sebutan Anda Sangat Tepat! (100%)</span>
+              <span>Sebutan Pinyin Sempurna (100% Tepat)!</span>
             </div>
-            <div class="text-[11px] text-emerald-700 mt-0.5">Dikesan: "<strong>${spoken}</strong>"</div>
+            <div class="flex flex-wrap gap-1.5 mb-2">${tokenAnalysisHtml}</div>
+            <div class="text-[11px] text-emerald-700">Dikesan suara: "<strong>${spoken}</strong>"</div>
           `;
 
-          // Show Pass Badge
           const passBadge = document.getElementById(`badge-pass-${idx}`);
           if (passBadge) passBadge.classList.remove('hidden');
 
         } else {
-          // SEBUTAN KURANG TEPAT
+          // ADA PINYIN YANG SALAH: HIGHLIGHT WARNA MERAH JELAS
           playBeep('wrong');
-          feedbackEl.className = "block mt-2 p-2 rounded-xl bg-rose-50 text-rose-900 border border-rose-200 text-xs";
+          const accuracyPct = Math.max(0, Math.round(((tokens.length - wrongTokens.length) / tokens.length) * 100));
+
+          feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-rose-50 border-2 border-rose-300 text-xs shadow-xs animate-in fade-in duration-200";
           feedbackEl.innerHTML = `
-            <div class="font-bold flex items-center space-x-1 text-rose-700">
-              <span>🤔</span>
-              <span>Sebutan Kurang Tepat, Cuba Lagi!</span>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-bold text-rose-900 flex items-center space-x-1">
+                <span>⚠️</span>
+                <span>Analisis Pinyin (${accuracyPct}% Tepat):</span>
+              </span>
+              <span class="text-[10px] font-bold text-rose-700 bg-rose-200/70 px-2 py-0.5 rounded-full border border-rose-300">
+                ${wrongTokens.length} Pinyin Perlu Dibaiki
+              </span>
             </div>
-            <div class="text-[11px] text-slate-600 mt-0.5">Dikesan: "<span class="text-rose-600 font-bold">${spoken}</span>"</div>
-            <div class="text-[11px] text-slate-500 mt-0.5">Sasaran: "<strong class="font-hanzi">${targetText}</strong>"</div>
+
+            <!-- Reben Suku Kata Pinyin (Hijau = Betul, Merah = Salah) -->
+            <div class="flex flex-wrap gap-1.5 my-2">
+              ${tokenAnalysisHtml}
+            </div>
+
+            <!-- Highlight Pinyin Yang Salah & Boleh Ditekan Untuk Dengar -->
+            <div class="bg-rose-100/90 border border-rose-300 rounded-xl p-2.5 text-[11px] text-rose-950 mt-1.5">
+              <strong>Pinyin Yang Dikesan Silap (Highlighted):</strong>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                ${wrongTokens.map(w => `
+                  <button onclick="speakChinese('${w.hz}')" class="px-2 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-black font-sans text-xs flex items-center space-x-1 shadow-xs transition active:scale-95" title="Tekan untuk dengar nada Pinyin ${w.py}">
+                    <span>${w.py}</span>
+                    <span class="font-hanzi font-normal opacity-90">(${w.hz})</span>
+                    <span class="text-[10px]">🔊</span>
+                  </button>
+                `).join('')}
+              </div>
+              <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul.</span>
+            </div>
           `;
         }
       };
