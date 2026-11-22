@@ -319,7 +319,7 @@
 
           <span>📐</span>
 
-          <span>Pola Ayat</span>
+          <span>Pola Ayat (10 Soalan)</span>
 
         </button>
 
@@ -569,22 +569,20 @@
 
     <!-- ==================== VIEW 2: POLA AYAT (HANZI + PINYIN + AUDIO) ==================== -->
 
-    <div id="view-sentence-challenge" class="app-view hidden flex flex-col justify-between flex-grow">
-
+    <div id="view-sentence-challenge" class="app-view hidden flex flex-col justify-between flex-grow pt-1">
       <div>
-
-        <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1.5 px-0.5">
-
-          <span id="level-title-sentence" class="text-indigo-700 font-extrabold text-sm">Ayat 1 / 8</span>
-
-          <span class="text-indigo-600 font-extrabold">Formula Kedudukan Pejabat</span>
-
-        </div>
-
-        <div class="w-full h-2.5 bg-slate-200/80 rounded-full overflow-hidden p-0.5 mb-4">
-
-          <div id="progress-bar-sentence" class="h-full bg-gradient-to-r from-teal-500 to-indigo-500 rounded-full transition-all duration-300" style="width: 12%;"></div>
-
+        <!-- Protected Status & Progress Card (Optimized for Mobile) -->
+        <div class="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-200 shadow-xs mb-3.5">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-2 px-0.5">
+            <div class="flex items-center space-x-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></span>
+              <span id="level-title-sentence" class="text-indigo-700 font-black text-sm">Ayat 1 / 10</span>
+            </div>
+            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 font-extrabold">10 Cabaran Ayat Modul</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200/70">
+            <div id="progress-bar-sentence" class="h-full bg-gradient-to-r from-teal-500 to-indigo-500 rounded-full transition-all duration-300" style="width: 10%;"></div>
+          </div>
         </div>
 
 
@@ -809,6 +807,7 @@
   <!-- ==================== JAVASCRIPT ==================== -->
 
   <script>
+    const CURRENT_TOPIC = 1;
 
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
@@ -1509,16 +1508,16 @@
         "py": "píngguǒ."
       },
       {
-        "hz": "喝茶",
-        "py": "hē chá"
+        "hz": "一盒",
+        "py": "yī hé"
       },
       {
-        "hz": "炒饭",
-        "py": "chǎofàn"
+        "hz": "香蕉",
+        "py": "xiāngjiāo"
       }
     ],
     "hint": "Subjek + 想买 + Kuantiti + Benda.",
-    "explain": "Wǒ xiǎng mǎi liǎng gōngjīn píngguǒ. (Saya mahu beli dua kilogram epal.)"
+    "explain": "Wǒ xiǎng mǎi liǎng gōngjīn píngguǒ. (Saya ingin beli dua kilogram epal.)"
   },
   {
     "targetMy": "Buah tembikai terlalu mahal.",
@@ -1541,12 +1540,12 @@
         "py": "le."
       },
       {
-        "hz": "苹果",
-        "py": "píngguǒ"
+        "hz": "便宜",
+        "py": "piányi"
       },
       {
-        "hz": "多少",
-        "py": "duōshao"
+        "hz": "葡萄",
+        "py": "pútao"
       }
     ],
     "hint": "Kata Nama + 太贵 + 了。",
@@ -1573,50 +1572,211 @@
         "py": "yī bēi chá."
       },
       {
-        "hz": "炒面",
-        "py": "chǎomiàn"
+        "hz": "炒饭",
+        "py": "chǎofàn"
       },
       {
-        "hz": "果汁",
-        "py": "guǒzhī"
+        "hz": "咖啡",
+        "py": "kāfēi"
       }
     ],
     "hint": "Panggilan + 请给我 + Minuman.",
     "explain": "Fúwùyuán, qǐng gěi wǒ yī bēi chá. (Pelayan, tolong berikan saya secawan teh.)"
   },
   {
-    "targetMy": "Saya ingin makan sepinggan nasi goreng.",
+    "targetMy": "Saya mahu sepinggan nasi goreng, tidak mahu pedas.",
     "correctOrder": [
-      "我想吃",
-      "一盘",
-      "炒饭。"
+      "我要",
+      "一盘炒饭，",
+      "不要辣的。"
     ],
     "pool": [
       {
-        "hz": "我想吃",
-        "py": "wǒ xiǎng chī"
+        "hz": "我要",
+        "py": "wǒ yào"
       },
       {
-        "hz": "一盘",
-        "py": "yī pán"
+        "hz": "一盘炒饭，",
+        "py": "yī pán chǎofàn,"
       },
       {
-        "hz": "炒饭。",
-        "py": "chǎofàn."
+        "hz": "不要辣的。",
+        "py": "bú yào là de."
       },
       {
-        "hz": "鸡肉",
-        "py": "jīròu"
+        "hz": "炒面",
+        "py": "chǎomiàn"
       },
       {
-        "hz": "买",
-        "py": "mǎi"
+        "hz": "辣的",
+        "py": "là de"
       }
     ],
-    "hint": "Subjek + 想吃 + Penjodoh Bilangan + Makanan.",
-    "explain": "Wǒ xiǎng chī yī pán chǎofàn. (Saya ingin makan sepinggan nasi goreng.)"
+    "hint": "Subjek + 要 + Penjodoh Bilangan + Makanan + Syarat.",
+    "explain": "Wǒ yào yī pán chǎofàn, bú yào là de. (Saya mahu sepinggan nasi goreng, tidak mahu pedas.)"
+  },
+  {
+    "targetMy": "Buah anggur satu kotak berharga sepuluh ringgit.",
+    "correctOrder": [
+      "葡萄",
+      "一盒",
+      "十块钱。"
+    ],
+    "pool": [
+      {
+        "hz": "葡萄",
+        "py": "pútao"
+      },
+      {
+        "hz": "一盒",
+        "py": "yī hé"
+      },
+      {
+        "hz": "十块钱。",
+        "py": "shí kuài qián."
+      },
+      {
+        "hz": "八块钱",
+        "py": "bā kuài qián"
+      },
+      {
+        "hz": "苹果",
+        "py": "píngguǒ"
+      }
+    ],
+    "hint": "Buah + Penjodoh Bilangan + Harga.",
+    "explain": "Pútao yī盒 shí kuài qián. (Buah anggur satu kotak berharga sepuluh ringgit.)"
+  },
+  {
+    "targetMy": "Saya mahu minuman kopi sejuk.",
+    "correctOrder": [
+      "我要",
+      "冷的",
+      "咖啡。"
+    ],
+    "pool": [
+      {
+        "hz": "我要",
+        "py": "wǒ yào"
+      },
+      {
+        "hz": "冷的",
+        "py": "lěng de"
+      },
+      {
+        "hz": "咖啡。",
+        "py": "kāfēi."
+      },
+      {
+        "hz": "热的",
+        "py": "rè de"
+      },
+      {
+        "hz": "汽水",
+        "py": "qìshuǐ"
+      }
+    ],
+    "hint": "Subjek + 要 + Sifat + Minuman.",
+    "explain": "Wǒ yào lěng de kāfēi. (Saya mahu minuman kopi sejuk.)"
+  },
+  {
+    "targetMy": "Jumlah semua lapan belas ringgit.",
+    "correctOrder": [
+      "一共",
+      "十八",
+      "块钱。"
+    ],
+    "pool": [
+      {
+        "hz": "一共",
+        "py": "yígòng"
+      },
+      {
+        "hz": "十八",
+        "py": "shíbā"
+      },
+      {
+        "hz": "块钱。",
+        "py": "kuài qián."
+      },
+      {
+        "hz": "二十",
+        "py": "èrshí"
+      },
+      {
+        "hz": "令吉",
+        "py": "língjí"
+      }
+    ],
+    "hint": "一共 + Jumlah Nombor + 块钱。",
+    "explain": "Yígòng shíbā kuài qián. (Jumlah semua lapan belas ringgit.)"
+  },
+  {
+    "targetMy": "Beri awak dua puluh ringgit.",
+    "correctOrder": [
+      "给你",
+      "二十",
+      "令吉。"
+    ],
+    "pool": [
+      {
+        "hz": "给你",
+        "py": "gěi nǐ"
+      },
+      {
+        "hz": "二十",
+        "py": "èrshí"
+      },
+      {
+        "hz": "令吉。",
+        "py": "língjí."
+      },
+      {
+        "hz": "找你",
+        "py": "zhǎo nǐ"
+      },
+      {
+        "hz": "十块钱",
+        "py": "shí kuài qián"
+      }
+    ],
+    "hint": "给你 + Jumlah Bayaran + Mata Wang.",
+    "explain": "Gěi nǐ èrshí língjí. (Beri awak dua puluh ringgit.)"
+  },
+  {
+    "targetMy": "Pulangkan baki awak satu ringgit lima puluh sen.",
+    "correctOrder": [
+      "找你",
+      "一令吉",
+      "五十仙。"
+    ],
+    "pool": [
+      {
+        "hz": "找你",
+        "py": "zhǎo nǐ"
+      },
+      {
+        "hz": "一令吉",
+        "py": "yī língjí"
+      },
+      {
+        "hz": "五十仙。",
+        "py": "wǔshí xiān."
+      },
+      {
+        "hz": "一共",
+        "py": "yígòng"
+      },
+      {
+        "hz": "两令吉",
+        "py": "liǎng língjí"
+      }
+    ],
+    "hint": "找你 + Jumlah Baki.",
+    "explain": "Zhǎo nǐ yī língjí wǔshí xiān. (Pulangkan baki awak satu ringgit lima puluh sen.)"
   }
 ];
+
 
     const CHAT_SCENARIOS = {
   "1": {
@@ -2123,29 +2283,61 @@
 
 
 
-    function speakChinese(text) {
-
+    function speakChinese(text, role) {
       if (!('speechSynthesis' in window)) return;
-
       window.speechSynthesis.cancel();
-
       const u = new SpeechSynthesisUtterance(text);
-
       u.lang = 'zh-CN';
-
       u.rate = audioRate;
 
-      const voices = window.speechSynthesis.getVoices();
+      const voices = window.speechSynthesis.getVoices().filter(v => v.lang && (v.lang.includes('zh') || v.lang.includes('cmn')));
+      const maleVoiceNames = ['yunxi', 'yunyang', 'yunjian', 'kangkang', 'zhiwei', 'danny', 'wanlung', 'benson', 'male', 'boy', 'man', 'david'];
+      const femaleVoiceNames = ['xiaoxiao', 'xiaoyi', 'huihui', 'yaoyao', 'hiugaai', 'female', 'girl', 'zira', 'hsiaochen', 'tingting'];
 
-      const zh = voices.find(v => v.lang && (v.lang.includes('zh') || v.lang.includes('cmn')));
-
-      if (zh) u.voice = zh;
+      if (role === 'male') {
+        const mVoice = voices.find(v => maleVoiceNames.some(m => v.name.toLowerCase().includes(m)));
+        if (mVoice) {
+          u.voice = mVoice;
+          u.pitch = 0.75;
+          u.rate = audioRate * 0.90;
+        } else {
+          if (voices.length > 0) u.voice = voices[0];
+          u.pitch = 0.50;
+          u.rate = audioRate * 0.88;
+        }
+      } else if (role === 'female') {
+        const fVoice = voices.find(v => femaleVoiceNames.some(f => v.name.toLowerCase().includes(f)));
+        if (fVoice) {
+          u.voice = fVoice;
+          u.pitch = 1.25;
+          u.rate = audioRate * 1.0;
+        } else {
+          if (voices.length > 0) u.voice = voices[0];
+          u.pitch = 1.35;
+          u.rate = audioRate * 1.02;
+        }
+      } else {
+        if (voices.length > 0) u.voice = voices[0];
+        u.pitch = 1.0;
+      }
 
       window.speechSynthesis.speak(u);
-
     }
 
-
+    let currentChatAudioObj = null;
+    function playChatMsgAudio(topic, scenarioId, idx, text, role) {
+      if (currentChatAudioObj) {
+        currentChatAudioObj.pause();
+        currentChatAudioObj.currentTime = 0;
+      }
+      const audioPath = `audio/chat/t${topic}_s${scenarioId}_m${idx}.mp3`;
+      const audio = new Audio(audioPath);
+      currentChatAudioObj = audio;
+      audio.playbackRate = audioRate;
+      audio.play().catch(e => {
+        speakChinese(text, role);
+      });
+    }
 
     let soundContext = null;
 
@@ -2250,7 +2442,7 @@
 
 
     function switchAppMode(mode) {
-
+      window.scrollTo(0, 0);
       playBeep('click');
 
       currentAppMode = mode;
@@ -3216,134 +3408,82 @@
 
 
     function loadChatScenario(id) {
-
       playBeep('click');
-
       currentScenarioId = id;
-
       const data = CHAT_SCENARIOS[id];
 
-
-
       document.getElementById('chat-scenario-title').innerText = data.title;
-
       const tab1 = document.getElementById('chat-tab-1');
-
       const tab2 = document.getElementById('chat-tab-2');
 
-
-
       if (id === 1) {
-
-        tab1.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs";
-
+        tab1.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs font-bold";
         tab2.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900";
-
       } else {
-
-        tab2.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs";
-
+        tab2.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs font-bold";
         tab1.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900";
-
       }
 
-
-
       const container = document.getElementById('chat-messages-container');
-
       container.innerHTML = '';
 
-
-
       data.messages.forEach((msg, idx) => {
-
         const row = document.createElement('div');
+        row.className = `flex flex-col ${msg.isMe ? 'items-end' : 'items-start'} mb-2.5`;
 
-        row.className = `flex flex-col ${msg.isMe ? 'items-end' : 'items-start'} mb-1`;
+        // Hasan / Aiman (isMe == true) is Suara Lelaki 👨
+        // Conversational Partner (isMe == false) is Suara Perempuan 👩
+        const isHasan = msg.isMe;
+        const role = isHasan ? 'male' : 'female';
+        const roleBadge = isHasan 
+          ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full border bg-blue-100 text-blue-800 border-blue-300">👨 Suara Lelaki</span>'
+          : '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full border bg-pink-100 text-pink-800 border-pink-300">👩 Suara Perempuan</span>';
 
-
+        const btnAudioClass = isHasan
+          ? 'bg-indigo-800/80 hover:bg-indigo-900 text-indigo-100 border border-indigo-400/40'
+          : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200';
 
         row.innerHTML = `
-
-          <div class="text-[10px] font-bold text-slate-400 mb-1 px-1 flex items-center space-x-1">
-
+          <div class="text-[11px] font-bold text-slate-500 mb-1 px-1 flex items-center space-x-1.5">
             <span>${msg.sender}</span>
-
-            <span id="badge-pass-${idx}" class="hidden text-[9px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.2 rounded-full border border-emerald-300">
-
+            ${roleBadge}
+            <span id="badge-pass-${idx}" class="hidden text-[9px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.5 rounded-full border border-emerald-300">
               ✅ Lulus Sebutan
-
             </span>
-
           </div>
 
-
-
-          <div class="max-w-[92%] sm:max-w-[85%] rounded-2xl p-3.5 transition shadow-xs border ${
-
+          <div id="chat-card-${idx}" class="chat-bubble-card max-w-[94%] sm:max-w-[85%] rounded-2xl p-3.5 transition shadow-xs border ${
             msg.isMe
-
               ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-br-none border-indigo-500'
-
               : 'bg-white border-slate-200 text-slate-900 rounded-bl-none'
-
           }">
-
             <!-- Hanzi & Pinyin -->
-
             <div class="text-base sm:text-lg font-black font-hanzi leading-snug">${msg.hz}</div>
-
             <div class="text-xs ${msg.isMe ? 'text-indigo-200' : 'text-indigo-600'} font-semibold mt-0.5">${msg.py}</div>
-
             <div class="text-[11px] ${msg.isMe ? 'text-indigo-100/90' : 'text-slate-500'} mt-1 pt-1 border-t ${msg.isMe ? 'border-indigo-400/30' : 'border-slate-100'}">
-
               ${msg.my}
-
             </div>
-
-
 
             <!-- Action Controls: Dengar Audio & Semak Sebutan Suara -->
-
             <div class="mt-2.5 pt-2 border-t ${msg.isMe ? 'border-indigo-400/40' : 'border-slate-100'} flex items-center justify-between gap-2">
-
-              <button onclick="speakChinese('${msg.hz}')" class="px-2.5 py-1 rounded-xl ${msg.isMe ? 'bg-indigo-800/80 hover:bg-indigo-900 text-indigo-100' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'} text-[11px] font-bold flex items-center space-x-1 transition active:scale-95">
-
+              <button onclick="playChatMsgAudio(CURRENT_TOPIC, currentScenarioId, ${idx}, '${msg.hz}', '${role}')" class="px-3 py-1 rounded-xl ${btnAudioClass} text-xs font-bold flex items-center space-x-1.5 transition active:scale-95 shadow-2xs">
                 <span>🔊</span>
-
                 <span>Dengar</span>
-
               </button>
-
-
 
               <button id="mic-btn-${idx}" onclick="startSpeechCheck('${msg.hz}', ${idx})" class="px-3 py-1 rounded-xl ${msg.isMe ? 'bg-white text-indigo-800 hover:bg-indigo-50' : 'bg-indigo-600 hover:bg-indigo-700 text-white'} text-[11px] font-extrabold flex items-center space-x-1 shadow-xs transition active:scale-95">
-
                 <span>🎙️</span>
-
                 <span>Uji Sebutan Saya</span>
-
               </button>
-
             </div>
 
-
-
             <!-- Voice Feedback Area -->
-
             <div id="mic-feedback-${idx}" class="hidden mt-2 p-2 rounded-xl text-xs font-semibold"></div>
-
           </div>
-
         `;
-
         container.appendChild(row);
-
       });
-
     }
-
-
 
     /* Pengecaman & Semakan Sebutan Suara (Speech Recognition) */
 
@@ -3654,30 +3794,46 @@
 
 
     function playFullChatAudio() {
-
       const messages = CHAT_SCENARIOS[currentScenarioId].messages;
-
-      let i = 0;
-
-      function next() {
-
-        if (i < messages.length) {
-
-          speakChinese(messages[i].hz);
-
-          i++;
-
-          setTimeout(next, 3200);
-
-        }
-
+      if (currentChatAudioObj) {
+        currentChatAudioObj.pause();
+        currentChatAudioObj.currentTime = 0;
       }
-
-      next();
-
+      let i = 0;
+      function playNextMsg() {
+        if (i >= messages.length) {
+          document.querySelectorAll('.chat-bubble-card').forEach(c => c.classList.remove('ring-4', 'ring-amber-400'));
+          return;
+        }
+        document.querySelectorAll('.chat-bubble-card').forEach(c => c.classList.remove('ring-4', 'ring-amber-400'));
+        const activeBubble = document.getElementById(`chat-card-${i}`);
+        if (activeBubble) {
+          activeBubble.classList.add('ring-4', 'ring-amber-400');
+          activeBubble.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        const msg = messages[i];
+        const role = msg.isMe ? 'male' : 'female';
+        const audioPath = `audio/chat/t${CURRENT_TOPIC}_s${currentScenarioId}_m${i}.mp3`;
+        const audio = new Audio(audioPath);
+        currentChatAudioObj = audio;
+        audio.playbackRate = audioRate;
+        audio.onended = () => {
+          i++;
+          setTimeout(playNextMsg, 600);
+        };
+        audio.onerror = () => {
+          speakChinese(msg.hz, role);
+          i++;
+          setTimeout(playNextMsg, 2800);
+        };
+        audio.play().catch(e => {
+          speakChinese(msg.hz, role);
+          i++;
+          setTimeout(playNextMsg, 2800);
+        });
+      }
+      playNextMsg();
     }
-
-
 
     /* ========== 7. KAMUS DRAWER ========== */
 
@@ -3795,17 +3951,15 @@
 
   <!-- WATERMARK (BOTTOM LEFT - AS REQUESTED) -->
 
-  <div class="fixed bottom-2.5 left-3 z-50 pointer-events-none select-none text-[11px] font-bold text-slate-600/80 bg-white/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-slate-200/80 shadow-xs flex items-center space-x-1.5">
-
-    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block"></span>
-
-    <span>Hajar Nur Atiqah Binti Mohd Adam</span>
-
-  </div>
-
-
-
-</body>
+  <div class="fixed bottom-2.5 left-3 z-50 pointer-events-none select-none text-[10px] sm:text-[11px] font-bold text-slate-700 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-2xl border border-slate-300 shadow-lg flex flex-col items-start leading-tight">
+    <div class="flex items-center space-x-1.5 text-slate-900 font-extrabold">
+      <span class="w-2 h-2 rounded-full bg-indigo-500 inline-block animate-pulse"></span>
+      <span>Hajar Nur Atiqah Binti Mohd Adam</span>
+    </div>
+    <div class="text-[9px] font-black text-indigo-700 tracking-wider pl-3.5 uppercase">
+      KOLEJ VOKASIONAL PORT DICKSON
+    </div>
+  </div></body>
 
 </html>
 

@@ -319,7 +319,7 @@
 
           <span>📐</span>
 
-          <span>Pola Ayat</span>
+          <span>Pola Ayat (10 Soalan)</span>
 
         </button>
 
@@ -569,22 +569,20 @@
 
     <!-- ==================== VIEW 2: POLA AYAT (HANZI + PINYIN + AUDIO) ==================== -->
 
-    <div id="view-sentence-challenge" class="app-view hidden flex flex-col justify-between flex-grow">
-
+    <div id="view-sentence-challenge" class="app-view hidden flex flex-col justify-between flex-grow pt-1">
       <div>
-
-        <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1.5 px-0.5">
-
-          <span id="level-title-sentence" class="text-indigo-700 font-extrabold text-sm">Ayat 1 / 8</span>
-
-          <span class="text-indigo-600 font-extrabold">Formula Kedudukan Pejabat</span>
-
-        </div>
-
-        <div class="w-full h-2.5 bg-slate-200/80 rounded-full overflow-hidden p-0.5 mb-4">
-
-          <div id="progress-bar-sentence" class="h-full bg-gradient-to-r from-teal-500 to-indigo-500 rounded-full transition-all duration-300" style="width: 12%;"></div>
-
+        <!-- Protected Status & Progress Card (Optimized for Mobile) -->
+        <div class="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-200 shadow-xs mb-3.5">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-2 px-0.5">
+            <div class="flex items-center space-x-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></span>
+              <span id="level-title-sentence" class="text-indigo-700 font-black text-sm">Ayat 1 / 10</span>
+            </div>
+            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 font-extrabold">10 Cabaran Ayat Modul</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200/70">
+            <div id="progress-bar-sentence" class="h-full bg-gradient-to-r from-teal-500 to-indigo-500 rounded-full transition-all duration-300" style="width: 10%;"></div>
+          </div>
         </div>
 
 
@@ -809,6 +807,7 @@
   <!-- ==================== JAVASCRIPT ==================== -->
 
   <script>
+    const CURRENT_TOPIC = 6;
 
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
@@ -1457,161 +1456,327 @@
 
     const SENTENCE_CHALLENGES = [
   {
-    "targetMy": "Bagaimanakah cara pergi ke lapangan terbang?",
+    "targetMy": "Saya bercadang untuk menaiki MRT ke Kuala Lumpur.",
     "correctOrder": [
-      "怎么去",
-      "机场？"
+      "我打算",
+      "坐地铁去",
+      "吉隆坡。"
     ],
     "pool": [
       {
-        "hz": "怎么去",
-        "py": "zěnme qù"
+        "hz": "我打算",
+        "py": "wǒ dǎsuàn"
       },
       {
-        "hz": "机场？",
-        "py": "jīchǎng?"
+        "hz": "坐地铁去",
+        "py": "zuò dìtiě qù"
       },
       {
-        "hz": "火车站",
-        "py": "huǒchēzhàn"
+        "hz": "吉隆坡。",
+        "py": "Jílóngpō."
       },
       {
-        "hz": "坐地铁",
-        "py": "zuò dìtiě"
+        "hz": "坐巴士",
+        "py": "zuò bāshì"
+      },
+      {
+        "hz": "飞机场",
+        "py": "fēijīchǎng"
       }
     ],
-    "hint": "怎么去 + Destinasi?",
-    "explain": "Zěnme qù jīchǎng? (Bagaimanakah cara pergi ke lapangan terbang?)"
+    "hint": "Subjek + 打算 + 坐 [Kenderaan] 去 [Tempat].",
+    "explain": "Wǒ dǎsuàn zuò dìtiě qù Jílóngpō. (Saya bercadang untuk menaiki MRT ke Kuala Lumpur.)"
   },
   {
-    "targetMy": "Tumpang tanya bagaimanakah cara pergi ke Menara KLCC?",
+    "targetMy": "Saya ingin membeli sekeping tiket pergi dan balik.",
     "correctOrder": [
-      "请问",
-      "怎么去",
-      "双峰塔？"
+      "我想买",
+      "一张",
+      "来回票。"
     ],
     "pool": [
       {
-        "hz": "请问",
-        "py": "qǐngwèn"
+        "hz": "我想买",
+        "py": "wǒ xiǎng mǎi"
       },
       {
-        "hz": "怎么去",
-        "py": "zěnme qù"
+        "hz": "一张",
+        "py": "yī zhāng"
       },
       {
-        "hz": "双峰塔？",
-        "py": "Shuāngfēngtǎ?"
+        "hz": "来回票。",
+        "py": "láihuí piào."
       },
       {
-        "hz": "巴士站",
-        "py": "bāshìzhàn"
+        "hz": "单程票",
+        "py": "dānchéng piào"
       },
       {
-        "hz": "直走",
-        "py": "zhízǒu"
+        "hz": "两张",
+        "py": "liǎng zhāng"
       }
     ],
-    "hint": "Kata Sopan + 怎么去 + Destinasi?",
-    "explain": "Qǐngwèn zěnme qù Shuāngfēngtǎ? (Tumpang tanya bagaimanakah ke Menara KLCC?)"
+    "hint": "Subjek + 想买 + 张 + 来回票。",
+    "explain": "Wǒ xiǎng mǎi yī zhāng láihuí piào. (Saya ingin membeli sekeping tiket pergi dan balik.)"
   },
   {
-    "targetMy": "Dari stesen kereta api naik MRT pergi ke lapangan terbang.",
+    "targetMy": "Awak boleh gunakan kad Touch 'n Go untuk sentuh masuk.",
     "correctOrder": [
-      "从火车站",
-      "坐地铁",
-      "去机场。"
+      "你可以用",
+      "一触即通卡",
+      "刷卡。"
     ],
     "pool": [
       {
-        "hz": "从火车站",
-        "py": "cóng huǒchēzhàn"
+        "hz": "你可以用",
+        "py": "nǐ kěyǐ yòng"
       },
       {
-        "hz": "坐地铁",
-        "py": "zuò dìtiě"
+        "hz": "一触即通卡",
+        "py": "Yīchùjítōng kǎ"
       },
       {
-        "hz": "去机场。",
-        "py": "qù jīchǎng."
+        "hz": "刷卡。",
+        "py": "shuā kǎ."
       },
       {
-        "hz": "出租车",
-        "py": "chūzūchē"
-      },
-      {
-        "hz": "左转",
-        "py": "zuǒzhuǎn"
-      }
-    ],
-    "hint": "从 (dari) + Asal + 坐 (naik) + Kenderaan + 去 (ke) + Destinasi.",
-    "explain": "Cóng huǒchēzhàn zuò dìtiě qù jīchǎng. (Dari stesen kereta api naik MRT ke lapangan terbang.)"
-  },
-  {
-    "targetMy": "Jalan terus ke hadapan, kemudian belok kiri.",
-    "correctOrder": [
-      "往前直走，",
-      "然后",
-      "左转。"
-    ],
-    "pool": [
-      {
-        "hz": "往前直走，",
-        "py": "wǎng qián zhí zǒu,"
-      },
-      {
-        "hz": "然后",
-        "py": "ránhòu"
-      },
-      {
-        "hz": "左转。",
-        "py": "zuǒ zhuǎn."
-      },
-      {
-        "hz": "右转。",
-        "py": "yòu zhuǎn."
+        "hz": "现金",
+        "py": "xiànjīn"
       },
       {
         "hz": "车票",
         "py": "chēpiào"
       }
     ],
-    "hint": "往前直走 + 然后 + Arah Belok.",
-    "explain": "Wǎng qián zhí zǒu, ránhòu zuǒ zhuǎn. (Jalan terus ke depan, kemudian belok kiri.)"
+    "hint": "你可以用 + Kad + 刷卡。",
+    "explain": "Nǐ kěyǐ yòng Yīchùjítōng kǎ shuā kǎ. (Awak boleh gunakan kad Touch 'n Go untuk sentuh masuk.)"
   },
   {
-    "targetMy": "Naik teksi lebih pantas daripada naik bas.",
+    "targetMy": "Pergi ke Menara Berkembar KLCC perlu turun di stesen mana?",
     "correctOrder": [
-      "坐出租车",
-      "比坐巴士",
-      "快。"
+      "去双峰塔",
+      "在哪一站",
+      "下车？"
     ],
     "pool": [
       {
-        "hz": "坐出租车",
-        "py": "zuò chūzūchē"
+        "hz": "去双峰塔",
+        "py": "qù Shuāngfēng Tǎ"
       },
       {
-        "hz": "比坐巴士",
-        "py": "bǐ zuò bāshì"
+        "hz": "在哪一站",
+        "py": "zài nǎ yí zhàn"
       },
       {
-        "hz": "快。",
-        "py": "kuài."
+        "hz": "下车？",
+        "py": "xià chē?"
+      },
+      {
+        "hz": "上车",
+        "py": "shàng chē"
+      },
+      {
+        "hz": "火车站",
+        "py": "huǒchēzhàn"
+      }
+    ],
+    "hint": "去 [Tempat] + 在哪一站 + 下车？",
+    "explain": "Qù Shuāngfēng Tǎ zài nǎ yí zhàn xià chē? (Pergi ke KLCC perlu turun di stesen mana?)"
+  },
+  {
+    "targetMy": "Kami menaiki teksi pergi ke lapangan terbang.",
+    "correctOrder": [
+      "我们坐德士",
+      "去",
+      "飞机场。"
+    ],
+    "pool": [
+      {
+        "hz": "我们坐德士",
+        "py": "wǒmen zuò déshì"
+      },
+      {
+        "hz": "去",
+        "py": "qù"
+      },
+      {
+        "hz": "飞机场。",
+        "py": "fēijīchǎng."
+      },
+      {
+        "hz": "坐地铁",
+        "py": "zuò dìtiě"
+      },
+      {
+        "hz": "车站",
+        "py": "chēzhàn"
+      }
+    ],
+    "hint": "Subjek + 坐德士 + 去 + Tempat.",
+    "explain": "Wǒmen zuò déshì qù fēijīchǎng. (Kami menaiki teksi pergi ke lapangan terbang.)"
+  },
+  {
+    "targetMy": "Bagaimanakah cara untuk pergi ke stesen kereta api?",
+    "correctOrder": [
+      "火车站",
+      "怎么",
+      "去？"
+    ],
+    "pool": [
+      {
+        "hz": "火车站",
+        "py": "huǒchēzhàn"
+      },
+      {
+        "hz": "怎么",
+        "py": "zěnme"
+      },
+      {
+        "hz": "去？",
+        "py": "qù?"
+      },
+      {
+        "hz": "在哪儿",
+        "py": "zài nǎr"
+      },
+      {
+        "hz": "什么时候",
+        "py": "shénme shíhou"
+      }
+    ],
+    "hint": "Tempat + 怎么去？",
+    "explain": "Huǒchēzhàn zěnme qù? (Bagaimanakah cara untuk pergi ke stesen kereta api?)"
+  },
+  {
+    "targetMy": "Perjalanan menaiki bas awam mengambil masa lebih kurang dua puluh minit.",
+    "correctOrder": [
+      "坐巴士",
+      "大约",
+      "二十分钟。"
+    ],
+    "pool": [
+      {
+        "hz": "坐巴士",
+        "py": "zuò bāshì"
+      },
+      {
+        "hz": "大约",
+        "py": "dàyuē"
+      },
+      {
+        "hz": "二十分钟。",
+        "py": "èrshí fēnzhōng."
+      },
+      {
+        "hz": "三十分钟",
+        "py": "sānshí fēnzhōng"
       },
       {
         "hz": "走路",
         "py": "zǒulù"
-      },
-      {
-        "hz": "远",
-        "py": "yuǎn"
       }
     ],
-    "hint": "Kaedah A + 比 (banding) + Kaedah B + 快 (laju).",
-    "explain": "Zuò chūzūchē bǐ zuò bāshì kuài. (Naik teksi lebih cepat berbanding naik bas.)"
+    "hint": "Kenderaan + 大约 + Tempoh Masa.",
+    "explain": "Zuò bāshì dàyuē èrshí fēnzhōng. (Menaiki bas mengambil masa lebih kurang 20 minit.)"
+  },
+  {
+    "targetMy": "Beli sekeping tiket sehala.",
+    "correctOrder": [
+      "买一张",
+      "单程",
+      "票。"
+    ],
+    "pool": [
+      {
+        "hz": "买一张",
+        "py": "mǎi yī zhāng"
+      },
+      {
+        "hz": "单程",
+        "py": "dānchéng"
+      },
+      {
+        "hz": "票。",
+        "py": "piào."
+      },
+      {
+        "hz": "来回",
+        "py": "láihuí"
+      },
+      {
+        "hz": "两张",
+        "py": "liǎng zhāng"
+      }
+    ],
+    "hint": "买 + 张 + 单程票。",
+    "explain": "Mǎi yī zhāng dānchéng piào. (Beli sekeping tiket sehala.)"
+  },
+  {
+    "targetMy": "Adik lelaki suka menunggang basikal.",
+    "correctOrder": [
+      "弟弟喜欢",
+      "骑",
+      "自行车。"
+    ],
+    "pool": [
+      {
+        "hz": "弟弟喜欢",
+        "py": "dìdi xǐhuan"
+      },
+      {
+        "hz": "骑",
+        "py": "qí"
+      },
+      {
+        "hz": "自行车。",
+        "py": "zìxíngchē."
+      },
+      {
+        "hz": "坐",
+        "py": "zuò"
+      },
+      {
+        "hz": "巴士",
+        "py": "bāshì"
+      }
+    ],
+    "hint": "Subjek + 喜欢 + 骑 + 自行车。",
+    "explain": "Dìdi xǐhuan qí zìxíngchē. (Adik lelaki suka menunggang basikal.)"
+  },
+  {
+    "targetMy": "Menaiki pengangkutan awam sangat mudah dan menyenangkan.",
+    "correctOrder": [
+      "坐公共交通",
+      "很",
+      "方便。"
+    ],
+    "pool": [
+      {
+        "hz": "坐公共交通",
+        "py": "zuò gōnggòng jiāotōng"
+      },
+      {
+        "hz": "很",
+        "py": "hěn"
+      },
+      {
+        "hz": "方便。",
+        "py": "fāngbiàn."
+      },
+      {
+        "hz": "太慢",
+        "py": "tài màn"
+      },
+      {
+        "hz": "很贵",
+        "py": "hěn guì"
+      }
+    ],
+    "hint": "坐公共交通 + 很方便。",
+    "explain": "Zuò gōnggòng jiāotōng hěn fāngbiàn. (Menaiki transit awam sangat mudah.)"
   }
 ];
+
 
     const CHAT_SCENARIOS = {
   "1": {
@@ -2134,29 +2299,61 @@
 
 
 
-    function speakChinese(text) {
-
+    function speakChinese(text, role) {
       if (!('speechSynthesis' in window)) return;
-
       window.speechSynthesis.cancel();
-
       const u = new SpeechSynthesisUtterance(text);
-
       u.lang = 'zh-CN';
-
       u.rate = audioRate;
 
-      const voices = window.speechSynthesis.getVoices();
+      const voices = window.speechSynthesis.getVoices().filter(v => v.lang && (v.lang.includes('zh') || v.lang.includes('cmn')));
+      const maleVoiceNames = ['yunxi', 'yunyang', 'yunjian', 'kangkang', 'zhiwei', 'danny', 'wanlung', 'benson', 'male', 'boy', 'man', 'david'];
+      const femaleVoiceNames = ['xiaoxiao', 'xiaoyi', 'huihui', 'yaoyao', 'hiugaai', 'female', 'girl', 'zira', 'hsiaochen', 'tingting'];
 
-      const zh = voices.find(v => v.lang && (v.lang.includes('zh') || v.lang.includes('cmn')));
-
-      if (zh) u.voice = zh;
+      if (role === 'male') {
+        const mVoice = voices.find(v => maleVoiceNames.some(m => v.name.toLowerCase().includes(m)));
+        if (mVoice) {
+          u.voice = mVoice;
+          u.pitch = 0.75;
+          u.rate = audioRate * 0.90;
+        } else {
+          if (voices.length > 0) u.voice = voices[0];
+          u.pitch = 0.50;
+          u.rate = audioRate * 0.88;
+        }
+      } else if (role === 'female') {
+        const fVoice = voices.find(v => femaleVoiceNames.some(f => v.name.toLowerCase().includes(f)));
+        if (fVoice) {
+          u.voice = fVoice;
+          u.pitch = 1.25;
+          u.rate = audioRate * 1.0;
+        } else {
+          if (voices.length > 0) u.voice = voices[0];
+          u.pitch = 1.35;
+          u.rate = audioRate * 1.02;
+        }
+      } else {
+        if (voices.length > 0) u.voice = voices[0];
+        u.pitch = 1.0;
+      }
 
       window.speechSynthesis.speak(u);
-
     }
 
-
+    let currentChatAudioObj = null;
+    function playChatMsgAudio(topic, scenarioId, idx, text, role) {
+      if (currentChatAudioObj) {
+        currentChatAudioObj.pause();
+        currentChatAudioObj.currentTime = 0;
+      }
+      const audioPath = `audio/chat/t${topic}_s${scenarioId}_m${idx}.mp3`;
+      const audio = new Audio(audioPath);
+      currentChatAudioObj = audio;
+      audio.playbackRate = audioRate;
+      audio.play().catch(e => {
+        speakChinese(text, role);
+      });
+    }
 
     let soundContext = null;
 
@@ -2261,7 +2458,7 @@
 
 
     function switchAppMode(mode) {
-
+      window.scrollTo(0, 0);
       playBeep('click');
 
       currentAppMode = mode;
@@ -3227,134 +3424,82 @@
 
 
     function loadChatScenario(id) {
-
       playBeep('click');
-
       currentScenarioId = id;
-
       const data = CHAT_SCENARIOS[id];
 
-
-
       document.getElementById('chat-scenario-title').innerText = data.title;
-
       const tab1 = document.getElementById('chat-tab-1');
-
       const tab2 = document.getElementById('chat-tab-2');
 
-
-
       if (id === 1) {
-
-        tab1.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs";
-
+        tab1.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs font-bold";
         tab2.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900";
-
       } else {
-
-        tab2.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs";
-
+        tab2.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs font-bold";
         tab1.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900";
-
       }
 
-
-
       const container = document.getElementById('chat-messages-container');
-
       container.innerHTML = '';
 
-
-
       data.messages.forEach((msg, idx) => {
-
         const row = document.createElement('div');
+        row.className = `flex flex-col ${msg.isMe ? 'items-end' : 'items-start'} mb-2.5`;
 
-        row.className = `flex flex-col ${msg.isMe ? 'items-end' : 'items-start'} mb-1`;
+        // Hasan / Aiman (isMe == true) is Suara Lelaki 👨
+        // Conversational Partner (isMe == false) is Suara Perempuan 👩
+        const isHasan = msg.isMe;
+        const role = isHasan ? 'male' : 'female';
+        const roleBadge = isHasan 
+          ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full border bg-blue-100 text-blue-800 border-blue-300">👨 Suara Lelaki</span>'
+          : '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full border bg-pink-100 text-pink-800 border-pink-300">👩 Suara Perempuan</span>';
 
-
+        const btnAudioClass = isHasan
+          ? 'bg-indigo-800/80 hover:bg-indigo-900 text-indigo-100 border border-indigo-400/40'
+          : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200';
 
         row.innerHTML = `
-
-          <div class="text-[10px] font-bold text-slate-400 mb-1 px-1 flex items-center space-x-1">
-
+          <div class="text-[11px] font-bold text-slate-500 mb-1 px-1 flex items-center space-x-1.5">
             <span>${msg.sender}</span>
-
-            <span id="badge-pass-${idx}" class="hidden text-[9px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.2 rounded-full border border-emerald-300">
-
+            ${roleBadge}
+            <span id="badge-pass-${idx}" class="hidden text-[9px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.5 rounded-full border border-emerald-300">
               ✅ Lulus Sebutan
-
             </span>
-
           </div>
 
-
-
-          <div class="max-w-[92%] sm:max-w-[85%] rounded-2xl p-3.5 transition shadow-xs border ${
-
+          <div id="chat-card-${idx}" class="chat-bubble-card max-w-[94%] sm:max-w-[85%] rounded-2xl p-3.5 transition shadow-xs border ${
             msg.isMe
-
               ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-br-none border-indigo-500'
-
               : 'bg-white border-slate-200 text-slate-900 rounded-bl-none'
-
           }">
-
             <!-- Hanzi & Pinyin -->
-
             <div class="text-base sm:text-lg font-black font-hanzi leading-snug">${msg.hz}</div>
-
             <div class="text-xs ${msg.isMe ? 'text-indigo-200' : 'text-indigo-600'} font-semibold mt-0.5">${msg.py}</div>
-
             <div class="text-[11px] ${msg.isMe ? 'text-indigo-100/90' : 'text-slate-500'} mt-1 pt-1 border-t ${msg.isMe ? 'border-indigo-400/30' : 'border-slate-100'}">
-
               ${msg.my}
-
             </div>
-
-
 
             <!-- Action Controls: Dengar Audio & Semak Sebutan Suara -->
-
             <div class="mt-2.5 pt-2 border-t ${msg.isMe ? 'border-indigo-400/40' : 'border-slate-100'} flex items-center justify-between gap-2">
-
-              <button onclick="speakChinese('${msg.hz}')" class="px-2.5 py-1 rounded-xl ${msg.isMe ? 'bg-indigo-800/80 hover:bg-indigo-900 text-indigo-100' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'} text-[11px] font-bold flex items-center space-x-1 transition active:scale-95">
-
+              <button onclick="playChatMsgAudio(CURRENT_TOPIC, currentScenarioId, ${idx}, '${msg.hz}', '${role}')" class="px-3 py-1 rounded-xl ${btnAudioClass} text-xs font-bold flex items-center space-x-1.5 transition active:scale-95 shadow-2xs">
                 <span>🔊</span>
-
                 <span>Dengar</span>
-
               </button>
-
-
 
               <button id="mic-btn-${idx}" onclick="startSpeechCheck('${msg.hz}', ${idx})" class="px-3 py-1 rounded-xl ${msg.isMe ? 'bg-white text-indigo-800 hover:bg-indigo-50' : 'bg-indigo-600 hover:bg-indigo-700 text-white'} text-[11px] font-extrabold flex items-center space-x-1 shadow-xs transition active:scale-95">
-
                 <span>🎙️</span>
-
                 <span>Uji Sebutan Saya</span>
-
               </button>
-
             </div>
 
-
-
             <!-- Voice Feedback Area -->
-
             <div id="mic-feedback-${idx}" class="hidden mt-2 p-2 rounded-xl text-xs font-semibold"></div>
-
           </div>
-
         `;
-
         container.appendChild(row);
-
       });
-
     }
-
-
 
     /* Pengecaman & Semakan Sebutan Suara (Speech Recognition) */
 
@@ -3665,30 +3810,46 @@
 
 
     function playFullChatAudio() {
-
       const messages = CHAT_SCENARIOS[currentScenarioId].messages;
-
-      let i = 0;
-
-      function next() {
-
-        if (i < messages.length) {
-
-          speakChinese(messages[i].hz);
-
-          i++;
-
-          setTimeout(next, 3200);
-
-        }
-
+      if (currentChatAudioObj) {
+        currentChatAudioObj.pause();
+        currentChatAudioObj.currentTime = 0;
       }
-
-      next();
-
+      let i = 0;
+      function playNextMsg() {
+        if (i >= messages.length) {
+          document.querySelectorAll('.chat-bubble-card').forEach(c => c.classList.remove('ring-4', 'ring-amber-400'));
+          return;
+        }
+        document.querySelectorAll('.chat-bubble-card').forEach(c => c.classList.remove('ring-4', 'ring-amber-400'));
+        const activeBubble = document.getElementById(`chat-card-${i}`);
+        if (activeBubble) {
+          activeBubble.classList.add('ring-4', 'ring-amber-400');
+          activeBubble.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        const msg = messages[i];
+        const role = msg.isMe ? 'male' : 'female';
+        const audioPath = `audio/chat/t${CURRENT_TOPIC}_s${currentScenarioId}_m${i}.mp3`;
+        const audio = new Audio(audioPath);
+        currentChatAudioObj = audio;
+        audio.playbackRate = audioRate;
+        audio.onended = () => {
+          i++;
+          setTimeout(playNextMsg, 600);
+        };
+        audio.onerror = () => {
+          speakChinese(msg.hz, role);
+          i++;
+          setTimeout(playNextMsg, 2800);
+        };
+        audio.play().catch(e => {
+          speakChinese(msg.hz, role);
+          i++;
+          setTimeout(playNextMsg, 2800);
+        });
+      }
+      playNextMsg();
     }
-
-
 
     /* ========== 7. KAMUS DRAWER ========== */
 
@@ -3806,17 +3967,15 @@
 
   <!-- WATERMARK (BOTTOM LEFT - AS REQUESTED) -->
 
-  <div class="fixed bottom-2.5 left-3 z-50 pointer-events-none select-none text-[11px] font-bold text-slate-600/80 bg-white/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-slate-200/80 shadow-xs flex items-center space-x-1.5">
-
-    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 inline-block"></span>
-
-    <span>Hajar Nur Atiqah Binti Mohd Adam</span>
-
-  </div>
-
-
-
-</body>
+  <div class="fixed bottom-2.5 left-3 z-50 pointer-events-none select-none text-[10px] sm:text-[11px] font-bold text-slate-700 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-2xl border border-slate-300 shadow-lg flex flex-col items-start leading-tight">
+    <div class="flex items-center space-x-1.5 text-slate-900 font-extrabold">
+      <span class="w-2 h-2 rounded-full bg-indigo-500 inline-block animate-pulse"></span>
+      <span>Hajar Nur Atiqah Binti Mohd Adam</span>
+    </div>
+    <div class="text-[9px] font-black text-indigo-700 tracking-wider pl-3.5 uppercase">
+      KOLEJ VOKASIONAL PORT DICKSON
+    </div>
+  </div></body>
 
 </html>
 

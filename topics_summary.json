@@ -1,0 +1,1168 @@
+{
+  "1": {
+    "vocab_count": 24,
+    "vocab": [
+      {
+        "hz": "老板",
+        "py": "lǎo bǎn",
+        "my": "bos / peniaga",
+        "type": "k.n"
+      },
+      {
+        "hz": "想",
+        "py": "xiǎng",
+        "my": "ingin / mahu",
+        "type": "k.k"
+      },
+      {
+        "hz": "买",
+        "py": "mǎi",
+        "my": "beli",
+        "type": "k.k"
+      },
+      {
+        "hz": "多少",
+        "py": "duō shao",
+        "my": "berapa",
+        "type": "k.g"
+      },
+      {
+        "hz": "钱",
+        "py": "qián",
+        "my": "duit / wang",
+        "type": "k.n"
+      },
+      {
+        "hz": "公斤",
+        "py": "gōng jīn",
+        "my": "kilogram (kg)",
+        "type": "p.b"
+      },
+      {
+        "hz": "盒",
+        "py": "hé",
+        "my": "kotak",
+        "type": "p.b"
+      },
+      {
+        "hz": "苹果",
+        "py": "píng guǒ",
+        "my": "buah epal",
+        "type": "k.n"
+      },
+      {
+        "hz": "葡萄",
+        "py": "pú tao",
+        "my": "buah anggur",
+        "type": "k.n"
+      },
+      {
+        "hz": "芒果",
+        "py": "máng guǒ",
+        "my": "buah mangga",
+        "type": "k.n"
+      },
+      {
+        "hz": "西瓜",
+        "py": "xī guā",
+        "my": "buah tembikai",
+        "type": "k.n"
+      },
+      {
+        "hz": "香蕉",
+        "py": "xiāng jiāo",
+        "my": "buah pisang",
+        "type": "k.n"
+      },
+      {
+        "hz": "橙子",
+        "py": "chéng zi",
+        "my": "buah oren",
+        "type": "k.n"
+      },
+      {
+        "hz": "别的",
+        "py": "bié de",
+        "my": "yang lain",
+        "type": "k.n"
+      },
+      {
+        "hz": "给",
+        "py": "gěi",
+        "my": "beri / bayar",
+        "type": "k.k"
+      },
+      {
+        "hz": "餐厅",
+        "py": "cān tīng",
+        "my": "restoran",
+        "type": "k.n"
+      },
+      {
+        "hz": "服务员",
+        "py": "fú wù yuán",
+        "my": "pelayan restoran",
+        "type": "k.n"
+      },
+      {
+        "hz": "炒饭",
+        "py": "chǎo fàn",
+        "my": "nasi goreng",
+        "type": "k.n"
+      },
+      {
+        "hz": "炒面",
+        "py": "chǎo miàn",
+        "my": "mee goreng",
+        "type": "k.n"
+      },
+      {
+        "hz": "鸡肉",
+        "py": "jī ròu",
+        "my": "daging ayam",
+        "type": "k.n"
+      },
+      {
+        "hz": "鱼",
+        "py": "yú",
+        "my": "ikan",
+        "type": "k.n"
+      },
+      {
+        "hz": "喝",
+        "py": "hē",
+        "my": "minum",
+        "type": "k.k"
+      },
+      {
+        "hz": "茶",
+        "py": "chá",
+        "my": "teh",
+        "type": "k.n"
+      },
+      {
+        "hz": "果汁",
+        "py": "guǒ zhī",
+        "my": "jus buah",
+        "type": "k.n"
+      }
+    ],
+    "sentences": [
+      {
+        "target": "Berapakah harga satu kilogram epal?",
+        "explain": "Píngguǒ yī gōngjīn duōshao qián? (Berapakah harga satu kilogram epal?)",
+        "hint": "Formula: Buah + Kuantiti + 多少钱？"
+      },
+      {
+        "target": "Saya ingin beli dua kilogram epal.",
+        "explain": "Wǒ xiǎng mǎi liǎng gōngjīn píngguǒ. (Saya mahu beli dua kilogram epal.)",
+        "hint": "Subjek + 想买 + Kuantiti + Benda."
+      },
+      {
+        "target": "Buah tembikai terlalu mahal.",
+        "explain": "Xīguā tài guì le. (Buah tembikai terlalu mahal.)",
+        "hint": "Kata Nama + 太贵 + 了。"
+      },
+      {
+        "target": "Pelayan, tolong berikan saya secawan teh.",
+        "explain": "Fúwùyuán, qǐng gěi wǒ yī bēi chá. (Pelayan, tolong berikan saya secawan teh.)",
+        "hint": "Panggilan + 请给我 + Minuman."
+      },
+      {
+        "target": "Saya ingin makan sepinggan nasi goreng.",
+        "explain": "Wǒ xiǎng chī yī pán chǎofàn. (Saya ingin makan sepinggan nasi goreng.)",
+        "hint": "Subjek + 想吃 + Penjodoh Bilangan + Makanan."
+      }
+    ]
+  },
+  "2": {
+    "vocab_count": 22,
+    "vocab": [
+      {
+        "hz": "这",
+        "py": "zhè",
+        "my": "ini",
+        "type": "k.g"
+      },
+      {
+        "hz": "件",
+        "py": "jiàn",
+        "my": "helai (baju)",
+        "type": "p.b"
+      },
+      {
+        "hz": "条",
+        "py": "tiáo",
+        "my": "helai (seluar)",
+        "type": "p.b"
+      },
+      {
+        "hz": "双",
+        "py": "shuāng",
+        "my": "pasang (kasut)",
+        "type": "p.b"
+      },
+      {
+        "hz": "颜色",
+        "py": "yán sè",
+        "my": "warna",
+        "type": "k.n"
+      },
+      {
+        "hz": "红色",
+        "py": "hóng sè",
+        "my": "warna merah",
+        "type": "k.n"
+      },
+      {
+        "hz": "白色",
+        "py": "bái sè",
+        "my": "warna putih",
+        "type": "k.n"
+      },
+      {
+        "hz": "黑色",
+        "py": "hēi sè",
+        "my": "warna hitam",
+        "type": "k.n"
+      },
+      {
+        "hz": "衣服",
+        "py": "yī fu",
+        "my": "baju / pakaian",
+        "type": "k.n"
+      },
+      {
+        "hz": "裤子",
+        "py": "kù zi",
+        "my": "seluar",
+        "type": "k.n"
+      },
+      {
+        "hz": "皮鞋",
+        "py": "pí xié",
+        "my": "kasut kulit",
+        "type": "k.n"
+      },
+      {
+        "hz": "觉得",
+        "py": "jué de",
+        "my": "berpendapat / rasa",
+        "type": "k.k"
+      },
+      {
+        "hz": "怎么样",
+        "py": "zěn me yàng",
+        "my": "bagaimana",
+        "type": "k.g"
+      },
+      {
+        "hz": "穿",
+        "py": "chuān",
+        "my": "pakai",
+        "type": "k.k"
+      },
+      {
+        "hz": "几号",
+        "py": "jǐ hào",
+        "my": "saiz berapa",
+        "type": "k.n"
+      },
+      {
+        "hz": "大号",
+        "py": "dà hào",
+        "my": "saiz besar (L)",
+        "type": "k.n"
+      },
+      {
+        "hz": "中号",
+        "py": "zhōng hào",
+        "my": "saiz sederhana (M)",
+        "type": "k.n"
+      },
+      {
+        "hz": "小号",
+        "py": "xiǎo hào",
+        "my": "saiz kecil (S)",
+        "type": "k.n"
+      },
+      {
+        "hz": "试穿",
+        "py": "shì chuān",
+        "my": "cuba pakai",
+        "type": "k.k"
+      },
+      {
+        "hz": "漂亮",
+        "py": "piào liang",
+        "my": "cantik",
+        "type": "k.s"
+      },
+      {
+        "hz": "衣服",
+        "py": "chèn shān",
+        "my": "baju",
+        "type": "k.n"
+      },
+      {
+        "hz": "裙子",
+        "py": "qún zi",
+        "my": "skirt / gaun",
+        "type": "k.n"
+      }
+    ],
+    "sentences": [
+      {
+        "target": "Saya mahu beli sehelai baju berwarna putih.",
+        "explain": "Wǒ xiǎng mǎi yī jiàn báisè de yīfu. (Saya mahu beli sehelai baju putih.)",
+        "hint": "Subjek + 想买 + Penjodoh Bilangan (件) + Warna + Baju."
+      },
+      {
+        "target": "Bagaimanakah dengan seluar warna hitam ini?",
+        "explain": "Zhè tiáo hēisè de kùzi zěnmeyàng? (Bagaimanakah dengan seluar hitam ini?)",
+        "hint": "Kata Tunjuk + Penjodoh Bilangan (条) + Benda + 怎么样？"
+      },
+      {
+        "target": "Awak pakai baju saiz berapa?",
+        "explain": "Nǐ chuān jǐ hào de yīfu? (Awak pakai baju saiz berapa?)",
+        "hint": "Subjek + 穿 + 几号的 + Pakaian?"
+      },
+      {
+        "target": "Saya rasa kasut kulit sepasang ini sangat cantik.",
+        "explain": "Wǒ juéde zhè shuāng píxié hěn piàoliang. (Saya rasa kasut kulit sepasang ini sangat cantik.)",
+        "hint": "Subjek + 觉得 + Penjodoh Bilangan (双) + Kasut + 很漂亮。"
+      },
+      {
+        "target": "Bolehkah baju ini dicuba pakai?",
+        "explain": "Zhè jiàn yīfu kěyǐ shìchuān ma? (Bolehkah baju ini dicuba pakai?)",
+        "hint": "Pakaian + 可以 + 试穿吗？"
+      }
+    ]
+  },
+  "3": {
+    "vocab_count": 22,
+    "vocab": [
+      {
+        "hz": "爱好",
+        "py": "ài hào",
+        "my": "hobi / kegemaran",
+        "type": "k.n"
+      },
+      {
+        "hz": "喜欢",
+        "py": "xǐ huan",
+        "my": "suka / gemar",
+        "type": "k.k"
+      },
+      {
+        "hz": "看书",
+        "py": "kàn shū",
+        "my": "membaca buku",
+        "type": "k.k"
+      },
+      {
+        "hz": "画画",
+        "py": "huà huà",
+        "my": "melukis lukisan",
+        "type": "k.k"
+      },
+      {
+        "hz": "唱歌",
+        "py": "chàng gē",
+        "my": "menyanyi lagu",
+        "type": "k.k"
+      },
+      {
+        "hz": "跳舞",
+        "py": "tiào wǔ",
+        "my": "menari tarian",
+        "type": "k.k"
+      },
+      {
+        "hz": "上网",
+        "py": "shàng wǎng",
+        "my": "melayari internet",
+        "type": "k.k"
+      },
+      {
+        "hz": "玩游戏",
+        "py": "wán yóu xì",
+        "my": "bermain game",
+        "type": "k.k"
+      },
+      {
+        "hz": "运动",
+        "py": "yùn dòng",
+        "my": "bersukan / riadah",
+        "type": "k.k"
+      },
+      {
+        "hz": "踢足球",
+        "py": "tī zú qiú",
+        "my": "bermain bola sepak",
+        "type": "k.k"
+      },
+      {
+        "hz": "踢藤球",
+        "py": "tī téng qiú",
+        "my": "bermain sepak takraw",
+        "type": "k.k"
+      },
+      {
+        "hz": "打羽毛球",
+        "py": "dǎ yǔ máo qiú",
+        "my": "bermain badminton",
+        "type": "k.k"
+      },
+      {
+        "hz": "打篮球",
+        "py": "dǎ lán qiú",
+        "my": "bermain bola keranjang",
+        "type": "k.k"
+      },
+      {
+        "hz": "打排球",
+        "py": "dǎ pái qiú",
+        "my": "bermain bola tampar",
+        "type": "k.k"
+      },
+      {
+        "hz": "打橄榄球",
+        "py": "dǎ gǎn lǎn qiú",
+        "my": "bermain ragbi",
+        "type": "k.k"
+      },
+      {
+        "hz": "打保龄球",
+        "py": "dǎ bǎo líng qiú",
+        "my": "bermain boling",
+        "type": "k.k"
+      },
+      {
+        "hz": "游泳",
+        "py": "yóu yǒng",
+        "my": "berenang",
+        "type": "k.k"
+      },
+      {
+        "hz": "跑步",
+        "py": "pǎo bù",
+        "my": "berlari / joging",
+        "type": "k.k"
+      },
+      {
+        "hz": "操场",
+        "py": "cāo chǎng",
+        "my": "padang",
+        "type": "k.n"
+      },
+      {
+        "hz": "朋友",
+        "py": "péng you",
+        "my": "kawan / rakan",
+        "type": "k.n"
+      },
+      {
+        "hz": "周末",
+        "py": "zhōu mò",
+        "my": "hujung minggu",
+        "type": "k.n"
+      },
+      {
+        "hz": "听音乐",
+        "py": "tīng yīn yuè",
+        "my": "mendengar muzik",
+        "type": "k.k"
+      }
+    ],
+    "sentences": [
+      {
+        "target": "Apakah hobi kegemaran awak?",
+        "explain": "Nǐ de àihào shì shénme? (Apakah hobi kegemaran awak?)",
+        "hint": "Subjek + 是 + 什么？"
+      },
+      {
+        "target": "Hobi saya ialah bermain badminton.",
+        "explain": "Wǒ de àihào shì dǎ yǔmáoqiú. (Hobi saya ialah bermain badminton.)",
+        "hint": "Subjek + 是 + Aktiviti Hobi."
+      },
+      {
+        "target": "Hobi Li Qiang ialah bermain bola keranjang.",
+        "explain": "Lǐ Qiáng de àihào shì dǎ lánqiú. (Hobi Li Qiang ialah bermain bola keranjang.)",
+        "hint": "Nama + 的爱好是 + Sukan."
+      },
+      {
+        "target": "Aini sangat suka membaca buku dan melukis.",
+        "explain": "Àinī xǐhuan kànshū hé huàhuà. (Aini suka membaca dan melukis.)",
+        "hint": "Nama + 喜欢 + Aktiviti 1 + 和 + Aktiviti 2."
+      },
+      {
+        "target": "Jom kita pergi ke padang main bola sepak.",
+        "explain": "Wǒmen qù cāochǎng tī zúqiú ba. (Jom kita ke padang main bola sepak.)",
+        "hint": "Subjek + 去 + Tempat + Sukan + 吧 (ajakan)."
+      }
+    ]
+  },
+  "4": {
+    "vocab_count": 23,
+    "vocab": [
+      {
+        "hz": "新",
+        "py": "xīn",
+        "my": "baru",
+        "type": "adjektif"
+      },
+      {
+        "hz": "职员",
+        "py": "zhí yuán",
+        "my": "pekerja / staf",
+        "type": "kata nama"
+      },
+      {
+        "hz": "同事",
+        "py": "tóng shì",
+        "my": "rakan sekerja",
+        "type": "kata nama"
+      },
+      {
+        "hz": "座位",
+        "py": "zuò wèi",
+        "my": "tempat duduk",
+        "type": "kata nama"
+      },
+      {
+        "hz": "前面",
+        "py": "qián miàn",
+        "my": "bahagian depan",
+        "type": "kata arah"
+      },
+      {
+        "hz": "后面",
+        "py": "hòu miàn",
+        "my": "bahagian belakang",
+        "type": "kata arah"
+      },
+      {
+        "hz": "里面",
+        "py": "lǐ miàn",
+        "my": "bahagian dalam",
+        "type": "kata arah"
+      },
+      {
+        "hz": "上面",
+        "py": "shàng miàn",
+        "my": "bahagian atas",
+        "type": "kata arah"
+      },
+      {
+        "hz": "下面",
+        "py": "xià miàn",
+        "my": "bahagian bawah",
+        "type": "kata arah"
+      },
+      {
+        "hz": "旁边",
+        "py": "páng biān",
+        "my": "sebelah / tepi",
+        "type": "kata arah"
+      },
+      {
+        "hz": "桌子",
+        "py": "zhuō zi",
+        "my": "meja",
+        "type": "kata nama"
+      },
+      {
+        "hz": "椅子",
+        "py": "yǐ zi",
+        "my": "kerusi",
+        "type": "kata nama"
+      },
+      {
+        "hz": "柜子",
+        "py": "guì zi",
+        "my": "almari",
+        "type": "kata nama"
+      },
+      {
+        "hz": "文具",
+        "py": "wén jù",
+        "my": "alat tulis",
+        "type": "kata nama"
+      },
+      {
+        "hz": "电脑",
+        "py": "diàn nǎo",
+        "my": "komputer / laptop",
+        "type": "kata nama"
+      },
+      {
+        "hz": "打印机",
+        "py": "dǎ yìn jī",
+        "my": "mesin cetak (printer)",
+        "type": "kata nama"
+      },
+      {
+        "hz": "复印机",
+        "py": "fù yìn jī",
+        "my": "mesin fotostat",
+        "type": "kata nama"
+      },
+      {
+        "hz": "文件夹",
+        "py": "wén jiàn jiā",
+        "my": "fail dokumen",
+        "type": "kata nama"
+      },
+      {
+        "hz": "拿",
+        "py": "ná",
+        "my": "ambil",
+        "type": "kata kerja"
+      },
+      {
+        "hz": "经理",
+        "py": "jīng lǐ",
+        "my": "pengurus",
+        "type": "kata nama"
+      },
+      {
+        "hz": "在",
+        "py": "zài",
+        "my": "ada (di tempatnya) / di",
+        "type": "kata kerja"
+      },
+      {
+        "hz": "事",
+        "py": "shì",
+        "my": "perkara / hal",
+        "type": "kata nama"
+      },
+      {
+        "hz": "打电话",
+        "py": "dǎ diàn huà",
+        "my": "menelefon",
+        "type": "kata kerja"
+      }
+    ],
+    "sentences": [
+      {
+        "target": "Tempat duduk saya di mana?",
+        "explain": "Wǒ de zuòwèi zài nǎr? (Tempat duduk saya di mana?)",
+        "hint": "Formula: Kata Nama + 在 + 哪儿？"
+      },
+      {
+        "target": "Komputer di atas meja.",
+        "explain": "Diànnǎo zài zhuōzi shàngmiàn. (Komputer di atas meja.)",
+        "hint": "Formula: Objek + 在 + Rujukan + Kedudukan"
+      },
+      {
+        "target": "Tempat duduk saya di bahagian hadapan.",
+        "explain": "Wǒ de zuòwèi zài qiánmiàn. (Tempat duduk saya di depan.)",
+        "hint": "Subjek + 在 + Arah/Kedudukan."
+      },
+      {
+        "target": "Mesin pencetak di sebelah almari fail.",
+        "explain": "Dǎyìnjī zài guìzi pángbiān. (Mesin pencetak di sebelah almari.)",
+        "hint": "Alatan + 在 + Rujukan + 旁边。"
+      },
+      {
+        "target": "Adakah Pengurus Wang ada di pejabat?",
+        "explain": "Wáng jīnglǐ zài bàngōngshì ma? (Adakah Pengurus Wang ada di pejabat?)",
+        "hint": "Subjek + 在 + Tempat + 吗？"
+      }
+    ]
+  },
+  "5": {
+    "vocab_count": 22,
+    "vocab": [
+      {
+        "hz": "来自",
+        "py": "lái zì",
+        "my": "berasal dari",
+        "type": "k.k"
+      },
+      {
+        "hz": "州属",
+        "py": "zhōu shǔ",
+        "my": "negeri (wilayah)",
+        "type": "k.n"
+      },
+      {
+        "hz": "首府",
+        "py": "shǒu fǔ",
+        "my": "ibu negeri",
+        "type": "k.n"
+      },
+      {
+        "hz": "警察局",
+        "py": "jǐng chá jú",
+        "my": "balai polis",
+        "type": "k.n"
+      },
+      {
+        "hz": "邮政局",
+        "py": "yóu zhèng jú",
+        "my": "pejabat pos",
+        "type": "k.n"
+      },
+      {
+        "hz": "消防局",
+        "py": "xiāo fáng jú",
+        "my": "balai bomba",
+        "type": "k.n"
+      },
+      {
+        "hz": "银行",
+        "py": "yín háng",
+        "my": "bank",
+        "type": "k.n"
+      },
+      {
+        "hz": "学校",
+        "py": "xué xiào",
+        "my": "sekolah",
+        "type": "k.n"
+      },
+      {
+        "hz": "医院",
+        "py": "yī yuàn",
+        "my": "hospital",
+        "type": "k.n"
+      },
+      {
+        "hz": "商店",
+        "py": "shāng diàn",
+        "my": "kedai perniagaan",
+        "type": "k.n"
+      },
+      {
+        "hz": "操场",
+        "py": "cāo chǎng",
+        "my": "padang sukan",
+        "type": "k.n"
+      },
+      {
+        "hz": "马来西亚",
+        "py": "Mǎ lái xī yà",
+        "my": "Malaysia",
+        "type": "k.n"
+      },
+      {
+        "hz": "吉隆坡",
+        "py": "Jí lóng pō",
+        "my": "Kuala Lumpur",
+        "type": "k.n"
+      },
+      {
+        "hz": "柔佛",
+        "py": "Róu fó",
+        "my": "Johor",
+        "type": "k.n"
+      },
+      {
+        "hz": "槟城",
+        "py": "Bīn chéng",
+        "my": "Pulau Pinang",
+        "type": "k.n"
+      },
+      {
+        "hz": "雪兰莪",
+        "py": "Xuě lán é",
+        "my": "Selangor",
+        "type": "k.n"
+      },
+      {
+        "hz": "附近",
+        "py": "fù jìn",
+        "my": "berdekatan / sekitar",
+        "type": "k.n"
+      },
+      {
+        "hz": "前面",
+        "py": "qián miàn",
+        "my": "hadapan",
+        "type": "k.n"
+      },
+      {
+        "hz": "后面",
+        "py": "hòu miàn",
+        "my": "belakang",
+        "type": "k.n"
+      },
+      {
+        "hz": "对面",
+        "py": "duì miàn",
+        "my": "bertentangan / seberang",
+        "type": "k.n"
+      },
+      {
+        "hz": "旁边",
+        "py": "páng biān",
+        "my": "sebelah / tepi",
+        "type": "k.n"
+      },
+      {
+        "hz": "日常用品",
+        "py": "rì cháng yòng pǐn",
+        "my": "barang keperluan harian",
+        "type": "k.n"
+      }
+    ],
+    "sentences": [
+      {
+        "target": "Awak berasal dari mana?",
+        "explain": "Nǐ láizì nǎr? (Awak berasal dari mana?)",
+        "hint": "Subjek + 来自 + 哪儿？"
+      },
+      {
+        "target": "Saya berasal dari negeri Selangor.",
+        "explain": "Wǒ láizì Xuělán'é zhōu. (Saya berasal dari negeri Selangor.)",
+        "hint": "Subjek + 来自 + Nama Negeri."
+      },
+      {
+        "target": "Ibu negeri Selangor ialah Shah Alam.",
+        "explain": "Xuělán'é de shǒufǔ shì Shā'ānán. (Ibu negeri Selangor ialah Shah Alam.)",
+        "hint": "Negeri + 的首府是 + Nama Bandar."
+      },
+      {
+        "target": "Balai polis terletak di seberang sekolah.",
+        "explain": "Jǐngchájú zài xuéxiào duìmiàn. (Balai polis di seberang sekolah.)",
+        "hint": "Tempat 1 + 在 + Tempat 2 + 对面。"
+      },
+      {
+        "target": "Balai bomba terletak di sebelah hospital.",
+        "explain": "Xiāofángjú zài yīyuàn pángbiān. (Balai bomba di sebelah hospital.)",
+        "hint": "Tempat 1 + 在 + Tempat 2 + 旁边。"
+      }
+    ]
+  },
+  "6": {
+    "vocab_count": 22,
+    "vocab": [
+      {
+        "hz": "公共交通",
+        "py": "gōng gòng jiāo tōng",
+        "my": "pengangkutan awam",
+        "type": "k.n"
+      },
+      {
+        "hz": "火车站",
+        "py": "huǒ chē zhàn",
+        "my": "stesen kereta api",
+        "type": "k.n"
+      },
+      {
+        "hz": "巴士站",
+        "py": "bā shì zhàn",
+        "my": "stesen bas",
+        "type": "k.n"
+      },
+      {
+        "hz": "机场",
+        "py": "jī chǎng",
+        "my": "lapangan terbang",
+        "type": "k.n"
+      },
+      {
+        "hz": "双峰塔",
+        "py": "shuāng fēng tǎ",
+        "my": "Menara Berkembar KLCC",
+        "type": "k.n"
+      },
+      {
+        "hz": "出租车",
+        "py": "chū zū chē",
+        "my": "teksi",
+        "type": "k.n"
+      },
+      {
+        "hz": "飞机",
+        "py": "fēi jī",
+        "my": "kapal terbang",
+        "type": "k.n"
+      },
+      {
+        "hz": "地铁",
+        "py": "dì tiě",
+        "my": "MRT / LRT",
+        "type": "k.n"
+      },
+      {
+        "hz": "怎么",
+        "py": "zěn me",
+        "my": "bagaimana",
+        "type": "k.g"
+      },
+      {
+        "hz": "去",
+        "py": "qù",
+        "my": "pergi",
+        "type": "k.k"
+      },
+      {
+        "hz": "坐",
+        "py": "zuò",
+        "my": "naik kenderaan",
+        "type": "k.k"
+      },
+      {
+        "hz": "从",
+        "py": "cóng",
+        "my": "dari",
+        "type": "k.k"
+      },
+      {
+        "hz": "到",
+        "py": "dào",
+        "my": "tiba / sampai",
+        "type": "k.k"
+      },
+      {
+        "hz": "左转",
+        "py": "zuǒ zhuǎn",
+        "my": "belok kiri",
+        "type": "k.k"
+      },
+      {
+        "hz": "右转",
+        "py": "yòu zhuǎn",
+        "my": "belok kanan",
+        "type": "k.k"
+      },
+      {
+        "hz": "直走",
+        "py": "zhí zǒu",
+        "my": "jalan terus",
+        "type": "k.k"
+      },
+      {
+        "hz": "往前",
+        "py": "wǎng qián",
+        "my": "ke hadapan",
+        "type": "k.n"
+      },
+      {
+        "hz": "然后",
+        "py": "rán hòu",
+        "my": "kemudian",
+        "type": "k.h"
+      },
+      {
+        "hz": "车票",
+        "py": "chē piào",
+        "my": "tiket kenderaan",
+        "type": "k.n"
+      },
+      {
+        "hz": "走路",
+        "py": "zǒu lù",
+        "my": "berjalan kaki",
+        "type": "k.k"
+      },
+      {
+        "hz": "远",
+        "py": "yuǎn",
+        "my": "jauh",
+        "type": "k.s"
+      },
+      {
+        "hz": "近",
+        "py": "jìn",
+        "my": "dekat",
+        "type": "k.s"
+      }
+    ],
+    "sentences": [
+      {
+        "target": "Bagaimanakah cara pergi ke lapangan terbang?",
+        "explain": "Zěnme qù jīchǎng? (Bagaimanakah cara pergi ke lapangan terbang?)",
+        "hint": "怎么去 + Destinasi?"
+      },
+      {
+        "target": "Tumpang tanya bagaimanakah cara pergi ke Menara KLCC?",
+        "explain": "Qǐngwèn zěnme qù Shuāngfēngtǎ? (Tumpang tanya bagaimanakah ke Menara KLCC?)",
+        "hint": "Kata Sopan + 怎么去 + Destinasi?"
+      },
+      {
+        "target": "Dari stesen kereta api naik MRT pergi ke lapangan terbang.",
+        "explain": "Cóng huǒchēzhàn zuò dìtiě qù jīchǎng. (Dari stesen kereta api naik MRT ke lapangan terbang.)",
+        "hint": "从 (dari) + Asal + 坐 (naik) + Kenderaan + 去 (ke) + Destinasi."
+      },
+      {
+        "target": "Jalan terus ke hadapan, kemudian belok kiri.",
+        "explain": "Wǎng qián zhí zǒu, ránhòu zuǒ zhuǎn. (Jalan terus ke depan, kemudian belok kiri.)",
+        "hint": "往前直走 + 然后 + Arah Belok."
+      },
+      {
+        "target": "Naik teksi lebih pantas daripada naik bas.",
+        "explain": "Zuò chūzūchē bǐ zuò bāshì kuài. (Naik teksi lebih cepat berbanding naik bas.)",
+        "hint": "Kaedah A + 比 (banding) + Kaedah B + 快 (laju)."
+      }
+    ]
+  },
+  "7": {
+    "vocab_count": 22,
+    "vocab": [
+      {
+        "hz": "面试",
+        "py": "miàn shì",
+        "my": "temuduga kerja",
+        "type": "k.k"
+      },
+      {
+        "hz": "自我介绍",
+        "py": "zì wǒ jiè shào",
+        "my": "memperkenalkan diri",
+        "type": "k.k"
+      },
+      {
+        "hz": "毕业",
+        "py": "bì yè",
+        "my": "graduasi / tamat belajar",
+        "type": "k.k"
+      },
+      {
+        "hz": "学习",
+        "py": "xué xí",
+        "my": "belajar",
+        "type": "k.k"
+      },
+      {
+        "hz": "专业",
+        "py": "zhuān yè",
+        "my": "jurusan / kepakaran",
+        "type": "k.n"
+      },
+      {
+        "hz": "履历表",
+        "py": "lǚ lì biǎo",
+        "my": "resume / CV",
+        "type": "k.n"
+      },
+      {
+        "hz": "工作",
+        "py": "gōng zuò",
+        "my": "bekerja / pekerjaan",
+        "type": "k.k"
+      },
+      {
+        "hz": "经验",
+        "py": "jīng yàn",
+        "my": "pengalaman",
+        "type": "k.n"
+      },
+      {
+        "hz": "公司",
+        "py": "gōng sī",
+        "my": "syarikat",
+        "type": "k.n"
+      },
+      {
+        "hz": "实习",
+        "py": "shí xí",
+        "my": "latihan industri / praktikal",
+        "type": "k.k"
+      },
+      {
+        "hz": "会",
+        "py": "huì",
+        "my": "tahu / berkebolehan",
+        "type": "k.k"
+      },
+      {
+        "hz": "说",
+        "py": "shuō",
+        "my": "bercakap / bertutur",
+        "type": "k.k"
+      },
+      {
+        "hz": "优点",
+        "py": "yōu diǎn",
+        "my": "kelebihan diri",
+        "type": "k.n"
+      },
+      {
+        "hz": "知识",
+        "py": "zhī shi",
+        "my": "pengetahuan",
+        "type": "k.n"
+      },
+      {
+        "hz": "工资",
+        "py": "gōng zī",
+        "my": "gaji pendapatan",
+        "type": "k.n"
+      },
+      {
+        "hz": "职位",
+        "py": "zhí wèi",
+        "my": "jawatan",
+        "type": "k.n"
+      },
+      {
+        "hz": "什么时候",
+        "py": "shén me shí hou",
+        "my": "bila masa",
+        "type": "k.g"
+      },
+      {
+        "hz": "开始",
+        "py": "kāi shǐ",
+        "my": "bermula",
+        "type": "k.k"
+      },
+      {
+        "hz": "上班",
+        "py": "shàng bān",
+        "my": "masuk kerja",
+        "type": "k.k"
+      },
+      {
+        "hz": "责任心",
+        "py": "zé rèn xīn",
+        "my": "rasa tanggungjawab",
+        "type": "k.n"
+      },
+      {
+        "hz": "准时",
+        "py": "zhǔn shí",
+        "my": "tepat masa",
+        "type": "k.s"
+      },
+      {
+        "hz": "经理",
+        "py": "jīng lǐ",
+        "my": "pengurus",
+        "type": "k.n"
+      }
+    ],
+    "sentences": [
+      {
+        "target": "Ini adalah resume saya.",
+        "explain": "Zhè shì wǒ de lǚlìbiǎo. (Ini adalah resume saya.)",
+        "hint": "这是 + 我的 + 履历表。"
+      },
+      {
+        "target": "Saya graduasi dari kolej vokasional.",
+        "explain": "Wǒ bìyè yú zhíyè xuéyuàn. (Saya graduasi dari kolej vokasional.)",
+        "hint": "Subjek + 毕业于 (tamat dari) + Institusi."
+      },
+      {
+        "target": "Saya menjalani latihan industri di syarikat besar.",
+        "explain": "Wǒ zài dà gōngsī shíxí. (Saya praktikal di syarikat besar.)",
+        "hint": "我在 + Tempat + 实习。"
+      },
+      {
+        "target": "Saya boleh bertutur Bahasa Mandarin dan Bahasa Melayu.",
+        "explain": "Wǒ huì shuō Huáyǔ hé Mǎláiyǔ. (Saya boleh bertutur Mandarin dan Bahasa Melayu.)",
+        "hint": "Subjek + 会说 + Bahasa 1 + 和 + Bahasa 2."
+      },
+      {
+        "target": "Bila boleh mula masuk kerja?",
+        "explain": "Shénme shíhou kěyǐ kāishǐ shàngbān? (Bila boleh mula masuk kerja?)",
+        "hint": "什么时候 + 可以 + 开始上班？"
+      }
+    ]
+  }
+}
