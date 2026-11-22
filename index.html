@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>PinyinGo - Portal Bahasa Mandarin Kolej Vokasional (ELM 4322)</title>
+  <title>PinyinGo Pelajar - Latihan Kendiri Bahasa Mandarin (ELM 4322)</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts -->
@@ -35,8 +35,11 @@
       transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .topic-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 28px -8px rgba(79, 70, 229, 0.12);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 28px -8px rgba(79, 70, 229, 0.16);
+    }
+    .topic-card:active {
+      transform: scale(0.98);
     }
   </style>
 </head>
@@ -44,265 +47,204 @@
 
   <!-- TOP HEADER -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
-    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="max-w-2xl mx-auto px-4 py-3.5 flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white font-black text-xl shadow-md shadow-indigo-500/25">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 flex items-center justify-center text-white font-black text-xl shadow-md shadow-emerald-500/25">
           拼
         </div>
         <div>
           <div class="flex items-center space-x-1.5">
-            <h1 class="font-outfit font-black text-lg text-slate-900 tracking-tight">PinyinGo Portal</h1>
-            <span class="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">ELM 4322</span>
+            <h1 class="font-outfit font-black text-lg text-slate-900 tracking-tight">PinyinGo Pelajar</h1>
+            <span class="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">Mod Kendiri</span>
           </div>
-          <p class="text-xs text-slate-500 font-semibold leading-tight">Modul Bahasa Mandarin Kolej Vokasional</p>
+          <p class="text-xs text-slate-500 font-semibold leading-tight">Latihan Bahasa Mandarin Kolej Vokasional (ELM 4322)</p>
         </div>
       </div>
       <div class="text-right">
-        <span class="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-100">7 Topik Lengkap</span>
+        <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">7 Topik Lengkap</span>
       </div>
     </div>
   </header>
 
   <!-- MAIN HUB CONTENT -->
-  <main class="max-w-3xl mx-auto px-4 py-5 flex-grow w-full">
+  <main class="max-w-2xl mx-auto px-4 py-6 flex-grow w-full">
     
-    <!-- Hero Banner with 2 Mode Indicators -->
-    <div class="bg-gradient-to-br from-indigo-600 via-indigo-700 to-cyan-600 rounded-3xl p-5 sm:p-7 text-white shadow-xl mb-6 relative overflow-hidden">
+    <!-- Hero Banner (Student Mode) -->
+    <div class="bg-gradient-to-br from-indigo-600 via-indigo-700 to-cyan-600 rounded-3xl p-6 text-white shadow-xl mb-6 relative overflow-hidden">
       <div class="relative z-10">
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-          <span class="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-extrabold text-indigo-100">
-            <span>📽️</span><span>Slaid Mengajar Guru</span>
-          </span>
-          <span class="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-emerald-500/30 backdrop-blur-md text-xs font-extrabold text-emerald-100 border border-emerald-400/40">
-            <span>📱</span><span>Latihan Kendiri Murid</span>
-          </span>
-        </div>
+        <span class="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-extrabold mb-2 text-indigo-100">
+          🎓 Pembelajaran Interaktif Kendiri Murid
+        </span>
         <h2 class="text-2xl sm:text-3xl font-outfit font-black leading-tight">
-          Portal PdP & Pembelajaran Kendiri PinyinGo
+          Selamat Datang ke PinyinGo
         </h2>
-        <p class="text-xs sm:text-sm text-indigo-100 mt-1.5 max-w-xl leading-relaxed">
-          Pilih <strong>Slaid Mengajar</strong> untuk tayangan projektor/smartboard di dalam kelas, atau pilih <strong>Latihan Kendiri</strong> untuk latihan 20 soalan, bina ayat, dan semakan sebutan suara.
+        <p class="text-xs sm:text-sm text-indigo-100 mt-1 max-w-md leading-relaxed">
+          Pilih mana-mana topik di bawah untuk mula berlatih <strong>20 Soalan Bina Kata</strong>, <strong>Pola Ayat Acak</strong>, dan <strong>Semakan Sebutan Suara Mikrofon</strong> secara kendiri.
         </p>
       </div>
       <!-- Background Decorative Motif -->
-      <div class="absolute -right-3 -bottom-5 text-8xl opacity-15 select-none font-hanzi font-black">
+      <div class="absolute -right-4 -bottom-6 text-8xl opacity-15 select-none font-hanzi font-black">
         华语
       </div>
     </div>
 
-    <!-- Topics Grid (1 to 7) with 2 Direct Buttons for Each Topic -->
-    <div class="space-y-4">
+    <!-- Topics Grid (1 to 7 Direct Student Links) -->
+    <div class="space-y-3.5">
 
       <!-- Topik 1 -->
-      <div class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-xs flex flex-col justify-between">
-        <div class="flex items-start space-x-3.5 mb-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-2xl shrink-0 mt-0.5">
+      <a href="topik1.html" class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex items-center justify-between group block">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-105 transition">
             🍎
           </div>
-          <div class="flex-grow">
+          <div>
             <div class="flex items-center space-x-2">
               <span class="text-xs font-black text-amber-600 uppercase tracking-wider">Topik 1</span>
               <span class="text-xs text-slate-400 font-semibold">• 买食物 (Mǎi shíwù)</span>
             </div>
-            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900">
+            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900 group-hover:text-indigo-600 transition">
               Membeli Makanan
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Kosa kata buah-buahan, makanan harian, sebutan harga RM & pesanan restoran.</p>
+            <p class="text-xs text-slate-500 mt-0.5">20 Soalan buah-buahan, hidangan makanan, harga (RM) & pesanan restoran.</p>
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-          <a href="slide1.html" class="py-2.5 px-3 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-extrabold text-xs flex items-center justify-center space-x-1.5 transition active:scale-98">
-            <span>📽️</span>
-            <span>Slaid Mengajar Guru (Projektor)</span>
-          </a>
-          <a href="topik1.html" class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center space-x-1.5 transition shadow-sm active:scale-98">
-            <span>📱</span>
-            <span>Latihan Kendiri (20 Soalan & Suara)</span>
-            <span>➔</span>
-          </a>
+        <div class="w-9 h-9 rounded-full bg-slate-100 group-hover:bg-emerald-600 group-hover:text-white text-slate-400 flex items-center justify-center font-bold text-sm transition">
+          ➔
         </div>
-      </div>
+      </a>
 
       <!-- Topik 2 -->
-      <div class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-xs flex flex-col justify-between">
-        <div class="flex items-start space-x-3.5 mb-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center text-2xl shrink-0 mt-0.5">
+      <a href="topik2.html" class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex items-center justify-between group block">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center text-2xl group-hover:scale-105 transition">
             👔
           </div>
-          <div class="flex-grow">
+          <div>
             <div class="flex items-center space-x-2">
               <span class="text-xs font-black text-rose-600 uppercase tracking-wider">Topik 2</span>
               <span class="text-xs text-slate-400 font-semibold">• 买服装 (Mǎi fúzhuāng)</span>
             </div>
-            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900">
+            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900 group-hover:text-indigo-600 transition">
               Membeli Pakaian
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Warna, saiz pakaian (大, 中, 小号), penjodoh bilangan (件, 条, 双) & diskaun.</p>
+            <p class="text-xs text-slate-500 mt-0.5">20 Soalan jenis pakaian, warna, penjodoh bilangan (件, 条, 双) & diskaun.</p>
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-          <a href="slide2.html" class="py-2.5 px-3 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-extrabold text-xs flex items-center justify-center space-x-1.5 transition active:scale-98">
-            <span>📽️</span>
-            <span>Slaid Mengajar Guru (Projektor)</span>
-          </a>
-          <a href="topik2.html" class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center space-x-1.5 transition shadow-sm active:scale-98">
-            <span>📱</span>
-            <span>Latihan Kendiri (20 Soalan & Suara)</span>
-            <span>➔</span>
-          </a>
+        <div class="w-9 h-9 rounded-full bg-slate-100 group-hover:bg-emerald-600 group-hover:text-white text-slate-400 flex items-center justify-center font-bold text-sm transition">
+          ➔
         </div>
-      </div>
+      </a>
 
       <!-- Topik 3 -->
-      <div class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-xs flex flex-col justify-between">
-        <div class="flex items-start space-x-3.5 mb-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-200 text-teal-600 flex items-center justify-center text-2xl shrink-0 mt-0.5">
+      <a href="topik3.html" class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex items-center justify-between group block">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-200 text-teal-600 flex items-center justify-center text-2xl group-hover:scale-105 transition">
             🏸
           </div>
-          <div class="flex-grow">
+          <div>
             <div class="flex items-center space-x-2">
               <span class="text-xs font-black text-teal-600 uppercase tracking-wider">Topik 3</span>
               <span class="text-xs text-slate-400 font-semibold">• 我的爱好 (Wǒ de àihào)</span>
             </div>
-            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900">
+            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900 group-hover:text-indigo-600 transition">
               Hobi Saya
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Sukan (badminton, bola sepak, takraw, bola keranjang), membaca, melukis & menyanyi.</p>
+            <p class="text-xs text-slate-500 mt-0.5">20 Soalan sukan (badminton, bola sepak, takraw), membaca, melukis & menyanyi.</p>
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-          <a href="slide3.html" class="py-2.5 px-3 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-extrabold text-xs flex items-center justify-center space-x-1.5 transition active:scale-98">
-            <span>📽️</span>
-            <span>Slaid Mengajar Guru (Projektor)</span>
-          </a>
-          <a href="topik3.html" class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center space-x-1.5 transition shadow-sm active:scale-98">
-            <span>📱</span>
-            <span>Latihan Kendiri (20 Soalan & Suara)</span>
-            <span>➔</span>
-          </a>
+        <div class="w-9 h-9 rounded-full bg-slate-100 group-hover:bg-emerald-600 group-hover:text-white text-slate-400 flex items-center justify-center font-bold text-sm transition">
+          ➔
         </div>
-      </div>
+      </a>
 
       <!-- Topik 4 -->
-      <div class="topic-card bg-white rounded-3xl p-4 sm:p-5 border-2 border-indigo-200 bg-indigo-50/20 shadow-xs flex flex-col justify-between">
-        <div class="flex items-start space-x-3.5 mb-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl shrink-0 mt-0.5">
+      <a href="topik4.html" class="topic-card bg-white rounded-3xl p-4 sm:p-5 border-2 border-indigo-200 bg-indigo-50/20 shadow-sm flex items-center justify-between group block">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl group-hover:scale-105 transition">
             🏢
           </div>
-          <div class="flex-grow">
+          <div>
             <div class="flex items-center space-x-2">
               <span class="text-xs font-black text-indigo-600 uppercase tracking-wider">Topik 4</span>
               <span class="text-xs text-slate-400 font-semibold">• 在办公室 (Zài bàngōngshì)</span>
               <span class="text-[9px] bg-indigo-600 text-white font-bold px-1.5 py-0.2 rounded-full">Popular</span>
             </div>
-            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900">
+            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900 group-hover:text-indigo-600 transition">
               Di Pejabat
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Kedudukan alatan meja, rakan sekerja, telefon, mesin fotostat & pengurus.</p>
+            <p class="text-xs text-slate-500 mt-0.5">20 Soalan kedudukan alatan meja, rakan sekerja, telefon, fotostat & pengurus.</p>
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-200/80">
-          <a href="slide4.html" class="py-2.5 px-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs flex items-center justify-center space-x-1.5 transition shadow-xs active:scale-98">
-            <span>📽️</span>
-            <span>Slaid Mengajar Guru (Projektor)</span>
-          </a>
-          <a href="topik4.html" class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center space-x-1.5 transition shadow-sm active:scale-98">
-            <span>📱</span>
-            <span>Latihan Kendiri (20 Soalan & Suara)</span>
-            <span>➔</span>
-          </a>
+        <div class="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm transition">
+          ➔
         </div>
-      </div>
+      </a>
 
       <!-- Topik 5 -->
-      <div class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-xs flex flex-col justify-between">
-        <div class="flex items-start space-x-3.5 mb-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-cyan-50 border border-cyan-200 text-cyan-600 flex items-center justify-center text-2xl shrink-0 mt-0.5">
+      <a href="topik5.html" class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex items-center justify-between group block">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-50 border border-cyan-200 text-cyan-600 flex items-center justify-center text-2xl group-hover:scale-105 transition">
             🗺️
           </div>
-          <div class="flex-grow">
+          <div>
             <div class="flex items-center space-x-2">
               <span class="text-xs font-black text-cyan-600 uppercase tracking-wider">Topik 5</span>
               <span class="text-xs text-slate-400 font-semibold">• 地名 (Dìmíng)</span>
             </div>
-            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900">
+            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900 group-hover:text-indigo-600 transition">
               Nama Tempat
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Nama negeri di Malaysia, ibu negeri, balai polis, balai bomba, hospital & bank.</p>
+            <p class="text-xs text-slate-500 mt-0.5">20 Soalan nama negeri di Malaysia, ibu negeri, balai polis, hospital & bank.</p>
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-          <a href="slide5.html" class="py-2.5 px-3 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-extrabold text-xs flex items-center justify-center space-x-1.5 transition active:scale-98">
-            <span>📽️</span>
-            <span>Slaid Mengajar Guru (Projektor)</span>
-          </a>
-          <a href="topik5.html" class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center space-x-1.5 transition shadow-sm active:scale-98">
-            <span>📱</span>
-            <span>Latihan Kendiri (20 Soalan & Suara)</span>
-            <span>➔</span>
-          </a>
+        <div class="w-9 h-9 rounded-full bg-slate-100 group-hover:bg-emerald-600 group-hover:text-white text-slate-400 flex items-center justify-center font-bold text-sm transition">
+          ➔
         </div>
-      </div>
+      </a>
 
       <!-- Topik 6 -->
-      <div class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-xs flex flex-col justify-between">
-        <div class="flex items-start space-x-3.5 mb-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center text-2xl shrink-0 mt-0.5">
+      <a href="topik6.html" class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex items-center justify-between group block">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center text-2xl group-hover:scale-105 transition">
             🚌
           </div>
-          <div class="flex-grow">
+          <div>
             <div class="flex items-center space-x-2">
               <span class="text-xs font-black text-sky-600 uppercase tracking-wider">Topik 6</span>
               <span class="text-xs text-slate-400 font-semibold">• 公共交通 (Gōnggòng jiāotōng)</span>
             </div>
-            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900">
+            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900 group-hover:text-indigo-600 transition">
               Kenderaan Awam & Arah
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Bas, teksi, keretapi, MRT, lapangan terbang, Menara KLCC & belok kiri/kanan.</p>
+            <p class="text-xs text-slate-500 mt-0.5">20 Soalan bas, teksi, stesen keretapi, lapangan terbang, KLCC & arah jalan.</p>
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-          <a href="slide6.html" class="py-2.5 px-3 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-extrabold text-xs flex items-center justify-center space-x-1.5 transition active:scale-98">
-            <span>📽️</span>
-            <span>Slaid Mengajar Guru (Projektor)</span>
-          </a>
-          <a href="topik6.html" class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center space-x-1.5 transition shadow-sm active:scale-98">
-            <span>📱</span>
-            <span>Latihan Kendiri (20 Soalan & Suara)</span>
-            <span>➔</span>
-          </a>
+        <div class="w-9 h-9 rounded-full bg-slate-100 group-hover:bg-emerald-600 group-hover:text-white text-slate-400 flex items-center justify-center font-bold text-sm transition">
+          ➔
         </div>
-      </div>
+      </a>
 
       <!-- Topik 7 -->
-      <div class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-xs flex flex-col justify-between">
-        <div class="flex items-start space-x-3.5 mb-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-200 text-purple-600 flex items-center justify-center text-2xl shrink-0 mt-0.5">
+      <a href="topik7.html" class="topic-card bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex items-center justify-between group block">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-200 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-105 transition">
             💼
           </div>
-          <div class="flex-grow">
+          <div>
             <div class="flex items-center space-x-2">
               <span class="text-xs font-black text-purple-600 uppercase tracking-wider">Topik 7</span>
               <span class="text-xs text-slate-400 font-semibold">• 面试 (Miànshì)</span>
             </div>
-            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900">
+            <h3 class="text-base sm:text-lg font-outfit font-black text-slate-900 group-hover:text-indigo-600 transition">
               Temuduga Kerjaya
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Pengenalan diri, resume/CV, pengalaman praktikal kolej vokasional & etika kerja.</p>
+            <p class="text-xs text-slate-500 mt-0.5">20 Soalan pengenalan diri, resume, pengalaman praktikal, gaji & etika kerja.</p>
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-          <a href="slide7.html" class="py-2.5 px-3 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-extrabold text-xs flex items-center justify-center space-x-1.5 transition active:scale-98">
-            <span>📽️</span>
-            <span>Slaid Mengajar Guru (Projektor)</span>
-          </a>
-          <a href="topik7.html" class="py-2.5 px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center justify-center space-x-1.5 transition shadow-sm active:scale-98">
-            <span>📱</span>
-            <span>Latihan Kendiri (20 Soalan & Suara)</span>
-            <span>➔</span>
-          </a>
+        <div class="w-9 h-9 rounded-full bg-slate-100 group-hover:bg-emerald-600 group-hover:text-white text-slate-400 flex items-center justify-center font-bold text-sm transition">
+          ➔
         </div>
-      </div>
+      </a>
 
     </div>
   </main>
