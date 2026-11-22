@@ -621,11 +621,14 @@
 
             <span id="sentence-grammar-hint">Formula: Kata Nama + 在哪儿？</span>
 
-            <button onclick="resetSentenceBuilder()" class="text-indigo-600 font-bold hover:underline">
-
-              🔄 Padam & Susun Semula
-
+            <div class="flex items-center space-x-2">
+            <button onclick="showSentenceAnswer()" class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline flex items-center space-x-0.5">
+              <span>💡</span><span>Semak Jawapan Betul</span>
             </button>
+            <button onclick="resetSentenceBuilder()" class="text-slate-500 hover:text-slate-700 font-bold hover:underline">
+              🔄 Padam & Susun Semula
+            </button>
+          </div>
 
           </div>
 
@@ -1454,120 +1457,88 @@
 
     const SENTENCE_CHALLENGES = [
   {
-    "targetMy": "Sila buat perkenalan diri yang ringkas.",
+    "targetMy": "Ini adalah resume saya.",
     "correctOrder": [
-      "请您做一下",
-      "简单的",
-      "自我介绍。"
+      "这是",
+      "我的",
+      "履历表。"
     ],
     "pool": [
       {
-        "hz": "请您做一下",
-        "py": "qǐng nín zuò yíxià"
+        "hz": "这是",
+        "py": "zhè shì"
       },
       {
-        "hz": "简单的",
-        "py": "jiǎndān de"
+        "hz": "我的",
+        "py": "wǒ de"
       },
       {
-        "hz": "自我介绍。",
-        "py": "zìwǒ jièshào."
+        "hz": "履历表。",
+        "py": "lǚlìbiǎo."
       },
       {
-        "hz": "履历表",
-        "py": "lǚlìbiǎo"
+        "hz": "公司",
+        "py": "gōngsī"
       },
       {
-        "hz": "工资",
-        "py": "gōngzī"
+        "hz": "面试",
+        "py": "miànshì"
       }
     ],
-    "hint": "Sila buat + Kata Sifat + 自我介绍。",
-    "explain": "Qǐng nín zuò yíxià jiǎndān de zìwǒ jièshào. (Sila perkenalkan diri secara ringkas.)"
+    "hint": "这是 + 我的 + 履历表。",
+    "explain": "Zhè shì wǒ de lǚlìbiǎo. (Ini adalah resume saya.)"
   },
   {
-    "targetMy": "Saya graduasi dari Kolej Vokasional dalam jurusan kejuruteraan mekanikal.",
+    "targetMy": "Saya graduasi dari kolej vokasional.",
     "correctOrder": [
-      "我毕业于",
-      "职业学院",
-      "机电专业。"
+      "我",
+      "毕业于",
+      "职业学院。"
     ],
     "pool": [
       {
-        "hz": "我毕业于",
-        "py": "wǒ bìyè yú"
+        "hz": "我",
+        "py": "wǒ"
       },
       {
-        "hz": "职业学院",
-        "py": "zhíyè xuéyuàn"
+        "hz": "毕业于",
+        "py": "bìyè yú"
       },
       {
-        "hz": "机电专业。",
-        "py": "jīdiàn zhuānyè."
-      },
-      {
-        "hz": "经理",
-        "py": "jīnglǐ"
-      },
-      {
-        "hz": "准时",
-        "py": "zhǔnshí"
-      }
-    ],
-    "hint": "Subjek + 毕业于 (tamat dari) + Institusi + Jurusan.",
-    "explain": "Wǒ bìyè yú zhíyè xuéyuàn jīdiàn zhuānyè. (Saya tamat pengajian kolej vokasional jurusan mekatronik.)"
-  },
-  {
-    "targetMy": "Ini adalah resume saya, silakan semak.",
-    "correctOrder": [
-      "这是我的",
-      "履历表，",
-      "请您过目。"
-    ],
-    "pool": [
-      {
-        "hz": "这是我的",
-        "py": "zhè shì wǒ de"
-      },
-      {
-        "hz": "履历表，",
-        "py": "lǚlìbiǎo,"
-      },
-      {
-        "hz": "请您过目。",
-        "py": "qǐng nín guòmù."
+        "hz": "职业学院。",
+        "py": "zhíyè xuéyuàn."
       },
       {
         "hz": "实习",
         "py": "shíxí"
       },
       {
-        "hz": "经验",
-        "py": "jīngyàn"
+        "hz": "经理",
+        "py": "jīnglǐ"
       }
     ],
-    "hint": "Ini adalah + 履历表 + Kata Hormat.",
-    "explain": "Zhè shì wǒ de lǚlìbiǎo, qǐng nín guòmù. (Ini resume saya, sila lihat.)"
+    "hint": "Subjek + 毕业于 (tamat dari) + Institusi.",
+    "explain": "Wǒ bìyè yú zhíyè xuéyuàn. (Saya graduasi dari kolej vokasional.)"
   },
   {
-    "targetMy": "Saya telah menjalani latihan industri di sebuah syarikat selama 6 bulan.",
+    "targetMy": "Saya menjalani latihan industri di syarikat besar.",
     "correctOrder": [
-      "我在一家大公司",
-      "实习了",
-      "六个月。"
+      "我在",
+      "大公司",
+      "实习。"
     ],
     "pool": [
       {
-        "hz": "我在一家大公司",
-        "py": "wǒ zài yī jiā dà gōngsī"
+        "hz": "我在",
+        "py": "wǒ zài"
       },
       {
-        "hz": "实习了",
-        "py": "shíxí le"
+        "hz": "大公司",
+        "py": "dà gōngsī"
       },
       {
-        "hz": "六个月。",
-        "py": "liù gè yuè."
+        "hz": "实习。",
+        "py": "shíxí."
       },
       {
         "hz": "工作",
@@ -1578,28 +1549,28 @@
         "py": "yōudiǎn"
       }
     ],
-    "hint": "Subjek + 在 (di syarikat) + 实习了 + Tempoh Masa.",
-    "explain": "Wǒ zài yī jiā dà gōngsī shíxí le liù gè yuè. (Saya praktikal di syarikat besar selama 6 bulan.)"
+    "hint": "我在 + Tempat + 实习。",
+    "explain": "Wǒ zài dà gōngsī shíxí. (Saya praktikal di syarikat besar.)"
   },
   {
-    "targetMy": "Selain bertutur Bahasa Melayu, saya juga mahir bertutur Bahasa Mandarin.",
+    "targetMy": "Saya boleh bertutur Bahasa Mandarin dan Bahasa Melayu.",
     "correctOrder": [
-      "我除了会说马来语，",
-      "还会说",
-      "华语。"
+      "我会说",
+      "华语",
+      "和马来语。"
     ],
     "pool": [
       {
-        "hz": "我除了会说马来语，",
-        "py": "wǒ chúle huì shuō Mǎláiyǔ,"
+        "hz": "我会说",
+        "py": "wǒ huì shuō"
       },
       {
-        "hz": "还会说",
-        "py": "hái huì shuō"
+        "hz": "华语",
+        "py": "Huáyǔ"
       },
       {
-        "hz": "华语。",
-        "py": "Huáyǔ."
+        "hz": "和马来语。",
+        "py": "hé Mǎláiyǔ."
       },
       {
         "hz": "上班",
@@ -1610,8 +1581,40 @@
         "py": "kāishǐ"
       }
     ],
-    "hint": "除了...还会... (Selain... juga boleh...).",
-    "explain": "Wǒ chúle huì shuō Mǎláiyǔ, hái huì shuō Huáyǔ. (Selain BM, saya juga boleh bertutur Mandarin.)"
+    "hint": "Subjek + 会说 + Bahasa 1 + 和 + Bahasa 2.",
+    "explain": "Wǒ huì shuō Huáyǔ hé Mǎláiyǔ. (Saya boleh bertutur Mandarin dan Bahasa Melayu.)"
+  },
+  {
+    "targetMy": "Bila boleh mula masuk kerja?",
+    "correctOrder": [
+      "什么时候",
+      "可以",
+      "开始上班？"
+    ],
+    "pool": [
+      {
+        "hz": "什么时候",
+        "py": "shénme shíhou"
+      },
+      {
+        "hz": "可以",
+        "py": "kěyǐ"
+      },
+      {
+        "hz": "开始上班？",
+        "py": "kāishǐ shàngbān?"
+      },
+      {
+        "hz": "准时",
+        "py": "zhǔnshí"
+      },
+      {
+        "hz": "经验",
+        "py": "jīngyàn"
+      }
+    ],
+    "hint": "什么时候 + 可以 + 开始上班？",
+    "explain": "Shénme shíhou kěyǐ kāishǐ shàngbān? (Bila boleh mula masuk kerja?)"
   }
 ];
 
@@ -2973,6 +2976,10 @@
       const q = SENTENCE_CHALLENGES[sentenceIndex];
 
       selectedSentenceTokens = [];
+      isSentenceChecked = false;
+      const feedback = document.getElementById('sentence-feedback-box');
+      if (feedback) { feedback.className = 'hidden mb-3.5 p-3.5 rounded-2xl'; feedback.innerHTML = ''; }
+      setSentenceBtnState('check');
 
       isSentenceChecked = false;
 
@@ -3139,104 +3146,138 @@
 
 
     function checkSentenceAction() {
-
       if (isSentenceChecked) {
-
         playBeep('click');
-
         sentenceIndex = (sentenceIndex + 1) % SENTENCE_CHALLENGES.length;
-
         loadSentenceChallenge();
-
         return;
-
       }
-
-
 
       const q = SENTENCE_CHALLENGES[sentenceIndex];
-
       const feedback = document.getElementById('sentence-feedback-box');
-
-
+      const correctHz = q.correctOrder.join('');
+      const correctTokens = q.correctOrder.map(item => {
+        const found = q.pool.find(p => p.hz === item);
+        return found ? found.py : '';
+      });
+      const correctPy = correctTokens.join(' ');
 
       if (selectedSentenceTokens.length !== q.correctOrder.length) {
-
         playBeep('wrong');
-
-        alert("Sila lengkapkan semua bahagian ayat terlebih dahulu!");
-
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-amber-300 bg-amber-50 text-amber-950 shadow-sm animate-pulse";
+        feedback.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold flex items-center space-x-1.5">
+              <span>⚠️</span>
+              <span>Sila pilih semua bahagian ayat dahulu, atau tekan butang di bawah untuk melihat jawapan betul.</span>
+            </div>
+            <button onclick="showSentenceAnswer()" class="ml-2 px-2.5 py-1 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shrink-0">
+              💡 Lihat Jawapan
+            </button>
+          </div>
+        `;
         return;
-
       }
-
-
 
       const isMatch = selectedSentenceTokens.every((t, i) => t.hz === q.correctOrder[i]);
 
-
-
       if (isMatch) {
-
         isSentenceChecked = true;
-
         playBeep('success');
-
         totalXp += 20;
-
         streakCount++;
-
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
-
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
-
-
-        const fullSentenceHz = selectedSentenceTokens.map(t => t.hz).join('');
-
-        const fullSentencePy = selectedSentenceTokens.map(t => t.py).join(' ');
-
-        speakChinese(fullSentenceHz);
-
-
-
-        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950";
-
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-emerald-300 bg-emerald-50/90 text-emerald-950 shadow-sm";
         feedback.innerHTML = `
-
-          <div class="font-bold text-sm">🎉 Tepat Sekali!</div>
-
-          <div class="font-hanzi font-black text-emerald-900 text-base mt-0.5">${fullSentenceHz}</div>
-
-          <div class="text-xs font-bold text-emerald-700 mt-0.5">(${fullSentencePy})</div>
-
-          <p class="text-xs text-emerald-800 mt-1">${q.explain}</p>
-
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-emerald-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">
+              <span>🎉</span><span>Tepat Sekali! Susunan Anda Betul</span>
+            </span>
+            <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border border-emerald-200 shadow-2xs">
+            <div class="text-[11px] font-black text-emerald-800 uppercase tracking-wider">Jawapan Yang Betul (Modul ELM 4322):</div>
+            <div class="font-hanzi font-black text-emerald-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+            <div class="text-xs font-bold text-emerald-700 font-sans mt-0.5">${correctPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+            <div class="text-[11px] text-emerald-900 bg-emerald-50 p-2 rounded-lg border border-emerald-200 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
         `;
-
-
-
         setSentenceBtnState('next');
-
       } else {
-
         playBeep('wrong');
-
-        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-rose-200 bg-rose-50 text-rose-950";
-
+        isSentenceChecked = true;
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-rose-300 bg-rose-50/90 text-rose-950 shadow-sm";
         feedback.innerHTML = `
-
-          <div class="font-bold text-sm">Susunan Belum Tepat</div>
-
-          <p class="text-xs text-rose-700 mt-0.5">Sila semak semula susunan tatabahasa.</p>
-
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-rose-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-900 text-xs font-black">
+              <span>❌</span><span>Susunan Belum Tepat</span>
+            </span>
+            <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan Betul</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border-2 border-indigo-200 shadow-2xs">
+            <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider flex items-center space-x-1">
+              <span>📌</span><span>Semakan Jawapan Yang Betul (Modul ELM 4322):</span>
+            </div>
+            <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+            <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${correctPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+            <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
+          <div class="mt-2.5 flex items-center justify-between text-xs text-slate-600">
+            <span>Pelajari jawapan betul di atas, kemudian tekan butang di bawah untuk ayat seterusnya.</span>
+            <button onclick="resetSentenceBuilder(); isSentenceChecked = false; setSentenceBtnState('check');" class="ml-2 px-3 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold shrink-0">
+              🔄 Cuba Semula
+            </button>
+          </div>
         `;
-
+        setSentenceBtnState('next');
       }
-
     }
 
+    function showSentenceAnswer() {
+      const q = SENTENCE_CHALLENGES[sentenceIndex];
+      const feedback = document.getElementById('sentence-feedback-box');
+      const correctHz = q.correctOrder.join('');
+      const correctTokens = q.correctOrder.map(item => {
+        const found = q.pool.find(p => p.hz === item);
+        return found ? found.py : '';
+      });
+      const correctPy = correctTokens.join(' ');
 
+      isSentenceChecked = true;
+      feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50/90 text-indigo-950 shadow-sm";
+      feedback.innerHTML = `
+        <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-indigo-200">
+          <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-100 text-indigo-900 text-xs font-black">
+            <span>💡</span><span>Semakan Jawapan Yang Betul</span>
+          </span>
+          <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+            <span>🔊</span><span>Dengar Sebutan</span>
+          </button>
+        </div>
+        <div class="bg-white/95 rounded-xl p-3 border border-indigo-200 shadow-2xs">
+          <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider">Susunan Rasmi Modul ELM 4322:</div>
+          <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+          <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${correctPy}</div>
+          <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+          <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+            💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+          </div>
+        </div>
+      `;
+      setSentenceBtnState('next');
+    }
 
     function setSentenceBtnState(state) {
 

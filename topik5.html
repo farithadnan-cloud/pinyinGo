@@ -621,11 +621,14 @@
 
             <span id="sentence-grammar-hint">Formula: Kata Nama + 在哪儿？</span>
 
-            <button onclick="resetSentenceBuilder()" class="text-indigo-600 font-bold hover:underline">
-
-              🔄 Padam & Susun Semula
-
+            <div class="flex items-center space-x-2">
+            <button onclick="showSentenceAnswer()" class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline flex items-center space-x-0.5">
+              <span>💡</span><span>Semak Jawapan Betul</span>
             </button>
+            <button onclick="resetSentenceBuilder()" class="text-slate-500 hover:text-slate-700 font-bold hover:underline">
+              🔄 Padam & Susun Semula
+            </button>
+          </div>
 
           </div>
 
@@ -1454,74 +1457,106 @@
 
     const SENTENCE_CHALLENGES = [
   {
-    "targetMy": "Awak berasal dari negeri mana di Malaysia?",
+    "targetMy": "Awak berasal dari mana?",
     "correctOrder": [
-      "你来自",
-      "马来西亚",
-      "哪个州属？"
+      "你",
+      "来自",
+      "哪儿？"
     ],
     "pool": [
       {
-        "hz": "你来自",
-        "py": "nǐ láizì"
+        "hz": "你",
+        "py": "nǐ"
       },
       {
-        "hz": "马来西亚",
-        "py": "Mǎláixīyà"
+        "hz": "来自",
+        "py": "láizì"
       },
       {
-        "hz": "哪个州属？",
-        "py": "nǎge zhōushǔ?"
-      },
-      {
-        "hz": "首府",
-        "py": "shǒufǔ"
+        "hz": "哪儿？",
+        "py": "nǎr?"
       },
       {
         "hz": "学校",
         "py": "xuéxiào"
+      },
+      {
+        "hz": "回家",
+        "py": "huíjiā"
       }
     ],
-    "hint": "Subjek + 来自 + Negara + 哪个州属？",
-    "explain": "Nǐ láizì Mǎláixīyà nǎge zhōushǔ? (Awak berasal dari negeri mana di Malaysia?)"
+    "hint": "Subjek + 来自 + 哪儿？",
+    "explain": "Nǐ láizì nǎr? (Awak berasal dari mana?)"
   },
   {
-    "targetMy": "Saya berasal dari Johor, ibu negerinya ialah Johor Bahru.",
+    "targetMy": "Saya berasal dari negeri Selangor.",
     "correctOrder": [
-      "我来自柔佛，",
-      "首府是",
-      "新山。"
+      "我",
+      "来自",
+      "雪兰莪州。"
     ],
     "pool": [
       {
-        "hz": "我来自柔佛，",
-        "py": "wǒ láizì Róufó,"
+        "hz": "我",
+        "py": "wǒ"
+      },
+      {
+        "hz": "来自",
+        "py": "láizì"
+      },
+      {
+        "hz": "雪兰莪州。",
+        "py": "Xuělán'é zhōu."
+      },
+      {
+        "hz": "柔佛",
+        "py": "Róufó"
+      },
+      {
+        "hz": "首府",
+        "py": "shǒufǔ"
+      }
+    ],
+    "hint": "Subjek + 来自 + Nama Negeri.",
+    "explain": "Wǒ láizì Xuělán'é zhōu. (Saya berasal dari negeri Selangor.)"
+  },
+  {
+    "targetMy": "Ibu negeri Selangor ialah Shah Alam.",
+    "correctOrder": [
+      "雪兰莪的",
+      "首府是",
+      "莎阿南。"
+    ],
+    "pool": [
+      {
+        "hz": "雪兰莪的",
+        "py": "Xuělán'é de"
       },
       {
         "hz": "首府是",
         "py": "shǒufǔ shì"
       },
       {
-        "hz": "新山。",
-        "py": "Xīnshān."
+        "hz": "莎阿南。",
+        "py": "Shā'ānán."
       },
       {
-        "hz": "银行",
-        "py": "yínháng"
+        "hz": "新山",
+        "py": "Xīnshān"
       },
       {
-        "hz": "对面",
-        "py": "duìmiàn"
+        "hz": "吉隆坡",
+        "py": "Jílóngpō"
       }
     ],
-    "hint": "Saya berasal dari + 首府是 + Nama Bandar.",
-    "explain": "Wǒ láizì Róufó, shǒufǔ shì Xīnshān. (Saya dari Johor, ibu negeri ialah Johor Bahru.)"
+    "hint": "Negeri + 的首府是 + Nama Bandar.",
+    "explain": "Xuělán'é de shǒufǔ shì Shā'ānán. (Ibu negeri Selangor ialah Shah Alam.)"
   },
   {
     "targetMy": "Balai polis terletak di seberang sekolah.",
     "correctOrder": [
       "警察局",
-      "在学校的",
+      "在学校",
       "对面。"
     ],
     "pool": [
@@ -1530,8 +1565,8 @@
         "py": "jǐngchájú"
       },
       {
-        "hz": "在学校的",
-        "py": "zài xuéxiào de"
+        "hz": "在学校",
+        "py": "zài xuéxiào"
       },
       {
         "hz": "对面。",
@@ -1542,76 +1577,44 @@
         "py": "yīyuàn"
       },
       {
-        "hz": "回家",
-        "py": "huíjiā"
+        "hz": "消防局",
+        "py": "xiāofángjú"
       }
     ],
-    "hint": "Tempat 1 + 在 + Tempat 2 的 + Kedudukan (对面).",
-    "explain": "Jǐngchájú zài xuéxiào de duìmiàn. (Balai polis terletak di seberang sekolah.)"
+    "hint": "Tempat 1 + 在 + Tempat 2 + 对面。",
+    "explain": "Jǐngchájú zài xuéxiào duìmiàn. (Balai polis di seberang sekolah.)"
   },
   {
-    "targetMy": "Berhampiran hospital ada sebuah bank besar.",
+    "targetMy": "Balai bomba terletak di sebelah hospital.",
     "correctOrder": [
-      "医院附近",
-      "有一间",
-      "大银行。"
+      "消防局",
+      "在医院",
+      "旁边。"
     ],
     "pool": [
-      {
-        "hz": "医院附近",
-        "py": "yīyuàn fùjìn"
-      },
-      {
-        "hz": "有一间",
-        "py": "yǒu yī jiān"
-      },
-      {
-        "hz": "大银行。",
-        "py": "dà yínháng."
-      },
-      {
-        "hz": "操场",
-        "py": "cāochǎng"
-      },
-      {
-        "hz": "来自",
-        "py": "láizì"
-      }
-    ],
-    "hint": "Tempat + 附近 + 有 + Bangunan.",
-    "explain": "Yīyuàn fùjìn yǒu yī jiān dà yínháng. (Dekat hospital ada sebuah bank besar.)"
-  },
-  {
-    "targetMy": "Saya ingin pergi ke pejabat pos untuk menghantar surat.",
-    "correctOrder": [
-      "我想去",
-      "邮政局",
-      "寄一封信。"
-    ],
-    "pool": [
-      {
-        "hz": "我想去",
-        "py": "wǒ xiǎng qù"
-      },
-      {
-        "hz": "邮政局",
-        "py": "yóuzhèngjú"
-      },
-      {
-        "hz": "寄一封信。",
-        "py": "jì yī fēng xìn."
-      },
       {
         "hz": "消防局",
         "py": "xiāofángjú"
       },
       {
-        "hz": "商店",
-        "py": "shāngdiàn"
+        "hz": "在医院",
+        "py": "zài yīyuàn"
+      },
+      {
+        "hz": "旁边。",
+        "py": "pángbiān."
+      },
+      {
+        "hz": "银行",
+        "py": "yínháng"
+      },
+      {
+        "hz": "前面",
+        "py": "qiánmiàn"
       }
     ],
-    "hint": "Subjek + 想去 + Tempat + Tujuan.",
-    "explain": "Wǒ xiǎng qù yóuzhèngjú jì yī fēng xìn. (Saya mahu ke pejabat pos pos surat.)"
+    "hint": "Tempat 1 + 在 + Tempat 2 + 旁边。",
+    "explain": "Xiāofángjú zài yīyuàn pángbiān. (Balai bomba di sebelah hospital.)"
   }
 ];
 
@@ -2905,6 +2908,10 @@
       const q = SENTENCE_CHALLENGES[sentenceIndex];
 
       selectedSentenceTokens = [];
+      isSentenceChecked = false;
+      const feedback = document.getElementById('sentence-feedback-box');
+      if (feedback) { feedback.className = 'hidden mb-3.5 p-3.5 rounded-2xl'; feedback.innerHTML = ''; }
+      setSentenceBtnState('check');
 
       isSentenceChecked = false;
 
@@ -3071,104 +3078,138 @@
 
 
     function checkSentenceAction() {
-
       if (isSentenceChecked) {
-
         playBeep('click');
-
         sentenceIndex = (sentenceIndex + 1) % SENTENCE_CHALLENGES.length;
-
         loadSentenceChallenge();
-
         return;
-
       }
-
-
 
       const q = SENTENCE_CHALLENGES[sentenceIndex];
-
       const feedback = document.getElementById('sentence-feedback-box');
-
-
+      const correctHz = q.correctOrder.join('');
+      const correctTokens = q.correctOrder.map(item => {
+        const found = q.pool.find(p => p.hz === item);
+        return found ? found.py : '';
+      });
+      const correctPy = correctTokens.join(' ');
 
       if (selectedSentenceTokens.length !== q.correctOrder.length) {
-
         playBeep('wrong');
-
-        alert("Sila lengkapkan semua bahagian ayat terlebih dahulu!");
-
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-amber-300 bg-amber-50 text-amber-950 shadow-sm animate-pulse";
+        feedback.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold flex items-center space-x-1.5">
+              <span>⚠️</span>
+              <span>Sila pilih semua bahagian ayat dahulu, atau tekan butang di bawah untuk melihat jawapan betul.</span>
+            </div>
+            <button onclick="showSentenceAnswer()" class="ml-2 px-2.5 py-1 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shrink-0">
+              💡 Lihat Jawapan
+            </button>
+          </div>
+        `;
         return;
-
       }
-
-
 
       const isMatch = selectedSentenceTokens.every((t, i) => t.hz === q.correctOrder[i]);
 
-
-
       if (isMatch) {
-
         isSentenceChecked = true;
-
         playBeep('success');
-
         totalXp += 20;
-
         streakCount++;
-
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
-
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
-
-
-        const fullSentenceHz = selectedSentenceTokens.map(t => t.hz).join('');
-
-        const fullSentencePy = selectedSentenceTokens.map(t => t.py).join(' ');
-
-        speakChinese(fullSentenceHz);
-
-
-
-        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950";
-
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-emerald-300 bg-emerald-50/90 text-emerald-950 shadow-sm";
         feedback.innerHTML = `
-
-          <div class="font-bold text-sm">🎉 Tepat Sekali!</div>
-
-          <div class="font-hanzi font-black text-emerald-900 text-base mt-0.5">${fullSentenceHz}</div>
-
-          <div class="text-xs font-bold text-emerald-700 mt-0.5">(${fullSentencePy})</div>
-
-          <p class="text-xs text-emerald-800 mt-1">${q.explain}</p>
-
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-emerald-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">
+              <span>🎉</span><span>Tepat Sekali! Susunan Anda Betul</span>
+            </span>
+            <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border border-emerald-200 shadow-2xs">
+            <div class="text-[11px] font-black text-emerald-800 uppercase tracking-wider">Jawapan Yang Betul (Modul ELM 4322):</div>
+            <div class="font-hanzi font-black text-emerald-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+            <div class="text-xs font-bold text-emerald-700 font-sans mt-0.5">${correctPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+            <div class="text-[11px] text-emerald-900 bg-emerald-50 p-2 rounded-lg border border-emerald-200 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
         `;
-
-
-
         setSentenceBtnState('next');
-
       } else {
-
         playBeep('wrong');
-
-        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-rose-200 bg-rose-50 text-rose-950";
-
+        isSentenceChecked = true;
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-rose-300 bg-rose-50/90 text-rose-950 shadow-sm";
         feedback.innerHTML = `
-
-          <div class="font-bold text-sm">Susunan Belum Tepat</div>
-
-          <p class="text-xs text-rose-700 mt-0.5">Sila semak semula susunan tatabahasa.</p>
-
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-rose-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-900 text-xs font-black">
+              <span>❌</span><span>Susunan Belum Tepat</span>
+            </span>
+            <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan Betul</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border-2 border-indigo-200 shadow-2xs">
+            <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider flex items-center space-x-1">
+              <span>📌</span><span>Semakan Jawapan Yang Betul (Modul ELM 4322):</span>
+            </div>
+            <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+            <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${correctPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+            <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
+          <div class="mt-2.5 flex items-center justify-between text-xs text-slate-600">
+            <span>Pelajari jawapan betul di atas, kemudian tekan butang di bawah untuk ayat seterusnya.</span>
+            <button onclick="resetSentenceBuilder(); isSentenceChecked = false; setSentenceBtnState('check');" class="ml-2 px-3 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold shrink-0">
+              🔄 Cuba Semula
+            </button>
+          </div>
         `;
-
+        setSentenceBtnState('next');
       }
-
     }
 
+    function showSentenceAnswer() {
+      const q = SENTENCE_CHALLENGES[sentenceIndex];
+      const feedback = document.getElementById('sentence-feedback-box');
+      const correctHz = q.correctOrder.join('');
+      const correctTokens = q.correctOrder.map(item => {
+        const found = q.pool.find(p => p.hz === item);
+        return found ? found.py : '';
+      });
+      const correctPy = correctTokens.join(' ');
 
+      isSentenceChecked = true;
+      feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50/90 text-indigo-950 shadow-sm";
+      feedback.innerHTML = `
+        <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-indigo-200">
+          <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-100 text-indigo-900 text-xs font-black">
+            <span>💡</span><span>Semakan Jawapan Yang Betul</span>
+          </span>
+          <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+            <span>🔊</span><span>Dengar Sebutan</span>
+          </button>
+        </div>
+        <div class="bg-white/95 rounded-xl p-3 border border-indigo-200 shadow-2xs">
+          <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider">Susunan Rasmi Modul ELM 4322:</div>
+          <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+          <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${correctPy}</div>
+          <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+          <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+            💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+          </div>
+        </div>
+      `;
+      setSentenceBtnState('next');
+    }
 
     function setSentenceBtnState(state) {
 

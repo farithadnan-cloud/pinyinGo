@@ -621,11 +621,14 @@
 
             <span id="sentence-grammar-hint">Formula: Kata Nama + 在哪儿？</span>
 
-            <button onclick="resetSentenceBuilder()" class="text-indigo-600 font-bold hover:underline">
-
-              🔄 Padam & Susun Semula
-
+            <div class="flex items-center space-x-2">
+            <button onclick="showSentenceAnswer()" class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline flex items-center space-x-0.5">
+              <span>💡</span><span>Semak Jawapan Betul</span>
             </button>
+            <button onclick="resetSentenceBuilder()" class="text-slate-500 hover:text-slate-700 font-bold hover:underline">
+              🔄 Padam & Susun Semula
+            </button>
+          </div>
 
           </div>
 
@@ -1458,228 +1461,177 @@
     // 8 Soalan Latihan Susun Ayat
 
     const SENTENCE_CHALLENGES = [
-
+  {
+    "targetMy": "Tempat duduk saya di mana?",
+    "correctOrder": [
+      "我的座位",
+      "在",
+      "哪儿？"
+    ],
+    "pool": [
       {
-
-        targetMy: "Tempat duduk saya di mana?",
-
-        correctOrder: ["我的座位", "在", "哪儿？"],
-
-        pool: [
-
-          { hz: "我的座位", py: "wǒ de zuòwèi" },
-
-          { hz: "在", py: "zài" },
-
-          { hz: "哪儿？", py: "nǎr?" },
-
-          { hz: "前面", py: "qiánmiàn" },
-
-          { hz: "柜子", py: "guìzi" }
-
-        ],
-
-        hint: "Formula: Kata Nama + 在 + 哪儿？",
-
-        explain: "Wǒ de zuòwèi zài nǎr? (Tempat duduk saya di mana?)"
-
+        "hz": "我的座位",
+        "py": "wǒ de zuòwèi"
       },
-
       {
-
-        targetMy: "Komputer di atas meja.",
-
-        correctOrder: ["电脑", "在", "桌子", "上面。"],
-
-        pool: [
-
-          { hz: "电脑", py: "diànnǎo" },
-
-          { hz: "在", py: "zài" },
-
-          { hz: "桌子", py: "zhuōzi" },
-
-          { hz: "上面。", py: "shàngmiàn." },
-
-          { hz: "下面。", py: "xiàmiàn." },
-
-          { hz: "椅子", py: "yǐzi" }
-
-        ],
-
-        hint: "Formula: Objek + 在 + Rujukan + Kedudukan",
-
-        explain: "Diànnǎo zài zhuōzi shàngmiàn. (Komputer di atas meja.)"
-
+        "hz": "在",
+        "py": "zài"
       },
-
       {
-
-        targetMy: "Fail di dalam almari Pengurus Wang.",
-
-        correctOrder: ["文件夹", "在", "王经理的柜子", "里面。"],
-
-        pool: [
-
-          { hz: "文件夹", py: "wénjiànjiā" },
-
-          { hz: "在", py: "zài" },
-
-          { hz: "王经理的柜子", py: "Wáng jīnglǐ de guìzi" },
-
-          { hz: "里面。", py: "lǐmiàn." },
-
-          { hz: "打印机", py: "dǎyìnjī" },
-
-          { hz: "后面。", py: "hòumiàn." }
-
-        ],
-
-        hint: "Wénjiànjiā zài Wáng jīnglǐ de guìzi lǐmiàn.",
-
-        explain: "Fail dokumen berada di dalam almari Pengurus Wang."
-
+        "hz": "哪儿？",
+        "py": "nǎr?"
       },
-
       {
-
-        targetMy: "Adakah Pengurus Wang ada?",
-
-        correctOrder: ["王经理", "在", "吗？"],
-
-        pool: [
-
-          { hz: "王经理", py: "Wáng jīnglǐ" },
-
-          { hz: "在", py: "zài" },
-
-          { hz: "吗？", py: "ma?" },
-
-          { hz: "不在", py: "bú zài" },
-
-          { hz: "哪儿？", py: "nǎr?" }
-
-        ],
-
-        hint: "Formula: Nama Orang + 在吗？",
-
-        explain: "Wáng jīnglǐ zài ma? (Tanya keberadaan seseorang)"
-
+        "hz": "前面",
+        "py": "qiánmiàn"
       },
-
       {
-
-        targetMy: "Hari ini dia tidak ada di pejabat.",
-
-        correctOrder: ["他今天", "不在", "办公室。"],
-
-        pool: [
-
-          { hz: "他今天", py: "tā jīntiān" },
-
-          { hz: "不在", py: "bú zài" },
-
-          { hz: "办公室。", py: "bàngōngshì." },
-
-          { hz: "在", py: "zài" },
-
-          { hz: "明天", py: "míngtiān" }
-
-        ],
-
-        hint: "Tā jīntiān bú zài bàngōngshì.",
-
-        explain: "Jawapan ketiadaan: 不在 (bú zài)."
-
-      },
-
-      {
-
-        targetMy: "Mesin pencetak di bawah meja.",
-
-        correctOrder: ["打印机", "在", "桌子", "下面。"],
-
-        pool: [
-
-          { hz: "打印机", py: "dǎyìnjī" },
-
-          { hz: "在", py: "zài" },
-
-          { hz: "桌子", py: "zhuōzi" },
-
-          { hz: "下面。", py: "xiàmiàn." },
-
-          { hz: "上面。", py: "shàngmiàn." },
-
-          { hz: "复印机", py: "fùyìnjī" }
-
-        ],
-
-        hint: "Dǎyìnjī zài zhuōzi xiàmiàn.",
-
-        explain: "Mesin cetak berada di bahagian bawah meja."
-
-      },
-
-      {
-
-        targetMy: "Mesin fotostat di belakang kerusi.",
-
-        correctOrder: ["复印机", "在", "椅子", "后面。"],
-
-        pool: [
-
-          { hz: "复印机", py: "fùyìnjī" },
-
-          { hz: "在", py: "zài" },
-
-          { hz: "椅子", py: "yǐzi" },
-
-          { hz: "后面。", py: "hòumiàn." },
-
-          { hz: "前面。", py: "qiánmiàn." },
-
-          { hz: "桌子", py: "zhuōzi" }
-
-        ],
-
-        hint: "Fùyìnjī zài yǐzi hòumiàn.",
-
-        explain: "Mesin fotostat berada di bahagian belakang kerusi."
-
-      },
-
-      {
-
-        targetMy: "Tempat duduk awak di depan saya.",
-
-        correctOrder: ["你的座位", "在", "我的前面。"],
-
-        pool: [
-
-          { hz: "你的座位", py: "nǐ de zuòwèi" },
-
-          { hz: "在", py: "zài" },
-
-          { hz: "我的前面。", py: "wǒ de qiánmiàn." },
-
-          { hz: "后面。", py: "hòumiàn." },
-
-          { hz: "哪儿？", py: "nǎr?" }
-
-        ],
-
-        hint: "Nǐ de zuòwèi zài wǒ de qiánmiàn.",
-
-        explain: "Tempat duduk awak berada di depan saya."
-
+        "hz": "柜子",
+        "py": "guìzi"
       }
-
-    ];
-
-
-
-    // Data Dialog Topik 4 dengan Token Pecahan Hanzi & Pinyin
+    ],
+    "hint": "Formula: Kata Nama + 在 + 哪儿？",
+    "explain": "Wǒ de zuòwèi zài nǎr? (Tempat duduk saya di mana?)"
+  },
+  {
+    "targetMy": "Komputer di atas meja.",
+    "correctOrder": [
+      "电脑",
+      "在",
+      "桌子",
+      "上面。"
+    ],
+    "pool": [
+      {
+        "hz": "电脑",
+        "py": "diànnǎo"
+      },
+      {
+        "hz": "在",
+        "py": "zài"
+      },
+      {
+        "hz": "桌子",
+        "py": "zhuōzi"
+      },
+      {
+        "hz": "上面。",
+        "py": "shàngmiàn."
+      },
+      {
+        "hz": "下面。",
+        "py": "xiàmiàn."
+      },
+      {
+        "hz": "椅子",
+        "py": "yǐzi"
+      }
+    ],
+    "hint": "Formula: Objek + 在 + Rujukan + Kedudukan",
+    "explain": "Diànnǎo zài zhuōzi shàngmiàn. (Komputer di atas meja.)"
+  },
+  {
+    "targetMy": "Tempat duduk saya di bahagian hadapan.",
+    "correctOrder": [
+      "我的座位",
+      "在",
+      "前面。"
+    ],
+    "pool": [
+      {
+        "hz": "我的座位",
+        "py": "wǒ de zuòwèi"
+      },
+      {
+        "hz": "在",
+        "py": "zài"
+      },
+      {
+        "hz": "前面。",
+        "py": "qiánmiàn."
+      },
+      {
+        "hz": "后面。",
+        "py": "hòumiàn."
+      },
+      {
+        "hz": "打印机",
+        "py": "dǎyìnjī"
+      }
+    ],
+    "hint": "Subjek + 在 + Arah/Kedudukan.",
+    "explain": "Wǒ de zuòwèi zài qiánmiàn. (Tempat duduk saya di depan.)"
+  },
+  {
+    "targetMy": "Mesin pencetak di sebelah almari fail.",
+    "correctOrder": [
+      "打印机",
+      "在",
+      "柜子",
+      "旁边。"
+    ],
+    "pool": [
+      {
+        "hz": "打印机",
+        "py": "dǎyìnjī"
+      },
+      {
+        "hz": "在",
+        "py": "zài"
+      },
+      {
+        "hz": "柜子",
+        "py": "guìzi"
+      },
+      {
+        "hz": "旁边。",
+        "py": "pángbiān."
+      },
+      {
+        "hz": "桌子",
+        "py": "zhuōzi"
+      },
+      {
+        "hz": "里面。",
+        "py": "lǐmiàn."
+      }
+    ],
+    "hint": "Alatan + 在 + Rujukan + 旁边。",
+    "explain": "Dǎyìnjī zài guìzi pángbiān. (Mesin pencetak di sebelah almari.)"
+  },
+  {
+    "targetMy": "Adakah Pengurus Wang ada di pejabat?",
+    "correctOrder": [
+      "王经理",
+      "在",
+      "办公室吗？"
+    ],
+    "pool": [
+      {
+        "hz": "王经理",
+        "py": "Wáng jīnglǐ"
+      },
+      {
+        "hz": "在",
+        "py": "zài"
+      },
+      {
+        "hz": "办公室吗？",
+        "py": "bàngōngshì ma?"
+      },
+      {
+        "hz": "职员",
+        "py": "zhíyuán"
+      },
+      {
+        "hz": "同事",
+        "py": "tóngshì"
+      }
+    ],
+    "hint": "Subjek + 在 + Tempat + 吗？",
+    "explain": "Wáng jīnglǐ zài bàngōngshì ma? (Adakah Pengurus Wang ada di pejabat?)"
+  }
+];
 
     const CHAT_SCENARIOS = {
 
@@ -2880,6 +2832,10 @@
       const q = SENTENCE_CHALLENGES[sentenceIndex];
 
       selectedSentenceTokens = [];
+      isSentenceChecked = false;
+      const feedback = document.getElementById('sentence-feedback-box');
+      if (feedback) { feedback.className = 'hidden mb-3.5 p-3.5 rounded-2xl'; feedback.innerHTML = ''; }
+      setSentenceBtnState('check');
 
       isSentenceChecked = false;
 
@@ -3046,104 +3002,138 @@
 
 
     function checkSentenceAction() {
-
       if (isSentenceChecked) {
-
         playBeep('click');
-
         sentenceIndex = (sentenceIndex + 1) % SENTENCE_CHALLENGES.length;
-
         loadSentenceChallenge();
-
         return;
-
       }
-
-
 
       const q = SENTENCE_CHALLENGES[sentenceIndex];
-
       const feedback = document.getElementById('sentence-feedback-box');
-
-
+      const correctHz = q.correctOrder.join('');
+      const correctTokens = q.correctOrder.map(item => {
+        const found = q.pool.find(p => p.hz === item);
+        return found ? found.py : '';
+      });
+      const correctPy = correctTokens.join(' ');
 
       if (selectedSentenceTokens.length !== q.correctOrder.length) {
-
         playBeep('wrong');
-
-        alert("Sila lengkapkan semua bahagian ayat terlebih dahulu!");
-
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-amber-300 bg-amber-50 text-amber-950 shadow-sm animate-pulse";
+        feedback.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold flex items-center space-x-1.5">
+              <span>⚠️</span>
+              <span>Sila pilih semua bahagian ayat dahulu, atau tekan butang di bawah untuk melihat jawapan betul.</span>
+            </div>
+            <button onclick="showSentenceAnswer()" class="ml-2 px-2.5 py-1 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shrink-0">
+              💡 Lihat Jawapan
+            </button>
+          </div>
+        `;
         return;
-
       }
-
-
 
       const isMatch = selectedSentenceTokens.every((t, i) => t.hz === q.correctOrder[i]);
 
-
-
       if (isMatch) {
-
         isSentenceChecked = true;
-
         playBeep('success');
-
         totalXp += 20;
-
         streakCount++;
-
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
-
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
-
-
-        const fullSentenceHz = selectedSentenceTokens.map(t => t.hz).join('');
-
-        const fullSentencePy = selectedSentenceTokens.map(t => t.py).join(' ');
-
-        speakChinese(fullSentenceHz);
-
-
-
-        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950";
-
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-emerald-300 bg-emerald-50/90 text-emerald-950 shadow-sm";
         feedback.innerHTML = `
-
-          <div class="font-bold text-sm">🎉 Tepat Sekali!</div>
-
-          <div class="font-hanzi font-black text-emerald-900 text-base mt-0.5">${fullSentenceHz}</div>
-
-          <div class="text-xs font-bold text-emerald-700 mt-0.5">(${fullSentencePy})</div>
-
-          <p class="text-xs text-emerald-800 mt-1">${q.explain}</p>
-
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-emerald-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">
+              <span>🎉</span><span>Tepat Sekali! Susunan Anda Betul</span>
+            </span>
+            <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border border-emerald-200 shadow-2xs">
+            <div class="text-[11px] font-black text-emerald-800 uppercase tracking-wider">Jawapan Yang Betul (Modul ELM 4322):</div>
+            <div class="font-hanzi font-black text-emerald-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+            <div class="text-xs font-bold text-emerald-700 font-sans mt-0.5">${correctPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+            <div class="text-[11px] text-emerald-900 bg-emerald-50 p-2 rounded-lg border border-emerald-200 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
         `;
-
-
-
         setSentenceBtnState('next');
-
       } else {
-
         playBeep('wrong');
-
-        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-rose-200 bg-rose-50 text-rose-950";
-
+        isSentenceChecked = true;
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-rose-300 bg-rose-50/90 text-rose-950 shadow-sm";
         feedback.innerHTML = `
-
-          <div class="font-bold text-sm">Susunan Belum Tepat</div>
-
-          <p class="text-xs text-rose-700 mt-0.5">Sila semak semula susunan tatabahasa.</p>
-
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-rose-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-900 text-xs font-black">
+              <span>❌</span><span>Susunan Belum Tepat</span>
+            </span>
+            <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan Betul</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border-2 border-indigo-200 shadow-2xs">
+            <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider flex items-center space-x-1">
+              <span>📌</span><span>Semakan Jawapan Yang Betul (Modul ELM 4322):</span>
+            </div>
+            <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+            <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${correctPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+            <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
+          <div class="mt-2.5 flex items-center justify-between text-xs text-slate-600">
+            <span>Pelajari jawapan betul di atas, kemudian tekan butang di bawah untuk ayat seterusnya.</span>
+            <button onclick="resetSentenceBuilder(); isSentenceChecked = false; setSentenceBtnState('check');" class="ml-2 px-3 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold shrink-0">
+              🔄 Cuba Semula
+            </button>
+          </div>
         `;
-
+        setSentenceBtnState('next');
       }
-
     }
 
+    function showSentenceAnswer() {
+      const q = SENTENCE_CHALLENGES[sentenceIndex];
+      const feedback = document.getElementById('sentence-feedback-box');
+      const correctHz = q.correctOrder.join('');
+      const correctTokens = q.correctOrder.map(item => {
+        const found = q.pool.find(p => p.hz === item);
+        return found ? found.py : '';
+      });
+      const correctPy = correctTokens.join(' ');
 
+      isSentenceChecked = true;
+      feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50/90 text-indigo-950 shadow-sm";
+      feedback.innerHTML = `
+        <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-indigo-200">
+          <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-100 text-indigo-900 text-xs font-black">
+            <span>💡</span><span>Semakan Jawapan Yang Betul</span>
+          </span>
+          <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+            <span>🔊</span><span>Dengar Sebutan</span>
+          </button>
+        </div>
+        <div class="bg-white/95 rounded-xl p-3 border border-indigo-200 shadow-2xs">
+          <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider">Susunan Rasmi Modul ELM 4322:</div>
+          <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+          <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${correctPy}</div>
+          <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+          <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+            💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+          </div>
+        </div>
+      `;
+      setSentenceBtnState('next');
+    }
 
     function setSentenceBtnState(state) {
 

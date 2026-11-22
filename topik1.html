@@ -621,11 +621,14 @@
 
             <span id="sentence-grammar-hint">Formula: Kata Nama + 在哪儿？</span>
 
-            <button onclick="resetSentenceBuilder()" class="text-indigo-600 font-bold hover:underline">
-
-              🔄 Padam & Susun Semula
-
+            <div class="flex items-center space-x-2">
+            <button onclick="showSentenceAnswer()" class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline flex items-center space-x-0.5">
+              <span>💡</span><span>Semak Jawapan Betul</span>
             </button>
+            <button onclick="resetSentenceBuilder()" class="text-slate-500 hover:text-slate-700 font-bold hover:underline">
+              🔄 Padam & Susun Semula
+            </button>
+          </div>
 
           </div>
 
@@ -1474,8 +1477,8 @@
         "py": "duōshao qián?"
       },
       {
-        "hz": "太贵了",
-        "py": "tài guì le"
+        "hz": "老板",
+        "py": "lǎobǎn"
       },
       {
         "hz": "西瓜",
@@ -1518,36 +1521,36 @@
     "explain": "Wǒ xiǎng mǎi liǎng gōngjīn píngguǒ. (Saya mahu beli dua kilogram epal.)"
   },
   {
-    "targetMy": "Tembikai di sini terlalu mahal.",
+    "targetMy": "Buah tembikai terlalu mahal.",
     "correctOrder": [
-      "这里的",
       "西瓜",
-      "太贵了。"
+      "太贵",
+      "了。"
     ],
     "pool": [
-      {
-        "hz": "这里的",
-        "py": "zhèlǐ de"
-      },
       {
         "hz": "西瓜",
         "py": "xīguā"
       },
       {
-        "hz": "太贵了。",
-        "py": "tài guì le."
+        "hz": "太贵",
+        "py": "tài guì"
       },
       {
-        "hz": "便宜",
-        "py": "piányi"
+        "hz": "了。",
+        "py": "le."
+      },
+      {
+        "hz": "苹果",
+        "py": "píngguǒ"
       },
       {
         "hz": "多少",
         "py": "duōshao"
       }
     ],
-    "hint": "Tempat + Kata Nama + 太贵了。",
-    "explain": "Zhèlǐ de xīguā tài guì le. (Tembikai di sini terlalu mahal.)"
+    "hint": "Kata Nama + 太贵 + 了。",
+    "explain": "Xīguā tài guì le. (Buah tembikai terlalu mahal.)"
   },
   {
     "targetMy": "Pelayan, tolong berikan saya secawan teh.",
@@ -1574,19 +1577,19 @@
         "py": "chǎomiàn"
       },
       {
-        "hz": "老板",
-        "py": "lǎobǎn"
+        "hz": "果汁",
+        "py": "guǒzhī"
       }
     ],
     "hint": "Panggilan + 请给我 + Minuman.",
     "explain": "Fúwùyuán, qǐng gěi wǒ yī bēi chá. (Pelayan, tolong berikan saya secawan teh.)"
   },
   {
-    "targetMy": "Saya ingin makan sepinggan nasi goreng ayam.",
+    "targetMy": "Saya ingin makan sepinggan nasi goreng.",
     "correctOrder": [
       "我想吃",
       "一盘",
-      "鸡肉炒饭。"
+      "炒饭。"
     ],
     "pool": [
       {
@@ -1598,20 +1601,20 @@
         "py": "yī pán"
       },
       {
-        "hz": "鸡肉炒饭。",
-        "py": "jīròu chǎofàn."
+        "hz": "炒饭。",
+        "py": "chǎofàn."
       },
       {
-        "hz": "橙子",
-        "py": "chéngzi"
+        "hz": "鸡肉",
+        "py": "jīròu"
       },
       {
-        "hz": "多少钱",
-        "py": "duōshao qián"
+        "hz": "买",
+        "py": "mǎi"
       }
     ],
-    "hint": "我想吃 + Penjodoh Bilangan + Makanan.",
-    "explain": "Wǒ xiǎng chī yī pán jīròu chǎofàn. (Saya ingin makan sepinggan nasi goreng ayam.)"
+    "hint": "Subjek + 想吃 + Penjodoh Bilangan + Makanan.",
+    "explain": "Wǒ xiǎng chī yī pán chǎofàn. (Saya ingin makan sepinggan nasi goreng.)"
   }
 ];
 
@@ -2873,6 +2876,10 @@
       const q = SENTENCE_CHALLENGES[sentenceIndex];
 
       selectedSentenceTokens = [];
+      isSentenceChecked = false;
+      const feedback = document.getElementById('sentence-feedback-box');
+      if (feedback) { feedback.className = 'hidden mb-3.5 p-3.5 rounded-2xl'; feedback.innerHTML = ''; }
+      setSentenceBtnState('check');
 
       isSentenceChecked = false;
 
@@ -3039,104 +3046,138 @@
 
 
     function checkSentenceAction() {
-
       if (isSentenceChecked) {
-
         playBeep('click');
-
         sentenceIndex = (sentenceIndex + 1) % SENTENCE_CHALLENGES.length;
-
         loadSentenceChallenge();
-
         return;
-
       }
-
-
 
       const q = SENTENCE_CHALLENGES[sentenceIndex];
-
       const feedback = document.getElementById('sentence-feedback-box');
-
-
+      const correctHz = q.correctOrder.join('');
+      const correctTokens = q.correctOrder.map(item => {
+        const found = q.pool.find(p => p.hz === item);
+        return found ? found.py : '';
+      });
+      const correctPy = correctTokens.join(' ');
 
       if (selectedSentenceTokens.length !== q.correctOrder.length) {
-
         playBeep('wrong');
-
-        alert("Sila lengkapkan semua bahagian ayat terlebih dahulu!");
-
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-amber-300 bg-amber-50 text-amber-950 shadow-sm animate-pulse";
+        feedback.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold flex items-center space-x-1.5">
+              <span>⚠️</span>
+              <span>Sila pilih semua bahagian ayat dahulu, atau tekan butang di bawah untuk melihat jawapan betul.</span>
+            </div>
+            <button onclick="showSentenceAnswer()" class="ml-2 px-2.5 py-1 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shrink-0">
+              💡 Lihat Jawapan
+            </button>
+          </div>
+        `;
         return;
-
       }
-
-
 
       const isMatch = selectedSentenceTokens.every((t, i) => t.hz === q.correctOrder[i]);
 
-
-
       if (isMatch) {
-
         isSentenceChecked = true;
-
         playBeep('success');
-
         totalXp += 20;
-
         streakCount++;
-
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
-
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
-
-
-        const fullSentenceHz = selectedSentenceTokens.map(t => t.hz).join('');
-
-        const fullSentencePy = selectedSentenceTokens.map(t => t.py).join(' ');
-
-        speakChinese(fullSentenceHz);
-
-
-
-        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950";
-
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-emerald-300 bg-emerald-50/90 text-emerald-950 shadow-sm";
         feedback.innerHTML = `
-
-          <div class="font-bold text-sm">🎉 Tepat Sekali!</div>
-
-          <div class="font-hanzi font-black text-emerald-900 text-base mt-0.5">${fullSentenceHz}</div>
-
-          <div class="text-xs font-bold text-emerald-700 mt-0.5">(${fullSentencePy})</div>
-
-          <p class="text-xs text-emerald-800 mt-1">${q.explain}</p>
-
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-emerald-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">
+              <span>🎉</span><span>Tepat Sekali! Susunan Anda Betul</span>
+            </span>
+            <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border border-emerald-200 shadow-2xs">
+            <div class="text-[11px] font-black text-emerald-800 uppercase tracking-wider">Jawapan Yang Betul (Modul ELM 4322):</div>
+            <div class="font-hanzi font-black text-emerald-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+            <div class="text-xs font-bold text-emerald-700 font-sans mt-0.5">${correctPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+            <div class="text-[11px] text-emerald-900 bg-emerald-50 p-2 rounded-lg border border-emerald-200 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
         `;
-
-
-
         setSentenceBtnState('next');
-
       } else {
-
         playBeep('wrong');
-
-        feedback.className = "block mb-3 p-3.5 rounded-2xl border border-rose-200 bg-rose-50 text-rose-950";
-
+        isSentenceChecked = true;
+        feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-rose-300 bg-rose-50/90 text-rose-950 shadow-sm";
         feedback.innerHTML = `
-
-          <div class="font-bold text-sm">Susunan Belum Tepat</div>
-
-          <p class="text-xs text-rose-700 mt-0.5">Sila semak semula susunan tatabahasa.</p>
-
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-rose-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-900 text-xs font-black">
+              <span>❌</span><span>Susunan Belum Tepat</span>
+            </span>
+            <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan Betul</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border-2 border-indigo-200 shadow-2xs">
+            <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider flex items-center space-x-1">
+              <span>📌</span><span>Semakan Jawapan Yang Betul (Modul ELM 4322):</span>
+            </div>
+            <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+            <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${correctPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+            <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
+          <div class="mt-2.5 flex items-center justify-between text-xs text-slate-600">
+            <span>Pelajari jawapan betul di atas, kemudian tekan butang di bawah untuk ayat seterusnya.</span>
+            <button onclick="resetSentenceBuilder(); isSentenceChecked = false; setSentenceBtnState('check');" class="ml-2 px-3 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold shrink-0">
+              🔄 Cuba Semula
+            </button>
+          </div>
         `;
-
+        setSentenceBtnState('next');
       }
-
     }
 
+    function showSentenceAnswer() {
+      const q = SENTENCE_CHALLENGES[sentenceIndex];
+      const feedback = document.getElementById('sentence-feedback-box');
+      const correctHz = q.correctOrder.join('');
+      const correctTokens = q.correctOrder.map(item => {
+        const found = q.pool.find(p => p.hz === item);
+        return found ? found.py : '';
+      });
+      const correctPy = correctTokens.join(' ');
 
+      isSentenceChecked = true;
+      feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50/90 text-indigo-950 shadow-sm";
+      feedback.innerHTML = `
+        <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-indigo-200">
+          <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-100 text-indigo-900 text-xs font-black">
+            <span>💡</span><span>Semakan Jawapan Yang Betul</span>
+          </span>
+          <button onclick="speakChinese('${correctHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+            <span>🔊</span><span>Dengar Sebutan</span>
+          </button>
+        </div>
+        <div class="bg-white/95 rounded-xl p-3 border border-indigo-200 shadow-2xs">
+          <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider">Susunan Rasmi Modul ELM 4322:</div>
+          <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${correctHz}</div>
+          <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${correctPy}</div>
+          <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.targetMy}"</div>
+          <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+            💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+          </div>
+        </div>
+      `;
+      setSentenceBtnState('next');
+    }
 
     function setSentenceBtnState(state) {
 
