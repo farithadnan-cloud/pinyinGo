@@ -34,97 +34,95 @@ function detectCurrentTopic() {
   }
 }
 
-// 2. Inject CSS for Certificate & Print
+// 2. Inject CSS for Certificate & Print (Fixes iOS Safari / Android / Desktop Paper Scaling)
 function injectCertificateStyles() {
   if (document.getElementById('pinyingo-cert-styles')) return;
   const style = document.createElement('style');
   style.id = 'pinyingo-cert-styles';
   style.innerHTML = `
     @page {
-      size: A4 landscape;
+      size: auto;
       margin: 8mm;
     }
     @media print {
       html, body {
         width: 100% !important;
-        height: 100% !important;
+        min-width: 100% !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #ffffff !important;
-        overflow: hidden !important;
+        overflow: visible !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      body * {
-        visibility: hidden !important;
+      body > * {
+        display: none !important;
       }
-      #certificate-modal,
-      #certificate-modal * {
-        visibility: visible !important;
-      }
-      #certificate-modal {
-        position: fixed !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
+      #certificate-modal-container,
+      #certificate-modal-container #certificate-modal {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
-        background: #ffffff !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        z-index: 9999999 !important;
+        background: transparent !important;
         opacity: 1 !important;
-        page-break-after: avoid !important;
-        page-break-inside: avoid !important;
+        overflow: visible !important;
+      }
+      #certificate-modal-container #certificate-modal .relative {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       #certificate-print-area {
+        display: block !important;
         position: relative !important;
         width: 100% !important;
-        max-width: 275mm !important;
-        max-height: 188mm !important;
+        max-width: 100% !important;
         margin: 0 auto !important;
-        padding: 12px 20px !important;
-        box-shadow: none !important;
+        padding: 24px 30px !important;
+        box-sizing: border-box !important;
         border: 4px double #b45309 !important;
         border-radius: 14px !important;
         background: #fdfbf7 !important;
-        box-sizing: border-box !important;
         page-break-inside: avoid !important;
         page-break-after: avoid !important;
         break-inside: avoid !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      #certificate-print-area .border-2 {
-        padding: 10px 16px !important;
+      #certificate-print-area .inner-box {
+        padding: 16px 24px !important;
       }
       #certificate-print-area img {
-        height: 52px !important;
-        margin-bottom: 2px !important;
+        height: 60px !important;
+        margin-bottom: 4px !important;
       }
       #certificate-print-area h2 {
-        font-size: 1.6rem !important;
-        margin-top: 2px !important;
-        margin-bottom: 0px !important;
+        font-size: 1.8rem !important;
+        margin-top: 4px !important;
+        margin-bottom: 2px !important;
       }
       #certificate-print-area .my-4 {
-        margin-top: 6px !important;
-        margin-bottom: 6px !important;
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
       }
       #certificate-print-area #cert-student-name {
-        font-size: 1.5rem !important;
-        padding-bottom: 2px !important;
+        font-size: 1.8rem !important;
+        padding-bottom: 4px !important;
       }
-      #certificate-print-area .grid {
-        margin-top: 6px !important;
-        margin-bottom: 6px !important;
-        padding: 6px 12px !important;
+      #certificate-print-area .score-grid {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+        padding: 10px 18px !important;
       }
-      #certificate-print-area .mt-5 {
-        margin-top: 8px !important;
-        padding-top: 6px !important;
+      #certificate-print-area .footer-sig {
+        margin-top: 14px !important;
+        padding-top: 10px !important;
       }
       .no-print {
         display: none !important;
@@ -139,9 +137,10 @@ function injectStudentModals() {
   if (document.getElementById('student-name-modal')) return;
 
   const modalContainer = document.createElement('div');
+  modalContainer.id = 'certificate-modal-container';
   modalContainer.innerHTML = `
     <!-- STUDENT NAME MODAL -->
-    <div id="student-name-modal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 hidden opacity-0">
+    <div id="student-name-modal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 hidden opacity-0 no-print">
       <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl border border-slate-100 relative transform transition-all scale-95 duration-200" id="student-modal-card">
         <div class="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center text-3xl mx-auto mb-3 shadow-sm">
           🎓
@@ -185,14 +184,14 @@ function injectStudentModals() {
       <div class="relative w-full max-w-4xl my-auto">
         
         <!-- Top Action Bar (no-print) -->
-        <div class="no-print flex items-center justify-between mb-3 bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/15 text-white">
+        <div class="no-print flex flex-wrap items-center justify-between gap-2 mb-3 bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/15 text-white">
           <div class="flex items-center space-x-2">
             <span class="text-lg">📜</span>
             <span class="text-xs sm:text-sm font-bold tracking-wide">E-Sijil Pencapaian Rasmi KVPD</span>
           </div>
           
-          <!-- Topic Selector (Visible on Hub index.html or switchable) -->
-          <div id="cert-topic-switcher-bar" class="hidden sm:flex items-center space-x-1 bg-white/10 px-2 py-1 rounded-xl text-xs">
+          <!-- Topic Selector -->
+          <div id="cert-topic-switcher-bar" class="flex items-center space-x-1 bg-white/10 px-2 py-1 rounded-xl text-xs">
             <span class="text-slate-300 text-[11px] mr-1">Topik:</span>
             <select id="cert-topic-select" onchange="changeCertTopic(this.value)" class="bg-slate-800 text-amber-300 font-bold text-xs rounded-lg px-2 py-1 outline-none border border-slate-700">
               <option value="1">Topik 1: Membeli Makanan</option>
@@ -209,6 +208,10 @@ function injectStudentModals() {
             <button onclick="printCertificate()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs flex items-center space-x-1.5 shadow-md shadow-amber-500/20 transition active:scale-95">
               <span>🖨️</span>
               <span>Cetak / PDF</span>
+            </button>
+            <button onclick="downloadCertificateImage()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center space-x-1.5 shadow-md transition active:scale-95" title="Muat Turun Imej Sijil (PNG)">
+              <span>📥</span>
+              <span class="hidden sm:inline">Simpan Imej</span>
             </button>
             <button onclick="promptStudentName(true)" class="px-2.5 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white font-bold text-xs transition" title="Tukar Ejaan Nama">
               <span>✏️ Nama</span>
@@ -242,7 +245,7 @@ function injectStudentModals() {
           <div class="absolute bottom-2 right-3 text-amber-700/40 text-xl select-none">⚜️</div>
 
           <!-- Certificate Inner Border Box -->
-          <div class="border-2 border-amber-500/40 rounded-2xl p-5 sm:p-8 text-center relative z-10 bg-white/60 backdrop-blur-xs">
+          <div class="inner-box border-2 border-amber-500/40 rounded-2xl p-5 sm:p-8 text-center relative z-10 bg-white/60 backdrop-blur-xs">
             
             <!-- Institution Title with Official KVPD Logo -->
             <div class="mb-3">
@@ -270,8 +273,8 @@ function injectStudentModals() {
                 Dengan ini diperakui bahawa
               </p>
               
-              <div class="my-2">
-                <span id="cert-student-name" class="inline-block font-outfit font-black text-xl sm:text-3xl text-indigo-950 border-b-2 border-amber-600 pb-1 px-4 tracking-wide uppercase">
+              <div class="my-2.5">
+                <span id="cert-student-name" class="inline-block font-outfit font-black text-2xl sm:text-3xl text-indigo-950 border-b-2 border-amber-600 pb-1 px-6 tracking-wide uppercase">
                   [NAMA PELAJAR]
                 </span>
               </div>
@@ -280,7 +283,7 @@ function injectStudentModals() {
                 telah berjaya menguasai dan menyempurnakan modul pembelajaran serta latihan amali kendiri bagi sukatan:
               </p>
               
-              <div class="mt-2 inline-block bg-amber-50/90 border border-amber-200/90 rounded-2xl px-4 py-1.5 shadow-xs">
+              <div class="mt-2.5 inline-block bg-amber-50/90 border border-amber-300 rounded-2xl px-5 py-2 shadow-xs">
                 <span id="cert-topic-badge" class="font-outfit font-black text-xs sm:text-base text-amber-950">
                   TOPIK 1: 买食物 Membeli Makanan (mǎi shí wù)
                 </span>
@@ -292,41 +295,41 @@ function injectStudentModals() {
             </div>
 
             <!-- Badges & Verification Row: ACTUAL MARKS & GRADE -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 max-w-lg mx-auto my-4 text-center sm:text-left bg-slate-50/95 p-3 rounded-2xl border border-slate-200/90 text-[10px] sm:text-xs">
-              <div class="flex flex-col justify-center">
-                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Markah Diperoleh:</span>
-                <span id="cert-score-display" class="font-outfit font-black text-base sm:text-lg text-slate-900 leading-tight">
+            <div class="score-grid grid grid-cols-3 gap-2 sm:gap-4 max-w-lg mx-auto my-4 text-center bg-slate-50/95 p-3 rounded-2xl border border-slate-200/90 text-[10px] sm:text-xs">
+              <div class="flex flex-col justify-center border-r border-slate-200 pr-2">
+                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Markah:</span>
+                <span id="cert-score-display" class="font-outfit font-black text-sm sm:text-base text-slate-900 leading-tight">
                   0 / 100 (0%)
                 </span>
               </div>
-              <div class="flex flex-col justify-center items-center sm:items-start">
-                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Keputusan / Gred:</span>
+              <div class="flex flex-col justify-center items-center border-r border-slate-200 px-2">
+                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Keputusan:</span>
                 <span id="cert-grade-display" class="inline-block px-2.5 py-0.5 rounded-full font-black text-xs border text-slate-600 bg-slate-100 border-slate-300">
                   Belum Selesai
                 </span>
               </div>
-              <div class="flex flex-col justify-center">
+              <div class="flex flex-col justify-center pl-2">
                 <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Tarikh & No. Siri:</span>
-                <span id="cert-issue-date" class="block font-bold text-slate-800 text-[10px] sm:text-[11px]">23 November 2026</span>
+                <span id="cert-issue-date" class="block font-bold text-slate-800 text-[10px]">23 November 2026</span>
                 <span id="cert-verify-code" class="font-mono text-slate-500 text-[9px]">KVPD-ELM4322-T1</span>
               </div>
             </div>
 
             <!-- Signatures Footer -->
-            <div class="mt-5 pt-3.5 border-t border-amber-200/70 flex items-end justify-end px-2 sm:px-6">
+            <div class="footer-sig mt-6 pt-4 border-t border-amber-200/80 flex items-end justify-end px-3 sm:px-8">
               <!-- Official Signatory -->
               <div class="text-right">
                 <div class="font-serif italic text-base sm:text-lg font-bold text-slate-800 tracking-wider">
                   Hajar Nur Atiqah
                 </div>
-                <div class="w-40 sm:w-52 h-0.5 bg-slate-800 ml-auto my-1"></div>
-                <span class="block font-outfit font-black text-[10px] sm:text-xs text-slate-900 uppercase">
+                <div class="w-40 sm:w-52 h-0.5 bg-slate-800 ml-auto my-1.5"></div>
+                <span class="block font-outfit font-black text-[11px] sm:text-xs text-slate-900 uppercase">
                   HAJAR NUR ATIQAH BINTI MOHD ADAM
                 </span>
-                <span class="block text-[9px] sm:text-[10px] text-slate-600 font-semibold">
+                <span class="block text-[10px] sm:text-[11px] text-slate-600 font-semibold">
                   Pensyarah Bahasa Mandarin
                 </span>
-                <span class="block text-[8px] sm:text-[9px] text-slate-500">
+                <span class="block text-[9px] sm:text-[10px] text-slate-500">
                   Kolej Vokasional Port Dickson
                 </span>
               </div>
@@ -589,10 +592,10 @@ function renderCertificateData(topicNum, studentName) {
   if (scoreDisplay) {
     if (scoreData.hasAttempted) {
       scoreDisplay.innerText = `${scoreData.score} / 100 (${scoreData.score}%)`;
-      scoreDisplay.className = "font-outfit font-black text-base sm:text-lg text-emerald-700 leading-tight";
+      scoreDisplay.className = "font-outfit font-black text-sm sm:text-base text-emerald-700 leading-tight";
     } else {
       scoreDisplay.innerText = `0 / 100 (0%)`;
-      scoreDisplay.className = "font-outfit font-black text-base sm:text-lg text-slate-400 leading-tight";
+      scoreDisplay.className = "font-outfit font-black text-sm sm:text-base text-slate-400 leading-tight";
     }
   }
 
@@ -641,6 +644,40 @@ function renderCertificateData(topicNum, studentName) {
   }
 }
 
+// 7. Robust Print / PDF Engine
 function printCertificate() {
   window.print();
+}
+
+// 8. Download Certificate as High-Definition Image (PNG) for mobile/iPhone saving
+function downloadCertificateImage() {
+  const printArea = document.getElementById('certificate-print-area');
+  if (!printArea) return;
+
+  if (typeof html2canvas === 'undefined') {
+    // Dynamically load html2canvas if not yet loaded
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    script.onload = () => captureAndDownload(printArea);
+    document.head.appendChild(script);
+  } else {
+    captureAndDownload(printArea);
+  }
+}
+
+function captureAndDownload(targetEl) {
+  const studentName = (getStudentName() || 'Pelajar').replace(/\s+/g, '_');
+  const filename = `Sijil_PinyinGo_${studentName}_Topik${currentCertTopicNum}.png`;
+
+  html2canvas(targetEl, {
+    scale: 2.5,
+    useCORS: true,
+    backgroundColor: '#fcfaf5',
+    logging: false
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
 }
