@@ -40,7 +40,21 @@ function injectCertificateStyles() {
   const style = document.createElement('style');
   style.id = 'pinyingo-cert-styles';
   style.innerHTML = `
+    @page {
+      size: A4 landscape;
+      margin: 8mm;
+    }
     @media print {
+      html, body {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        overflow: hidden !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
       body * {
         visibility: hidden !important;
       }
@@ -56,31 +70,64 @@ function injectCertificateStyles() {
         height: 100vh !important;
         margin: 0 !important;
         padding: 0 !important;
-        background: white !important;
+        background: #ffffff !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        z-index: 999999 !important;
+        z-index: 9999999 !important;
         opacity: 1 !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
       }
       #certificate-print-area {
         position: relative !important;
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 275mm !important;
+        max-height: 188mm !important;
         margin: 0 auto !important;
+        padding: 12px 20px !important;
         box-shadow: none !important;
-        border: 4px solid #b45309 !important;
+        border: 4px double #b45309 !important;
+        border-radius: 14px !important;
         background: #fdfbf7 !important;
+        box-sizing: border-box !important;
         page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+        break-inside: avoid !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
+      #certificate-print-area .border-2 {
+        padding: 10px 16px !important;
+      }
+      #certificate-print-area img {
+        height: 52px !important;
+        margin-bottom: 2px !important;
+      }
+      #certificate-print-area h2 {
+        font-size: 1.6rem !important;
+        margin-top: 2px !important;
+        margin-bottom: 0px !important;
+      }
+      #certificate-print-area .my-4 {
+        margin-top: 6px !important;
+        margin-bottom: 6px !important;
+      }
+      #certificate-print-area #cert-student-name {
+        font-size: 1.5rem !important;
+        padding-bottom: 2px !important;
+      }
+      #certificate-print-area .grid {
+        margin-top: 6px !important;
+        margin-bottom: 6px !important;
+        padding: 6px 12px !important;
+      }
+      #certificate-print-area .mt-5 {
+        margin-top: 8px !important;
+        padding-top: 6px !important;
+      }
       .no-print {
         display: none !important;
-      }
-      @page {
-        size: A4 landscape;
-        margin: 8mm;
       }
     }
   `;
@@ -265,31 +312,21 @@ function injectStudentModals() {
               </div>
             </div>
 
-            <!-- Signatures & Seal Footer -->
-            <div class="mt-5 pt-3.5 border-t border-amber-200/70 flex items-end justify-between px-2 sm:px-6">
-              <!-- Digital Seal -->
-              <div class="text-center">
-                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-double border-amber-600 bg-gradient-to-tr from-amber-400 via-amber-200 to-yellow-500 flex flex-col items-center justify-center shadow-md shadow-amber-500/20 mx-auto select-none">
-                  <span class="text-xs sm:text-sm font-black text-amber-950">KVPD</span>
-                  <span class="text-[8px] sm:text-[9px] font-black text-amber-900 tracking-tighter">ELM 4322</span>
-                  <span class="text-[7px] font-bold text-amber-950">★ RASMI ★</span>
-                </div>
-                <span class="block text-[8px] sm:text-[9px] font-bold text-amber-900/70 mt-1">Meterai Pengesahan</span>
-              </div>
-
+            <!-- Signatures Footer -->
+            <div class="mt-5 pt-3.5 border-t border-amber-200/70 flex items-end justify-end px-2 sm:px-6">
               <!-- Official Signatory -->
-              <div class="text-center sm:text-right">
+              <div class="text-right">
                 <div class="font-serif italic text-base sm:text-lg font-bold text-slate-800 tracking-wider">
                   Hajar Nur Atiqah
                 </div>
-                <div class="w-36 sm:w-48 h-0.5 bg-slate-800 mx-auto sm:ml-auto my-1"></div>
+                <div class="w-40 sm:w-52 h-0.5 bg-slate-800 ml-auto my-1"></div>
                 <span class="block font-outfit font-black text-[10px] sm:text-xs text-slate-900 uppercase">
                   HAJAR NUR ATIQAH BINTI MOHD ADAM
                 </span>
-                <span class="block text-[9px] sm:text-[10px] text-slate-500 font-semibold">
-                  Pensyarah Bahasa Mandarin (ELM 4322)
+                <span class="block text-[9px] sm:text-[10px] text-slate-600 font-semibold">
+                  Pensyarah Bahasa Mandarin
                 </span>
-                <span class="block text-[8px] sm:text-[9px] text-slate-400">
+                <span class="block text-[8px] sm:text-[9px] text-slate-500">
                   Kolej Vokasional Port Dickson
                 </span>
               </div>
