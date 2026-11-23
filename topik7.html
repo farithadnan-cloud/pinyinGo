@@ -230,7 +230,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=12" defer></script>
+  <script src="js/certificate.js?v=13" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -4044,6 +4044,11 @@
             <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul. Anda perlu menyebut KESELURUHAN ayat dengan nada yang betul untuk lulus sebutan.</span>
           </div>
         `;
+      }
+          // Rakam markah perkataan dan ayat secara automatik ke dalam rekod Dialog & E-Sijil
+      const correctWordsCount = tokens.length - wrongTokens.length;
+      if (typeof recordSentenceSpeechScore === 'function') {
+        recordSentenceSpeechScore(CURRENT_TOPIC, currentScenarioId, idx, correctWordsCount, tokens.length);
       }
     }
 

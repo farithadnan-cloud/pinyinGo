@@ -604,54 +604,156 @@ function initChatDialogUI() {
   refreshChatDialogCard(currentCertTopicNum);
 }
 
+// Auto-calculate and update dialog speech score based on correct sentences and words
+function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, totalWords) {
+  if (!topicNum || !scenarioId) return;
+  const progressKey = `pinyingo_chat_progress_${topicNum}_d${scenarioId}`;
+  let progress = {};
+  try {
+    progress = JSON.parse(localStorage.getItem(progressKey) || '{}');
+  } catch (e) {}
+
+  // Simpan markah tertinggi bagi ayat ini
+  const prev = progress[msgIdx] || { correct: 0, total: totalWords, isPassed: false };
+  const isPassed = correctWords >= totalWords && totalWords > 0;
+  if (!progress[msgIdx] || correctWords >= (prev.correct || 0)) {
+    progress[msgIdx] = {
+      correct: correctWords,
+      total: totalWords,
+      isPassed: isPassed
+    };
+  }
+  localStorage.setItem(progressKey, JSON.stringify(progress));
+
+  // Kira markah dialog berdasarkan purata perkataan & ayat yang betul
+  const scenarioData = (typeof CHAT_SCENARIOS !== 'undefined' && CHAT_SCENARIOS[scenarioId]) ? CHAT_SCENARIOS[scenarioId] : null;
+  if (!scenarioData || !scenarioData.messages) return;
+
+  const totalMessages = scenarioData.messages.length;
+  let totalDialogWords = 0;
+  let totalWordsCorrect = 0;
+  let sentencesPassed = 0;
+
+  scenarioData.messages.forEach((msg, i) => {
+    const tCount = (msg.tokens && msg.tokens.length > 0) ? msg.tokens.length : (msg.hz ? msg.hz.replace(/[，。！？\s.,!?]/g, '').length : 1);
+    totalDialogWords += tCount;
+
+    const p = progress[i];
+    if (p) {
+      totalWordsCorrect += Math.min(p.correct || 0, tCount);
+      if (p.isPassed || p.correct >= tCount) {
+        sentencesPassed++;
+      }
+    }
+  });
+
+  const wordAcc = totalDialogWords > 0 ? (totalWordsCorrect / totalDialogWords) : 0;
+  const sentenceAcc = totalMessages > 0 ? (sentencesPassed / totalMessages) : 0;
+  const blendedAcc = (0.5 * wordAcc) + (0.5 * sentenceAcc);
+  const dialogScore = Math.min(10, Math.max(0, Math.round(blendedAcc * 10)));
+
+  const type = scenarioId == 1 ? 'chat_d1' : 'chat_d2';
+  saveTopicScore(topicNum, dialogScore, type);
+
+  return {
+    dialogScore,
+    sentencesPassed,
+    totalMessages,
+    totalWordsCorrect,
+    totalDialogWords,
+    percentage: Math.round(blendedAcc * 100)
+  };
+}
+
 function refreshChatDialogCard(topicNum) {
-  const label = document.getElementById('chat-dialog-label');
-  const badge = document.getElementById('chat-dialog-badge');
+  const label = document.getElementById('chat-completion-label') || document.getElementById('chat-dialog-label');
+  const badge = document.getElementById('chat-completion-badge') || document.getElementById('chat-dialog-badge');
   const btn = document.getElementById('btn-complete-chat');
   const btnText = document.getElementById('btn-complete-chat-text');
-  if (!label || !badge || !btn) return;
+  if (!label || !badge) return;
 
   const curScenario = typeof currentScenarioId !== 'undefined' ? currentScenarioId : 1;
   const scoreData = getTopicScore(topicNum);
-  const isD1 = curScenario === 1;
-  const isDone = isD1 ? (scoreData.chatD1Score >= 10) : (scoreData.chatD2Score >= 10);
+  const isD1 = curScenario == 1;
+  const curScore = isD1 ? (scoreData.chatD1Score || 0) : (scoreData.chatD2Score || 0);
+
+  // Ambil maklumat kemajuan sebutan
+  const progressKey = `pinyingo_chat_progress_${topicNum}_d${curScenario}`;
+  let progress = {};
+  try {
+    progress = JSON.parse(localStorage.getItem(progressKey) || '{}');
+  } catch (e) {}
+
+  const scenarioData = (typeof CHAT_SCENARIOS !== 'undefined' && CHAT_SCENARIOS[curScenario]) ? CHAT_SCENARIOS[curScenario] : null;
+  let totalMessages = scenarioData ? scenarioData.messages.length : 0;
+  let totalDialogWords = 0;
+  let totalWordsCorrect = 0;
+  let sentencesPassed = 0;
+
+  if (scenarioData) {
+    scenarioData.messages.forEach((msg, i) => {
+      const tCount = (msg.tokens && msg.tokens.length > 0) ? msg.tokens.length : (msg.hz ? msg.hz.replace(/[，。！？\s.,!?]/g, '').length : 1);
+      totalDialogWords += tCount;
+      const p = progress[i];
+      if (p) {
+        totalWordsCorrect += Math.min(p.correct || 0, tCount);
+        if (p.isPassed || p.correct >= tCount) {
+          sentencesPassed++;
+          const passBadge = document.getElementById(`badge-pass-${i}`);
+          if (passBadge) passBadge.classList.remove('hidden');
+        }
+      }
+    });
+  }
 
   label.innerText = `Latihan Pertuturan Dialog ${curScenario}`;
 
-  if (isDone) {
+  if (curScore >= 10 && sentencesPassed === totalMessages) {
     badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300";
-    badge.innerText = `Selesai (10/10 Markah) ✓`;
-    btn.className = "py-2.5 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition active:scale-95 shrink-0";
-    btnText.innerText = `Ulang Tandakan Dialog ${curScenario}`;
+    badge.innerText = `Selesai Cemerlang (10/10 Markah) ✓ (${sentencesPassed}/${totalMessages} Ayat, ${totalWordsCorrect}/${totalDialogWords} Kata)`;
+    if (btn) {
+      btn.className = "w-full sm:w-auto py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs transition active:scale-95 shadow-md flex items-center justify-center space-x-1.5 shrink-0";
+      if (btnText) btnText.innerText = `Markah Penuh 10/10 Disahkan ✓`;
+    }
+  } else if (curScore > 0 || sentencesPassed > 0 || totalWordsCorrect > 0) {
+    badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black bg-indigo-100 text-indigo-900 border border-indigo-300";
+    badge.innerText = `Markah Auto: ${curScore}/10 (${sentencesPassed}/${totalMessages} Ayat Lulus, ${totalWordsCorrect}/${totalDialogWords} Kata)`;
+    if (btn) {
+      btn.className = "w-full sm:w-auto py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 text-white font-black text-xs transition active:scale-95 shadow-md flex items-center justify-center space-x-1.5 shrink-0";
+      if (btnText) btnText.innerText = `Sahkan & Simpan Dialog ${curScenario} (${curScore}/10 Markah)`;
+    }
   } else {
-    badge.className = "px-2 py-0.5 rounded-full text-[10px] font-black bg-slate-100 text-slate-500 border border-slate-200";
-    badge.innerText = `Belum Selesai (0/10)`;
-    btn.className = "py-2.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs transition active:scale-95 shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5 shrink-0";
-    btnText.innerText = `Selesai Dialog ${curScenario} (+10 Markah)`;
+    badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black bg-slate-100 text-slate-500 border border-slate-200";
+    badge.innerText = `Belum Bermula (0/10 Markah)`;
+    if (btn) {
+      btn.className = "w-full sm:w-auto py-2.5 px-4 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-extrabold text-xs transition active:scale-95 flex items-center justify-center space-x-1.5 shrink-0";
+      if (btnText) btnText.innerText = `Uji Sebutan Ayat Di Atas Untuk Markah`;
+    }
   }
 }
 
 function completeCurrentChatDialog() {
   const curScenario = typeof currentScenarioId !== 'undefined' ? currentScenarioId : 1;
+  const scoreData = getTopicScore(currentCertTopicNum);
+  const curScore = curScenario === 1 ? (scoreData.chatD1Score || 0) : (scoreData.chatD2Score || 0);
+
   if (typeof playBeep === 'function') playBeep('success');
-
-  const type = curScenario === 1 ? 'chat_d1' : 'chat_d2';
-  saveTopicScore(currentCertTopicNum, 10, type);
-
   if (typeof confetti === 'function') {
     confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
   }
 
-  const scoreData = getTopicScore(currentCertTopicNum);
-  
-  if (scoreData.allCompleted) {
+  const type = curScenario === 1 ? 'chat_d1' : 'chat_d2';
+  saveTopicScore(currentCertTopicNum, curScore, type);
+
+  const updatedData = getTopicScore(currentCertTopicNum);
+  if (updatedData.allCompleted) {
     setTimeout(() => {
-      alert(`🎉 TAHNIAH! Anda telah menyelesaikan SEMUA soalan & aktiviti Topik ini!\n\n• Bina Kata: ${scoreData.vocabScore}/40\n• Pola Ayat: ${scoreData.sentenceScore}/40\n• Chat Dialog 1: 10/10\n• Chat Dialog 2: 10/10\n\nJUMLAH BESAR: ${scoreData.totalScore} / 100 (${scoreData.grade})\n\nTekan butang 'Sijil' di atas untuk melihat dan mencetak E-Sijil rasmi anda!`);
+      alert(`🎉 TAHNIAH! Anda telah menyelesaikan SEMUA aktiviti pembelajaran & latihan bagi Topik ini!\n\n• Bina Kata: ${updatedData.vocabScore}/40\n• Pola Ayat: ${updatedData.sentenceScore}/40\n• Pertuturan Dialog 1: ${updatedData.chatD1Score}/10\n• Pertuturan Dialog 2: ${updatedData.chatD2Score}/10\n\nJUMLAH KESELURUHAN: ${updatedData.totalScore} / 100 (${updatedData.grade})\n\nTekan butang 'Sijil' di atas untuk melihat dan mencetak E-Sijil rasmi anda!`);
       openTopicCertificate(currentCertTopicNum);
     }, 400);
   } else {
     setTimeout(() => {
-      alert(`✅ Berjaya! Anda memperoleh 10/10 markah bagi Dialog ${curScenario}.\n\nMarkah terkumpul topik ini: ${scoreData.totalScore} / 100.\nSila lengkapkan baki bahagian lain untuk melayakkan diri menerima E-Sijil rasmi!`);
+      alert(`✅ Markah Pertuturan Dialog ${curScenario}: ${curScore}/10 Markah telah disimpan dan disahkan ke dalam sistem!\n\nJumlah markah terkumpul topik ini: ${updatedData.totalScore} / 100.\nSila lengkapkan baki latihan lain untuk melayakkan diri menerima E-Sijil rasmi.`);
     }, 300);
   }
 }
