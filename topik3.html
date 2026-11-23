@@ -233,7 +233,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=16" defer></script>
+  <script src="js/certificate.js?v=18" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -693,9 +693,14 @@
             <h3 class="font-outfit font-black text-slate-900 text-base" id="chat-scenario-title">Situasi: Hari Pertama Hasan</h3>
             <p class="text-xs text-slate-500">Tekan mana-mana mesej untuk dengar sebutan jelas.</p>
           </div>
-          <div class="flex bg-slate-200/80 p-0.5 rounded-xl text-xs font-bold">
-            <button onclick="loadChatScenario(1)" id="chat-tab-1" class="px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs">Dialog 1</button>
-            <button onclick="loadChatScenario(2)" id="chat-tab-2" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900">Dialog 2</button>
+          <div class="flex items-center space-x-2">
+            <div id="chat-live-score-pill" class="px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 text-xs font-black shadow-2xs whitespace-nowrap">
+              <span>📊</span> <span id="chat-live-score-val">0/10 Markah</span>
+            </div>
+            <div class="flex bg-slate-200/80 p-0.5 rounded-xl text-xs font-bold">
+              <button onclick="loadChatScenario(1)" id="chat-tab-1" class="px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs">Dialog 1</button>
+              <button onclick="loadChatScenario(2)" id="chat-tab-2" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900">Dialog 2</button>
+            </div>
           </div>
         </div>
 
@@ -3823,31 +3828,39 @@
       }).join('');
 
       const passBadge = document.getElementById(`badge-pass-${idx}`);
+      const correctWordsCount = tokens.length - wrongTokens.length;
+      const accuracyPct = Math.max(0, Math.round((correctWordsCount / tokens.length) * 100));
 
-      if (wrongTokens.length === 0) {
-        // 100% LULUS KESELURUHAN AYAT
+      if (accuracyPct >= 70) {
+        // LULUS AYAT (>= 70% KETEPATAN)
         playBeep('success');
         totalXp += 25;
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
 
         feedbackEl.className = "block mt-2 p-3.5 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-xs shadow-xs animate-in fade-in duration-200";
         feedbackEl.innerHTML = `
-          <div class="font-extrabold flex items-center space-x-1.5 text-emerald-800 mb-2">
-            <span class="text-base">🎉</span>
-            <span class="text-sm">Sebutan Pinyin Sempurna (100% Tepat)!</span>
+          <div class="font-extrabold flex items-center justify-between text-emerald-800 mb-2">
+            <span class="flex items-center space-x-1.5 text-xs sm:text-sm">
+              <span class="text-base">${accuracyPct === 100 ? '🎉' : '👏'}</span>
+              <span>Sebutan Berjaya: ${accuracyPct}% Tepat!</span>
+            </span>
+            <span class="text-[10px] font-black text-emerald-800 bg-emerald-200/80 px-2.5 py-0.5 rounded-full border border-emerald-300">
+              LULUS AYAT ✓
+            </span>
           </div>
           <div class="flex flex-wrap gap-1.5 mb-2.5">${tokenAnalysisHtml}</div>
-          <div class="text-[11px] text-emerald-700 font-medium">Dikesan suara: "<strong>${spoken}</strong>"</div>
+          <div class="text-[11px] text-emerald-700 font-medium mb-1">Dikesan suara: "<strong>${spoken}</strong>"</div>
+          <div class="p-2 rounded-xl bg-emerald-100/90 border border-emerald-300 text-emerald-950 text-xs font-bold flex items-center space-x-1.5 mt-2">
+            <span>✅</span>
+            <span>Tahniah! Ayat ini lulus dan markah Dialog bertambah secara automatik pada papan skor di atas!</span>
+          </div>
         `;
 
         if (passBadge) passBadge.classList.remove('hidden');
 
       } else {
-        // ADA PERKATAAN YANG TIDAK DISEBUT / SALAH NADA
+        // KETEPATAN KURANG DARIPADA 70% (BELUM LULUS)
         playBeep('wrong');
-        const accuracyPct = Math.max(0, Math.round(((tokens.length - wrongTokens.length) / tokens.length) * 100));
-
-        // Tidak dapat markah penuh / lulus jika belum lengkap
         if (passBadge) passBadge.classList.add('hidden');
 
         feedbackEl.className = "block mt-2 p-3.5 rounded-2xl bg-rose-50 border-2 border-rose-300 text-xs shadow-xs animate-in fade-in duration-200";
@@ -3862,16 +3875,14 @@
             </span>
           </div>
 
-          <!-- Grid Kad Suku Kata Pinyin (Hijau = Betul, Merah = Silap) -->
           <div class="flex flex-wrap gap-1.5 my-2">
             ${tokenAnalysisHtml}
           </div>
 
           <div class="text-[11px] text-slate-700 mb-2 font-medium">Dikesan suara: "<strong>${spoken}</strong>"</div>
 
-          <!-- Highlight Pinyin Yang Silap dengan Butang Dengar -->
           <div class="bg-rose-100/90 border border-rose-300 rounded-xl p-2.5 text-[11px] text-rose-950 mt-1.5">
-            <strong>Pinyin Yang Dikesan Silap (Highlighted):</strong>
+            <strong>Pinyin Yang Perlu Dibaiki / Belum Disebut:</strong>
             <div class="flex flex-wrap gap-1.5 mt-1.5">
               ${wrongTokens.map(w => `
                 <button onclick="speakChinese('${w.hz}')" class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-black font-sans text-xs flex items-center space-x-1 shadow-xs transition active:scale-95" title="Tekan untuk dengar nada Pinyin ${w.py}">
@@ -3881,12 +3892,22 @@
                 </button>
               `).join('')}
             </div>
-            <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul. Anda perlu menyebut KESELURUHAN ayat dengan nada yang betul untuk lulus sebutan.</span>
+            <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul.</span>
+          </div>
+
+          <div class="mt-2.5 p-2.5 rounded-xl bg-amber-100/90 border border-amber-300 text-amber-950 text-[11px] font-bold flex items-start space-x-2">
+            <span class="text-base leading-none">📌</span>
+            <div>
+              <span>Status Ayat: <strong>Belum Lulus (${accuracyPct}% Tepat - Perlu sekurang-kurangnya 70%)</strong></span>
+              <div class="font-normal text-amber-900 mt-1">
+                Anda baru menyebut <strong>${correctWordsCount}</strong> daripada <strong>${tokens.length}</strong> perkataan. Sila sebut <strong>KESELURUHAN AYAT</strong>: <em>"${targetText}"</em> untuk lulus ayat ini dan menaikkan markah.
+              </div>
+            </div>
           </div>
         `;
       }
-          // Rakam markah perkataan dan ayat secara automatik ke dalam rekod Dialog & E-Sijil
-      const correctWordsCount = tokens.length - wrongTokens.length;
+
+      // Rakam markah perkataan dan ayat secara automatik ke dalam rekod Dialog & E-Sijil
       if (typeof recordSentenceSpeechScore === 'function') {
         recordSentenceSpeechScore(CURRENT_TOPIC, currentScenarioId, idx, correctWordsCount, tokens.length);
       }

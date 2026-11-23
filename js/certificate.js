@@ -561,16 +561,15 @@ function getTopicScore(topicNum) {
 
 // Auto-calculate and update dialog speech score based on correct sentences and words
 function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, totalWords) {
-  if (!topicNum || !scenarioId) return;
   const progressKey = `pinyingo_chat_progress_${topicNum}_d${scenarioId}`;
   let progress = {};
   try {
     progress = JSON.parse(localStorage.getItem(progressKey) || '{}');
   } catch (e) {}
 
-  // Simpan markah tertinggi bagi ayat ini
+  // Ayat dikira lulus jika capai 70% ketepatan perkataan
+  const isPassed = totalWords > 0 && ((correctWords / totalWords) >= 0.70 || correctWords >= totalWords);
   const prev = progress[msgIdx] || { correct: 0, total: totalWords, isPassed: false };
-  const isPassed = correctWords >= totalWords && totalWords > 0;
   if (!progress[msgIdx] || correctWords >= (prev.correct || 0)) {
     progress[msgIdx] = {
       correct: correctWords,
@@ -596,7 +595,7 @@ function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, t
     const p = progress[i];
     if (p) {
       totalWordsCorrect += Math.min(p.correct || 0, tCount);
-      if (p.isPassed || p.correct >= tCount) {
+      if (p.isPassed || (tCount > 0 && (p.correct / tCount) >= 0.70)) {
         sentencesPassed++;
       }
     }
@@ -604,11 +603,16 @@ function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, t
 
   const wordAcc = totalDialogWords > 0 ? (totalWordsCorrect / totalDialogWords) : 0;
   const sentenceAcc = totalMessages > 0 ? (sentencesPassed / totalMessages) : 0;
-  const blendedAcc = (0.5 * wordAcc) + (0.5 * sentenceAcc);
-  const dialogScore = Math.min(10, Math.max(0, Math.round(blendedAcc * 10)));
+  const blendedAcc = (wordAcc + sentenceAcc) / 2;
+  let dialogScore = Math.min(10, Math.max(0, Math.round(blendedAcc * 10)));
+  // Jika pelajar ada menyebut perkataan dengan betul (cth: >= 4 perkataan), berikan sekurang-kurangnya 1 markah
+  if (dialogScore === 0 && (totalWordsCorrect >= 4 || sentencesPassed > 0)) {
+    dialogScore = 1;
+  }
 
   const type = scenarioId == 1 ? 'chat_d1' : 'chat_d2';
   saveTopicScore(topicNum, dialogScore, type);
+  refreshChatDialogCard(topicNum);
 
   return {
     dialogScore,
@@ -621,11 +625,6 @@ function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, t
 }
 
 function refreshChatDialogCard(topicNum) {
-  const label = document.getElementById('chat-completion-label') || document.getElementById('chat-dialog-label');
-  const badge = document.getElementById('chat-completion-badge') || document.getElementById('chat-dialog-badge');
-  const desc = document.getElementById('chat-completion-desc');
-  if (!label || !badge) return;
-
   const curScenario = typeof currentScenarioId !== 'undefined' ? currentScenarioId : 1;
   const scoreData = getTopicScore(topicNum);
   const isD1 = curScenario == 1;
@@ -660,20 +659,20 @@ function refreshChatDialogCard(topicNum) {
     });
   }
 
-  label.innerText = `Markah Pertuturan Dialog ${curScenario}`;
-
-  if (curScore >= 10 && sentencesPassed === totalMessages) {
-    badge.className = "px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border-2 border-emerald-400";
-    badge.innerText = `10 / 10 Markah Penuh ✓ (${sentencesPassed}/${totalMessages} Ayat Lulus)`;
-    if (desc) desc.innerText = `Tahniah! Kesemua ${totalMessages} ayat dan ${totalDialogWords} perkataan berjaya disebut dengan sempurna (10/10 markah disimpan automatik ke E-Sijil).`;
-  } else if (curScore > 0 || sentencesPassed > 0 || totalWordsCorrect > 0) {
-    badge.className = "px-3 py-1 rounded-full text-xs font-black bg-indigo-100 text-indigo-900 border-2 border-indigo-400";
-    badge.innerText = `${curScore} / 10 Markah (${sentencesPassed}/${totalMessages} Ayat Lulus, ${totalWordsCorrect}/${totalDialogWords} Kata)`;
-    if (desc) desc.innerText = `Markah telah dikira & disimpan automatik ke E-Sijil: ${sentencesPassed}/${totalMessages} ayat lulus, ${totalWordsCorrect}/${totalDialogWords} perkataan betul.`;
-  } else {
-    badge.className = "px-3 py-1 rounded-full text-xs font-black bg-slate-100 text-slate-500 border border-slate-300";
-    badge.innerText = `0 / 10 Markah`;
-    if (desc) desc.innerText = `Markah dijana & disimpan secara automatik ke dalam E-Sijil sebaik sahaja anda menguji sebutan ayat di atas.`;
+  // Update Live Score Pill on top of Chat Screen
+  const scorePill = document.getElementById('chat-live-score-pill');
+  const scoreVal = document.getElementById('chat-live-score-val');
+  if (scorePill && scoreVal) {
+    if (curScore >= 10 && sentencesPassed === totalMessages) {
+      scorePill.className = "px-2.5 py-1 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-black shadow-2xs whitespace-nowrap animate-in fade-in";
+      scoreVal.innerText = `${curScore}/10 Markah (Penuh ⭐)`;
+    } else if (curScore > 0 || sentencesPassed > 0) {
+      scorePill.className = "px-2.5 py-1 rounded-xl bg-indigo-100 border border-indigo-300 text-indigo-900 text-xs font-black shadow-2xs whitespace-nowrap animate-in fade-in";
+      scoreVal.innerText = `${curScore}/10 Markah (${sentencesPassed}/${totalMessages} Lulus)`;
+    } else {
+      scorePill.className = "px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-300 text-slate-600 text-xs font-black shadow-2xs whitespace-nowrap";
+      scoreVal.innerText = `0/10 Markah (${sentencesPassed}/${totalMessages} Lulus)`;
+    }
   }
 }
 
