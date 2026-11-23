@@ -71,6 +71,65 @@
   </script>
 
   <style>
+    :root {
+      --app-dvh: 100dvh;
+      --container-max-w: 640px;
+    }
+    @supports not (height: 100dvh) {
+      :root {
+        --app-dvh: 100vh;
+      }
+    }
+
+    html, body {
+      min-height: 100%;
+      min-height: var(--app-dvh);
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Container dynamic sizing rules */
+    .app-shell {
+      width: 100%;
+      max-width: var(--container-max-w);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Dynamic chat container height adapting to containerHeight */
+    #chat-messages-container {
+      max-height: clamp(250px, calc(var(--app-dvh) - 270px), 64vh);
+      scroll-behavior: smooth;
+    }
+
+    /* Short screens / compact heights (e.g. height < 700px or landscape) */
+    @media (max-height: 700px) {
+      #chat-messages-container {
+        max-height: clamp(210px, calc(var(--app-dvh) - 230px), 54vh);
+      }
+      .option-tile {
+        padding: 0.65rem !important;
+      }
+      #hero-question-card {
+        padding: 0.85rem !important;
+        margin-bottom: 0.75rem !important;
+      }
+      #sentence-dropzone {
+        min-height: 54px !important;
+        padding: 0.4rem !important;
+      }
+    }
+
+    /* Large screens / Tablets / Desktops */
+    @media (min-width: 768px) {
+      :root {
+        --container-max-w: 680px;
+      }
+      #chat-messages-container {
+        max-height: 62vh;
+      }
+    }
+
     .hidden {
       display: none !important;
     }
@@ -233,10 +292,10 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=19" defer></script>
+  <script src="js/certificate.js?v=20" defer></script>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
+<body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
 
 
 
@@ -316,15 +375,15 @@
 
     <!-- SUB-NAV: 3 TABS -->
 
-    <div class="max-w-md sm:max-w-xl mx-auto px-4 pb-2">
+    <div class="app-shell px-2.5 sm:px-4 pb-2">
 
-      <div class="bg-slate-100/90 p-1 rounded-2xl flex text-xs font-extrabold text-slate-500 gap-1">
+      <div class="bg-slate-100/90 p-1 rounded-2xl flex text-[11px] sm:text-xs font-extrabold text-slate-500 gap-1">
 
         <button onclick="switchAppMode('vocabChallenge')" id="nav-mode-vocab" class="flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold">
 
           <span>🧩</span>
 
-          <span>Bina Kata (20 Soalan)</span>
+          <span class="truncate">Bina Kata (20)</span>
 
         </button>
 
@@ -332,7 +391,7 @@
 
           <span>📐</span>
 
-          <span>Pola Ayat (10 Soalan)</span>
+          <span class="truncate">Pola Ayat (10)</span>
 
         </button>
 
@@ -340,7 +399,7 @@
 
           <span>💬</span>
 
-          <span>Simulasi Chat</span>
+          <span class="truncate">Simulasi Chat</span>
 
         </button>
 
@@ -354,7 +413,7 @@
 
   <!-- ==================== MAIN CONTENT ==================== -->
 
-  <main class="w-full max-w-md sm:max-w-xl mx-auto px-4 py-3 flex-grow flex flex-col justify-between">
+  <main class="app-shell px-2.5 sm:px-4 py-2 sm:py-3 flex-grow flex flex-col justify-between min-h-0">
 
 
 
@@ -456,7 +515,7 @@
 
             <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
 
-            <button onclick="speakCurrentPart(1)" class="group w-24 h-28 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
+            <button onclick="speakCurrentPart(1)" class="group w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
 
               <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
 
@@ -486,7 +545,7 @@
 
             <!-- Capsule 2: Target Slot (Dashed / Active) -->
 
-            <div id="target-slot-capsule" onclick="clearSlot()" class="w-24 h-28 sm:w-28 sm:h-32 bg-slate-50/90 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center shadow-inner cursor-pointer transition">
+            <div id="target-slot-capsule" onclick="clearSlot()" class="w-20 h-24 sm:w-28 sm:h-32 bg-slate-50/90 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center shadow-inner cursor-pointer transition">
 
               <span class="text-xs font-bold text-slate-400 font-sans" id="capsule-slot-pinyin">pilih pinyin</span>
 
@@ -707,7 +766,7 @@
         </div>
 
         <!-- Chat Bubble Container -->
-        <div class="glass-card rounded-3xl p-4 sm:p-5 space-y-3.5 max-h-[58vh] overflow-y-auto pr-1" id="chat-messages-container">
+        <div class="glass-card rounded-3xl p-3 sm:p-5 space-y-3.5 flex-1 min-h-[220px] overflow-y-auto pr-1" id="chat-messages-container">
           <!-- Populated by JS -->
         </div>
 
@@ -2662,6 +2721,7 @@
       playBeep('click');
 
       currentAppMode = mode;
+      setTimeout(adjustContainerDimensions, 50);
 
       document.querySelectorAll('.app-view').forEach(v => {
         v.classList.add('hidden');
@@ -2669,26 +2729,26 @@
       });
 
       document.querySelectorAll('#nav-mode-vocab, #nav-mode-sentence, #nav-mode-chat').forEach(b => {
-        b.className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 hover:text-slate-800 text-slate-500";
+        b.className = "flex-1 py-2 px-1 rounded-xl transition flex items-center justify-center space-x-1 hover:text-slate-800 text-slate-500 text-center";
       });
 
       if (mode === 'vocabChallenge') {
         const v = document.getElementById('view-vocab-challenge');
         v.classList.remove('hidden');
         v.style.display = 'flex';
-        document.getElementById('nav-mode-vocab').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
+        document.getElementById('nav-mode-vocab').className = "flex-1 py-2 px-1 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold text-center";
         loadVocabQuestion();
       } else if (mode === 'sentenceChallenge') {
         const v = document.getElementById('view-sentence-challenge');
         v.classList.remove('hidden');
         v.style.display = 'flex';
-        document.getElementById('nav-mode-sentence').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
+        document.getElementById('nav-mode-sentence').className = "flex-1 py-2 px-1 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold text-center";
         loadSentenceChallenge();
       } else {
         const v = document.getElementById('view-chat-roleplay');
         v.classList.remove('hidden');
         v.style.display = 'flex';
-        document.getElementById('nav-mode-chat').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
+        document.getElementById('nav-mode-chat').className = "flex-1 py-2 px-1 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold text-center";
         loadChatScenario(1);
       }
     }
@@ -2817,7 +2877,7 @@
 
         const card = document.createElement('button');
 
-        card.className = "option-tile glass-card rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center group cursor-pointer border border-slate-200/90 relative";
+        card.className = "option-tile glass-card rounded-2xl p-3 sm:p-4.5 flex flex-col items-center justify-center text-center group cursor-pointer border border-slate-200/90 relative";
 
         card.onclick = () => selectVocabOption(opt, card);
 
@@ -2869,7 +2929,7 @@
 
       const slot = document.getElementById('target-slot-capsule');
 
-      slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-600 flex flex-col items-center justify-center shadow-md cursor-pointer transition transform scale-105";
+      slot.className = "w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-600 flex flex-col items-center justify-center shadow-md cursor-pointer transition transform scale-105";
 
       
 
@@ -2927,7 +2987,7 @@
 
       const slot = document.getElementById('target-slot-capsule');
 
-      slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-slate-50/90 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center shadow-inner cursor-pointer transition";
+      slot.className = "w-20 h-24 sm:w-28 sm:h-32 bg-slate-50/90 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center shadow-inner cursor-pointer transition";
 
       
 
@@ -3010,7 +3070,7 @@
 
         const slot = document.getElementById('target-slot-capsule');
 
-        slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-emerald-50 rounded-2xl border-2 border-emerald-500 flex flex-col items-center justify-center shadow-md text-center";
+        slot.className = "w-20 h-24 sm:w-28 sm:h-32 bg-emerald-50 rounded-2xl border-2 border-emerald-500 flex flex-col items-center justify-center shadow-md text-center";
 
         document.getElementById('capsule-slot-char').className = "text-3xl sm:text-4xl font-black text-emerald-800 font-hanzi mt-0.5";
 
@@ -3062,7 +3122,7 @@
         // Highlight slot as wrong
         const slot = document.getElementById('target-slot-capsule');
         if (slot) {
-          slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-rose-50 rounded-2xl border-2 border-rose-400 flex flex-col items-center justify-center shadow-md text-center";
+          slot.className = "w-20 h-24 sm:w-28 sm:h-32 bg-rose-50 rounded-2xl border-2 border-rose-400 flex flex-col items-center justify-center shadow-md text-center";
           const slotChar = document.getElementById('capsule-slot-char');
           if (slotChar) slotChar.className = "text-3xl sm:text-4xl font-black text-rose-800 font-hanzi mt-0.5 line-through";
           const slotPy = document.getElementById('capsule-slot-pinyin');
@@ -4252,7 +4312,39 @@
       }
     }
 
-  </script>
+  
+    /* Dynamic Container Height & Width Layout Adjuster */
+    function adjustContainerDimensions() {
+      const vh = window.innerHeight;
+      const vw = window.innerWidth;
+      document.documentElement.style.setProperty('--app-dvh', `${vh}px`);
+
+      const mainEl = document.querySelector('main');
+      const containerW = mainEl ? mainEl.clientWidth : Math.min(vw, 640);
+      const containerH = mainEl ? mainEl.clientHeight : vh;
+      document.documentElement.style.setProperty('--container-width', `${containerW}px`);
+      document.documentElement.style.setProperty('--container-height', `${containerH}px`);
+
+      const chatBox = document.getElementById('chat-messages-container');
+      if (chatBox) {
+        const headerEl = document.querySelector('header');
+        const headerH = headerEl ? headerEl.offsetHeight : 110;
+        const chatHeader = document.querySelector('#view-chat-roleplay .space-y-2');
+        const chatHeaderH = chatHeader ? chatHeader.offsetHeight : 80;
+        const audioBtn = document.getElementById('btn-toggle-chat-audio');
+        const audioBtnH = audioBtn ? audioBtn.parentElement.offsetHeight : 60;
+
+        const totalOffsets = headerH + chatHeaderH + audioBtnH + 45;
+        const computedAvailable = Math.max(220, vh - totalOffsets);
+        chatBox.style.maxHeight = `${computedAvailable}px`;
+      }
+    }
+
+    window.addEventListener('resize', adjustContainerDimensions);
+    window.addEventListener('orientationchange', () => { setTimeout(adjustContainerDimensions, 120); });
+    document.addEventListener('DOMContentLoaded', adjustContainerDimensions);
+
+</script>
 
   <!-- WATERMARK (BOTTOM LEFT - AS REQUESTED) -->
 
