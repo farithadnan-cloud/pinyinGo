@@ -319,8 +319,8 @@ function injectStudentModals() {
             <div class="footer-sig mt-6 pt-4 border-t border-amber-200/80 flex items-end justify-end px-3 sm:px-8">
               <!-- Official Signatory -->
               <div class="text-right">
-                <div class="font-serif italic text-base sm:text-lg font-bold text-slate-800 tracking-wider">
-                  Hajar Nur Atiqah
+                <div class="flex justify-end">
+                  <img src="assets/images/signature.png" alt="Tandatangan Hajar Nur Atiqah" class="h-14 sm:h-16 w-auto object-contain -mb-1 pointer-events-none select-none">
                 </div>
                 <div class="w-40 sm:w-52 h-0.5 bg-slate-800 ml-auto my-1.5"></div>
                 <span class="block font-outfit font-black text-[11px] sm:text-xs text-slate-900 uppercase">
