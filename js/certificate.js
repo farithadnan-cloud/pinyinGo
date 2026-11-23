@@ -253,8 +253,11 @@ function injectStudentModals() {
                 <img src="https://ekvpd.com/v1/lp/lp/assets/images/logokv.png" alt="Logo Kolej Vokasional Port Dickson" class="h-16 sm:h-20 object-contain filter drop-shadow-sm mb-1" onerror="this.onerror=null; this.src='assets/images/logokv.png';">
                 <span class="font-outfit font-black tracking-widest text-xs sm:text-sm text-amber-950 uppercase mt-0.5">KOLEJ VOKASIONAL PORT DICKSON</span>
               </div>
-              <p class="text-[9px] sm:text-[11px] font-bold text-slate-500 tracking-wider uppercase">
-                JABATAN PENDIDIKAN TEKNIK & VOKASIONAL • KURSUS BAHASA MANDARIN II (ELM 4322)
+              <p class="text-[10px] sm:text-xs font-bold text-slate-600 tracking-wider uppercase">
+                JABATAN PENDIDIKAN UMUM
+              </p>
+              <p class="text-[9px] sm:text-[11px] font-extrabold text-amber-900/80 tracking-wider uppercase mt-0.5">
+                KURSUS BAHASA MANDARIN II (ELM 4322)
               </p>
               
               <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-auto my-2.5"></div>
