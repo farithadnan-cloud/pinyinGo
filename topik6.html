@@ -230,7 +230,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=8" defer></script>
+  <script src="js/certificate.js?v=10" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -2822,7 +2822,7 @@
 
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
-        document.getElementById('xp-counter').innerText = `+${vScore} / 40 Markah`;
+        document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
 
 
 
@@ -2871,72 +2871,69 @@
         setPrimaryButtonState('next');
 
       } else {
-
-        // WRONG: Highlight Pinyin yang salah & Pinyin yang betul
-
+        // WRONG: User CANNOT correct or retry. Lock immediately, show correct answer & move to next!
+        isVocabChecked = true;
         playBeep('wrong');
-
         streakCount = 0;
-
         document.getElementById('streak-counter').innerText = `0 Streak`;
-
-
 
         const correctOpt = q.options.find(o => o.isCorrect);
 
+        // Highlight slot as wrong
+        const slot = document.getElementById('target-slot-capsule');
+        if (slot) {
+          slot.className = "w-24 h-28 sm:w-28 sm:h-32 bg-rose-50 rounded-2xl border-2 border-rose-400 flex flex-col items-center justify-center shadow-md text-center";
+          const slotChar = document.getElementById('capsule-slot-char');
+          if (slotChar) slotChar.className = "text-3xl sm:text-4xl font-black text-rose-800 font-hanzi mt-0.5 line-through";
+          const slotPy = document.getElementById('capsule-slot-pinyin');
+          if (slotPy) slotPy.className = "text-xs font-black text-rose-700 font-sans tracking-wide";
+        }
 
+        // Highlight cards on grid: Red on chosen wrong card, Green on correct card, lock interactions
+        document.querySelectorAll('#vocab-options-grid .option-tile').forEach(c => {
+          c.classList.remove('selected', 'border-indigo-600', 'bg-indigo-50/70');
+          c.classList.add('pointer-events-none');
+          const txt = c.innerText;
+          if (txt.includes(selectedVocabOption.char) && txt.includes(selectedVocabOption.py)) {
+            c.classList.add('border-rose-500', 'bg-rose-100', 'text-rose-950', 'ring-2', 'ring-rose-400');
+          } else if (txt.includes(correctOpt.char) && txt.includes(correctOpt.py)) {
+            c.classList.add('border-emerald-500', 'bg-emerald-100', 'text-emerald-950', 'ring-2', 'ring-emerald-400');
+          } else {
+            c.classList.add('opacity-40');
+          }
+        });
 
         feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border-2 border-rose-300 bg-rose-50/95 text-rose-950 shadow-xs animate-in fade-in duration-200";
-
         document.getElementById('feedback-status-icon').innerText = "❌";
-
-        document.getElementById('feedback-status-title').innerText = "Pilihan Pinyin Kurang Tepat";
-
+        document.getElementById('feedback-status-title').innerText = "Jawapan Kurang Tepat (Terkunci)";
         document.getElementById('feedback-status-body').innerHTML = `
-
-          <div class="mt-1 space-y-1 text-xs">
-
+          <div class="mt-1 space-y-1.5 text-xs">
             <div class="flex items-center space-x-2">
-
-              <span class="text-rose-700 font-semibold">Pinyin Pilihan Anda:</span>
-
+              <span class="text-rose-700 font-semibold">Pilihan Anda:</span>
               <span class="px-2 py-0.5 rounded-lg bg-rose-200 text-rose-900 border border-rose-400 font-black font-sans line-through">
-
                 ${selectedVocabOption.py} (${selectedVocabOption.char})
-
               </span>
-
               <span class="text-[10px] text-rose-600 font-bold">❌ Salah</span>
-
             </div>
-
             <div class="flex items-center space-x-2">
-
-              <span class="text-emerald-800 font-semibold">Pinyin Yang Betul:</span>
-
-              <button onclick="speakChinese('${correctOpt.char}')" class="px-2 py-0.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-950 border border-emerald-400 font-black font-sans flex items-center space-x-1 shadow-2xs">
-
+              <span class="text-emerald-800 font-semibold">Jawapan Yang Betul:</span>
+              <button onclick="speakChinese('${correctOpt.char}')" class="px-2.5 py-1 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-950 border border-emerald-400 font-black font-sans flex items-center space-x-1 shadow-2xs">
                 <span>${correctOpt.py} (${correctOpt.char})</span>
-
                 <span class="text-[10px] ml-1">🔊</span>
-
               </button>
-
               <span class="text-[10px] text-emerald-700 font-bold">✅ Nada ${correctOpt.py}</span>
-
             </div>
-
           </div>
-
           <p class="text-[11px] text-slate-600 mt-2 pt-1 border-t border-rose-200/80 leading-relaxed">${q.explain}</p>
-
+          <div class="text-[11px] font-bold text-rose-800 bg-rose-100/80 p-2 rounded-xl border border-rose-200 mt-2 flex items-center space-x-1.5">
+            <span>🔒</span>
+            <span>Jawapan telah direkodkan (tidak boleh diubah). Sila teliti jawapan betul di atas dan tekan butang di bawah untuk ke soalan seterusnya.</span>
+          </div>
         `;
 
+        setPrimaryButtonState('next');
       }
-
     }
-
-
 
     function setPrimaryButtonState(state) {
 
@@ -3319,7 +3316,7 @@
         totalXp += 20;
         streakCount++;
         window.vocabCorrectCount = (window.vocabCorrectCount || 0) + 1;
-        document.getElementById('xp-counter').innerText = `+${vScore} / 40 Markah`;
+        document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
         feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-emerald-300 bg-emerald-50/90 text-emerald-950 shadow-sm";
@@ -3368,10 +3365,8 @@
             </div>
           </div>
           <div class="mt-2.5 flex items-center justify-between text-xs text-slate-600">
-            <span>Pelajari jawapan betul di atas, kemudian tekan butang di bawah untuk ayat seterusnya.</span>
-            <button onclick="resetSentenceBuilder(); isSentenceChecked = false; setSentenceBtnState('check');" class="ml-2 px-3 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold shrink-0">
-              🔄 Cuba Semula
-            </button>
+            <span>Jawapan telah disemak dan direkodkan (tidak boleh diubah). Sila pelajari susunan yang betul di atas, kemudian tekan butang di bawah untuk meneruskan.</span>
+            
           </div>
         `;
         setSentenceBtnState('next');
@@ -3527,315 +3522,226 @@
       });
     }
 
-    /* Pengecaman & Semakan Sebutan Suara (Speech Recognition) */
+    /* Pengecaman & Semakan Sebutan Suara (Speech Recognition Pantas & Butang Henti Manual) */
+    let speechCheckTimer = null;
+    let hasSpeechResultProcessed = false;
 
-    function startSpeechCheck(targetText, idx) {
-
-      playBeep('click');
-
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-
-
-      const feedbackEl = document.getElementById(`mic-feedback-${idx}`);
-
-      const micBtn = document.getElementById(`mic-btn-${idx}`);
-
-
-
-      if (!SpeechRecognition) {
-
-        feedbackEl.className = "block mt-2 p-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
-
-        feedbackEl.innerHTML = "⚠️ Pelayar peranti anda belum menyokong Web Speech Recognition secara langsung. Sila gunakan Google Chrome atau Safari terkini untuk fungsi mikrofon ini.";
-
-        return;
-
+    function stopSpeechCheck() {
+      if (speechCheckTimer) {
+        clearTimeout(speechCheckTimer);
+        speechCheckTimer = null;
       }
-
-
-
-      // If already running, abort
-
       if (activeSpeechRecognizer) {
-
-        try { activeSpeechRecognizer.abort(); } catch (e) {}
-
+        try {
+          activeSpeechRecognizer.stop();
+        } catch (e) {}
       }
-
-
-
-      const recognition = new SpeechRecognition();
-
-      activeSpeechRecognizer = recognition;
-
-      activeEvaluatingIndex = idx;
-
-
-
-      recognition.lang = 'zh-CN';
-
-      recognition.continuous = false;
-
-      recognition.interimResults = false;
-
-      recognition.maxAlternatives = 3;
-
-
-
-      // Status UI
-
-      micBtn.classList.add('animate-pulse', 'ring-2', 'ring-rose-400');
-
-      micBtn.innerHTML = `<span>🔴</span><span>Mendengar...</span>`;
-
-
-
-      feedbackEl.className = "block mt-2 p-2 rounded-xl bg-indigo-50 text-indigo-900 border border-indigo-200 text-xs flex items-center space-x-1.5";
-
-      feedbackEl.innerHTML = `
-
-        <span class="animate-spin text-sm">⏳</span>
-
-        <span>Sila sebut ayat ini dalam Mandarin sekarang...</span>
-
-      `;
-
-
-
-      recognition.onresult = (event) => {
-
-        const spoken = event.results[0][0].transcript.trim();
-
-        const cleanSpoken = spoken.replace(/[，。！？\s.,!?]/g, '');
-
-        const cleanTarget = targetText.replace(/[，。！？\s.,!?]/g, '');
-
-
-
-        const msgData = CHAT_SCENARIOS[currentScenarioId].messages[idx];
-
-        const tokens = msgData.tokens || [];
-
-
-
-        // Semak setiap suku kata Pinyin sama ada tepat disebut atau salah
-
-        const wrongTokens = [];
-
-        const tokenAnalysisHtml = tokens.map(tok => {
-
-          const isMatched = cleanSpoken.includes(tok.hz);
-
-          if (!isMatched) {
-
-            wrongTokens.push(tok);
-
-            return `
-
-              <button onclick="speakChinese('${tok.hz}')" class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-rose-100 hover:bg-rose-200 border-2 border-rose-500 shadow-xs transition active:scale-95 animate-pulse" title="Tekan untuk dengar Pinyin ${tok.py}">
-
-                <span class="text-xs font-black text-rose-950 font-sans tracking-tight">${tok.py}</span>
-
-                <span class="text-sm font-black font-hanzi text-rose-900 leading-none">${tok.hz}</span>
-
-                <span class="text-[9px] text-rose-700 font-bold mt-0.5">❌ Silap</span>
-
-              </button>
-
-            `;
-
-          } else {
-
-            return `
-
-              <span class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-emerald-50 border border-emerald-300 shadow-2xs">
-
-                <span class="text-xs font-black text-emerald-800 font-sans tracking-tight">${tok.py}</span>
-
-                <span class="text-sm font-black font-hanzi text-emerald-900 leading-none">${tok.hz}</span>
-
-                <span class="text-[9px] text-emerald-600 font-bold mt-0.5">✓ Betul</span>
-
-              </span>
-
-            `;
-
-          }
-
-        }).join('');
-
-
-
-        if (wrongTokens.length === 0) {
-
-          // 100% BETUL SEMUA PINYIN
-
-          playBeep('success');
-
-          totalXp += 25;
-
-          document.getElementById('xp-counter').innerText = `+${vScore} / 40 Markah`;
-
-
-
-          feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-emerald-50 border border-emerald-300 text-xs shadow-xs animate-in fade-in duration-200";
-
-          feedbackEl.innerHTML = `
-
-            <div class="font-extrabold flex items-center space-x-1.5 text-emerald-800 mb-1.5">
-
-              <span>🎉</span>
-
-              <span>Sebutan Pinyin Sempurna (100% Tepat)!</span>
-
-            </div>
-
-            <div class="flex flex-wrap gap-1.5 mb-2">${tokenAnalysisHtml}</div>
-
-            <div class="text-[11px] text-emerald-700">Dikesan suara: "<strong>${spoken}</strong>"</div>
-
-          `;
-
-
-
-          const passBadge = document.getElementById(`badge-pass-${idx}`);
-
-          if (passBadge) passBadge.classList.remove('hidden');
-
-
-
-        } else {
-
-          // ADA PINYIN YANG SALAH: HIGHLIGHT WARNA MERAH JELAS
-
-          playBeep('wrong');
-
-          const accuracyPct = Math.max(0, Math.round(((tokens.length - wrongTokens.length) / tokens.length) * 100));
-
-
-
-          feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-rose-50 border-2 border-rose-300 text-xs shadow-xs animate-in fade-in duration-200";
-
-          feedbackEl.innerHTML = `
-
-            <div class="flex items-center justify-between mb-1.5">
-
-              <span class="font-bold text-rose-900 flex items-center space-x-1">
-
-                <span>⚠️</span>
-
-                <span>Analisis Pinyin (${accuracyPct}% Tepat):</span>
-
-              </span>
-
-              <span class="text-[10px] font-bold text-rose-700 bg-rose-200/70 px-2 py-0.5 rounded-full border border-rose-300">
-
-                ${wrongTokens.length} Pinyin Perlu Dibaiki
-
-              </span>
-
-            </div>
-
-
-
-            <!-- Reben Suku Kata Pinyin (Hijau = Betul, Merah = Salah) -->
-
-            <div class="flex flex-wrap gap-1.5 my-2">
-
-              ${tokenAnalysisHtml}
-
-            </div>
-
-
-
-            <!-- Highlight Pinyin Yang Salah & Boleh Ditekan Untuk Dengar -->
-
-            <div class="bg-rose-100/90 border border-rose-300 rounded-xl p-2.5 text-[11px] text-rose-950 mt-1.5">
-
-              <strong>Pinyin Yang Dikesan Silap (Highlighted):</strong>
-
-              <div class="flex flex-wrap gap-1.5 mt-1.5">
-
-                ${wrongTokens.map(w => `
-
-                  <button onclick="speakChinese('${w.hz}')" class="px-2 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-black font-sans text-xs flex items-center space-x-1 shadow-xs transition active:scale-95" title="Tekan untuk dengar nada Pinyin ${w.py}">
-
-                    <span>${w.py}</span>
-
-                    <span class="font-hanzi font-normal opacity-90">(${w.hz})</span>
-
-                    <span class="text-[10px]">🔊</span>
-
-                  </button>
-
-                `).join('')}
-
-              </div>
-
-              <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul.</span>
-
-            </div>
-
-          `;
-
-        }
-
-      };
-
-
-
-      recognition.onerror = (event) => {
-
-        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
-
-        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
-
-
-
-        feedbackEl.className = "block mt-2 p-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
-
-        if (event.error === 'not-allowed') {
-
-          feedbackEl.innerText = "Sila benarkan akses mikrofon pelayar untuk membuat semakan sebutan.";
-
-        } else {
-
-          feedbackEl.innerText = "Tidak dapat mendengar suara dengan jelas. Sila cuba tekan dan sebut sekali lagi.";
-
-        }
-
-      };
-
-
-
-      recognition.onend = () => {
-
-        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
-
-        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
-
-      };
-
-
-
-      try {
-
-        recognition.start();
-
-      } catch (err) {
-
-        micBtn.classList.remove('animate-pulse', 'ring-2', 'ring-rose-400');
-
-        micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
-
-      }
-
     }
 
+    function resetMicButton(idx, targetText) {
+      const micBtn = document.getElementById(`mic-btn-${idx}`);
+      if (!micBtn) return;
+      const msg = CHAT_SCENARIOS[currentScenarioId].messages[idx];
+      micBtn.className = `px-3 py-1 rounded-xl ${msg.isMe ? 'bg-white text-indigo-800 hover:bg-indigo-50' : 'bg-indigo-600 hover:bg-indigo-700 text-white'} text-[11px] font-extrabold flex items-center space-x-1 shadow-xs transition active:scale-95`;
+      micBtn.innerHTML = `<span>🎙️</span><span>Uji Sebutan Saya</span>`;
+      micBtn.onclick = () => startSpeechCheck(targetText, idx);
+    }
 
+    function startSpeechCheck(targetText, idx) {
+      playBeep('click');
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    function playFullChatAudio() {
+      const feedbackEl = document.getElementById(`mic-feedback-${idx}`);
+      const micBtn = document.getElementById(`mic-btn-${idx}`);
+
+      if (!SpeechRecognition) {
+        feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-amber-50 text-amber-900 border border-amber-300 text-xs";
+        feedbackEl.innerHTML = "⚠️ Pelayar peranti anda belum menyokong Web Speech Recognition secara langsung. Sila gunakan Google Chrome atau Safari terkini untuk fungsi mikrofon ini.";
+        return;
+      }
+
+      // Hentikan sesi pengecaman sebelumnya jika ada
+      stopSpeechCheck();
+      hasSpeechResultProcessed = false;
+
+      const recognition = new SpeechRecognition();
+      activeSpeechRecognizer = recognition;
+      activeEvaluatingIndex = idx;
+
+      recognition.lang = 'zh-CN';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 3;
+
+      // Ubah rupa butang menjadi 'Selesai Sebut (Semak)' dengan warna merah terang & berdenyut
+      micBtn.className = "px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-black flex items-center space-x-1 shadow-md animate-pulse ring-2 ring-rose-400 transition active:scale-95";
+      micBtn.innerHTML = `<span>⏹️</span><span>Selesai Sebut (Semak)</span>`;
+      micBtn.onclick = () => stopSpeechCheck();
+
+      feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-rose-50/95 text-rose-950 border-2 border-rose-300 text-xs shadow-sm";
+      feedbackEl.innerHTML = `
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded-full bg-rose-600 animate-ping inline-block shrink-0"></span>
+            <div>
+              <span class="font-black text-rose-900 block">Sedang mendengar... Sila sebut sekarang!</span>
+              <span class="text-[10px] text-rose-700 font-medium">Tekan butang merah 'Semak' setelah selesai menyebut.</span>
+            </div>
+          </div>
+          <button onclick="stopSpeechCheck()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs shadow-sm shrink-0 active:scale-95 flex items-center space-x-1">
+            <span>⏹️</span>
+            <span>Semak</span>
+          </button>
+        </div>
+      `;
+
+      // Had masa keselamatan: Berhenti secara automatik selepas 6 saat supaya tidak tergantung
+      speechCheckTimer = setTimeout(() => {
+        stopSpeechCheck();
+      }, 6000);
+
+      recognition.onresult = (event) => {
+        hasSpeechResultProcessed = true;
+        if (speechCheckTimer) {
+          clearTimeout(speechCheckTimer);
+          speechCheckTimer = null;
+        }
+
+        const spoken = event.results[0][0].transcript.trim();
+        const cleanSpoken = spoken.replace(/[，。！？\s.,!?]/g, '');
+        const cleanTarget = targetText.replace(/[，。！？\s.,!?]/g, '');
+
+        const msgData = CHAT_SCENARIOS[currentScenarioId].messages[idx];
+        const tokens = msgData.tokens || [];
+
+        // Semak setiap suku kata Pinyin sama ada tepat disebut atau salah
+        const wrongTokens = [];
+        const tokenAnalysisHtml = tokens.map(tok => {
+          const isMatched = cleanSpoken.includes(tok.hz);
+          if (!isMatched) {
+            wrongTokens.push(tok);
+            return `
+              <button onclick="speakChinese('${tok.hz}')" class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-rose-100 hover:bg-rose-200 border-2 border-rose-500 shadow-xs transition active:scale-95 animate-pulse" title="Tekan untuk dengar Pinyin ${tok.py}">
+                <span class="text-xs font-black text-rose-950 font-sans tracking-tight">${tok.py}</span>
+                <span class="text-sm font-black font-hanzi text-rose-900 leading-none">${tok.hz}</span>
+                <span class="text-[9px] text-rose-700 font-bold mt-0.5">❌ Silap</span>
+              </button>
+            `;
+          } else {
+            return `
+              <span class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-emerald-50 border border-emerald-300 shadow-2xs">
+                <span class="text-xs font-black text-emerald-800 font-sans tracking-tight">${tok.py}</span>
+                <span class="text-sm font-black font-hanzi text-emerald-900 leading-none">${tok.hz}</span>
+                <span class="text-[9px] text-emerald-600 font-bold mt-0.5">✓ Betul</span>
+              </span>
+            `;
+          }
+        }).join('');
+
+        if (wrongTokens.length === 0) {
+          // 100% BETUL SEMUA PINYIN
+          playBeep('success');
+          totalXp += 25;
+          document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
+
+          feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-emerald-50 border border-emerald-300 text-xs shadow-xs animate-in fade-in duration-200";
+          feedbackEl.innerHTML = `
+            <div class="font-extrabold flex items-center space-x-1.5 text-emerald-800 mb-1.5">
+              <span>🎉</span>
+              <span>Sebutan Pinyin Sempurna (100% Tepat)!</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mb-2">${tokenAnalysisHtml}</div>
+            <div class="text-[11px] text-emerald-700">Dikesan suara: "<strong>${spoken}</strong>"</div>
+          `;
+
+          const passBadge = document.getElementById(`badge-pass-${idx}`);
+          if (passBadge) passBadge.classList.remove('hidden');
+
+          if (typeof recordPassedSpeech === 'function') {
+            recordPassedSpeech(idx);
+          }
+
+        } else {
+          // ADA PINYIN YANG SALAH: HIGHLIGHT WARNA MERAH JELAS
+          playBeep('wrong');
+          const accuracyPct = Math.max(0, Math.round(((tokens.length - wrongTokens.length) / tokens.length) * 100));
+
+          feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-rose-50 border-2 border-rose-300 text-xs shadow-xs animate-in fade-in duration-200";
+          feedbackEl.innerHTML = `
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-bold text-rose-900 flex items-center space-x-1">
+                <span>⚠️</span>
+                <span>Analisis Pinyin (${accuracyPct}% Tepat):</span>
+              </span>
+              <span class="text-[10px] font-bold text-rose-700 bg-rose-200/70 px-2 py-0.5 rounded-full border border-rose-300">
+                ${wrongTokens.length} Pinyin Perlu Dibaiki
+              </span>
+            </div>
+
+            <!-- Reben Suku Kata Pinyin (Hijau = Betul, Merah = Salah) -->
+            <div class="flex flex-wrap gap-1.5 my-2">
+              ${tokenAnalysisHtml}
+            </div>
+
+            <!-- Highlight Pinyin Yang Salah & Boleh Ditekan Untuk Dengar -->
+            <div class="bg-rose-100/90 border border-rose-300 rounded-xl p-2.5 text-[11px] text-rose-950 mt-1.5">
+              <strong>Pinyin Yang Dikesan Silap (Highlighted):</strong>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                ${wrongTokens.map(w => `
+                  <button onclick="speakChinese('${w.hz}')" class="px-2 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-black font-sans text-xs flex items-center space-x-1 shadow-xs transition active:scale-95" title="Tekan untuk dengar nada Pinyin ${w.py}">
+                    <span>${w.py}</span>
+                    <span class="font-hanzi font-normal opacity-90">(${w.hz})</span>
+                    <span class="text-[10px]">🔊</span>
+                  </button>
+                `).join('')}
+              </div>
+              <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul.</span>
+            </div>
+          `;
+        }
+      };
+
+      recognition.onerror = (event) => {
+        if (speechCheckTimer) {
+          clearTimeout(speechCheckTimer);
+          speechCheckTimer = null;
+        }
+        resetMicButton(idx, targetText);
+
+        feedbackEl.className = "block mt-2 p-2.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
+        if (event.error === 'not-allowed') {
+          feedbackEl.innerText = "Sila benarkan akses mikrofon pelayar untuk membuat semakan sebutan.";
+        } else if (event.error === 'no-speech') {
+          feedbackEl.innerText = "Tiada suara dikesan. Sila pastikan anda bercakap dengan jelas berdekatan mikrofon dan tekan 'Semak'.";
+        } else {
+          feedbackEl.innerText = "Tidak dapat mendengar suara dengan jelas. Sila cuba tekan dan sebut sekali lagi.";
+        }
+      };
+
+      recognition.onend = () => {
+        if (speechCheckTimer) {
+          clearTimeout(speechCheckTimer);
+          speechCheckTimer = null;
+        }
+        resetMicButton(idx, targetText);
+
+        if (!hasSpeechResultProcessed) {
+          feedbackEl.className = "block mt-2 p-2.5 rounded-2xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
+          feedbackEl.innerHTML = "⚠️ Rakaman selesai. Sila pastikan sebutan dibuat dengan jelas berdekatan mikrofon.";
+        }
+      };
+
+      try {
+        recognition.start();
+      } catch (err) {
+        resetMicButton(idx, targetText);
+        feedbackEl.className = "block mt-2 p-2.5 rounded-2xl bg-rose-50 text-rose-900 border border-rose-200 text-xs";
+        feedbackEl.innerHTML = "⚠️ Gagal memulakan mikrofon. Sila muat semula laman web ini dan cuba lagi.";
+      }
+    }
+
+    
+function playFullChatAudio() {
       const messages = CHAT_SCENARIOS[currentScenarioId].messages;
       if (currentChatAudioObj) {
         currentChatAudioObj.pause();
