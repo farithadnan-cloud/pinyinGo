@@ -230,7 +230,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=14" defer></script>
+  <script src="js/certificate.js?v=15" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -686,64 +686,21 @@
       <div>
 
         <div class="flex items-center justify-between mb-3 px-1">
-
           <div>
-
             <h3 class="font-outfit font-black text-slate-900 text-base" id="chat-scenario-title">Situasi: Hari Pertama Hasan</h3>
-
             <p class="text-xs text-slate-500">Tekan mana-mana mesej untuk dengar sebutan jelas.</p>
-
           </div>
-
           <div class="flex bg-slate-200/80 p-0.5 rounded-xl text-xs font-bold">
-
             <button onclick="loadChatScenario(1)" id="chat-tab-1" class="px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs">Dialog 1</button>
-
             <button onclick="loadChatScenario(2)" id="chat-tab-2" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900">Dialog 2</button>
-
           </div>
-
         </div>
-
-
 
         <!-- Chat Bubble Container -->
-
         <div class="glass-card rounded-3xl p-4 sm:p-5 space-y-3.5 max-h-[58vh] overflow-y-auto pr-1" id="chat-messages-container">
-
           <!-- Populated by JS -->
-
         </div>
 
-      </div>
-
-
-
-      <!-- Realtime Auto Score Card for Chat (100% Automatik) -->
-      <div id="chat-completion-banner" class="mt-3 p-3.5 rounded-2xl bg-gradient-to-r from-indigo-50/90 via-white to-emerald-50/90 border-2 border-indigo-200/90 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-800 text-white flex items-center justify-center font-black text-lg shadow-sm shrink-0">
-            💬
-          </div>
-          <div>
-            <div class="flex items-center space-x-2 flex-wrap gap-1">
-              <span id="chat-completion-label" class="text-xs font-black text-slate-900 tracking-tight">Markah Pertuturan Dialog 1</span>
-              <span id="chat-completion-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-slate-100 text-slate-600 border border-slate-300">0 / 10 Markah</span>
-            </div>
-            <p id="chat-completion-desc" class="text-[11px] text-slate-500 font-medium mt-0.5">Markah dijana & disimpan secara automatik ke dalam E-Sijil sebaik sahaja anda menguji sebutan ayat di atas.</p>
-          </div>
-        </div>
-        <div class="flex items-center space-x-1.5 self-end sm:self-center shrink-0">
-          <span class="inline-flex items-center space-x-1.5 text-[11px] font-black text-emerald-800 bg-emerald-100/90 px-3 py-1 rounded-xl border border-emerald-300 shadow-2xs">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Simpanan Automatik</span>
-          </span>
-        </div>
-      </div>
-        <button id="btn-complete-chat" onclick="completeCurrentChatDialog()" class="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs transition active:scale-95 shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5 shrink-0">
-          <span>✅</span>
-          <span id="btn-complete-chat-text">Selesai Dialog 1 (+10 Markah)</span>
-        </button>
       </div>
 
       <!-- Full Audio Playback Bar with Play / Stop Toggle -->
@@ -755,8 +712,6 @@
       </div>
 
     </div>
-
-
 
   </main>
 

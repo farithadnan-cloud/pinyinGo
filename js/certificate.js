@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
   injectStudentModals();
   detectCurrentTopic();
   initStudentProfile();
-  initChatDialogUI();
 });
 
 function detectCurrentTopic() {
@@ -559,50 +558,6 @@ function getTopicScore(topicNum) {
   }
 }
 
-// 6. Chat Dialog Completion UI & Logic
-function initChatDialogUI() {
-  const chatMessages = document.getElementById('chat-messages-container');
-  if (!chatMessages) return; // Not on a topic page
-
-  // Check if dialog completion card exists, if not create it
-  let card = document.getElementById('chat-dialog-scoring-card');
-  if (!card) {
-    const parentContainer = chatMessages.parentElement.parentElement;
-    card = document.createElement('div');
-    card.id = 'chat-dialog-scoring-card';
-    card.className = "mt-4 p-4 rounded-3xl bg-white/95 border border-slate-200/90 shadow-sm";
-    card.innerHTML = `
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div class="flex items-center space-x-3">
-          <div id="chat-dialog-icon" class="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-xl font-bold shrink-0">
-            💬
-          </div>
-          <div>
-            <div class="flex items-center space-x-2">
-              <span id="chat-dialog-label" class="text-xs font-black text-slate-800">Latihan Pertuturan Dialog 1</span>
-              <span id="chat-dialog-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-slate-100 text-slate-500 border border-slate-200">Belum Selesai (0/10)</span>
-            </div>
-            <p class="text-[11px] text-slate-500 mt-0.5">Dengar audio dan uji sebutan anda, kemudian tekan butang untuk merekod 10 markah penuh.</p>
-          </div>
-        </div>
-        <button id="btn-complete-chat" onclick="completeCurrentChatDialog()" class="py-2.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs transition active:scale-95 shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5 shrink-0">
-          <span>✓</span>
-          <span id="btn-complete-chat-text">Selesai Dialog 1 (+10 Markah)</span>
-        </button>
-      </div>
-    `;
-    
-    // Insert right after the Full Audio Playback Bar
-    const fullAudioBar = chatMessages.parentElement.nextElementSibling;
-    if (fullAudioBar) {
-      fullAudioBar.parentNode.insertBefore(card, fullAudioBar.nextSibling);
-    } else {
-      chatMessages.parentElement.appendChild(card);
-    }
-  }
-
-  refreshChatDialogCard(currentCertTopicNum);
-}
 
 // Auto-calculate and update dialog speech score based on correct sentences and words
 function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, totalWords) {
