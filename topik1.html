@@ -233,7 +233,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=18" defer></script>
+  <script src="js/certificate.js?v=19" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -688,19 +688,21 @@
 
       <div>
 
-        <div class="flex items-center justify-between mb-3 px-1">
-          <div>
-            <h3 class="font-outfit font-black text-slate-900 text-base" id="chat-scenario-title">Situasi: Hari Pertama Hasan</h3>
-            <p class="text-xs text-slate-500">Tekan mana-mana mesej untuk dengar sebutan jelas.</p>
-          </div>
-          <div class="flex items-center space-x-2">
-            <div id="chat-live-score-pill" class="px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 text-xs font-black shadow-2xs whitespace-nowrap">
+                <!-- Header: Baris 1 (Pilihan Dialog & Markah Langsung) & Baris 2 (Tajuk Situasi & Panduan) -->
+        <div class="mb-3 px-1 space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex bg-slate-200/80 p-0.5 rounded-xl text-xs font-bold shrink-0">
+              <button onclick="loadChatScenario(1)" id="chat-tab-1" class="px-3 py-1.5 rounded-lg bg-white text-indigo-700 shadow-xs font-bold transition">Dialog 1</button>
+              <button onclick="loadChatScenario(2)" id="chat-tab-2" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">Dialog 2</button>
+            </div>
+            <div id="chat-live-score-pill" class="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 text-xs font-black shadow-2xs whitespace-nowrap">
               <span>📊</span> <span id="chat-live-score-val">0/10 Markah</span>
             </div>
-            <div class="flex bg-slate-200/80 p-0.5 rounded-xl text-xs font-bold">
-              <button onclick="loadChatScenario(1)" id="chat-tab-1" class="px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs">Dialog 1</button>
-              <button onclick="loadChatScenario(2)" id="chat-tab-2" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900">Dialog 2</button>
-            </div>
+          </div>
+
+          <div class="pt-0.5">
+            <h3 class="font-outfit font-black text-slate-900 text-base leading-snug break-words" id="chat-scenario-title">Situasi: Hari Pertama Hasan</h3>
+            <p class="text-xs text-slate-500 mt-0.5">Tekan mana-mana mesej untuk dengar sebutan jelas.</p>
           </div>
         </div>
 
