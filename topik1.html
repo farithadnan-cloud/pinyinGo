@@ -230,7 +230,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=13" defer></script>
+  <script src="js/certificate.js?v=14" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -630,9 +630,6 @@
             <span id="sentence-grammar-hint">Formula: Kata Nama + 在哪儿？</span>
 
             <div class="flex items-center space-x-2">
-            <button onclick="showSentenceAnswer()" class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline flex items-center space-x-0.5">
-              <span>💡</span><span>Semak Jawapan Betul</span>
-            </button>
             <button onclick="resetSentenceBuilder()" class="text-slate-500 hover:text-slate-700 font-bold hover:underline">
               🔄 Padam & Susun Semula
             </button>
@@ -722,38 +719,39 @@
 
 
 
-      <!-- Completion & Score Saving Banner for Chat -->
-      <div id="chat-completion-banner" class="mt-3 p-3.5 rounded-2xl bg-gradient-to-r from-indigo-50 to-emerald-50 border-2 border-indigo-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div class="flex items-center space-x-2.5">
-          <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-lg shadow-xs shrink-0">
+      <!-- Realtime Auto Score Card for Chat (100% Automatik) -->
+      <div id="chat-completion-banner" class="mt-3 p-3.5 rounded-2xl bg-gradient-to-r from-indigo-50/90 via-white to-emerald-50/90 border-2 border-indigo-200/90 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-800 text-white flex items-center justify-center font-black text-lg shadow-sm shrink-0">
             💬
           </div>
           <div>
-            <div class="flex items-center space-x-2">
-              <span id="chat-completion-label" class="text-xs font-black text-slate-800">Latihan Pertuturan Dialog 1</span>
-              <span id="chat-completion-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-slate-100 text-slate-500 border border-slate-200">Belum Selesai (0/10)</span>
+            <div class="flex items-center space-x-2 flex-wrap gap-1">
+              <span id="chat-completion-label" class="text-xs font-black text-slate-900 tracking-tight">Markah Pertuturan Dialog 1</span>
+              <span id="chat-completion-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-slate-100 text-slate-600 border border-slate-300">0 / 10 Markah</span>
             </div>
-            <p class="text-[11px] text-slate-500 font-medium">Uji sebutan ayat di atas, kemudian tekan butang untuk simpan 10 markah dialog ini ke dalam E-Sijil.</p>
+            <p id="chat-completion-desc" class="text-[11px] text-slate-500 font-medium mt-0.5">Markah dijana & disimpan secara automatik ke dalam E-Sijil sebaik sahaja anda menguji sebutan ayat di atas.</p>
           </div>
         </div>
+        <div class="flex items-center space-x-1.5 self-end sm:self-center shrink-0">
+          <span class="inline-flex items-center space-x-1.5 text-[11px] font-black text-emerald-800 bg-emerald-100/90 px-3 py-1 rounded-xl border border-emerald-300 shadow-2xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Simpanan Automatik</span>
+          </span>
+        </div>
+      </div>
         <button id="btn-complete-chat" onclick="completeCurrentChatDialog()" class="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs transition active:scale-95 shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5 shrink-0">
           <span>✅</span>
           <span id="btn-complete-chat-text">Selesai Dialog 1 (+10 Markah)</span>
         </button>
       </div>
 
-      <!-- Full Audio Playback Bar -->
-
+      <!-- Full Audio Playback Bar with Play / Stop Toggle -->
       <div class="pt-3">
-
-        <button onclick="playFullChatAudio()" class="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs sm:text-sm tracking-wide flex items-center justify-center space-x-2 shadow-md transition">
-
-          <span>🔊</span>
-
-          <span>Mainkan Keseluruhan Perbualan (Auto-Play)</span>
-
+        <button id="btn-toggle-chat-audio" onclick="toggleFullChatAudio()" class="w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs sm:text-sm tracking-wide flex items-center justify-center space-x-2 shadow-md transition active:scale-95">
+          <span id="btn-toggle-chat-icon">▶️</span>
+          <span id="btn-toggle-chat-text">Mainkan Keseluruhan Perbualan</span>
         </button>
-
       </div>
 
     </div>
@@ -2694,6 +2692,7 @@
 
 
     function switchAppMode(mode) {
+      if (typeof stopFullChatAudio === 'function') stopFullChatAudio();
       window.scrollTo(0, 0);
       playBeep('click');
 
@@ -3520,14 +3519,9 @@
         playBeep('wrong');
         feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-amber-300 bg-amber-50 text-amber-950 shadow-sm animate-pulse";
         feedback.innerHTML = `
-          <div class="flex items-center justify-between">
-            <div class="text-xs font-bold flex items-center space-x-1.5">
-              <span>⚠️</span>
-              <span>Sila pilih semua bahagian ayat dahulu, atau tekan butang di bawah untuk melihat jawapan betul.</span>
-            </div>
-            <button onclick="showSentenceAnswer()" class="ml-2 px-2.5 py-1 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shrink-0">
-              💡 Lihat Jawapan
-            </button>
+          <div class="text-xs font-bold flex items-center space-x-1.5 text-amber-900">
+            <span>⚠️</span>
+            <span>Sila susun semua perkataan terlebih dahulu sebelum menekan Semak Susunan Ayat.</span>
           </div>
         `;
         return;
@@ -3671,6 +3665,7 @@
 
     function loadChatScenario(id) {
       playBeep('click');
+      if (typeof stopFullChatAudio === 'function') stopFullChatAudio();
       currentScenarioId = id;
       if (typeof refreshChatDialogCard === 'function') refreshChatDialogCard(CURRENT_TOPIC);
       const data = CHAT_SCENARIOS[id];
@@ -4032,45 +4027,102 @@
       }
     }
 
-    function playFullChatAudio() {
-      const messages = CHAT_SCENARIOS[currentScenarioId].messages;
-      if (currentChatAudioObj) {
-        currentChatAudioObj.pause();
-        currentChatAudioObj.currentTime = 0;
+    /* Mainkan Keseluruhan Perbualan (Dengan Fungsi Play & Stop) */
+    let isFullChatPlaying = false;
+    let fullChatTimeout = null;
+
+    function stopFullChatAudio() {
+      isFullChatPlaying = false;
+      if (fullChatTimeout) {
+        clearTimeout(fullChatTimeout);
+        fullChatTimeout = null;
       }
+      if (currentChatAudioObj) {
+        try {
+          currentChatAudioObj.pause();
+          currentChatAudioObj.currentTime = 0;
+        } catch (e) {}
+        currentChatAudioObj = null;
+      }
+      if (window.speechSynthesis) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+      document.querySelectorAll('.chat-bubble-card').forEach(c => c.classList.remove('ring-4', 'ring-amber-400'));
+
+      const btn = document.getElementById('btn-toggle-chat-audio');
+      const icon = document.getElementById('btn-toggle-chat-icon');
+      const text = document.getElementById('btn-toggle-chat-text');
+      if (btn) {
+        btn.className = "w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs sm:text-sm tracking-wide flex items-center justify-center space-x-2 shadow-md transition active:scale-95";
+      }
+      if (icon) icon.innerText = "▶️";
+      if (text) text.innerText = "Mainkan Keseluruhan Perbualan";
+    }
+
+    function toggleFullChatAudio() {
+      if (isFullChatPlaying) {
+        playBeep('click');
+        stopFullChatAudio();
+        return;
+      }
+
+      playBeep('click');
+      isFullChatPlaying = true;
+
+      const btn = document.getElementById('btn-toggle-chat-audio');
+      const icon = document.getElementById('btn-toggle-chat-icon');
+      const text = document.getElementById('btn-toggle-chat-text');
+      if (btn) {
+        btn.className = "w-full py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs sm:text-sm tracking-wide flex items-center justify-center space-x-2 shadow-md transition active:scale-95 animate-pulse ring-2 ring-rose-400";
+      }
+      if (icon) icon.innerText = "⏹️";
+      if (text) text.innerText = "Hentikan Audio Perbualan (Stop)";
+
+      const messages = CHAT_SCENARIOS[currentScenarioId].messages;
       let i = 0;
+
       function playNextMsg() {
+        if (!isFullChatPlaying) return;
         if (i >= messages.length) {
-          document.querySelectorAll('.chat-bubble-card').forEach(c => c.classList.remove('ring-4', 'ring-amber-400'));
+          stopFullChatAudio();
           return;
         }
+
         document.querySelectorAll('.chat-bubble-card').forEach(c => c.classList.remove('ring-4', 'ring-amber-400'));
         const activeBubble = document.getElementById(`chat-card-${i}`);
         if (activeBubble) {
           activeBubble.classList.add('ring-4', 'ring-amber-400');
           activeBubble.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+
         const msg = messages[i];
         const role = msg.isMe ? 'male' : 'female';
         const audioPath = `audio/chat/t${CURRENT_TOPIC}_s${currentScenarioId}_m${i}.mp3`;
         const audio = new Audio(audioPath);
         currentChatAudioObj = audio;
         audio.playbackRate = audioRate;
+
         audio.onended = () => {
+          if (!isFullChatPlaying) return;
           i++;
-          setTimeout(playNextMsg, 600);
+          fullChatTimeout = setTimeout(playNextMsg, 600);
         };
+
         audio.onerror = () => {
+          if (!isFullChatPlaying) return;
           speakChinese(msg.hz, role);
           i++;
-          setTimeout(playNextMsg, 2800);
+          fullChatTimeout = setTimeout(playNextMsg, 2800);
         };
+
         audio.play().catch(e => {
+          if (!isFullChatPlaying) return;
           speakChinese(msg.hz, role);
           i++;
-          setTimeout(playNextMsg, 2800);
+          fullChatTimeout = setTimeout(playNextMsg, 2800);
         });
       }
+
       playNextMsg();
     }
 

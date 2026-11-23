@@ -668,8 +668,7 @@ function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, t
 function refreshChatDialogCard(topicNum) {
   const label = document.getElementById('chat-completion-label') || document.getElementById('chat-dialog-label');
   const badge = document.getElementById('chat-completion-badge') || document.getElementById('chat-dialog-badge');
-  const btn = document.getElementById('btn-complete-chat');
-  const btnText = document.getElementById('btn-complete-chat-text');
+  const desc = document.getElementById('chat-completion-desc');
   if (!label || !badge) return;
 
   const curScenario = typeof currentScenarioId !== 'undefined' ? currentScenarioId : 1;
@@ -706,29 +705,20 @@ function refreshChatDialogCard(topicNum) {
     });
   }
 
-  label.innerText = `Latihan Pertuturan Dialog ${curScenario}`;
+  label.innerText = `Markah Pertuturan Dialog ${curScenario}`;
 
   if (curScore >= 10 && sentencesPassed === totalMessages) {
-    badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300";
-    badge.innerText = `Selesai Cemerlang (10/10 Markah) ✓ (${sentencesPassed}/${totalMessages} Ayat, ${totalWordsCorrect}/${totalDialogWords} Kata)`;
-    if (btn) {
-      btn.className = "w-full sm:w-auto py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs transition active:scale-95 shadow-md flex items-center justify-center space-x-1.5 shrink-0";
-      if (btnText) btnText.innerText = `Markah Penuh 10/10 Disahkan ✓`;
-    }
+    badge.className = "px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border-2 border-emerald-400";
+    badge.innerText = `10 / 10 Markah Penuh ✓ (${sentencesPassed}/${totalMessages} Ayat Lulus)`;
+    if (desc) desc.innerText = `Tahniah! Kesemua ${totalMessages} ayat dan ${totalDialogWords} perkataan berjaya disebut dengan sempurna (10/10 markah disimpan automatik ke E-Sijil).`;
   } else if (curScore > 0 || sentencesPassed > 0 || totalWordsCorrect > 0) {
-    badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black bg-indigo-100 text-indigo-900 border border-indigo-300";
-    badge.innerText = `Markah Auto: ${curScore}/10 (${sentencesPassed}/${totalMessages} Ayat Lulus, ${totalWordsCorrect}/${totalDialogWords} Kata)`;
-    if (btn) {
-      btn.className = "w-full sm:w-auto py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 text-white font-black text-xs transition active:scale-95 shadow-md flex items-center justify-center space-x-1.5 shrink-0";
-      if (btnText) btnText.innerText = `Sahkan & Simpan Dialog ${curScenario} (${curScore}/10 Markah)`;
-    }
+    badge.className = "px-3 py-1 rounded-full text-xs font-black bg-indigo-100 text-indigo-900 border-2 border-indigo-400";
+    badge.innerText = `${curScore} / 10 Markah (${sentencesPassed}/${totalMessages} Ayat Lulus, ${totalWordsCorrect}/${totalDialogWords} Kata)`;
+    if (desc) desc.innerText = `Markah telah dikira & disimpan automatik ke E-Sijil: ${sentencesPassed}/${totalMessages} ayat lulus, ${totalWordsCorrect}/${totalDialogWords} perkataan betul.`;
   } else {
-    badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black bg-slate-100 text-slate-500 border border-slate-200";
-    badge.innerText = `Belum Bermula (0/10 Markah)`;
-    if (btn) {
-      btn.className = "w-full sm:w-auto py-2.5 px-4 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-extrabold text-xs transition active:scale-95 flex items-center justify-center space-x-1.5 shrink-0";
-      if (btnText) btnText.innerText = `Uji Sebutan Ayat Di Atas Untuk Markah`;
-    }
+    badge.className = "px-3 py-1 rounded-full text-xs font-black bg-slate-100 text-slate-500 border border-slate-300";
+    badge.innerText = `0 / 10 Markah`;
+    if (desc) desc.innerText = `Markah dijana & disimpan secara automatik ke dalam E-Sijil sebaik sahaja anda menguji sebutan ayat di atas.`;
   }
 }
 
