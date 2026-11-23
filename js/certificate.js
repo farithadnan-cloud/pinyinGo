@@ -141,7 +141,7 @@ function injectStudentModals() {
         <div class="no-print flex items-center justify-between mb-3 bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/15 text-white">
           <div class="flex items-center space-x-2">
             <span class="text-lg">📜</span>
-            <span class="text-xs sm:text-sm font-bold tracking-wide">E-Sijil Pencapaian Modul Interaktif</span>
+            <span class="text-xs sm:text-sm font-bold tracking-wide">E-Sijil Pencapaian Rasmi KVPD</span>
           </div>
           
           <!-- Topic Selector (Visible on Hub index.html or switchable) -->
@@ -172,6 +172,14 @@ function injectStudentModals() {
           </div>
         </div>
 
+        <!-- Unattempted Warning Banner (no-print) -->
+        <div id="cert-unattempted-warning" class="no-print hidden mb-3 p-3 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs flex items-center justify-between shadow-sm">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">⚠️</span>
+            <span>Anda <strong>belum menyelesaikan</strong> latihan bagi Topik ini. Markah semasa adalah <strong>0 / 100</strong>. Sila lengkapkan soalan latihan terlebih dahulu untuk menjana markah rasmi anda.</span>
+          </div>
+        </div>
+
         <!-- CERTIFICATE CARD -->
         <div id="certificate-print-area" class="bg-[#fcfaf5] text-slate-900 rounded-3xl p-5 sm:p-9 shadow-2xl border-4 sm:border-8 border-double border-amber-600/70 relative overflow-hidden">
           
@@ -189,11 +197,11 @@ function injectStudentModals() {
           <!-- Certificate Inner Border Box -->
           <div class="border-2 border-amber-500/40 rounded-2xl p-5 sm:p-8 text-center relative z-10 bg-white/60 backdrop-blur-xs">
             
-            <!-- Institution Title -->
+            <!-- Institution Title with Official KVPD Logo -->
             <div class="mb-3">
-              <div class="inline-flex items-center justify-center space-x-2 mb-1">
-                <span class="text-xl sm:text-2xl">🏛️</span>
-                <span class="font-outfit font-black tracking-widest text-xs sm:text-sm text-amber-950 uppercase">KOLEJ VOKASIONAL PORT DICKSON</span>
+              <div class="flex flex-col items-center justify-center mb-1.5">
+                <img src="https://ekvpd.com/v1/lp/lp/assets/images/logokv.png" alt="Logo Kolej Vokasional Port Dickson" class="h-16 sm:h-20 object-contain filter drop-shadow-sm mb-1" onerror="this.onerror=null; this.src='assets/images/logokv.png';">
+                <span class="font-outfit font-black tracking-widest text-xs sm:text-sm text-amber-950 uppercase mt-0.5">KOLEJ VOKASIONAL PORT DICKSON</span>
               </div>
               <p class="text-[9px] sm:text-[11px] font-bold text-slate-500 tracking-wider uppercase">
                 JABATAN PENDIDIKAN TEKNIK & VOKASIONAL • KURSUS BAHASA MANDARIN II (ELM 4322)
@@ -221,7 +229,7 @@ function injectStudentModals() {
                 </span>
               </div>
               
-              <p class="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+              <p id="cert-statement-desc" class="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
                 telah berjaya menguasai dan menyempurnakan modul pembelajaran serta latihan amali kendiri bagi sukatan:
               </p>
               
@@ -236,19 +244,24 @@ function injectStudentModals() {
               </p>
             </div>
 
-            <!-- Badges & Verification Row -->
-            <div class="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto my-4 text-left bg-slate-50/90 p-2.5 sm:p-3 rounded-2xl border border-slate-200/80 text-[9px] sm:text-xs">
-              <div>
-                <span class="block text-slate-400 font-bold">Tahap Penguasaan:</span>
-                <span class="font-black text-emerald-700">⭐⭐⭐⭐⭐ CEMERLANG</span>
+            <!-- Badges & Verification Row: ACTUAL MARKS & GRADE -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 max-w-lg mx-auto my-4 text-center sm:text-left bg-slate-50/95 p-3 rounded-2xl border border-slate-200/90 text-[10px] sm:text-xs">
+              <div class="flex flex-col justify-center">
+                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Markah Diperoleh:</span>
+                <span id="cert-score-display" class="font-outfit font-black text-base sm:text-lg text-slate-900 leading-tight">
+                  0 / 100 (0%)
+                </span>
               </div>
-              <div>
-                <span class="block text-slate-400 font-bold">Tarikh Pencapaian:</span>
-                <span id="cert-issue-date" class="font-black text-slate-800">23 November 2026</span>
+              <div class="flex flex-col justify-center items-center sm:items-start">
+                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Keputusan / Gred:</span>
+                <span id="cert-grade-display" class="inline-block px-2.5 py-0.5 rounded-full font-black text-xs border text-slate-600 bg-slate-100 border-slate-300">
+                  Belum Selesai
+                </span>
               </div>
-              <div>
-                <span class="block text-slate-400 font-bold">No. Verifikasi:</span>
-                <span id="cert-verify-code" class="font-mono font-bold text-slate-700">KVPD-ELM4322-T1</span>
+              <div class="flex flex-col justify-center">
+                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Tarikh & No. Siri:</span>
+                <span id="cert-issue-date" class="block font-bold text-slate-800 text-[10px] sm:text-[11px]">23 November 2026</span>
+                <span id="cert-verify-code" class="font-mono text-slate-500 text-[9px]">KVPD-ELM4322-T1</span>
               </div>
             </div>
 
@@ -300,7 +313,6 @@ function initStudentProfile() {
   updateUIStudentName(currentName);
 
   if (!currentName) {
-    // If name is not set, prompt after a short delay
     setTimeout(() => {
       promptStudentName(false);
     }, 600);
@@ -377,12 +389,98 @@ function saveStudentName() {
   updateUIStudentName(val);
   closeStudentModal();
 
-  // If certificate modal is open, refresh certificate text
   const certName = document.getElementById('cert-student-name');
   if (certName) certName.innerText = val;
 }
 
-// 5. Open & Render Certificate Modal
+// 5. Topic Score Management (Persisted in localStorage)
+function saveTopicScore(topicNum, score, type = 'vocab') {
+  const key = `pinyingo_score_topik_${topicNum}`;
+  let data = {};
+  try {
+    data = JSON.parse(localStorage.getItem(key) || '{}');
+  } catch (e) {}
+
+  if (type === 'vocab') {
+    data.vocabScore = score;
+    data.vocabCompleted = true;
+  } else if (type === 'sentence') {
+    data.sentenceScore = score;
+    data.sentenceCompleted = true;
+  }
+
+  // Calculate final score
+  if (data.vocabScore !== undefined && data.sentenceScore !== undefined) {
+    data.finalScore = Math.round((data.vocabScore + data.sentenceScore) / 2);
+  } else {
+    data.finalScore = data.vocabScore !== undefined ? data.vocabScore : data.sentenceScore;
+  }
+
+  data.completed = true;
+  data.lastUpdated = new Date().toISOString();
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function getTopicScore(topicNum) {
+  const key = `pinyingo_score_topik_${topicNum}`;
+  const raw = localStorage.getItem(key);
+  if (!raw) {
+    return {
+      hasAttempted: false,
+      score: 0,
+      grade: 'Belum Selesai',
+      gradeClass: 'text-slate-600 bg-slate-100 border-slate-300'
+    };
+  }
+
+  try {
+    const data = JSON.parse(raw);
+    const score = data.finalScore !== undefined ? data.finalScore : 0;
+    const hasAttempted = data.vocabCompleted || data.sentenceCompleted || data.completed;
+
+    if (!hasAttempted) {
+      return {
+        hasAttempted: false,
+        score: 0,
+        grade: 'Belum Selesai',
+        gradeClass: 'text-slate-600 bg-slate-100 border-slate-300'
+      };
+    }
+
+    let grade = 'Belum Selesai';
+    let gradeClass = 'text-slate-600 bg-slate-100 border-slate-300';
+
+    if (score >= 80) {
+      grade = 'Cemerlang (A)';
+      gradeClass = 'text-emerald-800 bg-emerald-100 border-emerald-300 font-black';
+    } else if (score >= 65) {
+      grade = 'Kepujian (B)';
+      gradeClass = 'text-indigo-800 bg-indigo-100 border-indigo-300 font-black';
+    } else if (score >= 50) {
+      grade = 'Lulus (C)';
+      gradeClass = 'text-amber-800 bg-amber-100 border-amber-300 font-black';
+    } else {
+      grade = 'Perlu Ulang (D)';
+      gradeClass = 'text-rose-800 bg-rose-100 border-rose-300 font-black';
+    }
+
+    return {
+      hasAttempted: true,
+      score,
+      grade,
+      gradeClass
+    };
+  } catch (e) {
+    return {
+      hasAttempted: false,
+      score: 0,
+      grade: 'Belum Selesai',
+      gradeClass: 'text-slate-600 bg-slate-100 border-slate-300'
+    };
+  }
+}
+
+// 6. Open & Render Certificate Modal
 function openTopicCertificate(topicNum) {
   const studentName = getStudentName();
   if (!studentName) {
@@ -404,8 +502,8 @@ function openTopicCertificate(topicNum) {
     modal.classList.remove('opacity-0');
   }, 20);
 
-  // Trigger confetti celebration!
-  if (typeof confetti === 'function') {
+  const scoreData = getTopicScore(currentCertTopicNum);
+  if (scoreData.hasAttempted && scoreData.score >= 50 && typeof confetti === 'function') {
     confetti({
       particleCount: 90,
       spread: 70,
@@ -431,6 +529,7 @@ function changeCertTopic(val) {
 
 function renderCertificateData(topicNum, studentName) {
   const info = PINYINGO_TOPICS[topicNum] || PINYINGO_TOPICS[1];
+  const scoreData = getTopicScore(topicNum);
 
   // Set student name
   const certName = document.getElementById('cert-student-name');
@@ -448,6 +547,41 @@ function renderCertificateData(topicNum, studentName) {
     topicSelect.value = info.num.toString();
   }
 
+  // Set score display
+  const scoreDisplay = document.getElementById('cert-score-display');
+  if (scoreDisplay) {
+    if (scoreData.hasAttempted) {
+      scoreDisplay.innerText = `${scoreData.score} / 100 (${scoreData.score}%)`;
+      scoreDisplay.className = "font-outfit font-black text-base sm:text-lg text-emerald-700 leading-tight";
+    } else {
+      scoreDisplay.innerText = `0 / 100 (0%)`;
+      scoreDisplay.className = "font-outfit font-black text-base sm:text-lg text-slate-400 leading-tight";
+    }
+  }
+
+  // Set grade display
+  const gradeDisplay = document.getElementById('cert-grade-display');
+  if (gradeDisplay) {
+    gradeDisplay.innerText = scoreData.grade;
+    gradeDisplay.className = `inline-block px-2.5 py-0.5 rounded-full font-black text-xs border ${scoreData.gradeClass}`;
+  }
+
+  // Warning banner & statement text
+  const warningBanner = document.getElementById('cert-unattempted-warning');
+  const descEl = document.getElementById('cert-statement-desc');
+
+  if (scoreData.hasAttempted) {
+    if (warningBanner) warningBanner.classList.add('hidden');
+    if (descEl) {
+      descEl.innerText = "telah berjaya menguasai dan menyempurnakan modul pembelajaran serta latihan amali kendiri bagi sukatan:";
+    }
+  } else {
+    if (warningBanner) warningBanner.classList.remove('hidden');
+    if (descEl) {
+      descEl.innerText = "Status Modul: Pelajar sedang menjalani pembelajaran kendiri (belum melengkapkan soalan latihan) bagi sukatan:";
+    }
+  }
+
   // Set date formatted in BM
   const dateEl = document.getElementById('cert-issue-date');
   if (dateEl) {
@@ -456,11 +590,11 @@ function renderCertificateData(topicNum, studentName) {
     dateEl.innerText = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
   }
 
-  // Set verification code (deterministic from student name + topic)
+  // Set verification code
   const verifyEl = document.getElementById('cert-verify-code');
   if (verifyEl) {
     let hash = 0;
-    const str = (studentName || 'KVPD') + info.num;
+    const str = (studentName || 'KVPD') + info.num + (scoreData.score || 0);
     for (let i = 0; i < str.length; i++) {
       hash = ((hash << 5) - hash) + str.charCodeAt(i);
       hash |= 0;

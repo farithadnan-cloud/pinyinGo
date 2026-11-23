@@ -2816,6 +2816,7 @@
         playBeep('success');
 
         streakCount++;
+        window.vocabCorrectCount = (window.vocabCorrectCount || 0) + 1;
 
         totalXp += 10;
 
@@ -3000,6 +3001,11 @@
 
 
     function showVocabCompletionScreen() {
+      const correctAns = window.vocabCorrectCount !== undefined ? window.vocabCorrectCount : 20;
+      const vScore = Math.min(100, Math.round((correctAns / VOCAB_20_QUESTIONS.length) * 100));
+      if (typeof saveTopicScore === 'function') {
+        saveTopicScore(CURRENT_TOPIC, vScore, 'vocab');
+      }
 
       playBeep('success');
 
@@ -3309,8 +3315,10 @@
       if (isMatch) {
         isSentenceChecked = true;
         playBeep('success');
+        window.sentenceCorrectCount = (window.sentenceCorrectCount || 0) + 1;
         totalXp += 20;
         streakCount++;
+        window.vocabCorrectCount = (window.vocabCorrectCount || 0) + 1;
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
@@ -3982,6 +3990,11 @@
 
   
     function showSentenceCompletionScreen() {
+      const sCorrect = window.sentenceCorrectCount !== undefined ? window.sentenceCorrectCount : 10;
+      const sScore = Math.min(100, Math.round((sCorrect / SENTENCE_CHALLENGES.length) * 100));
+      if (typeof saveTopicScore === 'function') {
+        saveTopicScore(CURRENT_TOPIC, sScore, 'sentence');
+      }
       playBeep('success');
       const view = document.getElementById('view-sentence-challenge');
       if (!view) return;
