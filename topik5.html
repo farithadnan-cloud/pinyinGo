@@ -230,7 +230,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=11" defer></script>
+  <script src="js/certificate.js?v=12" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -721,6 +721,26 @@
       </div>
 
 
+
+      <!-- Completion & Score Saving Banner for Chat -->
+      <div id="chat-completion-banner" class="mt-3 p-3.5 rounded-2xl bg-gradient-to-r from-indigo-50 to-emerald-50 border-2 border-indigo-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-lg shadow-xs shrink-0">
+            💬
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span id="chat-completion-label" class="text-xs font-black text-slate-800">Latihan Pertuturan Dialog 1</span>
+              <span id="chat-completion-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-slate-100 text-slate-500 border border-slate-200">Belum Selesai (0/10)</span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium">Uji sebutan ayat di atas, kemudian tekan butang untuk simpan 10 markah dialog ini ke dalam E-Sijil.</p>
+          </div>
+        </div>
+        <button id="btn-complete-chat" onclick="completeCurrentChatDialog()" class="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs transition active:scale-95 shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5 shrink-0">
+          <span>✅</span>
+          <span id="btn-complete-chat-text">Selesai Dialog 1 (+10 Markah)</span>
+        </button>
+      </div>
 
       <!-- Full Audio Playback Bar -->
 
@@ -1797,7 +1817,36 @@
         "hz": "爱曼，你来自哪儿？",
         "py": "Àimàn, nǐ láizì nǎr?",
         "my": "Aiman, awak berasal dari mana?",
-        "tokens": []
+        "tokens": [
+          {
+            "hz": "爱",
+            "py": "ài"
+          },
+          {
+            "hz": "曼",
+            "py": "màn"
+          },
+          {
+            "hz": "你",
+            "py": "nǐ"
+          },
+          {
+            "hz": "来",
+            "py": "lái"
+          },
+          {
+            "hz": "自",
+            "py": "zì"
+          },
+          {
+            "hz": "哪",
+            "py": "nǎ"
+          },
+          {
+            "hz": "儿",
+            "py": "ér"
+          }
+        ]
       },
       {
         "sender": "Aiman",
@@ -1850,7 +1899,56 @@
         "hz": "雪兰莪州的首府是莎阿南吗？",
         "py": "Xuělán'é zhōu de shǒufǔ shì Shā'ā'nán ma?",
         "my": "Ibu negeri Selangor Shah Alam kah?",
-        "tokens": []
+        "tokens": [
+          {
+            "hz": "雪",
+            "py": "xuě"
+          },
+          {
+            "hz": "兰",
+            "py": "lán"
+          },
+          {
+            "hz": "莪",
+            "py": "é"
+          },
+          {
+            "hz": "州",
+            "py": "zhōu"
+          },
+          {
+            "hz": "的",
+            "py": "de"
+          },
+          {
+            "hz": "首",
+            "py": "shǒu"
+          },
+          {
+            "hz": "府",
+            "py": "fǔ"
+          },
+          {
+            "hz": "是",
+            "py": "shì"
+          },
+          {
+            "hz": "莎",
+            "py": "shā"
+          },
+          {
+            "hz": "阿",
+            "py": "ā"
+          },
+          {
+            "hz": "南",
+            "py": "nán"
+          },
+          {
+            "hz": "吗",
+            "py": "ma"
+          }
+        ]
       },
       {
         "sender": "Aiman",
@@ -1915,7 +2013,56 @@
         "hz": "有的，警察局在前面大路旁边。",
         "py": "Yǒu de, jǐngchájú zài qiánmiàn dàlù pángbiān.",
         "my": "Ada, balai polis di hadapan sebelah jalan besar.",
-        "tokens": []
+        "tokens": [
+          {
+            "hz": "有",
+            "py": "yǒu"
+          },
+          {
+            "hz": "的",
+            "py": "de"
+          },
+          {
+            "hz": "警",
+            "py": "jǐng"
+          },
+          {
+            "hz": "察",
+            "py": "chá"
+          },
+          {
+            "hz": "局",
+            "py": "jú"
+          },
+          {
+            "hz": "在",
+            "py": "zài"
+          },
+          {
+            "hz": "前",
+            "py": "qián"
+          },
+          {
+            "hz": "面",
+            "py": "miàn"
+          },
+          {
+            "hz": "大",
+            "py": "dà"
+          },
+          {
+            "hz": "路",
+            "py": "lù"
+          },
+          {
+            "hz": "旁",
+            "py": "páng"
+          },
+          {
+            "hz": "边",
+            "py": "biān"
+          }
+        ]
       },
       {
         "sender": "Aiman",
@@ -1980,7 +2127,48 @@
         "hz": "没错，走过去只需五分钟。",
         "py": "Méicuò, zǒu guòqù zhǐ xū wǔ fēnzhōng.",
         "my": "Tepat sekali, jalan ke sana cuma perlu 5 minit.",
-        "tokens": []
+        "tokens": [
+          {
+            "hz": "没",
+            "py": "méi"
+          },
+          {
+            "hz": "错",
+            "py": "cuò"
+          },
+          {
+            "hz": "走",
+            "py": "zǒu"
+          },
+          {
+            "hz": "过",
+            "py": "guò"
+          },
+          {
+            "hz": "去",
+            "py": "qù"
+          },
+          {
+            "hz": "只",
+            "py": "zhǐ"
+          },
+          {
+            "hz": "需",
+            "py": "xū"
+          },
+          {
+            "hz": "五",
+            "py": "wǔ"
+          },
+          {
+            "hz": "分",
+            "py": "fēn"
+          },
+          {
+            "hz": "钟",
+            "py": "zhōng"
+          }
+        ]
       },
       {
         "sender": "Aiman",
@@ -2054,7 +2242,40 @@
         "hz": "请问消防局在哪里？",
         "py": "Qǐngwèn xiāofángjú zài nǎlǐ?",
         "my": "Tumpang tanya di manakah balai bomba?",
-        "tokens": []
+        "tokens": [
+          {
+            "hz": "请",
+            "py": "qǐng"
+          },
+          {
+            "hz": "问",
+            "py": "wèn"
+          },
+          {
+            "hz": "消",
+            "py": "xiāo"
+          },
+          {
+            "hz": "防",
+            "py": "fáng"
+          },
+          {
+            "hz": "局",
+            "py": "jú"
+          },
+          {
+            "hz": "在",
+            "py": "zài"
+          },
+          {
+            "hz": "哪",
+            "py": "nǎ"
+          },
+          {
+            "hz": "里",
+            "py": "lǐ"
+          }
+        ]
       },
       {
         "sender": "Aiman",
@@ -2107,7 +2328,32 @@
         "hz": "离这里远不远？",
         "py": "Lí zhèlǐ yuǎn bù yuǎn?",
         "my": "Jauh atau tidak dari sini?",
-        "tokens": []
+        "tokens": [
+          {
+            "hz": "离",
+            "py": "lí"
+          },
+          {
+            "hz": "这",
+            "py": "zhè"
+          },
+          {
+            "hz": "里",
+            "py": "lǐ"
+          },
+          {
+            "hz": "远",
+            "py": "yuǎn"
+          },
+          {
+            "hz": "不",
+            "py": "bù"
+          },
+          {
+            "hz": "远",
+            "py": "yuǎn"
+          }
+        ]
       },
       {
         "sender": "Aiman",
@@ -3555,88 +3801,103 @@
       const cleanTarget = targetText.replace(/[，。！？\s.,!?]/g, '');
 
       const msgData = CHAT_SCENARIOS[currentScenarioId].messages[idx];
-      const tokens = msgData.tokens || [];
+      let tokens = msgData.tokens || [];
 
-      // Semak setiap suku kata Pinyin sama ada tepat disebut atau salah
+      // Fallback jika tokens tiada
+      if (!tokens || tokens.length === 0) {
+        tokens = [];
+        for (const ch of cleanTarget) {
+          tokens.push({ hz: ch, py: '' });
+        }
+      }
+
+      // Semak setiap suku kata Pinyin secara berurutan
+      let remainingSpoken = cleanSpoken;
       const wrongTokens = [];
       const tokenAnalysisHtml = tokens.map(tok => {
-        const isMatched = cleanSpoken.includes(tok.hz);
-        if (!isMatched) {
-          wrongTokens.push(tok);
+        const matchIdx = remainingSpoken.indexOf(tok.hz);
+        const isMatched = matchIdx !== -1;
+        if (isMatched) {
+          remainingSpoken = remainingSpoken.slice(0, matchIdx) + remainingSpoken.slice(matchIdx + tok.hz.length);
           return `
-            <button onclick="speakChinese('${tok.hz}')" class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-rose-100 hover:bg-rose-200 border-2 border-rose-500 shadow-xs transition active:scale-95 animate-pulse" title="Tekan untuk dengar Pinyin ${tok.py}">
-              <span class="text-xs font-black text-rose-950 font-sans tracking-tight">${tok.py}</span>
-              <span class="text-sm font-black font-hanzi text-rose-900 leading-none">${tok.hz}</span>
-              <span class="text-[9px] text-rose-700 font-bold mt-0.5">❌ Silap</span>
-            </button>
+            <div class="inline-flex flex-col items-center justify-center p-2 rounded-2xl bg-emerald-50 border-2 border-emerald-300 shadow-2xs min-w-[50px] text-center">
+              <span class="text-xs font-black text-emerald-800 font-sans tracking-tight">${tok.py}</span>
+              <span class="text-base font-black font-hanzi text-emerald-950 leading-none mt-0.5">${tok.hz}</span>
+              <span class="text-[9px] text-emerald-700 font-bold mt-1">✓ Betul</span>
+            </div>
           `;
         } else {
+          wrongTokens.push(tok);
           return `
-            <span class="inline-flex flex-col items-center px-2 py-1 rounded-xl bg-emerald-50 border border-emerald-300 shadow-2xs">
-              <span class="text-xs font-black text-emerald-800 font-sans tracking-tight">${tok.py}</span>
-              <span class="text-sm font-black font-hanzi text-emerald-900 leading-none">${tok.hz}</span>
-              <span class="text-[9px] text-emerald-600 font-bold mt-0.5">✓ Betul</span>
-            </span>
+            <button onclick="speakChinese('${tok.hz}')" class="inline-flex flex-col items-center justify-center p-2 rounded-2xl bg-rose-50 hover:bg-rose-100 border-2 border-rose-400 shadow-xs transition active:scale-95 animate-pulse min-w-[50px] text-center" title="Tekan untuk dengar nada Pinyin ${tok.py}">
+              <span class="text-xs font-black text-rose-950 font-sans tracking-tight">${tok.py}</span>
+              <span class="text-base font-black font-hanzi text-rose-950 leading-none mt-0.5">${tok.hz}</span>
+              <span class="text-[9px] text-rose-700 font-bold mt-1">❌ Silap</span>
+            </button>
           `;
         }
       }).join('');
 
+      const passBadge = document.getElementById(`badge-pass-${idx}`);
+
       if (wrongTokens.length === 0) {
-        // 100% BETUL SEMUA PINYIN
+        // 100% LULUS KESELURUHAN AYAT
         playBeep('success');
         totalXp += 25;
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
 
-        feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-emerald-50 border border-emerald-300 text-xs shadow-xs animate-in fade-in duration-200";
+        feedbackEl.className = "block mt-2 p-3.5 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-xs shadow-xs animate-in fade-in duration-200";
         feedbackEl.innerHTML = `
-          <div class="font-extrabold flex items-center space-x-1.5 text-emerald-800 mb-1.5">
-            <span>🎉</span>
-            <span>Sebutan Pinyin Sempurna (100% Tepat)!</span>
+          <div class="font-extrabold flex items-center space-x-1.5 text-emerald-800 mb-2">
+            <span class="text-base">🎉</span>
+            <span class="text-sm">Sebutan Pinyin Sempurna (100% Tepat)!</span>
           </div>
-          <div class="flex flex-wrap gap-1.5 mb-2">${tokenAnalysisHtml}</div>
-          <div class="text-[11px] text-emerald-700">Dikesan suara: "<strong>${spoken}</strong>"</div>
+          <div class="flex flex-wrap gap-1.5 mb-2.5">${tokenAnalysisHtml}</div>
+          <div class="text-[11px] text-emerald-700 font-medium">Dikesan suara: "<strong>${spoken}</strong>"</div>
         `;
 
-        const passBadge = document.getElementById(`badge-pass-${idx}`);
         if (passBadge) passBadge.classList.remove('hidden');
 
       } else {
-        // ADA PINYIN YANG SALAH: HIGHLIGHT WARNA MERAH JELAS
+        // ADA PERKATAAN YANG TIDAK DISEBUT / SALAH NADA
         playBeep('wrong');
         const accuracyPct = Math.max(0, Math.round(((tokens.length - wrongTokens.length) / tokens.length) * 100));
 
-        feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-rose-50 border-2 border-rose-300 text-xs shadow-xs animate-in fade-in duration-200";
+        // Tidak dapat markah penuh / lulus jika belum lengkap
+        if (passBadge) passBadge.classList.add('hidden');
+
+        feedbackEl.className = "block mt-2 p-3.5 rounded-2xl bg-rose-50 border-2 border-rose-300 text-xs shadow-xs animate-in fade-in duration-200";
         feedbackEl.innerHTML = `
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="font-bold text-rose-900 flex items-center space-x-1">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-rose-900 flex items-center space-x-1 text-xs sm:text-sm">
               <span>⚠️</span>
               <span>Analisis Pinyin (${accuracyPct}% Tepat):</span>
             </span>
-            <span class="text-[10px] font-bold text-rose-700 bg-rose-200/70 px-2 py-0.5 rounded-full border border-rose-300">
+            <span class="text-[10px] font-black text-rose-800 bg-rose-200/80 px-2.5 py-0.5 rounded-full border border-rose-300">
               ${wrongTokens.length} Pinyin Perlu Dibaiki
             </span>
           </div>
 
-          <!-- Reben Suku Kata Pinyin (Hijau = Betul, Merah = Salah) -->
+          <!-- Grid Kad Suku Kata Pinyin (Hijau = Betul, Merah = Silap) -->
           <div class="flex flex-wrap gap-1.5 my-2">
             ${tokenAnalysisHtml}
           </div>
 
-          <div class="text-[11px] text-slate-700 mb-1.5">Dikesan suara: "<strong>${spoken}</strong>"</div>
+          <div class="text-[11px] text-slate-700 mb-2 font-medium">Dikesan suara: "<strong>${spoken}</strong>"</div>
 
-          <!-- Highlight Pinyin Yang Salah & Boleh Ditekan Untuk Dengar -->
+          <!-- Highlight Pinyin Yang Silap dengan Butang Dengar -->
           <div class="bg-rose-100/90 border border-rose-300 rounded-xl p-2.5 text-[11px] text-rose-950 mt-1.5">
             <strong>Pinyin Yang Dikesan Silap (Highlighted):</strong>
             <div class="flex flex-wrap gap-1.5 mt-1.5">
               ${wrongTokens.map(w => `
-                <button onclick="speakChinese('${w.hz}')" class="px-2 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-black font-sans text-xs flex items-center space-x-1 shadow-xs transition active:scale-95" title="Tekan untuk dengar nada Pinyin ${w.py}">
+                <button onclick="speakChinese('${w.hz}')" class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-black font-sans text-xs flex items-center space-x-1 shadow-xs transition active:scale-95" title="Tekan untuk dengar nada Pinyin ${w.py}">
                   <span>${w.py}</span>
                   <span class="font-hanzi font-normal opacity-90">(${w.hz})</span>
                   <span class="text-[10px]">🔊</span>
                 </button>
               `).join('')}
             </div>
-            <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul.</span>
+            <span class="text-[10px] text-rose-700 block mt-2 font-medium">💡 Tekan butang merah di atas untuk mendengar sebutan & nada Pinyin yang betul. Anda perlu menyebut KESELURUHAN ayat dengan nada yang betul untuk lulus sebutan.</span>
           </div>
         `;
       }
