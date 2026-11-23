@@ -71,6 +71,9 @@
   </script>
 
   <style>
+    .hidden {
+      display: none !important;
+    }
 
     body {
 
@@ -230,7 +233,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=15" defer></script>
+  <script src="js/certificate.js?v=16" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -357,7 +360,7 @@
 
     <!-- ==================== VIEW 1: CABARAN 20 SOALAN (HANZI + PINYIN + AUDIO) ==================== -->
 
-    <div id="view-vocab-challenge" class="app-view flex flex-col justify-between flex-grow">
+    <div id="view-vocab-challenge" class="app-view flex flex-col justify-between flex-grow" style="display: flex;">
 
       
 
@@ -579,7 +582,7 @@
 
     <!-- ==================== VIEW 2: POLA AYAT (HANZI + PINYIN + AUDIO) ==================== -->
 
-    <div id="view-sentence-challenge" class="app-view hidden flex flex-col justify-between flex-grow pt-1">
+    <div id="view-sentence-challenge" class="app-view hidden flex flex-col justify-between flex-grow pt-1" style="display: none;">
       <div>
         <!-- Protected Status & Progress Card (Optimized for Mobile) -->
         <div class="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-200 shadow-xs mb-3.5">
@@ -681,7 +684,7 @@
 
     <!-- ==================== VIEW 3: SIMULASI CHAT DIALOG ==================== -->
 
-    <div id="view-chat-roleplay" class="app-view hidden flex flex-col justify-between flex-grow">
+    <div id="view-chat-roleplay" class="app-view hidden flex flex-col justify-between flex-grow" style="display: none;">
 
       <div>
 
@@ -2715,44 +2718,34 @@
 
       currentAppMode = mode;
 
-
-
-      document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
-
-      document.querySelectorAll('#nav-mode-vocab, #nav-mode-sentence, #nav-mode-chat').forEach(b => {
-
-        b.className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 hover:text-slate-800 text-slate-500";
-
+      document.querySelectorAll('.app-view').forEach(v => {
+        v.classList.add('hidden');
+        v.style.display = 'none';
       });
 
-
+      document.querySelectorAll('#nav-mode-vocab, #nav-mode-sentence, #nav-mode-chat').forEach(b => {
+        b.className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 hover:text-slate-800 text-slate-500";
+      });
 
       if (mode === 'vocabChallenge') {
-
-        document.getElementById('view-vocab-challenge').classList.remove('hidden');
-
+        const v = document.getElementById('view-vocab-challenge');
+        v.classList.remove('hidden');
+        v.style.display = 'flex';
         document.getElementById('nav-mode-vocab').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
-
         loadVocabQuestion();
-
       } else if (mode === 'sentenceChallenge') {
-
-        document.getElementById('view-sentence-challenge').classList.remove('hidden');
-
+        const v = document.getElementById('view-sentence-challenge');
+        v.classList.remove('hidden');
+        v.style.display = 'flex';
         document.getElementById('nav-mode-sentence').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
-
         loadSentenceChallenge();
-
       } else {
-
-        document.getElementById('view-chat-roleplay').classList.remove('hidden');
-
+        const v = document.getElementById('view-chat-roleplay');
+        v.classList.remove('hidden');
+        v.style.display = 'flex';
         document.getElementById('nav-mode-chat').className = "flex-1 py-2 rounded-xl transition flex items-center justify-center space-x-1 bg-white text-indigo-700 shadow-xs font-bold";
-
         loadChatScenario(1);
-
       }
-
     }
 
 
