@@ -230,7 +230,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=7" defer></script>
+  <script src="js/certificate.js?v=8" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -2858,7 +2858,7 @@
 
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
-        document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
+        document.getElementById('xp-counter').innerText = `+${vScore} / 40 Markah`;
 
 
 
@@ -3038,7 +3038,7 @@
 
     function showVocabCompletionScreen() {
       const correctAns = window.vocabCorrectCount !== undefined ? window.vocabCorrectCount : 20;
-      const vScore = Math.min(100, Math.round((correctAns / VOCAB_20_QUESTIONS.length) * 100));
+      const vScore = Math.min(40, Math.round((correctAns / VOCAB_20_QUESTIONS.length) * 40));
       if (typeof saveTopicScore === 'function') {
         saveTopicScore(CURRENT_TOPIC, vScore, 'vocab');
       }
@@ -3065,9 +3065,9 @@
 
             <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-2xl">
 
-              <span class="text-xs text-slate-400 font-bold block">Jumlah XP</span>
+              <span class="text-xs text-slate-400 font-bold block">Markah Bina Kata</span>
 
-              <span class="text-xl font-black text-indigo-700">${totalXp} XP</span>
+              <span class="text-xl font-black text-indigo-700">${vScore} / 40 Markah</span>
 
             </div>
 
@@ -3355,7 +3355,7 @@
         totalXp += 20;
         streakCount++;
         window.vocabCorrectCount = (window.vocabCorrectCount || 0) + 1;
-        document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
+        document.getElementById('xp-counter').innerText = `+${vScore} / 40 Markah`;
         document.getElementById('streak-counter').innerText = `${streakCount} Streak`;
 
         feedback.className = "block mb-3.5 p-4 rounded-2xl border-2 border-emerald-300 bg-emerald-50/90 text-emerald-950 shadow-sm";
@@ -3487,6 +3487,7 @@
     function loadChatScenario(id) {
       playBeep('click');
       currentScenarioId = id;
+      if (typeof refreshChatDialogCard === 'function') refreshChatDialogCard(CURRENT_TOPIC);
       const data = CHAT_SCENARIOS[id];
 
       document.getElementById('chat-scenario-title').innerText = data.title;
@@ -3710,7 +3711,7 @@
 
           totalXp += 25;
 
-          document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
+          document.getElementById('xp-counter').innerText = `+${vScore} / 40 Markah`;
 
 
 
@@ -4027,7 +4028,7 @@
   
     function showSentenceCompletionScreen() {
       const sCorrect = window.sentenceCorrectCount !== undefined ? window.sentenceCorrectCount : 10;
-      const sScore = Math.min(100, Math.round((sCorrect / SENTENCE_CHALLENGES.length) * 100));
+      const sScore = Math.min(40, Math.round((sCorrect / SENTENCE_CHALLENGES.length) * 40));
       if (typeof saveTopicScore === 'function') {
         saveTopicScore(CURRENT_TOPIC, sScore, 'sentence');
       }
@@ -4044,7 +4045,7 @@
           <div class="my-6 grid grid-cols-2 gap-3 max-w-xs mx-auto">
             <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-2xl">
               <span class="text-xs text-slate-400 font-bold block">Pencapaian</span>
-              <span class="text-xl font-black text-indigo-700">10 / 10 ⭐</span>
+              <span class="text-xl font-black text-indigo-700">${sScore} / 40 Markah</span>
             </div>
             <div class="bg-amber-50 border border-amber-100 p-3 rounded-2xl">
               <span class="text-xs text-slate-400 font-bold block">Status Sijil</span>

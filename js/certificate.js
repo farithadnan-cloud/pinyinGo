@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   injectStudentModals();
   detectCurrentTopic();
   initStudentProfile();
+  initChatDialogUI();
 });
 
 function detectCurrentTopic() {
@@ -34,7 +35,7 @@ function detectCurrentTopic() {
   }
 }
 
-// 2. Inject CSS for Certificate & Print (Fixes iOS Safari / Android / Desktop Paper Scaling)
+// 2. Inject CSS for Certificate & Print (Optimized for Mobile & Desktop Printers)
 function injectCertificateStyles() {
   if (document.getElementById('pinyingo-cert-styles')) return;
   const style = document.createElement('style');
@@ -98,7 +99,7 @@ function injectCertificateStyles() {
       #certificate-print-area .inner-box {
         padding: 16px 24px !important;
       }
-      #certificate-print-area img {
+      #certificate-print-area img.kvpd-logo {
         height: 60px !important;
         margin-bottom: 4px !important;
       }
@@ -222,11 +223,11 @@ function injectStudentModals() {
           </div>
         </div>
 
-        <!-- Unattempted Warning Banner (no-print) -->
+        <!-- Unattempted / Incomplete Warning Banner (no-print) -->
         <div id="cert-unattempted-warning" class="no-print hidden mb-3 p-3 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs flex items-center justify-between shadow-sm">
           <div class="flex items-center space-x-2">
             <span class="text-lg">⚠️</span>
-            <span>Anda <strong>belum menyelesaikan</strong> latihan bagi Topik ini. Markah semasa adalah <strong>0 / 100</strong>. Sila lengkapkan soalan latihan terlebih dahulu untuk menjana markah rasmi anda.</span>
+            <span id="cert-warning-text">Anda <strong>belum menyelesaikan semua soalan</strong> bagi Topik ini. Markah penuh rasmi akan dijana sebaik sahaja kesemua aktiviti diselesaikan.</span>
           </div>
         </div>
 
@@ -250,7 +251,7 @@ function injectStudentModals() {
             <!-- Institution Title with Official KVPD Logo -->
             <div class="mb-3">
               <div class="flex flex-col items-center justify-center mb-1.5">
-                <img src="https://ekvpd.com/v1/lp/lp/assets/images/logokv.png" alt="Logo Kolej Vokasional Port Dickson" class="h-16 sm:h-20 object-contain filter drop-shadow-sm mb-1" onerror="this.onerror=null; this.src='assets/images/logokv.png';">
+                <img src="https://ekvpd.com/v1/lp/lp/assets/images/logokv.png" alt="Logo Kolej Vokasional Port Dickson" class="kvpd-logo h-16 sm:h-20 object-contain filter drop-shadow-sm mb-1" onerror="this.onerror=null; this.src='assets/images/logokv.png';">
                 <span class="font-outfit font-black tracking-widest text-xs sm:text-sm text-amber-950 uppercase mt-0.5">KOLEJ VOKASIONAL PORT DICKSON</span>
               </div>
               <p class="text-[10px] sm:text-xs font-bold text-slate-600 tracking-wider uppercase">
@@ -293,20 +294,20 @@ function injectStudentModals() {
               </div>
               
               <p class="text-[10px] sm:text-[11px] text-slate-500 mt-2 font-medium">
-                Merangkumi Penguasaan Kosa Kata Hanzi & Pinyin, Pembinaan Pola Ayat dan Amali Pertuturan Suara.
+                Merangkumi Penguasaan Kosa Kata (40m), Pola Ayat (40m) dan Simulasi Pertuturan Chat Dialog 1 & 2 (20m).
               </p>
             </div>
 
             <!-- Badges & Verification Row: ACTUAL MARKS & GRADE -->
             <div class="score-grid grid grid-cols-3 gap-2 sm:gap-4 max-w-lg mx-auto my-4 text-center bg-slate-50/95 p-3 rounded-2xl border border-slate-200/90 text-[10px] sm:text-xs">
               <div class="flex flex-col justify-center border-r border-slate-200 pr-2">
-                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Markah:</span>
+                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Markah Keseluruhan:</span>
                 <span id="cert-score-display" class="font-outfit font-black text-sm sm:text-base text-slate-900 leading-tight">
                   0 / 100 (0%)
                 </span>
               </div>
               <div class="flex flex-col justify-center items-center border-r border-slate-200 px-2">
-                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Keputusan:</span>
+                <span class="block text-slate-400 font-bold uppercase text-[9px] mb-0.5">Keputusan / Gred:</span>
                 <span id="cert-grade-display" class="inline-block px-2.5 py-0.5 rounded-full font-black text-xs border text-slate-600 bg-slate-100 border-slate-300">
                   Belum Selesai
                 </span>
@@ -316,6 +317,17 @@ function injectStudentModals() {
                 <span id="cert-issue-date" class="block font-bold text-slate-800 text-[10px]">23 November 2026</span>
                 <span id="cert-verify-code" class="font-mono text-slate-500 text-[9px]">KVPD-ELM4322-T1</span>
               </div>
+            </div>
+
+            <!-- Detailed Breakdown Pill (Shows Bina Kata, Pola Ayat, Dialog 1, Dialog 2) -->
+            <div id="cert-breakdown-row" class="text-[9px] sm:text-[10px] text-slate-500 font-semibold bg-white/70 py-1.5 px-3 rounded-xl border border-slate-200/60 max-w-lg mx-auto mb-2 flex items-center justify-around">
+              <span>Bina Kata: <strong id="cert-bk-score" class="text-slate-700">0/40</strong></span>
+              <span>•</span>
+              <span>Pola Ayat: <strong id="cert-pa-score" class="text-slate-700">0/40</strong></span>
+              <span>•</span>
+              <span>Dialog 1: <strong id="cert-d1-score" class="text-slate-700">0/10</strong></span>
+              <span>•</span>
+              <span>Dialog 2: <strong id="cert-d2-score" class="text-slate-700">0/10</strong></span>
             </div>
 
             <!-- Signatures Footer -->
@@ -436,8 +448,8 @@ function saveStudentName() {
   if (certName) certName.innerText = val;
 }
 
-// 5. Topic Score Management (Persisted in localStorage)
-function saveTopicScore(topicNum, score, type = 'vocab') {
+// 5. Complete Topic Score Management (Bina Kata: 40m, Pola Ayat: 40m, Dialog 1: 10m, Dialog 2: 10m)
+function saveTopicScore(topicNum, score, type) {
   const key = `pinyingo_score_topik_${topicNum}`;
   let data = {};
   try {
@@ -445,23 +457,30 @@ function saveTopicScore(topicNum, score, type = 'vocab') {
   } catch (e) {}
 
   if (type === 'vocab') {
-    data.vocabScore = score;
+    data.vocabScore = score; // max 40
     data.vocabCompleted = true;
   } else if (type === 'sentence') {
-    data.sentenceScore = score;
+    data.sentenceScore = score; // max 40
     data.sentenceCompleted = true;
+  } else if (type === 'chat_d1') {
+    data.chatD1Score = score; // 10
+    data.chatD1Completed = true;
+  } else if (type === 'chat_d2') {
+    data.chatD2Score = score; // 10
+    data.chatD2Completed = true;
   }
 
-  // Calculate final score
-  if (data.vocabScore !== undefined && data.sentenceScore !== undefined) {
-    data.finalScore = Math.round((data.vocabScore + data.sentenceScore) / 2);
-  } else {
-    data.finalScore = data.vocabScore !== undefined ? data.vocabScore : data.sentenceScore;
-  }
+  const vScore = data.vocabScore || 0;
+  const sScore = data.sentenceScore || 0;
+  const c1Score = data.chatD1Score || 0;
+  const c2Score = data.chatD2Score || 0;
 
-  data.completed = true;
+  data.totalScore = vScore + sScore + c1Score + c2Score;
+  data.allCompleted = Boolean(data.vocabCompleted && data.sentenceCompleted && data.chatD1Completed && data.chatD2Completed);
   data.lastUpdated = new Date().toISOString();
+
   localStorage.setItem(key, JSON.stringify(data));
+  refreshChatDialogCard(topicNum);
 }
 
 function getTopicScore(topicNum) {
@@ -469,8 +488,13 @@ function getTopicScore(topicNum) {
   const raw = localStorage.getItem(key);
   if (!raw) {
     return {
+      allCompleted: false,
       hasAttempted: false,
-      score: 0,
+      vocabScore: 0,
+      sentenceScore: 0,
+      chatD1Score: 0,
+      chatD2Score: 0,
+      totalScore: 0,
       grade: 'Belum Selesai',
       gradeClass: 'text-slate-600 bg-slate-100 border-slate-300'
     };
@@ -478,52 +502,161 @@ function getTopicScore(topicNum) {
 
   try {
     const data = JSON.parse(raw);
-    const score = data.finalScore !== undefined ? data.finalScore : 0;
-    const hasAttempted = data.vocabCompleted || data.sentenceCompleted || data.completed;
+    const vScore = data.vocabScore || 0;
+    const sScore = data.sentenceScore || 0;
+    const c1Score = data.chatD1Score || 0;
+    const c2Score = data.chatD2Score || 0;
+    const totalScore = vScore + sScore + c1Score + c2Score;
 
-    if (!hasAttempted) {
-      return {
-        hasAttempted: false,
-        score: 0,
-        grade: 'Belum Selesai',
-        gradeClass: 'text-slate-600 bg-slate-100 border-slate-300'
-      };
-    }
+    const allCompleted = Boolean(data.vocabCompleted && data.sentenceCompleted && data.chatD1Completed && data.chatD2Completed);
+    const hasAttempted = Boolean(data.vocabCompleted || data.sentenceCompleted || data.chatD1Completed || data.chatD2Completed || totalScore > 0);
 
     let grade = 'Belum Selesai';
     let gradeClass = 'text-slate-600 bg-slate-100 border-slate-300';
 
-    if (score >= 80) {
-      grade = 'Cemerlang (A)';
-      gradeClass = 'text-emerald-800 bg-emerald-100 border-emerald-300 font-black';
-    } else if (score >= 65) {
-      grade = 'Kepujian (B)';
-      gradeClass = 'text-indigo-800 bg-indigo-100 border-indigo-300 font-black';
-    } else if (score >= 50) {
-      grade = 'Lulus (C)';
-      gradeClass = 'text-amber-800 bg-amber-100 border-amber-300 font-black';
-    } else {
-      grade = 'Perlu Ulang (D)';
-      gradeClass = 'text-rose-800 bg-rose-100 border-rose-300 font-black';
+    if (allCompleted) {
+      if (totalScore >= 80) {
+        grade = 'Cemerlang (A)';
+        gradeClass = 'text-emerald-800 bg-emerald-100 border-emerald-300 font-black';
+      } else if (totalScore >= 65) {
+        grade = 'Kepujian (B)';
+        gradeClass = 'text-indigo-800 bg-indigo-100 border-indigo-300 font-black';
+      } else if (totalScore >= 50) {
+        grade = 'Lulus (C)';
+        gradeClass = 'text-amber-800 bg-amber-100 border-amber-300 font-black';
+      } else {
+        grade = 'Perlu Ulang (D)';
+        gradeClass = 'text-rose-800 bg-rose-100 border-rose-300 font-black';
+      }
+    } else if (hasAttempted) {
+      grade = 'Dalam Proses (Belum Lengkap)';
+      gradeClass = 'text-amber-800 bg-amber-100 border-amber-300 font-bold';
     }
 
     return {
-      hasAttempted: true,
-      score,
+      allCompleted,
+      hasAttempted,
+      vocabScore: vScore,
+      sentenceScore: sScore,
+      chatD1Score: c1Score,
+      chatD2Score: c2Score,
+      totalScore,
       grade,
       gradeClass
     };
   } catch (e) {
     return {
+      allCompleted: false,
       hasAttempted: false,
-      score: 0,
+      vocabScore: 0,
+      sentenceScore: 0,
+      chatD1Score: 0,
+      chatD2Score: 0,
+      totalScore: 0,
       grade: 'Belum Selesai',
       gradeClass: 'text-slate-600 bg-slate-100 border-slate-300'
     };
   }
 }
 
-// 6. Open & Render Certificate Modal
+// 6. Chat Dialog Completion UI & Logic
+function initChatDialogUI() {
+  const chatMessages = document.getElementById('chat-messages-container');
+  if (!chatMessages) return; // Not on a topic page
+
+  // Check if dialog completion card exists, if not create it
+  let card = document.getElementById('chat-dialog-scoring-card');
+  if (!card) {
+    const parentContainer = chatMessages.parentElement.parentElement;
+    card = document.createElement('div');
+    card.id = 'chat-dialog-scoring-card';
+    card.className = "mt-4 p-4 rounded-3xl bg-white/95 border border-slate-200/90 shadow-sm";
+    card.innerHTML = `
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center space-x-3">
+          <div id="chat-dialog-icon" class="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-xl font-bold shrink-0">
+            💬
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span id="chat-dialog-label" class="text-xs font-black text-slate-800">Latihan Pertuturan Dialog 1</span>
+              <span id="chat-dialog-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-slate-100 text-slate-500 border border-slate-200">Belum Selesai (0/10)</span>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-0.5">Dengar audio dan uji sebutan anda, kemudian tekan butang untuk merekod 10 markah penuh.</p>
+          </div>
+        </div>
+        <button id="btn-complete-chat" onclick="completeCurrentChatDialog()" class="py-2.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs transition active:scale-95 shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5 shrink-0">
+          <span>✓</span>
+          <span id="btn-complete-chat-text">Selesai Dialog 1 (+10 Markah)</span>
+        </button>
+      </div>
+    `;
+    
+    // Insert right after the Full Audio Playback Bar
+    const fullAudioBar = chatMessages.parentElement.nextElementSibling;
+    if (fullAudioBar) {
+      fullAudioBar.parentNode.insertBefore(card, fullAudioBar.nextSibling);
+    } else {
+      chatMessages.parentElement.appendChild(card);
+    }
+  }
+
+  refreshChatDialogCard(currentCertTopicNum);
+}
+
+function refreshChatDialogCard(topicNum) {
+  const label = document.getElementById('chat-dialog-label');
+  const badge = document.getElementById('chat-dialog-badge');
+  const btn = document.getElementById('btn-complete-chat');
+  const btnText = document.getElementById('btn-complete-chat-text');
+  if (!label || !badge || !btn) return;
+
+  const curScenario = typeof currentScenarioId !== 'undefined' ? currentScenarioId : 1;
+  const scoreData = getTopicScore(topicNum);
+  const isD1 = curScenario === 1;
+  const isDone = isD1 ? (scoreData.chatD1Score >= 10) : (scoreData.chatD2Score >= 10);
+
+  label.innerText = `Latihan Pertuturan Dialog ${curScenario}`;
+
+  if (isDone) {
+    badge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300";
+    badge.innerText = `Selesai (10/10 Markah) ✓`;
+    btn.className = "py-2.5 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition active:scale-95 shrink-0";
+    btnText.innerText = `Ulang Tandakan Dialog ${curScenario}`;
+  } else {
+    badge.className = "px-2 py-0.5 rounded-full text-[10px] font-black bg-slate-100 text-slate-500 border border-slate-200";
+    badge.innerText = `Belum Selesai (0/10)`;
+    btn.className = "py-2.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs transition active:scale-95 shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5 shrink-0";
+    btnText.innerText = `Selesai Dialog ${curScenario} (+10 Markah)`;
+  }
+}
+
+function completeCurrentChatDialog() {
+  const curScenario = typeof currentScenarioId !== 'undefined' ? currentScenarioId : 1;
+  if (typeof playBeep === 'function') playBeep('success');
+
+  const type = curScenario === 1 ? 'chat_d1' : 'chat_d2';
+  saveTopicScore(currentCertTopicNum, 10, type);
+
+  if (typeof confetti === 'function') {
+    confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+  }
+
+  const scoreData = getTopicScore(currentCertTopicNum);
+  
+  if (scoreData.allCompleted) {
+    setTimeout(() => {
+      alert(`🎉 TAHNIAH! Anda telah menyelesaikan SEMUA soalan & aktiviti Topik ini!\n\n• Bina Kata: ${scoreData.vocabScore}/40\n• Pola Ayat: ${scoreData.sentenceScore}/40\n• Chat Dialog 1: 10/10\n• Chat Dialog 2: 10/10\n\nJUMLAH BESAR: ${scoreData.totalScore} / 100 (${scoreData.grade})\n\nTekan butang 'Sijil' di atas untuk melihat dan mencetak E-Sijil rasmi anda!`);
+      openTopicCertificate(currentCertTopicNum);
+    }, 400);
+  } else {
+    setTimeout(() => {
+      alert(`✅ Berjaya! Anda memperoleh 10/10 markah bagi Dialog ${curScenario}.\n\nMarkah terkumpul topik ini: ${scoreData.totalScore} / 100.\nSila lengkapkan baki bahagian lain untuk melayakkan diri menerima E-Sijil rasmi!`);
+    }, 300);
+  }
+}
+
+// 7. Open & Render Certificate Modal
 function openTopicCertificate(topicNum) {
   const studentName = getStudentName();
   if (!studentName) {
@@ -546,7 +679,7 @@ function openTopicCertificate(topicNum) {
   }, 20);
 
   const scoreData = getTopicScore(currentCertTopicNum);
-  if (scoreData.hasAttempted && scoreData.score >= 50 && typeof confetti === 'function') {
+  if (scoreData.allCompleted && scoreData.totalScore >= 50 && typeof confetti === 'function') {
     confetti({
       particleCount: 90,
       spread: 70,
@@ -593,13 +726,10 @@ function renderCertificateData(topicNum, studentName) {
   // Set score display
   const scoreDisplay = document.getElementById('cert-score-display');
   if (scoreDisplay) {
-    if (scoreData.hasAttempted) {
-      scoreDisplay.innerText = `${scoreData.score} / 100 (${scoreData.score}%)`;
-      scoreDisplay.className = "font-outfit font-black text-sm sm:text-base text-emerald-700 leading-tight";
-    } else {
-      scoreDisplay.innerText = `0 / 100 (0%)`;
-      scoreDisplay.className = "font-outfit font-black text-sm sm:text-base text-slate-400 leading-tight";
-    }
+    scoreDisplay.innerText = `${scoreData.totalScore} / 100 (${scoreData.totalScore}%)`;
+    scoreDisplay.className = scoreData.allCompleted 
+      ? "font-outfit font-black text-sm sm:text-base text-emerald-700 leading-tight" 
+      : "font-outfit font-black text-sm sm:text-base text-slate-700 leading-tight";
   }
 
   // Set grade display
@@ -609,19 +739,34 @@ function renderCertificateData(topicNum, studentName) {
     gradeDisplay.className = `inline-block px-2.5 py-0.5 rounded-full font-black text-xs border ${scoreData.gradeClass}`;
   }
 
+  // Set breakdown pills
+  const bkScore = document.getElementById('cert-bk-score');
+  const paScore = document.getElementById('cert-pa-score');
+  const d1Score = document.getElementById('cert-d1-score');
+  const d2Score = document.getElementById('cert-d2-score');
+
+  if (bkScore) bkScore.innerText = `${scoreData.vocabScore}/40`;
+  if (paScore) paScore.innerText = `${scoreData.sentenceScore}/40`;
+  if (d1Score) d1Score.innerText = `${scoreData.chatD1Score}/10`;
+  if (d2Score) d2Score.innerText = `${scoreData.chatD2Score}/10`;
+
   // Warning banner & statement text
   const warningBanner = document.getElementById('cert-unattempted-warning');
+  const warningText = document.getElementById('cert-warning-text');
   const descEl = document.getElementById('cert-statement-desc');
 
-  if (scoreData.hasAttempted) {
+  if (scoreData.allCompleted) {
     if (warningBanner) warningBanner.classList.add('hidden');
     if (descEl) {
-      descEl.innerText = "telah berjaya menguasai dan menyempurnakan modul pembelajaran serta latihan amali kendiri bagi sukatan:";
+      descEl.innerText = "telah berjaya menguasai dan menyempurnakan kesemua modul pembelajaran serta latihan amali kendiri bagi sukatan:";
     }
   } else {
     if (warningBanner) warningBanner.classList.remove('hidden');
+    if (warningText) {
+      warningText.innerHTML = `Status Latihan: <strong>${scoreData.totalScore}/100 Markah Terkumpul</strong>. Anda belum menyelesaikan kesemua soalan latihan (Bina Kata 40m, Pola Ayat 40m, Dialog 1 10m, Dialog 2 10m). Sila lengkapkan kesemua aktiviti untuk mengesahkan gred rasmi.`;
+    }
     if (descEl) {
-      descEl.innerText = "Status Modul: Pelajar sedang menjalani pembelajaran kendiri (belum melengkapkan soalan latihan) bagi sukatan:";
+      descEl.innerText = "Status Modul: Pelajar sedang menjalani pembelajaran kendiri (latihan belum diselesaikan sepenuhnya) bagi sukatan:";
     }
   }
 
@@ -637,7 +782,7 @@ function renderCertificateData(topicNum, studentName) {
   const verifyEl = document.getElementById('cert-verify-code');
   if (verifyEl) {
     let hash = 0;
-    const str = (studentName || 'KVPD') + info.num + (scoreData.score || 0);
+    const str = (studentName || 'KVPD') + info.num + (scoreData.totalScore || 0);
     for (let i = 0; i < str.length; i++) {
       hash = ((hash << 5) - hash) + str.charCodeAt(i);
       hash |= 0;
@@ -647,18 +792,17 @@ function renderCertificateData(topicNum, studentName) {
   }
 }
 
-// 7. Robust Print / PDF Engine
+// 8. Robust Print / PDF Engine
 function printCertificate() {
   window.print();
 }
 
-// 8. Download Certificate as High-Definition Image (PNG) for mobile/iPhone saving
+// 9. Download Certificate as High-Definition Image (PNG)
 function downloadCertificateImage() {
   const printArea = document.getElementById('certificate-print-area');
   if (!printArea) return;
 
   if (typeof html2canvas === 'undefined') {
-    // Dynamically load html2canvas if not yet loaded
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
     script.onload = () => captureAndDownload(printArea);
