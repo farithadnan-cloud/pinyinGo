@@ -228,6 +228,9 @@
 
   </style>
 
+  <!-- Confetti & Certificate Module -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="js/certificate.js" defer></script>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-6">
@@ -276,9 +279,16 @@
 
 
 
-      <!-- Controls: Audio Speed & Drawer -->
-
-      <div class="flex items-center space-x-2">
+      <!-- Controls: Audio Speed, Certificate, Student Name & Drawer -->
+      <div class="flex items-center space-x-1.5 sm:space-x-2">
+        <button onclick="openTopicCertificate()" class="h-8 px-2 sm:px-2.5 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200/80 flex items-center space-x-1 text-xs font-black transition shadow-2xs" title="Lihat E-Sijil Pencapaian Topik Ini">
+          <span>📜</span>
+          <span class="text-[11px]">Sijil</span>
+        </button>
+        <button onclick="promptStudentName(true)" class="h-8 px-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80 flex items-center space-x-1 text-xs font-semibold max-w-[80px] sm:max-w-[110px] transition" title="Kemas Kini Profil Pelajar">
+          <span>👤</span>
+          <span id="header-student-name" class="truncate text-[11px]">Pelajar</span>
+        </button>
         <button onclick="toggleAudioSpeed()" class="h-8 px-2.5 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/60 flex items-center space-x-1 text-xs font-bold transition" title="Laras Kelajuan Suara Mandarin">
 
           <span>🔊</span>
@@ -3113,8 +3123,11 @@
           </div>
 
           <div class="flex flex-col sm:flex-row gap-2.5 justify-center">
-
-            <button onclick="restartVocab20()" class="py-3 px-5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs tracking-wide shadow-md transition">
+            <button onclick="openTopicCertificate()" class="py-3 px-5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-xs tracking-wide shadow-md shadow-amber-500/25 transition active:scale-95 flex items-center justify-center space-x-1.5">
+              <span>📜</span>
+              <span>Buka & Tuntut E-Sijil Topik</span>
+            </button>
+            <button onclick="restartVocab20()"  class="py-3 px-5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs tracking-wide shadow-md transition">
 
               🔄 Mulakan Semula (20 Soalan)
 
@@ -3339,7 +3352,11 @@
     function checkSentenceAction() {
       if (isSentenceChecked) {
         playBeep('click');
-        sentenceIndex = (sentenceIndex + 1) % SENTENCE_CHALLENGES.length;
+        if (sentenceIndex + 1 >= SENTENCE_CHALLENGES.length) {
+          showSentenceCompletionScreen();
+          return;
+        }
+        sentenceIndex = sentenceIndex + 1;
         loadSentenceChallenge();
         return;
       }
@@ -4045,6 +4062,44 @@
       loadVocabQuestion();
 
     });
+
+  
+    function showSentenceCompletionScreen() {
+      playBeep('success');
+      const view = document.getElementById('view-sentence-challenge');
+      if (!view) return;
+      view.innerHTML = `
+        <div class="glass-card rounded-3xl p-6 sm:p-8 text-center my-auto">
+          <div class="text-6xl mb-3">🎓</div>
+          <h2 class="text-2xl font-outfit font-black text-slate-900">Tahniah! Selesai 10 Pola Ayat</h2>
+          <p class="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
+            Hebat! Anda telah berjaya menyusun kesemua 10 pola ayat mengikut tatabahasa Mandarin dengan tepat.
+          </p>
+          <div class="my-6 grid grid-cols-2 gap-3 max-w-xs mx-auto">
+            <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-2xl">
+              <span class="text-xs text-slate-400 font-bold block">Pencapaian</span>
+              <span class="text-xl font-black text-indigo-700">10 / 10 ⭐</span>
+            </div>
+            <div class="bg-amber-50 border border-amber-100 p-3 rounded-2xl">
+              <span class="text-xs text-slate-400 font-bold block">Status Sijil</span>
+              <span class="text-xl font-black text-amber-700">Layak 📜</span>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2.5 justify-center">
+            <button onclick="openTopicCertificate()" class="py-3 px-5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 text-slate-950 font-black text-xs tracking-wide shadow-md shadow-amber-500/25 transition active:scale-95 flex items-center justify-center space-x-1.5">
+              <span>📜</span>
+              <span>Buka & Tuntut E-Sijil Topik</span>
+            </button>
+            <button onclick="sentenceIndex = 0; loadSentenceChallenge();" class="py-3 px-5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
+              🔄 Ulang Pola Ayat
+            </button>
+          </div>
+        </div>
+      `;
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+      }
+    }
 
   </script>
 

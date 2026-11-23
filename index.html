@@ -42,6 +42,9 @@
       transform: scale(0.98);
     }
   </style>
+  <!-- Confetti & Certificate Module -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="js/certificate.js" defer></script>
 </head>
 <body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-14">
 
@@ -60,8 +63,16 @@
           <p class="text-xs text-slate-500 font-semibold leading-tight">Latihan Bahasa Mandarin Kolej Vokasional (ELM 4322)</p>
         </div>
       </div>
-      <div class="text-right">
-        <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">7 Topik Lengkap</span>
+      <div class="flex items-center space-x-2">
+        <button onclick="openTopicCertificate(1)" class="h-8 px-2.5 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200/80 flex items-center space-x-1.5 text-xs font-bold transition shadow-xs" title="Lihat E-Sijil Pencapaian">
+          <span>📜</span>
+          <span class="font-extrabold">E-Sijil</span>
+        </button>
+        <button onclick="promptStudentName(true)" class="h-8 px-3 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 flex items-center space-x-1.5 text-xs font-bold transition shadow-xs" title="Kemas Kini Profil Pelajar">
+          <span>👤</span>
+          <span id="index-student-name" class="max-w-[110px] sm:max-w-[150px] truncate">Daftar Nama</span>
+          <span class="text-[10px] text-indigo-400">✏️</span>
+        </button>
       </div>
     </div>
   </header>
@@ -76,11 +87,21 @@
           🎓 Pembelajaran Interaktif Kendiri Murid
         </span>
         <h2 class="text-2xl sm:text-3xl font-outfit font-black leading-tight">
-          Selamat Datang ke PinyinGo
+          Selamat Datang<span id="hero-student-name"></span> ke PinyinGo
         </h2>
         <p class="text-xs sm:text-sm text-indigo-100 mt-1 max-w-md leading-relaxed">
           Pilih mana-mana topik di bawah untuk mula berlatih <strong>20 Soalan Bina Kata</strong> dan <strong>Semakan Sebutan Suara Mikrofon</strong> secara kendiri.
         </p>
+        <div class="mt-4 pt-3.5 border-t border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-indigo-100">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">🎓</span>
+            <span>E-Sijil Pencapaian Rasmi disediakan untuk setiap topik yang diselesaikan!</span>
+          </div>
+          <button onclick="openTopicCertificate(1)" class="self-start sm:self-auto px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs transition shadow-md flex items-center space-x-1.5 active:scale-95">
+            <span>📜</span>
+            <span>Buka E-Sijil Saya</span>
+          </button>
+        </div>
       </div>
       <!-- Background Decorative Motif -->
       <div class="absolute -right-4 -bottom-6 text-8xl opacity-15 select-none font-hanzi font-black">
