@@ -150,8 +150,8 @@
     "sentences": [
       {
         "target": "Berapakah harga satu kilogram epal?",
-        "explain": "Píngguǒ yī gōngjīn duōshao qián? (Berapakah harga satu kilogram epal?)",
-        "hint": "Formula: Buah + Kuantiti + 多少钱？"
+        "explain": "Yī gōngjīn píngguǒ duōshao qián? (Berapakah harga satu kilogram epal?)",
+        "hint": "Formula: Kuantiti + Buah + 多少钱？"
       },
       {
         "target": "Saya ingin beli dua kilogram epal.",
