@@ -668,10 +668,10 @@ function refreshChatDialogCard(topicNum) {
       scoreVal.innerText = `${curScore}/10 Markah (Penuh ⭐)`;
     } else if (curScore > 0 || sentencesPassed > 0) {
       scorePill.className = "px-2.5 py-1 rounded-xl bg-indigo-100 border border-indigo-300 text-indigo-900 text-xs font-black shadow-2xs whitespace-nowrap animate-in fade-in";
-      scoreVal.innerText = `${curScore}/10 Markah (${sentencesPassed}/${totalMessages} Lulus)`;
+      scoreVal.innerText = `${curScore}/10 Markah (${sentencesPassed}/${totalMessages} Ayat Selesai)`;
     } else {
       scorePill.className = "px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-300 text-slate-600 text-xs font-black shadow-2xs whitespace-nowrap";
-      scoreVal.innerText = `0/10 Markah (${sentencesPassed}/${totalMessages} Lulus)`;
+      scoreVal.innerText = `0/10 Markah (${sentencesPassed}/${totalMessages} Ayat Selesai)`;
     }
   }
 }

@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=23" defer></script>
+  <script src="js/certificate.js?v=24" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -576,39 +576,9 @@
       <div class="mb-8 sm:mb-10">
         <!-- Feedback Banner -->
 
-        <div id="action-feedback-box" class="hidden mb-3 p-3.5 rounded-2xl border transition">
-
-          <div class="flex items-start space-x-2.5">
-
-            <span class="text-2xl" id="feedback-status-icon">🎉</span>
-
-            <div class="flex-grow text-xs leading-relaxed">
-
-              <div class="font-bold text-sm" id="feedback-status-title">Hebat! Tepat Sekali</div>
-
-              <div class="mt-0.5" id="feedback-status-body">
-
-                <!-- Hanzi, Pinyin, Malay meaning -->
-
-              </div>
-
-            </div>
-
-            <button onclick="speakFullWord()" class="px-2.5 py-1.5 bg-white rounded-xl border border-slate-200 text-indigo-700 font-bold text-xs hover:bg-indigo-50 shadow-xs flex items-center space-x-1">
-
-              <span>🔊</span>
-
-              <span>Sebut</span>
-
-            </button>
-
-          </div>
-
-        </div>
-
-
-
-        <button id="btn-primary-action" onclick="handlePrimaryAction()" class="w-full py-4 rounded-2xl text-white font-outfit font-extrabold text-base sm:text-lg tracking-wide btn-gradient-primary flex items-center justify-center space-x-2 shadow-lg">
+        <div id="action-feedback-box" class="hidden mb-3.5 transition"></div>
+      </div>
+      <button id="btn-primary-action" onclick="handlePrimaryAction()" class="w-full py-4 rounded-2xl text-white font-outfit font-extrabold text-base sm:text-lg tracking-wide btn-gradient-primary flex items-center justify-center space-x-2 shadow-lg">
 
           <span id="btn-primary-text">Semak Jawapan</span>
 
@@ -2533,7 +2503,7 @@ function toggleAudioSpeed() {
 
       // Hide Feedback
 
-      document.getElementById('action-feedback-box').className = "hidden mb-3 p-3.5 rounded-2xl border transition";
+      const _fb = document.getElementById('action-feedback-box'); if (_fb) { _fb.className = 'hidden mb-3.5 transition'; _fb.innerHTML = ''; }
 
 
 
@@ -2543,9 +2513,7 @@ function toggleAudioSpeed() {
 
 
 
-      // Play audio of the first character automatically
-
-      setTimeout(() => speakChinese(q.char1), 250);
+      // Pre-listening removed to ensure authentic student answering
 
     }
 
@@ -2653,9 +2621,7 @@ function toggleAudioSpeed() {
 
 
 
-      // Voice preview of selected option
-
-      speakChinese(opt.char);
+      // Voice preview removed before checking
 
     }
 
@@ -2766,34 +2732,28 @@ function toggleAudioSpeed() {
 
         // Feedback with Hanzi + Pinyin + Audio
 
-        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50/95 text-emerald-950 shadow-xs";
-
-        document.getElementById('feedback-status-icon').innerText = "🎉";
-
-        document.getElementById('feedback-status-title').innerText = "Tahniah! Sebutan & Cantuman Tepat.";
-
-        document.getElementById('feedback-status-body').innerHTML = `
-
-          <div class="flex items-baseline space-x-2 my-0.5">
-
-            <span class="font-hanzi font-black text-lg text-emerald-900">${q.fullHz}</span>
-
-            <span class="font-sans font-black text-sm text-emerald-700">(${q.fullPy})</span>
-
+        feedbackBox.className = "block mb-3.5 p-4 rounded-2xl border-2 border-emerald-300 bg-emerald-50/90 text-emerald-950 shadow-sm animate-in fade-in";
+        feedbackBox.innerHTML = `
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-emerald-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black">
+              <span>🎉</span><span>Tepat Sekali! Cantuman Anda Betul</span>
+            </span>
+            <button onclick="speakChinese('${q.fullHz}')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan</span>
+            </button>
           </div>
-
-          <span class="text-xs text-emerald-800 font-medium">${q.explain}</span>
-
+          <div class="bg-white/95 rounded-xl p-3 border border-emerald-200 shadow-2xs">
+            <div class="text-[11px] font-black text-emerald-800 uppercase tracking-wider">JAWAPAN YANG BETUL (MODUL ELM 4322):</div>
+            <div class="font-hanzi font-black text-emerald-950 text-xl sm:text-2xl mt-1">${q.fullHz}</div>
+            <div class="text-xs font-bold text-emerald-700 font-sans mt-0.5">${q.fullPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.meaning}"</div>
+            <div class="text-[11px] text-emerald-900 bg-emerald-50 p-2 rounded-lg border border-emerald-200 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
+            </div>
+          </div>
         `;
 
-
-
-        // Speak full word immediately with Chinese TTS
-
         setTimeout(() => speakChinese(q.fullHz), 150);
-
-
-
         setPrimaryButtonState('next');
 
       } else {
@@ -2829,31 +2789,29 @@ function toggleAudioSpeed() {
           }
         });
 
-        feedbackBox.className = "block mb-3 p-3.5 rounded-2xl border-2 border-rose-300 bg-rose-50/95 text-rose-950 shadow-xs animate-in fade-in duration-200";
-        document.getElementById('feedback-status-icon').innerText = "❌";
-        document.getElementById('feedback-status-title').innerText = "Jawapan Kurang Tepat (Terkunci)";
-        document.getElementById('feedback-status-body').innerHTML = `
-          <div class="mt-1 space-y-1.5 text-xs">
-            <div class="flex items-center space-x-2">
-              <span class="text-rose-700 font-semibold">Pilihan Anda:</span>
-              <span class="px-2 py-0.5 rounded-lg bg-rose-200 text-rose-900 border border-rose-400 font-black font-sans line-through">
-                ${selectedVocabOption.py} (${selectedVocabOption.char})
-              </span>
-              <span class="text-[10px] text-rose-600 font-bold">❌ Salah</span>
+        feedbackBox.className = "block mb-3.5 p-4 rounded-2xl border-2 border-rose-300 bg-rose-50/90 text-rose-950 shadow-sm animate-in fade-in";
+        feedbackBox.innerHTML = `
+          <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-rose-200">
+            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-900 text-xs font-black">
+              <span>❌</span><span>Cantuman Belum Tepat</span>
+            </span>
+            <button onclick="speakChinese('${q.fullHz}')" class="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 shadow-xs transition active:scale-95">
+              <span>🔊</span><span>Dengar Sebutan Betul</span>
+            </button>
+          </div>
+          <div class="bg-white/95 rounded-xl p-3 border-2 border-indigo-200 shadow-2xs">
+            <div class="text-[11px] font-black text-indigo-700 uppercase tracking-wider flex items-center space-x-1">
+              <span>📌</span><span>Semakan Jawapan Yang Betul (Modul ELM 4322):</span>
             </div>
-            <div class="flex items-center space-x-2">
-              <span class="text-emerald-800 font-semibold">Jawapan Yang Betul:</span>
-              <button onclick="speakChinese('${correctOpt.char}')" class="px-2.5 py-1 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-950 border border-emerald-400 font-black font-sans flex items-center space-x-1 shadow-2xs">
-                <span>${correctOpt.py} (${correctOpt.char})</span>
-                <span class="text-[10px] ml-1">🔊</span>
-              </button>
-              <span class="text-[10px] text-emerald-700 font-bold">✅ Nada ${correctOpt.py}</span>
+            <div class="font-hanzi font-black text-indigo-950 text-xl sm:text-2xl mt-1">${q.fullHz}</div>
+            <div class="text-xs font-bold text-indigo-600 font-sans mt-0.5">${q.fullPy}</div>
+            <div class="text-xs text-slate-600 mt-1.5 font-semibold">Maksud: "${q.meaning}"</div>
+            <div class="text-[11px] text-slate-800 bg-indigo-50 p-2 rounded-lg border border-indigo-100 mt-2 font-medium">
+              💡 <strong>Huraian Tatabahasa:</strong> ${q.explain}
             </div>
           </div>
-          <p class="text-[11px] text-slate-600 mt-2 pt-1 border-t border-rose-200/80 leading-relaxed">${q.explain}</p>
-          <div class="text-[11px] font-bold text-rose-800 bg-rose-100/80 p-2 rounded-xl border border-rose-200 mt-2 flex items-center space-x-1.5">
-            <span>🔒</span>
-            <span>Jawapan telah direkodkan (tidak boleh diubah). Sila teliti jawapan betul di atas dan tekan butang di bawah untuk ke soalan seterusnya.</span>
+          <div class="mt-2.5 flex items-center justify-between text-xs text-slate-600">
+            <span>Jawapan telah disemak dan direkodkan (tidak boleh diubah). Sila teliti susunan yang betul di atas, kemudian tekan butang di bawah untuk meneruskan.</span>
           </div>
         `;
 
@@ -3147,9 +3105,7 @@ function toggleAudioSpeed() {
 
       selectedSentenceTokens.push(item);
 
-      renderSentenceChips();
-
-      speakChinese(item.hz);
+      renderSentenceChips(); // Pre-listening removed before checking
 
     }
 
