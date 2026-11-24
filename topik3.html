@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=22" defer></script>
+  <script src="js/certificate.js?v=23" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -486,13 +486,7 @@
 
 
 
-            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
-
-              <span>🔊</span>
-
-              <span>Dengar Audio</span>
-
-            </button>
+            
 
           </div>
 
@@ -518,21 +512,11 @@
 
             <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
 
-            <button onclick="speakCurrentPart(1)" class="group w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
-
+            <div class="w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 shadow-sm flex flex-col items-center justify-center relative">
               <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
-
-              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
-
-              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
-
-                <span>🔊</span>
-
-                <span>Dengar</span>
-
-              </span>
-
-            </button>
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5" id="capsule-char1">职</span>
+              <span class="text-[10px] text-slate-400 mt-1 font-semibold">Bahagian 1</span>
+            </div>
 
 
 
@@ -863,647 +847,327 @@
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
     const VOCAB_20_QUESTIONS = [
-  {
-    "targetMy": "hobi / kegemaran",
-    "char1": "爱",
-    "py1": "ài",
-    "char2": "好",
-    "py2": "hào",
-    "fullHz": "爱好",
-    "fullPy": "ài hào",
-    "explain": "爱 (ài - gemar) + 好 (hào) = 爱好 (àihào - hobi).",
-    "options": [
       {
-        "char": "好",
-        "py": "hào",
-        "isCorrect": true
+        targetMy: "hobi / kegemaran",
+        char1: "爱",
+        py1: "ài",
+        char2: "好",
+        py2: "hào",
+        fullHz: "爱好",
+        fullPy: "ài hào",
+        explain: "爱 (ài) + 好 (hào) = 爱好 (ài hào - hobi / kegemaran).",
+        options: [
+          { char: "事", py: "shì", isCorrect: false },
+          { char: "心", py: "xīn", isCorrect: false },
+          { char: "好", py: "hào", isCorrect: true },
+          { char: "物", py: "wù", isCorrect: false }
+        ]
       },
       {
-        "char": "情",
-        "py": "qíng",
-        "isCorrect": false
+        targetMy: "suka / gemar",
+        char1: "喜",
+        py1: "xǐ",
+        char2: "欢",
+        py2: "huan",
+        fullHz: "喜欢",
+        fullPy: "xǐ huan",
+        explain: "喜 (xǐ) + 欢 (huan) = 喜欢 (xǐ huan - suka / gemar).",
+        options: [
+          { char: "爱", py: "ài", isCorrect: false },
+          { char: "乐", py: "lè", isCorrect: false },
+          { char: "心", py: "xīn", isCorrect: false },
+          { char: "欢", py: "huan", isCorrect: true }
+        ]
       },
       {
-        "char": "心",
-        "py": "xīn",
-        "isCorrect": false
+        targetMy: "membaca buku",
+        char1: "看",
+        py1: "kàn",
+        char2: "书",
+        py2: "shū",
+        fullHz: "看书",
+        fullPy: "kàn shū",
+        explain: "看 (kàn) + 书 (shū) = 看书 (kàn shū - membaca buku).",
+        options: [
+          { char: "书", py: "shū", isCorrect: true },
+          { char: "球", py: "qiú", isCorrect: false },
+          { char: "戏", py: "xì", isCorrect: false },
+          { char: "画", py: "huà", isCorrect: false }
+        ]
       },
       {
-        "char": "人",
-        "py": "rén",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "suka / gemar",
-    "char1": "喜",
-    "py1": "xǐ",
-    "char2": "欢",
-    "py2": "huan",
-    "fullHz": "喜欢",
-    "fullPy": "xǐ huan",
-    "explain": "喜 (xǐ) + 欢 (huan) = 喜欢 (xǐhuan - suka).",
-    "options": [
-      {
-        "char": "欢",
-        "py": "huan",
-        "isCorrect": true
+        targetMy: "melukis lukisan",
+        char1: "画",
+        py1: "huà",
+        char2: "画",
+        py2: "huà",
+        fullHz: "画画",
+        fullPy: "huà huà",
+        explain: "画 (huà) + 画 (huà) = 画画 (huà huà - melukis lukisan).",
+        options: [
+          { char: "画", py: "huà", isCorrect: true },
+          { char: "图", py: "tú", isCorrect: false },
+          { char: "歌", py: "gē", isCorrect: false },
+          { char: "书", py: "shū", isCorrect: false }
+        ]
       },
       {
-        "char": "乐",
-        "py": "lè",
-        "isCorrect": false
+        targetMy: "menyanyi lagu",
+        char1: "唱",
+        py1: "chàng",
+        char2: "歌",
+        py2: "gē",
+        fullHz: "唱歌",
+        fullPy: "chàng gē",
+        explain: "唱 (chàng) + 歌 (gē) = 唱歌 (chàng gē - menyanyi lagu).",
+        options: [
+          { char: "戏", py: "xì", isCorrect: false },
+          { char: "画", py: "huà", isCorrect: false },
+          { char: "歌", py: "gē", isCorrect: true },
+          { char: "舞", py: "wǔ", isCorrect: false }
+        ]
       },
       {
-        "char": "悦",
-        "py": "yuè",
-        "isCorrect": false
+        targetMy: "menari tarian",
+        char1: "跳",
+        py1: "tiào",
+        char2: "舞",
+        py2: "wǔ",
+        fullHz: "跳舞",
+        fullPy: "tiào wǔ",
+        explain: "跳 (tiào) + 舞 (wǔ) = 跳舞 (tiào wǔ - menari tarian).",
+        options: [
+          { char: "球", py: "qiú", isCorrect: false },
+          { char: "步", py: "bù", isCorrect: false },
+          { char: "舞", py: "wǔ", isCorrect: true },
+          { char: "歌", py: "gē", isCorrect: false }
+        ]
       },
       {
-        "char": "笑",
-        "py": "xiào",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "membaca buku",
-    "char1": "看",
-    "py1": "kàn",
-    "char2": "书",
-    "py2": "shū",
-    "fullHz": "看书",
-    "fullPy": "kàn shū",
-    "explain": "看 (kàn - baca/tengok) + 书 (shū - buku) = 看书 (kànshū - membaca buku).",
-    "options": [
-      {
-        "char": "书",
-        "py": "shū",
-        "isCorrect": true
+        targetMy: "melayari internet",
+        char1: "上",
+        py1: "shàng",
+        char2: "网",
+        py2: "wǎng",
+        fullHz: "上网",
+        fullPy: "shàng wǎng",
+        explain: "上 (shàng) + 网 (wǎng) = 上网 (shàng wǎng - melayari internet).",
+        options: [
+          { char: "书", py: "shū", isCorrect: false },
+          { char: "线", py: "xiàn", isCorrect: false },
+          { char: "网", py: "wǎng", isCorrect: true },
+          { char: "课", py: "kè", isCorrect: false }
+        ]
       },
       {
-        "char": "报",
-        "py": "bào",
-        "isCorrect": false
+        targetMy: "bermain game",
+        char1: "玩",
+        py1: "wán",
+        char2: "游戏",
+        py2: "yóu xì",
+        fullHz: "玩游戏",
+        fullPy: "wán yóu xì",
+        explain: "玩 (wán) + 游戏 (yóu xì) = 玩游戏 (wán yóu xì - bermain game).",
+        options: [
+          { char: "书", py: "shū", isCorrect: false },
+          { char: "乐", py: "lè", isCorrect: false },
+          { char: "球", py: "qiú", isCorrect: false },
+          { char: "游戏", py: "yóu xì", isCorrect: true }
+        ]
       },
       {
-        "char": "文",
-        "py": "wén",
-        "isCorrect": false
+        targetMy: "bersukan / riadah",
+        char1: "运",
+        py1: "yùn",
+        char2: "动",
+        py2: "dòng",
+        fullHz: "运动",
+        fullPy: "yùn dòng",
+        explain: "运 (yùn) + 动 (dòng) = 运动 (yùn dòng - bersukan / riadah).",
+        options: [
+          { char: "动", py: "dòng", isCorrect: true },
+          { char: "场", py: "chǎng", isCorrect: false },
+          { char: "球", py: "qiú", isCorrect: false },
+          { char: "力", py: "lì", isCorrect: false }
+        ]
       },
       {
-        "char": "本",
-        "py": "běn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "melukis lukisan",
-    "char1": "画",
-    "py1": "huà",
-    "char2": "画",
-    "py2": "huà",
-    "fullHz": "画画",
-    "fullPy": "huà huà",
-    "explain": "画 (huà - lukis) + 画 (huà - lukisan) = 画画 (huàhuà - melukis).",
-    "options": [
-      {
-        "char": "画",
-        "py": "huà",
-        "isCorrect": true
+        targetMy: "bermain bola sepak",
+        char1: "踢",
+        py1: "tī",
+        char2: "足球",
+        py2: "zú qiú",
+        fullHz: "踢足球",
+        fullPy: "tī zú qiú",
+        explain: "踢 (tī) + 足球 (zú qiú) = 踢足球 (tī zú qiú - bermain bola sepak).",
+        options: [
+          { char: "藤球", py: "téng qiú", isCorrect: false },
+          { char: "排球", py: "pái qiú", isCorrect: false },
+          { char: "足球", py: "zú qiú", isCorrect: true },
+          { char: "篮球", py: "lán qiú", isCorrect: false }
+        ]
       },
       {
-        "char": "图",
-        "py": "tú",
-        "isCorrect": false
+        targetMy: "bermain sepak takraw",
+        char1: "踢",
+        py1: "tī",
+        char2: "藤球",
+        py2: "téng qiú",
+        fullHz: "踢藤球",
+        fullPy: "tī téng qiú",
+        explain: "踢 (tī) + 藤球 (téng qiú) = 踢藤球 (tī téng qiú - bermain sepak takraw).",
+        options: [
+          { char: "篮球", py: "lán qiú", isCorrect: false },
+          { char: "藤球", py: "téng qiú", isCorrect: true },
+          { char: "排球", py: "pái qiú", isCorrect: false },
+          { char: "足球", py: "zú qiú", isCorrect: false }
+        ]
       },
       {
-        "char": "写",
-        "py": "xiě",
-        "isCorrect": false
+        targetMy: "bermain badminton",
+        char1: "打",
+        py1: "dǎ",
+        char2: "羽毛球",
+        py2: "yǔ máo qiú",
+        fullHz: "打羽毛球",
+        fullPy: "dǎ yǔ máo qiú",
+        explain: "打 (dǎ) + 羽毛球 (yǔ máo qiú) = 打羽毛球 (dǎ yǔ máo qiú - bermain badminton).",
+        options: [
+          { char: "保龄球", py: "bǎo líng qiú", isCorrect: false },
+          { char: "篮球", py: "lán qiú", isCorrect: false },
+          { char: "羽毛球", py: "yǔ máo qiú", isCorrect: true },
+          { char: "排球", py: "pái qiú", isCorrect: false }
+        ]
       },
       {
-        "char": "笔",
-        "py": "bǐ",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "menyanyi lagu",
-    "char1": "唱",
-    "py1": "chàng",
-    "char2": "歌",
-    "py2": "gē",
-    "fullHz": "唱歌",
-    "fullPy": "chàng gē",
-    "explain": "唱 (chàng - dendang) + 歌 (gē - lagu) = 唱歌 (chànggē - menyanyi).",
-    "options": [
-      {
-        "char": "歌",
-        "py": "gē",
-        "isCorrect": true
+        targetMy: "bermain bola keranjang",
+        char1: "打",
+        py1: "dǎ",
+        char2: "篮球",
+        py2: "lán qiú",
+        fullHz: "打篮球",
+        fullPy: "dǎ lán qiú",
+        explain: "打 (dǎ) + 篮球 (lán qiú) = 打篮球 (dǎ lán qiú - bermain bola keranjang).",
+        options: [
+          { char: "足球", py: "zú qiú", isCorrect: false },
+          { char: "篮球", py: "lán qiú", isCorrect: true },
+          { char: "保龄球", py: "bǎo líng qiú", isCorrect: false },
+          { char: "排球", py: "pái qiú", isCorrect: false }
+        ]
       },
       {
-        "char": "曲",
-        "py": "qǔ",
-        "isCorrect": false
+        targetMy: "bermain bola tampar",
+        char1: "打",
+        py1: "dǎ",
+        char2: "排球",
+        py2: "pái qiú",
+        fullHz: "打排球",
+        fullPy: "dǎ pái qiú",
+        explain: "打 (dǎ) + 排球 (pái qiú) = 打排球 (dǎ pái qiú - bermain bola tampar).",
+        options: [
+          { char: "足球", py: "zú qiú", isCorrect: false },
+          { char: "排球", py: "pái qiú", isCorrect: true },
+          { char: "篮球", py: "lán qiú", isCorrect: false },
+          { char: "羽毛球", py: "yǔ máo qiú", isCorrect: false }
+        ]
       },
       {
-        "char": "声",
-        "py": "shēng",
-        "isCorrect": false
+        targetMy: "bermain ragbi",
+        char1: "打",
+        py1: "dǎ",
+        char2: "橄榄球",
+        py2: "gǎn lǎn qiú",
+        fullHz: "打橄榄球",
+        fullPy: "dǎ gǎn lǎn qiú",
+        explain: "打 (dǎ) + 橄榄球 (gǎn lǎn qiú) = 打橄榄球 (dǎ gǎn lǎn qiú - bermain ragbi).",
+        options: [
+          { char: "篮球", py: "lán qiú", isCorrect: false },
+          { char: "保龄球", py: "bǎo líng qiú", isCorrect: false },
+          { char: "排球", py: "pái qiú", isCorrect: false },
+          { char: "橄榄球", py: "gǎn lǎn qiú", isCorrect: true }
+        ]
       },
       {
-        "char": "乐",
-        "py": "lè",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "menari tarian",
-    "char1": "跳",
-    "py1": "tiào",
-    "char2": "舞",
-    "py2": "wǔ",
-    "fullHz": "跳舞",
-    "fullPy": "tiào wǔ",
-    "explain": "跳 (tiào - lompat/gerak) + 舞 (wǔ - tarian) = 跳舞 (tiàowǔ - menari).",
-    "options": [
-      {
-        "char": "舞",
-        "py": "wǔ",
-        "isCorrect": true
+        targetMy: "bermain boling",
+        char1: "打",
+        py1: "dǎ",
+        char2: "保龄球",
+        py2: "bǎo líng qiú",
+        fullHz: "打保龄球",
+        fullPy: "dǎ bǎo líng qiú",
+        explain: "打 (dǎ) + 保龄球 (bǎo líng qiú) = 打保龄球 (dǎ bǎo líng qiú - bermain boling).",
+        options: [
+          { char: "羽毛球", py: "yǔ máo qiú", isCorrect: false },
+          { char: "篮球", py: "lán qiú", isCorrect: false },
+          { char: "保龄球", py: "bǎo líng qiú", isCorrect: true },
+          { char: "排球", py: "pái qiú", isCorrect: false }
+        ]
       },
       {
-        "char": "步",
-        "py": "bù",
-        "isCorrect": false
+        targetMy: "berenang",
+        char1: "游",
+        py1: "yóu",
+        char2: "泳",
+        py2: "yǒng",
+        fullHz: "游泳",
+        fullPy: "yóu yǒng",
+        explain: "游 (yóu) + 泳 (yǒng) = 游泳 (yóu yǒng - berenang).",
+        options: [
+          { char: "步", py: "bù", isCorrect: false },
+          { char: "戏", py: "xì", isCorrect: false },
+          { char: "泳", py: "yǒng", isCorrect: true },
+          { char: "水", py: "shuǐ", isCorrect: false }
+        ]
       },
       {
-        "char": "绳",
-        "py": "shéng",
-        "isCorrect": false
+        targetMy: "berlari / joging",
+        char1: "跑",
+        py1: "pǎo",
+        char2: "步",
+        py2: "bù",
+        fullHz: "跑步",
+        fullPy: "pǎo bù",
+        explain: "跑 (pǎo) + 步 (bù) = 跑步 (pǎo bù - berlari / joging).",
+        options: [
+          { char: "步", py: "bù", isCorrect: true },
+          { char: "走", py: "zǒu", isCorrect: false },
+          { char: "跳", py: "tiào", isCorrect: false },
+          { char: "泳", py: "yǒng", isCorrect: false }
+        ]
       },
       {
-        "char": "动",
-        "py": "dòng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "melayari internet",
-    "char1": "上",
-    "py1": "shàng",
-    "char2": "网",
-    "py2": "wǎng",
-    "fullHz": "上网",
-    "fullPy": "shàng wǎng",
-    "explain": "上 (shàng) + 网 (wǎng - jaring/internet) = 上网 (shàngwǎng - internet).",
-    "options": [
-      {
-        "char": "网",
-        "py": "wǎng",
-        "isCorrect": true
+        targetMy: "padang",
+        char1: "操",
+        py1: "cāo",
+        char2: "场",
+        py2: "chǎng",
+        fullHz: "操场",
+        fullPy: "cāo chǎng",
+        explain: "操 (cāo) + 场 (chǎng) = 操场 (cāo chǎng - padang).",
+        options: [
+          { char: "院", py: "yuàn", isCorrect: false },
+          { char: "场", py: "chǎng", isCorrect: true },
+          { char: "馆", py: "guǎn", isCorrect: false },
+          { char: "室", py: "shì", isCorrect: false }
+        ]
       },
       {
-        "char": "线",
-        "py": "xiàn",
-        "isCorrect": false
+        targetMy: "mendengar muzik",
+        char1: "听",
+        py1: "tīng",
+        char2: "音乐",
+        py2: "yīn yuè",
+        fullHz: "听音乐",
+        fullPy: "tīng yīn yuè",
+        explain: "听 (tīng) + 音乐 (yīn yuè) = 听音乐 (tīng yīn yuè - mendengar muzik).",
+        options: [
+          { char: "音乐", py: "yīn yuè", isCorrect: true },
+          { char: "唱歌", py: "chàng gē", isCorrect: false },
+          { char: "上网", py: "shàng wǎng", isCorrect: false },
+          { char: "看书", py: "kàn shū", isCorrect: false }
+        ]
       },
-      {
-        "char": "电",
-        "py": "diàn",
-        "isCorrect": false
-      },
-      {
-        "char": "游",
-        "py": "yóu",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "permainan / game",
-    "char1": "游",
-    "py1": "yóu",
-    "char2": "戏",
-    "py2": "xì",
-    "fullHz": "游戏",
-    "fullPy": "yóu xì",
-    "explain": "游 (yóu) + 戏 (xì) = 游戏 (yóuxì - permainan/game).",
-    "options": [
-      {
-        "char": "戏",
-        "py": "xì",
-        "isCorrect": true
-      },
-      {
-        "char": "玩",
-        "py": "wán",
-        "isCorrect": false
-      },
-      {
-        "char": "乐",
-        "py": "lè",
-        "isCorrect": false
-      },
-      {
-        "char": "场",
-        "py": "chǎng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bersukan / riadah",
-    "char1": "运",
-    "py1": "yùn",
-    "char2": "动",
-    "py2": "dòng",
-    "fullHz": "运动",
-    "fullPy": "yùn dòng",
-    "explain": "运 (yùn) + 动 (dòng - gerak) = 运动 (yùndòng - bersukan).",
-    "options": [
-      {
-        "char": "动",
-        "py": "dòng",
-        "isCorrect": true
-      },
-      {
-        "char": "行",
-        "py": "xíng",
-        "isCorrect": false
-      },
-      {
-        "char": "转",
-        "py": "zhuǎn",
-        "isCorrect": false
-      },
-      {
-        "char": "作",
-        "py": "zuò",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bola sepak",
-    "char1": "足",
-    "py1": "zú",
-    "char2": "球",
-    "py2": "qiú",
-    "fullHz": "足球",
-    "fullPy": "zú qiú",
-    "explain": "足 (zú - kaki) + 球 (qiú - bola) = 足球 (zúqiú - bola sepak).",
-    "options": [
-      {
-        "char": "球",
-        "py": "qiú",
-        "isCorrect": true
-      },
-      {
-        "char": "皮",
-        "py": "pí",
-        "isCorrect": false
-      },
-      {
-        "char": "场",
-        "py": "chǎng",
-        "isCorrect": false
-      },
-      {
-        "char": "门",
-        "py": "mén",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "sepak takraw",
-    "char1": "藤",
-    "py1": "téng",
-    "char2": "球",
-    "py2": "qiú",
-    "fullHz": "藤球",
-    "fullPy": "téng qiú",
-    "explain": "藤 (téng - rotan) + 球 (qiú - bola) = 藤球 (téngqiú - sepak takraw).",
-    "options": [
-      {
-        "char": "球",
-        "py": "qiú",
-        "isCorrect": true
-      },
-      {
-        "char": "条",
-        "py": "tiáo",
-        "isCorrect": false
-      },
-      {
-        "char": "网",
-        "py": "wǎng",
-        "isCorrect": false
-      },
-      {
-        "char": "踢",
-        "py": "tī",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bulu tangkis / badminton",
-    "char1": "羽",
-    "py1": "yǔ",
-    "char2": "毛",
-    "py2": "máo",
-    "fullHz": "羽毛",
-    "fullPy": "yǔ máo",
-    "explain": "羽 (yǔ - bulu) + 毛 (máo) = 羽毛 (yǔmáo - bulu tangkis).",
-    "options": [
-      {
-        "char": "毛",
-        "py": "máo",
-        "isCorrect": true
-      },
-      {
-        "char": "翼",
-        "py": "yì",
-        "isCorrect": false
-      },
-      {
-        "char": "球",
-        "py": "qiú",
-        "isCorrect": false
-      },
-      {
-        "char": "拍",
-        "py": "pāi",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bola keranjang",
-    "char1": "篮",
-    "py1": "lán",
-    "char2": "球",
-    "py2": "qiú",
-    "fullHz": "篮球",
-    "fullPy": "lán qiú",
-    "explain": "篮 (lán - bakul) + 球 (qiú - bola) = 篮球 (lánqiú - bola keranjang).",
-    "options": [
-      {
-        "char": "球",
-        "py": "qiú",
-        "isCorrect": true
-      },
-      {
-        "char": "框",
-        "py": "kuàng",
-        "isCorrect": false
-      },
-      {
-        "char": "网",
-        "py": "wǎng",
-        "isCorrect": false
-      },
-      {
-        "char": "场",
-        "py": "chǎng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bola tampar",
-    "char1": "排",
-    "py1": "pái",
-    "char2": "球",
-    "py2": "qiú",
-    "fullHz": "排球",
-    "fullPy": "pái qiú",
-    "explain": "排 (pái) + 球 (qiú) = 排球 (páiqiú - bola tampar).",
-    "options": [
-      {
-        "char": "球",
-        "py": "qiú",
-        "isCorrect": true
-      },
-      {
-        "char": "队",
-        "py": "duì",
-        "isCorrect": false
-      },
-      {
-        "char": "行",
-        "py": "háng",
-        "isCorrect": false
-      },
-      {
-        "char": "打",
-        "py": "dǎ",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "sukan ragbi",
-    "char1": "橄",
-    "py1": "gǎn",
-    "char2": "榄",
-    "py2": "lǎn",
-    "fullHz": "橄榄",
-    "fullPy": "gǎn lǎn",
-    "explain": "橄榄 (gǎnlǎn - zaitun) + 球 = 橄榄球 (gǎnlǎnqiú - ragbi).",
-    "options": [
-      {
-        "char": "榄",
-        "py": "lǎn",
-        "isCorrect": true
-      },
-      {
-        "char": "球",
-        "py": "qiú",
-        "isCorrect": false
-      },
-      {
-        "char": "树",
-        "py": "shù",
-        "isCorrect": false
-      },
-      {
-        "char": "叶",
-        "py": "yè",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "boling",
-    "char1": "保",
-    "py1": "bǎo",
-    "char2": "龄",
-    "py2": "líng",
-    "fullHz": "保龄",
-    "fullPy": "bǎo líng",
-    "explain": "保 (bǎo) + 龄 (líng) + 球 = 保龄球 (bǎolíngqiú - boling).",
-    "options": [
-      {
-        "char": "龄",
-        "py": "líng",
-        "isCorrect": true
-      },
-      {
-        "char": "安",
-        "py": "ān",
-        "isCorrect": false
-      },
-      {
-        "char": "卫",
-        "py": "wèi",
-        "isCorrect": false
-      },
-      {
-        "char": "球",
-        "py": "qiú",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "berenang",
-    "char1": "游",
-    "py1": "yóu",
-    "char2": "泳",
-    "py2": "yǒng",
-    "fullHz": "游泳",
-    "fullPy": "yóu yǒng",
-    "explain": "游 (yóu) + 泳 (yǒng) = 游泳 (yóuyǒng - berenang).",
-    "options": [
-      {
-        "char": "泳",
-        "py": "yǒng",
-        "isCorrect": true
-      },
-      {
-        "char": "水",
-        "py": "shuǐ",
-        "isCorrect": false
-      },
-      {
-        "char": "池",
-        "py": "chí",
-        "isCorrect": false
-      },
-      {
-        "char": "玩",
-        "py": "wán",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "berlari / joging",
-    "char1": "跑",
-    "py1": "pǎo",
-    "char2": "步",
-    "py2": "bù",
-    "fullHz": "跑步",
-    "fullPy": "pǎo bù",
-    "explain": "跑 (pǎo - lari) + 步 (bù - langkah) = 跑步 (pǎobù - berlari).",
-    "options": [
-      {
-        "char": "步",
-        "py": "bù",
-        "isCorrect": true
-      },
-      {
-        "char": "道",
-        "py": "dào",
-        "isCorrect": false
-      },
-      {
-        "char": "走",
-        "py": "zǒu",
-        "isCorrect": false
-      },
-      {
-        "char": "跳",
-        "py": "tiào",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kawan / rakan",
-    "char1": "朋",
-    "py1": "péng",
-    "char2": "友",
-    "py2": "you",
-    "fullHz": "朋友",
-    "fullPy": "péng you",
-    "explain": "朋 (péng) + 友 (yǒu) = 朋友 (péngyou - kawan/rakan).",
-    "options": [
-      {
-        "char": "友",
-        "py": "you",
-        "isCorrect": true
-      },
-      {
-        "char": "伴",
-        "py": "bàn",
-        "isCorrect": false
-      },
-      {
-        "char": "生",
-        "py": "shēng",
-        "isCorrect": false
-      },
-      {
-        "char": "人",
-        "py": "rén",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "muzik",
-    "char1": "音",
-    "py1": "yīn",
-    "char2": "乐",
-    "py2": "yuè",
-    "fullHz": "音乐",
-    "fullPy": "yīn yuè",
-    "explain": "音 (yīn - bunyi) + 乐 (yuè - muzik) = 音乐 (yīnyuè - muzik).",
-    "options": [
-      {
-        "char": "乐",
-        "py": "yuè",
-        "isCorrect": true
-      },
-      {
-        "char": "声",
-        "py": "shēng",
-        "isCorrect": false
-      },
-      {
-        "char": "响",
-        "py": "xiǎng",
-        "isCorrect": false
-      },
-      {
-        "char": "歌",
-        "py": "gē",
-        "isCorrect": false
-      }
-    ]
-  }
-];
+    ];
 
     const SENTENCE_CHALLENGES = [
   {
@@ -2608,17 +2272,13 @@
 
 
 
-    /* ========== 2. AUDIO & FX ENGINE ========== */
+        /* ========== 2. AUDIO & FX ENGINE ========== */
 
-    let audioRate = 0.95;
+    let audioRate = 1.0;
+    const rates = [0.25, 0.5, 0.75, 1.0, 1.25];
+    let ratePointer = 3;
 
-    const rates = [0.75, 0.95, 1.15];
-
-    let ratePointer = 1;
-
-
-
-    function toggleAudioSpeed() {
+function toggleAudioSpeed() {
 
       ratePointer = (ratePointer + 1) % rates.length;
 
@@ -3282,23 +2942,11 @@
 
 
 
-    function speakCurrentQuestionPrompt() {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.fullHz);
-
-    }
+    function speakCurrentQuestionPrompt() { /* Audio disembunyikan sebelum menjawab */ }
 
 
 
-    function speakCurrentPart(part) {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.char1);
-
-    }
+    function speakCurrentPart(part) { /* Audio disembunyikan sebelum menjawab */ }
 
 
 

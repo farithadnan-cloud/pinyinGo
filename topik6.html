@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=22" defer></script>
+  <script src="js/certificate.js?v=23" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -486,13 +486,7 @@
 
 
 
-            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
-
-              <span>🔊</span>
-
-              <span>Dengar Audio</span>
-
-            </button>
+            
 
           </div>
 
@@ -518,21 +512,11 @@
 
             <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
 
-            <button onclick="speakCurrentPart(1)" class="group w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
-
+            <div class="w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 shadow-sm flex flex-col items-center justify-center relative">
               <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
-
-              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
-
-              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
-
-                <span>🔊</span>
-
-                <span>Dengar</span>
-
-              </span>
-
-            </button>
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5" id="capsule-char1">职</span>
+              <span class="text-[10px] text-slate-400 mt-1 font-semibold">Bahagian 1</span>
+            </div>
 
 
 
@@ -863,647 +847,327 @@
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
     const VOCAB_20_QUESTIONS = [
-  {
-    "targetMy": "lalu lintas / pengangkutan",
-    "char1": "交",
-    "py1": "jiāo",
-    "char2": "通",
-    "py2": "tōng",
-    "fullHz": "交通",
-    "fullPy": "jiāo tōng",
-    "explain": "交 (jiāo) + 通 (tōng - hubung) = 交通 (jiāotōng - lalu lintas/pengangkutan).",
-    "options": [
       {
-        "char": "通",
-        "py": "tōng",
-        "isCorrect": true
+        targetMy: "pengangkutan awam",
+        char1: "公共",
+        py1: "gōng gòng",
+        char2: "交通",
+        py2: "jiāo tōng",
+        fullHz: "公共交通",
+        fullPy: "gōng gòng jiāo tōng",
+        explain: "公共 (gōng gòng) + 交通 (jiāo tōng) = 公共交通 (gōng gòng jiāo tōng - pengangkutan awam).",
+        options: [
+          { char: "车站", py: "chē zhàn", isCorrect: false },
+          { char: "飞机", py: "fēi jī", isCorrect: false },
+          { char: "交通", py: "jiāo tōng", isCorrect: true },
+          { char: "车票", py: "chē piào", isCorrect: false }
+        ]
       },
       {
-        "char": "车",
-        "py": "chē",
-        "isCorrect": false
+        targetMy: "stesen kereta api",
+        char1: "火车",
+        py1: "huǒ chē",
+        char2: "站",
+        py2: "zhàn",
+        fullHz: "火车站",
+        fullPy: "huǒ chē zhàn",
+        explain: "火车 (huǒ chē) + 站 (zhàn) = 火车站 (huǒ chē zhàn - stesen kereta api).",
+        options: [
+          { char: "票", py: "piào", isCorrect: false },
+          { char: "站", py: "zhàn", isCorrect: true },
+          { char: "场", py: "chǎng", isCorrect: false },
+          { char: "路", py: "lù", isCorrect: false }
+        ]
       },
       {
-        "char": "道",
-        "py": "dào",
-        "isCorrect": false
+        targetMy: "stesen bas",
+        char1: "巴士",
+        py1: "bā shì",
+        char2: "站",
+        py2: "zhàn",
+        fullHz: "巴士站",
+        fullPy: "bā shì zhàn",
+        explain: "巴士 (bā shì) + 站 (zhàn) = 巴士站 (bā shì zhàn - stesen bas).",
+        options: [
+          { char: "票", py: "piào", isCorrect: false },
+          { char: "站", py: "zhàn", isCorrect: true },
+          { char: "路", py: "lù", isCorrect: false },
+          { char: "场", py: "chǎng", isCorrect: false }
+        ]
       },
       {
-        "char": "行",
-        "py": "xíng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kereta api",
-    "char1": "火",
-    "py1": "huǒ",
-    "char2": "车",
-    "py2": "chē",
-    "fullHz": "火车",
-    "fullPy": "huǒ chē",
-    "explain": "火 (huǒ - api) + 车 (chē - kenderaan) = 火车 (huǒchē - kereta api).",
-    "options": [
-      {
-        "char": "车",
-        "py": "chē",
-        "isCorrect": true
+        targetMy: "lapangan terbang",
+        char1: "机",
+        py1: "jī",
+        char2: "场",
+        py2: "chǎng",
+        fullHz: "机场",
+        fullPy: "jī chǎng",
+        explain: "机 (jī) + 场 (chǎng) = 机场 (jī chǎng - lapangan terbang).",
+        options: [
+          { char: "车", py: "chē", isCorrect: false },
+          { char: "场", py: "chǎng", isCorrect: true },
+          { char: "站", py: "zhàn", isCorrect: false },
+          { char: "票", py: "piào", isCorrect: false }
+        ]
       },
       {
-        "char": "机",
-        "py": "jī",
-        "isCorrect": false
+        targetMy: "Menara Berkembar KLCC",
+        char1: "双峰",
+        py1: "shuāng fēng",
+        char2: "塔",
+        py2: "tǎ",
+        fullHz: "双峰塔",
+        fullPy: "shuāng fēng tǎ",
+        explain: "双峰 (shuāng fēng) + 塔 (tǎ) = 双峰塔 (shuāng fēng tǎ - Menara Berkembar KLCC).",
+        options: [
+          { char: "馆", py: "guǎn", isCorrect: false },
+          { char: "楼", py: "lóu", isCorrect: false },
+          { char: "桥", py: "qiáo", isCorrect: false },
+          { char: "塔", py: "tǎ", isCorrect: true }
+        ]
       },
       {
-        "char": "轮",
-        "py": "lún",
-        "isCorrect": false
+        targetMy: "teksi",
+        char1: "出租",
+        py1: "chū zū",
+        char2: "车",
+        py2: "chē",
+        fullHz: "出租车",
+        fullPy: "chū zū chē",
+        explain: "出租 (chū zū) + 车 (chē) = 出租车 (chū zū chē - teksi).",
+        options: [
+          { char: "票", py: "piào", isCorrect: false },
+          { char: "车", py: "chē", isCorrect: true },
+          { char: "站", py: "zhàn", isCorrect: false },
+          { char: "场", py: "chǎng", isCorrect: false }
+        ]
       },
       {
-        "char": "船",
-        "py": "chuán",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "stesen kenderaan",
-    "char1": "车",
-    "py1": "chē",
-    "char2": "站",
-    "py2": "zhàn",
-    "fullHz": "车站",
-    "fullPy": "chē zhàn",
-    "explain": "车 (chē) + 站 (zhàn - hentian) = 车站 (chēzhàn - stesen).",
-    "options": [
-      {
-        "char": "站",
-        "py": "zhàn",
-        "isCorrect": true
+        targetMy: "kapal terbang",
+        char1: "飞",
+        py1: "fēi",
+        char2: "机",
+        py2: "jī",
+        fullHz: "飞机",
+        fullPy: "fēi jī",
+        explain: "飞 (fēi) + 机 (jī) = 飞机 (fēi jī - kapal terbang).",
+        options: [
+          { char: "车", py: "chē", isCorrect: false },
+          { char: "票", py: "piào", isCorrect: false },
+          { char: "船", py: "chuán", isCorrect: false },
+          { char: "机", py: "jī", isCorrect: true }
+        ]
       },
       {
-        "char": "场",
-        "py": "chǎng",
-        "isCorrect": false
+        targetMy: "MRT / LRT",
+        char1: "地",
+        py1: "dì",
+        char2: "铁",
+        py2: "tiě",
+        fullHz: "地铁",
+        fullPy: "dì tiě",
+        explain: "地 (dì) + 铁 (tiě) = 地铁 (dì tiě - MRT / LRT).",
+        options: [
+          { char: "车", py: "chē", isCorrect: false },
+          { char: "站", py: "zhàn", isCorrect: false },
+          { char: "路", py: "lù", isCorrect: false },
+          { char: "铁", py: "tiě", isCorrect: true }
+        ]
       },
       {
-        "char": "口",
-        "py": "kǒu",
-        "isCorrect": false
+        targetMy: "bagaimana",
+        char1: "怎",
+        py1: "zěn",
+        char2: "么",
+        py2: "me",
+        fullHz: "怎么",
+        fullPy: "zěn me",
+        explain: "怎 (zěn) + 么 (me) = 怎么 (zěn me - bagaimana).",
+        options: [
+          { char: "么", py: "me", isCorrect: true },
+          { char: "样", py: "yàng", isCorrect: false },
+          { char: "走", py: "zǒu", isCorrect: false },
+          { char: "好", py: "hǎo", isCorrect: false }
+        ]
       },
       {
-        "char": "门",
-        "py": "mén",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bas awam",
-    "char1": "巴",
-    "py1": "bā",
-    "char2": "士",
-    "py2": "shì",
-    "fullHz": "巴士",
-    "fullPy": "bā shì",
-    "explain": "巴 (bā) + 士 (shì) = 巴士 (bāshì - bas).",
-    "options": [
-      {
-        "char": "士",
-        "py": "shì",
-        "isCorrect": true
+        targetMy: "tiket kenderaan",
+        char1: "车",
+        py1: "chē",
+        char2: "票",
+        py2: "piào",
+        fullHz: "车票",
+        fullPy: "chē piào",
+        explain: "车 (chē) + 票 (piào) = 车票 (chē piào - tiket kenderaan).",
+        options: [
+          { char: "票", py: "piào", isCorrect: true },
+          { char: "费", py: "fèi", isCorrect: false },
+          { char: "站", py: "zhàn", isCorrect: false },
+          { char: "卡", py: "kǎ", isCorrect: false }
+        ]
       },
       {
-        "char": "车",
-        "py": "chē",
-        "isCorrect": false
+        targetMy: "berjalan kaki",
+        char1: "走",
+        py1: "zǒu",
+        char2: "路",
+        py2: "lù",
+        fullHz: "走路",
+        fullPy: "zǒu lù",
+        explain: "走 (zǒu) + 路 (lù) = 走路 (zǒu lù - berjalan kaki).",
+        options: [
+          { char: "车", py: "chē", isCorrect: false },
+          { char: "去", py: "qù", isCorrect: false },
+          { char: "路", py: "lù", isCorrect: true },
+          { char: "转", py: "zhuǎn", isCorrect: false }
+        ]
       },
       {
-        "char": "站",
-        "py": "zhàn",
-        "isCorrect": false
+        targetMy: "belok kiri",
+        char1: "左",
+        py1: "zuǒ",
+        char2: "转",
+        py2: "zhuǎn",
+        fullHz: "左转",
+        fullPy: "zuǒ zhuǎn",
+        explain: "左 (zuǒ) + 转 (zhuǎn) = 左转 (zuǒ zhuǎn - belok kiri).",
+        options: [
+          { char: "转", py: "zhuǎn", isCorrect: true },
+          { char: "走", py: "zǒu", isCorrect: false },
+          { char: "去", py: "qù", isCorrect: false },
+          { char: "回", py: "huí", isCorrect: false }
+        ]
       },
       {
-        "char": "人",
-        "py": "rén",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "lapangan terbang",
-    "char1": "机",
-    "py1": "jī",
-    "char2": "场",
-    "py2": "chǎng",
-    "fullHz": "机场",
-    "fullPy": "jī chǎng",
-    "explain": "机 (jī - pesawat) + 场 (chǎng - medan) = 机场 (jīchǎng - lapangan terbang).",
-    "options": [
-      {
-        "char": "场",
-        "py": "chǎng",
-        "isCorrect": true
+        targetMy: "belok kanan",
+        char1: "右",
+        py1: "yòu",
+        char2: "转",
+        py2: "zhuǎn",
+        fullHz: "右转",
+        fullPy: "yòu zhuǎn",
+        explain: "右 (yòu) + 转 (zhuǎn) = 右转 (yòu zhuǎn - belok kanan).",
+        options: [
+          { char: "转", py: "zhuǎn", isCorrect: true },
+          { char: "走", py: "zǒu", isCorrect: false },
+          { char: "去", py: "qù", isCorrect: false },
+          { char: "回", py: "huí", isCorrect: false }
+        ]
       },
       {
-        "char": "站",
-        "py": "zhàn",
-        "isCorrect": false
+        targetMy: "jalan terus",
+        char1: "直",
+        py1: "zhí",
+        char2: "走",
+        py2: "zǒu",
+        fullHz: "直走",
+        fullPy: "zhí zǒu",
+        explain: "直 (zhí) + 走 (zǒu) = 直走 (zhí zǒu - jalan terus).",
+        options: [
+          { char: "前", py: "qián", isCorrect: false },
+          { char: "走", py: "zǒu", isCorrect: true },
+          { char: "去", py: "qù", isCorrect: false },
+          { char: "转", py: "zhuǎn", isCorrect: false }
+        ]
       },
       {
-        "char": "馆",
-        "py": "guǎn",
-        "isCorrect": false
+        targetMy: "ke hadapan",
+        char1: "往",
+        py1: "wǎng",
+        char2: "前",
+        py2: "qián",
+        fullHz: "往前",
+        fullPy: "wǎng qián",
+        explain: "往 (wǎng) + 前 (qián) = 往前 (wǎng qián - ke hadapan).",
+        options: [
+          { char: "前", py: "qián", isCorrect: true },
+          { char: "右", py: "yòu", isCorrect: false },
+          { char: "左", py: "zuǒ", isCorrect: false },
+          { char: "后", py: "hòu", isCorrect: false }
+        ]
       },
       {
-        "char": "口",
-        "py": "kǒu",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kapal terbang",
-    "char1": "飞",
-    "py1": "fēi",
-    "char2": "机",
-    "py2": "jī",
-    "fullHz": "飞机",
-    "fullPy": "fēi jī",
-    "explain": "飞 (fēi - terbang) + 机 (jī - jentera) = 飞机 (fēijī - kapal terbang).",
-    "options": [
-      {
-        "char": "机",
-        "py": "jī",
-        "isCorrect": true
+        targetMy: "kemudian",
+        char1: "然",
+        py1: "rán",
+        char2: "后",
+        py2: "hòu",
+        fullHz: "然后",
+        fullPy: "rán hòu",
+        explain: "然 (rán) + 后 (hòu) = 然后 (rán hòu - kemudian).",
+        options: [
+          { char: "前", py: "qián", isCorrect: false },
+          { char: "直", py: "zhí", isCorrect: false },
+          { char: "往", py: "wǎng", isCorrect: false },
+          { char: "后", py: "hòu", isCorrect: true }
+        ]
       },
       {
-        "char": "车",
-        "py": "chē",
-        "isCorrect": false
+        targetMy: "naik kenderaan",
+        char1: "坐",
+        py1: "zuò",
+        char2: "车",
+        py2: "chē",
+        fullHz: "坐车",
+        fullPy: "zuò chē",
+        explain: "坐 (zuò) + 车 (chē) = 坐车 (zuò chē - naik kenderaan).",
+        options: [
+          { char: "机", py: "jī", isCorrect: false },
+          { char: "走", py: "zǒu", isCorrect: false },
+          { char: "车", py: "chē", isCorrect: true },
+          { char: "去", py: "qù", isCorrect: false }
+        ]
       },
       {
-        "char": "艇",
-        "py": "tǐng",
-        "isCorrect": false
+        targetMy: "bagaimana pergi",
+        char1: "怎么",
+        py1: "zěn me",
+        char2: "去",
+        py2: "qù",
+        fullHz: "怎么去",
+        fullPy: "zěn me qù",
+        explain: "怎么 (zěn me) + 去 (qù) = 怎么去 (zěn me qù - bagaimana pergi).",
+        options: [
+          { char: "去", py: "qù", isCorrect: true },
+          { char: "走", py: "zǒu", isCorrect: false },
+          { char: "到", py: "dào", isCorrect: false },
+          { char: "坐", py: "zuò", isCorrect: false }
+        ]
       },
       {
-        "char": "鸟",
-        "py": "niǎo",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kereta api bawah tanah / LRT",
-    "char1": "地",
-    "py1": "dì",
-    "char2": "铁",
-    "py2": "tiě",
-    "fullHz": "地铁",
-    "fullPy": "dì tiě",
-    "explain": "地 (dì - tanah) + 铁 (tiě - rel besi) = 地铁 (dìtiě - MRT/LRT/metro).",
-    "options": [
-      {
-        "char": "铁",
-        "py": "tiě",
-        "isCorrect": true
+        targetMy: "dari... sampai...",
+        char1: "从",
+        py1: "cóng",
+        char2: "到",
+        py2: "dào",
+        fullHz: "从到",
+        fullPy: "cóng dào",
+        explain: "从 (cóng) + 到 (dào) = 从到 (cóng dào - dari... sampai...).",
+        options: [
+          { char: "往", py: "wǎng", isCorrect: false },
+          { char: "到", py: "dào", isCorrect: true },
+          { char: "去", py: "qù", isCorrect: false },
+          { char: "来", py: "lái", isCorrect: false }
+        ]
       },
       {
-        "char": "道",
-        "py": "dào",
-        "isCorrect": false
+        targetMy: "jauh dan dekat",
+        char1: "远",
+        py1: "yuǎn",
+        char2: "近",
+        py2: "jìn",
+        fullHz: "远近",
+        fullPy: "yuǎn jìn",
+        explain: "远 (yuǎn) + 近 (jìn) = 远近 (yuǎn jìn - jauh dan dekat).",
+        options: [
+          { char: "慢", py: "màn", isCorrect: false },
+          { char: "快", py: "kuài", isCorrect: false },
+          { char: "长", py: "cháng", isCorrect: false },
+          { char: "近", py: "jìn", isCorrect: true }
+        ]
       },
-      {
-        "char": "车",
-        "py": "chē",
-        "isCorrect": false
-      },
-      {
-        "char": "轨",
-        "py": "guǐ",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "teksi (kereta sewa)",
-    "char1": "出",
-    "py1": "chū",
-    "char2": "租",
-    "py2": "zū",
-    "fullHz": "出租",
-    "fullPy": "chū zū",
-    "explain": "出 (chū) + 租 (zū - sewa) + 车 = 出租车 (chūzūchē - teksi).",
-    "options": [
-      {
-        "char": "租",
-        "py": "zū",
-        "isCorrect": true
-      },
-      {
-        "char": "借",
-        "py": "jiè",
-        "isCorrect": false
-      },
-      {
-        "char": "卖",
-        "py": "mài",
-        "isCorrect": false
-      },
-      {
-        "char": "赁",
-        "py": "lìn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kembar (Menara Berkembar)",
-    "char1": "双",
-    "py1": "shuāng",
-    "char2": "峰",
-    "py2": "fēng",
-    "fullHz": "双峰",
-    "fullPy": "shuāng fēng",
-    "explain": "双 (shuāng - sepasang) + 峰 (fēng - puncak) + 塔 = 双峰塔 (KLCC).",
-    "options": [
-      {
-        "char": "峰",
-        "py": "fēng",
-        "isCorrect": true
-      },
-      {
-        "char": "高",
-        "py": "gāo",
-        "isCorrect": false
-      },
-      {
-        "char": "楼",
-        "py": "lóu",
-        "isCorrect": false
-      },
-      {
-        "char": "塔",
-        "py": "tǎ",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "jalan terus",
-    "char1": "直",
-    "py1": "zhí",
-    "char2": "走",
-    "py2": "zǒu",
-    "fullHz": "直走",
-    "fullPy": "zhí zǒu",
-    "explain": "直 (zhí - lurus) + 走 (zǒu - jalan) = 直走 (zhízǒu - jalan terus).",
-    "options": [
-      {
-        "char": "走",
-        "py": "zǒu",
-        "isCorrect": true
-      },
-      {
-        "char": "去",
-        "py": "qù",
-        "isCorrect": false
-      },
-      {
-        "char": "前",
-        "py": "qián",
-        "isCorrect": false
-      },
-      {
-        "char": "行",
-        "py": "xíng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "belok kiri",
-    "char1": "左",
-    "py1": "zuǒ",
-    "char2": "转",
-    "py2": "zhuǎn",
-    "fullHz": "左转",
-    "fullPy": "zuǒ zhuǎn",
-    "explain": "左 (zuǒ - kiri) + 转 (zhuǎn - pusing/belok) = 左转 (zuǒzhuǎn - belok kiri).",
-    "options": [
-      {
-        "char": "转",
-        "py": "zhuǎn",
-        "isCorrect": true
-      },
-      {
-        "char": "边",
-        "py": "biān",
-        "isCorrect": false
-      },
-      {
-        "char": "拐",
-        "py": "guǎi",
-        "isCorrect": false
-      },
-      {
-        "char": "手",
-        "py": "shǒu",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "belok kanan",
-    "char1": "右",
-    "py1": "yòu",
-    "char2": "转",
-    "py2": "zhuǎn",
-    "fullHz": "右转",
-    "fullPy": "yòu zhuǎn",
-    "explain": "右 (yòu - kanan) + 转 (zhuǎn - belok) = 右转 (yòuzhuǎn - belok kanan).",
-    "options": [
-      {
-        "char": "转",
-        "py": "zhuǎn",
-        "isCorrect": true
-      },
-      {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": false
-      },
-      {
-        "char": "拐",
-        "py": "guǎi",
-        "isCorrect": false
-      },
-      {
-        "char": "直",
-        "py": "zhí",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "ke hadapan",
-    "char1": "往",
-    "py1": "wǎng",
-    "char2": "前",
-    "py2": "qián",
-    "fullHz": "往前",
-    "fullPy": "wǎng qián",
-    "explain": "往 (wǎng - hala) + 前 (qián - depan) = 往前 (wǎngqián - mara ke hadapan).",
-    "options": [
-      {
-        "char": "前",
-        "py": "qián",
-        "isCorrect": true
-      },
-      {
-        "char": "后",
-        "py": "hòu",
-        "isCorrect": false
-      },
-      {
-        "char": "左",
-        "py": "zuǒ",
-        "isCorrect": false
-      },
-      {
-        "char": "右",
-        "py": "yòu",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kemudian",
-    "char1": "然",
-    "py1": "rán",
-    "char2": "后",
-    "py2": "hòu",
-    "fullHz": "然后",
-    "fullPy": "rán hòu",
-    "explain": "然 (rán) + 后 (hòu - selepas) = 然后 (ránhòu - kemudian).",
-    "options": [
-      {
-        "char": "后",
-        "py": "hòu",
-        "isCorrect": true
-      },
-      {
-        "char": "而",
-        "py": "ér",
-        "isCorrect": false
-      },
-      {
-        "char": "自",
-        "py": "zì",
-        "isCorrect": false
-      },
-      {
-        "char": "前",
-        "py": "qián",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "berjalan kaki",
-    "char1": "走",
-    "py1": "zǒu",
-    "char2": "路",
-    "py2": "lù",
-    "fullHz": "走路",
-    "fullPy": "zǒu lù",
-    "explain": "走 (zǒu - jalan) + 路 (lù - jalan) = 走路 (zǒulù - jalan kaki).",
-    "options": [
-      {
-        "char": "路",
-        "py": "lù",
-        "isCorrect": true
-      },
-      {
-        "char": "道",
-        "py": "dào",
-        "isCorrect": false
-      },
-      {
-        "char": "行",
-        "py": "xíng",
-        "isCorrect": false
-      },
-      {
-        "char": "街",
-        "py": "jiē",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "tiket tambang",
-    "char1": "车",
-    "py1": "chē",
-    "char2": "票",
-    "py2": "piào",
-    "fullHz": "车票",
-    "fullPy": "chē piào",
-    "explain": "车 (chē - kenderaan) + 票 (piào - tiket) = 车票 (chēpiào - tiket kenderaan).",
-    "options": [
-      {
-        "char": "票",
-        "py": "piào",
-        "isCorrect": true
-      },
-      {
-        "char": "券",
-        "py": "quàn",
-        "isCorrect": false
-      },
-      {
-        "char": "单",
-        "py": "dān",
-        "isCorrect": false
-      },
-      {
-        "char": "卡",
-        "py": "kǎ",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "jauh dan dekat",
-    "char1": "远",
-    "py1": "yuǎn",
-    "char2": "近",
-    "py2": "jìn",
-    "fullHz": "远近",
-    "fullPy": "yuǎn jìn",
-    "explain": "远 (yuǎn - jauh) + 近 (jìn - dekat) = 远近 (yuǎnjìn - jarak jauh dekat).",
-    "options": [
-      {
-        "char": "近",
-        "py": "jìn",
-        "isCorrect": true
-      },
-      {
-        "char": "方",
-        "py": "fāng",
-        "isCorrect": false
-      },
-      {
-        "char": "处",
-        "py": "chù",
-        "isCorrect": false
-      },
-      {
-        "char": "程",
-        "py": "chéng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "mudah / senang",
-    "char1": "方",
-    "py1": "fāng",
-    "char2": "便",
-    "py2": "biàn",
-    "fullHz": "方便",
-    "fullPy": "fāng biàn",
-    "explain": "方 (fāng) + 便 (biàn) = 方便 (fāngbiàn - mudah/senang).",
-    "options": [
-      {
-        "char": "便",
-        "py": "biàn",
-        "isCorrect": true
-      },
-      {
-        "char": "利",
-        "py": "lì",
-        "isCorrect": false
-      },
-      {
-        "char": "法",
-        "py": "fǎ",
-        "isCorrect": false
-      },
-      {
-        "char": "向",
-        "py": "xiàng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bagaimana (cara)",
-    "char1": "怎",
-    "py1": "zěn",
-    "char2": "么",
-    "py2": "me",
-    "fullHz": "怎么",
-    "fullPy": "zěn me",
-    "explain": "怎 (zěn) + 么 (me) = 怎么 (zěnme - bagaimana cara).",
-    "options": [
-      {
-        "char": "么",
-        "py": "me",
-        "isCorrect": true
-      },
-      {
-        "char": "样",
-        "py": "yàng",
-        "isCorrect": false
-      },
-      {
-        "char": "做",
-        "py": "zuò",
-        "isCorrect": false
-      },
-      {
-        "char": "行",
-        "py": "xíng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "simpang empat",
-    "char1": "十",
-    "py1": "shí",
-    "char2": "字",
-    "py2": "zì",
-    "fullHz": "十字",
-    "fullPy": "shí zì",
-    "explain": "十 (shí - bentuk salib) + 字 (zì) + 路口 = 十字路口 (shízì lùkǒu - simpang 4).",
-    "options": [
-      {
-        "char": "字",
-        "py": "zì",
-        "isCorrect": true
-      },
-      {
-        "char": "口",
-        "py": "kǒu",
-        "isCorrect": false
-      },
-      {
-        "char": "形",
-        "py": "xíng",
-        "isCorrect": false
-      },
-      {
-        "char": "路",
-        "py": "lù",
-        "isCorrect": false
-      }
-    ]
-  }
-];
+    ];
 
     const SENTENCE_CHALLENGES = [
   {
@@ -2600,17 +2264,13 @@
 
 
 
-    /* ========== 2. AUDIO & FX ENGINE ========== */
+        /* ========== 2. AUDIO & FX ENGINE ========== */
 
-    let audioRate = 0.95;
+    let audioRate = 1.0;
+    const rates = [0.25, 0.5, 0.75, 1.0, 1.25];
+    let ratePointer = 3;
 
-    const rates = [0.75, 0.95, 1.15];
-
-    let ratePointer = 1;
-
-
-
-    function toggleAudioSpeed() {
+function toggleAudioSpeed() {
 
       ratePointer = (ratePointer + 1) % rates.length;
 
@@ -3274,23 +2934,11 @@
 
 
 
-    function speakCurrentQuestionPrompt() {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.fullHz);
-
-    }
+    function speakCurrentQuestionPrompt() { /* Audio disembunyikan sebelum menjawab */ }
 
 
 
-    function speakCurrentPart(part) {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.char1);
-
-    }
+    function speakCurrentPart(part) { /* Audio disembunyikan sebelum menjawab */ }
 
 
 

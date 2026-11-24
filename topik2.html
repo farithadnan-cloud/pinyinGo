@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=22" defer></script>
+  <script src="js/certificate.js?v=23" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -486,13 +486,7 @@
 
 
 
-            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
-
-              <span>🔊</span>
-
-              <span>Dengar Audio</span>
-
-            </button>
+            
 
           </div>
 
@@ -518,21 +512,11 @@
 
             <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
 
-            <button onclick="speakCurrentPart(1)" class="group w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
-
+            <div class="w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 shadow-sm flex flex-col items-center justify-center relative">
               <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
-
-              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
-
-              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
-
-                <span>🔊</span>
-
-                <span>Dengar</span>
-
-              </span>
-
-            </button>
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5" id="capsule-char1">职</span>
+              <span class="text-[10px] text-slate-400 mt-1 font-semibold">Bahagian 1</span>
+            </div>
 
 
 
@@ -863,647 +847,327 @@
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
     const VOCAB_20_QUESTIONS = [
-  {
-    "targetMy": "baju / pakaian",
-    "char1": "衣",
-    "py1": "yī",
-    "char2": "服",
-    "py2": "fu",
-    "fullHz": "衣服",
-    "fullPy": "yī fu",
-    "explain": "衣 (yī) + 服 (fu) = 衣服 (yīfu - pakaian/baju).",
-    "options": [
       {
-        "char": "服",
-        "py": "fu",
-        "isCorrect": true
+        targetMy: "baju / pakaian",
+        char1: "衣",
+        py1: "yī",
+        char2: "服",
+        py2: "fu",
+        fullHz: "衣服",
+        fullPy: "yī fu",
+        explain: "衣 (yī) + 服 (fu) = 衣服 (yī fu - baju / pakaian).",
+        options: [
+          { char: "服", py: "fu", isCorrect: true },
+          { char: "裤", py: "kù", isCorrect: false },
+          { char: "色", py: "sè", isCorrect: false },
+          { char: "鞋", py: "xié", isCorrect: false }
+        ]
       },
       {
-        "char": "裤",
-        "py": "kù",
-        "isCorrect": false
+        targetMy: "seluar",
+        char1: "裤",
+        py1: "kù",
+        char2: "子",
+        py2: "zi",
+        fullHz: "裤子",
+        fullPy: "kù zi",
+        explain: "裤 (kù) + 子 (zi) = 裤子 (kù zi - seluar).",
+        options: [
+          { char: "衫", py: "shān", isCorrect: false },
+          { char: "服", py: "fu", isCorrect: false },
+          { char: "条", py: "tiáo", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: true }
+        ]
       },
       {
-        "char": "鞋",
-        "py": "xié",
-        "isCorrect": false
+        targetMy: "kasut kulit",
+        char1: "皮",
+        py1: "pí",
+        char2: "鞋",
+        py2: "xié",
+        fullHz: "皮鞋",
+        fullPy: "pí xié",
+        explain: "皮 (pí) + 鞋 (xié) = 皮鞋 (pí xié - kasut kulit).",
+        options: [
+          { char: "鞋", py: "xié", isCorrect: true },
+          { char: "服", py: "fu", isCorrect: false },
+          { char: "包", py: "bāo", isCorrect: false },
+          { char: "带", py: "dài", isCorrect: false }
+        ]
       },
       {
-        "char": "色",
-        "py": "sè",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "seluar",
-    "char1": "裤",
-    "py1": "kù",
-    "char2": "子",
-    "py2": "zi",
-    "fullHz": "裤子",
-    "fullPy": "kù zi",
-    "explain": "裤 (kù - seluar) + 子 (zi) = 裤子 (kùzi - seluar).",
-    "options": [
-      {
-        "char": "子",
-        "py": "zi",
-        "isCorrect": true
+        targetMy: "kemeja / baju",
+        char1: "衬",
+        py1: "chèn",
+        char2: "衫",
+        py2: "shān",
+        fullHz: "衬衫",
+        fullPy: "chèn shān",
+        explain: "衬 (chèn) + 衫 (shān) = 衬衫 (chèn shān - kemeja / baju).",
+        options: [
+          { char: "裤", py: "kù", isCorrect: false },
+          { char: "衫", py: "shān", isCorrect: true },
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "衣", py: "yī", isCorrect: false }
+        ]
       },
       {
-        "char": "服",
-        "py": "fu",
-        "isCorrect": false
+        targetMy: "skirt / gaun",
+        char1: "裙",
+        py1: "qún",
+        char2: "子",
+        py2: "zi",
+        fullHz: "裙子",
+        fullPy: "qún zi",
+        explain: "裙 (qún) + 子 (zi) = 裙子 (qún zi - skirt / gaun).",
+        options: [
+          { char: "裤", py: "kù", isCorrect: false },
+          { char: "服", py: "fu", isCorrect: false },
+          { char: "条", py: "tiáo", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: true }
+        ]
       },
       {
-        "char": "条",
-        "py": "tiáo",
-        "isCorrect": false
+        targetMy: "warna",
+        char1: "颜",
+        py1: "yán",
+        char2: "色",
+        py2: "sè",
+        fullHz: "颜色",
+        fullPy: "yán sè",
+        explain: "颜 (yán) + 色 (sè) = 颜色 (yán sè - warna).",
+        options: [
+          { char: "色", py: "sè", isCorrect: true },
+          { char: "样", py: "yàng", isCorrect: false },
+          { char: "服", py: "fu", isCorrect: false },
+          { char: "号", py: "hào", isCorrect: false }
+        ]
       },
       {
-        "char": "衫",
-        "py": "shān",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kemeja",
-    "char1": "衬",
-    "py1": "chèn",
-    "char2": "衫",
-    "py2": "shān",
-    "fullHz": "衬衫",
-    "fullPy": "chèn shān",
-    "explain": "衬 (chèn) + 衫 (shān - baju) = 衬衫 (chènshān - kemeja).",
-    "options": [
-      {
-        "char": "衫",
-        "py": "shān",
-        "isCorrect": true
+        targetMy: "warna merah",
+        char1: "红",
+        py1: "hóng",
+        char2: "色",
+        py2: "sè",
+        fullHz: "红色",
+        fullPy: "hóng sè",
+        explain: "红 (hóng) + 色 (sè) = 红色 (hóng sè - warna merah).",
+        options: [
+          { char: "色", py: "sè", isCorrect: true },
+          { char: "鞋", py: "xié", isCorrect: false },
+          { char: "号", py: "hào", isCorrect: false },
+          { char: "衣", py: "yī", isCorrect: false }
+        ]
       },
       {
-        "char": "衣",
-        "py": "yī",
-        "isCorrect": false
+        targetMy: "warna putih",
+        char1: "白",
+        py1: "bái",
+        char2: "色",
+        py2: "sè",
+        fullHz: "白色",
+        fullPy: "bái sè",
+        explain: "白 (bái) + 色 (sè) = 白色 (bái sè - warna putih).",
+        options: [
+          { char: "色", py: "sè", isCorrect: true },
+          { char: "鞋", py: "xié", isCorrect: false },
+          { char: "号", py: "hào", isCorrect: false },
+          { char: "衣", py: "yī", isCorrect: false }
+        ]
       },
       {
-        "char": "子",
-        "py": "zi",
-        "isCorrect": false
+        targetMy: "warna hitam",
+        char1: "黑",
+        py1: "hēi",
+        char2: "色",
+        py2: "sè",
+        fullHz: "黑色",
+        fullPy: "hēi sè",
+        explain: "黑 (hēi) + 色 (sè) = 黑色 (hēi sè - warna hitam).",
+        options: [
+          { char: "衣", py: "yī", isCorrect: false },
+          { char: "色", py: "sè", isCorrect: true },
+          { char: "鞋", py: "xié", isCorrect: false },
+          { char: "号", py: "hào", isCorrect: false }
+        ]
       },
       {
-        "char": "皮",
-        "py": "pí",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "skirt / gaun",
-    "char1": "裙",
-    "py1": "qún",
-    "char2": "子",
-    "py2": "zi",
-    "fullHz": "裙子",
-    "fullPy": "qún zi",
-    "explain": "裙 (qún - skirt) + 子 (zi) = 裙子 (qúnzi - skirt/gaun).",
-    "options": [
-      {
-        "char": "子",
-        "py": "zi",
-        "isCorrect": true
+        targetMy: "cantik",
+        char1: "漂",
+        py1: "piào",
+        char2: "亮",
+        py2: "liang",
+        fullHz: "漂亮",
+        fullPy: "piào liang",
+        explain: "漂 (piào) + 亮 (liang) = 漂亮 (piào liang - cantik).",
+        options: [
+          { char: "好", py: "hǎo", isCorrect: false },
+          { char: "色", py: "sè", isCorrect: false },
+          { char: "亮", py: "liang", isCorrect: true },
+          { char: "样", py: "yàng", isCorrect: false }
+        ]
       },
       {
-        "char": "服",
-        "py": "fu",
-        "isCorrect": false
+        targetMy: "berpendapat / rasa",
+        char1: "觉",
+        py1: "jué",
+        char2: "得",
+        py2: "de",
+        fullHz: "觉得",
+        fullPy: "jué de",
+        explain: "觉 (jué) + 得 (de) = 觉得 (jué de - berpendapat / rasa).",
+        options: [
+          { char: "要", py: "yào", isCorrect: false },
+          { char: "穿", py: "chuān", isCorrect: false },
+          { char: "看", py: "kàn", isCorrect: false },
+          { char: "得", py: "de", isCorrect: true }
+        ]
       },
       {
-        "char": "衫",
-        "py": "shān",
-        "isCorrect": false
+        targetMy: "cuba pakai",
+        char1: "试",
+        py1: "shì",
+        char2: "穿",
+        py2: "chuān",
+        fullHz: "试穿",
+        fullPy: "shì chuān",
+        explain: "试 (shì) + 穿 (chuān) = 试穿 (shì chuān - cuba pakai).",
+        options: [
+          { char: "穿", py: "chuān", isCorrect: true },
+          { char: "脱", py: "tuō", isCorrect: false },
+          { char: "看", py: "kàn", isCorrect: false },
+          { char: "买", py: "mǎi", isCorrect: false }
+        ]
       },
       {
-        "char": "条",
-        "py": "tiáo",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kasut kulit",
-    "char1": "皮",
-    "py1": "pí",
-    "char2": "鞋",
-    "py2": "xié",
-    "fullHz": "皮鞋",
-    "fullPy": "pí xié",
-    "explain": "皮 (pí - kulit) + 鞋 (xié - kasut) = 皮鞋 (píxié - kasut kulit).",
-    "options": [
-      {
-        "char": "鞋",
-        "py": "xié",
-        "isCorrect": true
+        targetMy: "saiz berapa",
+        char1: "几",
+        py1: "jǐ",
+        char2: "号",
+        py2: "hào",
+        fullHz: "几号",
+        fullPy: "jǐ hào",
+        explain: "几 (jǐ) + 号 (hào) = 几号 (jǐ hào - saiz berapa).",
+        options: [
+          { char: "号", py: "hào", isCorrect: true },
+          { char: "个", py: "gè", isCorrect: false },
+          { char: "色", py: "sè", isCorrect: false },
+          { char: "样", py: "yàng", isCorrect: false }
+        ]
       },
       {
-        "char": "靴",
-        "py": "xuē",
-        "isCorrect": false
+        targetMy: "saiz besar (L)",
+        char1: "大",
+        py1: "dà",
+        char2: "号",
+        py2: "hào",
+        fullHz: "大号",
+        fullPy: "dà hào",
+        explain: "大 (dà) + 号 (hào) = 大号 (dà hào - saiz besar (L)).",
+        options: [
+          { char: "号", py: "hào", isCorrect: true },
+          { char: "条", py: "tiáo", isCorrect: false },
+          { char: "件", py: "jiàn", isCorrect: false },
+          { char: "色", py: "sè", isCorrect: false }
+        ]
       },
       {
-        "char": "带",
-        "py": "dài",
-        "isCorrect": false
+        targetMy: "saiz sederhana (M)",
+        char1: "中",
+        py1: "zhōng",
+        char2: "号",
+        py2: "hào",
+        fullHz: "中号",
+        fullPy: "zhōng hào",
+        explain: "中 (zhōng) + 号 (hào) = 中号 (zhōng hào - saiz sederhana (M)).",
+        options: [
+          { char: "条", py: "tiáo", isCorrect: false },
+          { char: "色", py: "sè", isCorrect: false },
+          { char: "件", py: "jiàn", isCorrect: false },
+          { char: "号", py: "hào", isCorrect: true }
+        ]
       },
       {
-        "char": "包",
-        "py": "bāo",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "warna",
-    "char1": "颜",
-    "py1": "yán",
-    "char2": "色",
-    "py2": "sè",
-    "fullHz": "颜色",
-    "fullPy": "yán sè",
-    "explain": "颜 (yán) + 色 (sè - warna) = 颜色 (yánsè - warna).",
-    "options": [
-      {
-        "char": "色",
-        "py": "sè",
-        "isCorrect": true
+        targetMy: "saiz kecil (S)",
+        char1: "小",
+        py1: "xiǎo",
+        char2: "号",
+        py2: "hào",
+        fullHz: "小号",
+        fullPy: "xiǎo hào",
+        explain: "小 (xiǎo) + 号 (hào) = 小号 (xiǎo hào - saiz kecil (S)).",
+        options: [
+          { char: "色", py: "sè", isCorrect: false },
+          { char: "条", py: "tiáo", isCorrect: false },
+          { char: "号", py: "hào", isCorrect: true },
+          { char: "件", py: "jiàn", isCorrect: false }
+        ]
       },
       {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": false
+        targetMy: "bagaimana",
+        char1: "怎么",
+        py1: "zěn me",
+        char2: "样",
+        py2: "yàng",
+        fullHz: "怎么样",
+        fullPy: "zěn me yàng",
+        explain: "怎么 (zěn me) + 样 (yàng) = 怎么样 (zěn me yàng - bagaimana).",
+        options: [
+          { char: "是", py: "shì", isCorrect: false },
+          { char: "好", py: "hǎo", isCorrect: false },
+          { char: "办", py: "bàn", isCorrect: false },
+          { char: "样", py: "yàng", isCorrect: true }
+        ]
       },
       {
-        "char": "样",
-        "py": "yàng",
-        "isCorrect": false
+        targetMy: "helai ini (baju)",
+        char1: "这",
+        py1: "zhè",
+        char2: "件",
+        py2: "jiàn",
+        fullHz: "这件",
+        fullPy: "zhè jiàn",
+        explain: "这 (zhè) + 件 (jiàn) = 这件 (zhè jiàn - helai ini (baju)).",
+        options: [
+          { char: "条", py: "tiáo", isCorrect: false },
+          { char: "件", py: "jiàn", isCorrect: true },
+          { char: "个", py: "gè", isCorrect: false },
+          { char: "双", py: "shuāng", isCorrect: false }
+        ]
       },
       {
-        "char": "光",
-        "py": "guāng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "warna merah",
-    "char1": "红",
-    "py1": "hóng",
-    "char2": "色",
-    "py2": "sè",
-    "fullHz": "红色",
-    "fullPy": "hóng sè",
-    "explain": "红 (hóng - merah) + 色 (sè) = 红色 (hóngsè - warna merah).",
-    "options": [
-      {
-        "char": "色",
-        "py": "sè",
-        "isCorrect": true
+        targetMy: "helai ini (seluar)",
+        char1: "这",
+        py1: "zhè",
+        char2: "条",
+        py2: "tiáo",
+        fullHz: "这条",
+        fullPy: "zhè tiáo",
+        explain: "这 (zhè) + 条 (tiáo) = 这条 (zhè tiáo - helai ini (seluar)).",
+        options: [
+          { char: "双", py: "shuāng", isCorrect: false },
+          { char: "条", py: "tiáo", isCorrect: true },
+          { char: "件", py: "jiàn", isCorrect: false },
+          { char: "只", py: "zhī", isCorrect: false }
+        ]
       },
       {
-        "char": "子",
-        "py": "zi",
-        "isCorrect": false
+        targetMy: "pasang ini (kasut)",
+        char1: "这",
+        py1: "zhè",
+        char2: "双",
+        py2: "shuāng",
+        fullHz: "这双",
+        fullPy: "zhè shuāng",
+        explain: "这 (zhè) + 双 (shuāng) = 这双 (zhè shuāng - pasang ini (kasut)).",
+        options: [
+          { char: "双", py: "shuāng", isCorrect: true },
+          { char: "件", py: "jiàn", isCorrect: false },
+          { char: "个", py: "gè", isCorrect: false },
+          { char: "条", py: "tiáo", isCorrect: false }
+        ]
       },
-      {
-        "char": "光",
-        "py": "guāng",
-        "isCorrect": false
-      },
-      {
-        "char": "布",
-        "py": "bù",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "warna putih",
-    "char1": "白",
-    "py1": "bái",
-    "char2": "色",
-    "py2": "sè",
-    "fullHz": "白色",
-    "fullPy": "bái sè",
-    "explain": "白 (bái - putih) + 色 (sè) = 白色 (báisè - warna putih).",
-    "options": [
-      {
-        "char": "色",
-        "py": "sè",
-        "isCorrect": true
-      },
-      {
-        "char": "衣",
-        "py": "yī",
-        "isCorrect": false
-      },
-      {
-        "char": "纸",
-        "py": "zhǐ",
-        "isCorrect": false
-      },
-      {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "warna hitam",
-    "char1": "黑",
-    "py1": "hēi",
-    "char2": "色",
-    "py2": "sè",
-    "fullHz": "黑色",
-    "fullPy": "hēi sè",
-    "explain": "黑 (hēi - hitam) + 色 (sè) = 黑色 (hēisè - warna hitam).",
-    "options": [
-      {
-        "char": "色",
-        "py": "sè",
-        "isCorrect": true
-      },
-      {
-        "char": "暗",
-        "py": "àn",
-        "isCorrect": false
-      },
-      {
-        "char": "夜",
-        "py": "yè",
-        "isCorrect": false
-      },
-      {
-        "char": "裤",
-        "py": "kù",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "warna biru",
-    "char1": "蓝",
-    "py1": "lán",
-    "char2": "色",
-    "py2": "sè",
-    "fullHz": "蓝色",
-    "fullPy": "lán sè",
-    "explain": "蓝 (lán - biru) + 色 (sè) = 蓝色 (lánsè - warna biru).",
-    "options": [
-      {
-        "char": "色",
-        "py": "sè",
-        "isCorrect": true
-      },
-      {
-        "char": "天",
-        "py": "tiān",
-        "isCorrect": false
-      },
-      {
-        "char": "海",
-        "py": "hǎi",
-        "isCorrect": false
-      },
-      {
-        "char": "花",
-        "py": "huā",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "warna kuning",
-    "char1": "黄",
-    "py1": "huáng",
-    "char2": "色",
-    "py2": "sè",
-    "fullHz": "黄色",
-    "fullPy": "huáng sè",
-    "explain": "黄 (huáng - kuning) + 色 (sè) = 黄色 (huángsè - warna kuning).",
-    "options": [
-      {
-        "char": "色",
-        "py": "sè",
-        "isCorrect": true
-      },
-      {
-        "char": "金",
-        "py": "jīn",
-        "isCorrect": false
-      },
-      {
-        "char": "土",
-        "py": "tǔ",
-        "isCorrect": false
-      },
-      {
-        "char": "光",
-        "py": "guāng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "berpendapat / rasa",
-    "char1": "觉",
-    "py1": "jué",
-    "char2": "得",
-    "py2": "de",
-    "fullHz": "觉得",
-    "fullPy": "jué de",
-    "explain": "觉 (jué) + 得 (de) = 觉得 (juéde - rasa/berpendapat).",
-    "options": [
-      {
-        "char": "得",
-        "py": "de",
-        "isCorrect": true
-      },
-      {
-        "char": "知",
-        "py": "zhī",
-        "isCorrect": false
-      },
-      {
-        "char": "看",
-        "py": "kàn",
-        "isCorrect": false
-      },
-      {
-        "char": "想",
-        "py": "xiǎng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "cuba pakai",
-    "char1": "试",
-    "py1": "shì",
-    "char2": "穿",
-    "py2": "chuān",
-    "fullHz": "试穿",
-    "fullPy": "shì chuān",
-    "explain": "试 (shì - cuba) + 穿 (chuān - pakai) = 试穿 (shìchuān - cuba pakai).",
-    "options": [
-      {
-        "char": "穿",
-        "py": "chuān",
-        "isCorrect": true
-      },
-      {
-        "char": "用",
-        "py": "yòng",
-        "isCorrect": false
-      },
-      {
-        "char": "看",
-        "py": "kàn",
-        "isCorrect": false
-      },
-      {
-        "char": "戴",
-        "py": "dài",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bagaimana",
-    "char1": "怎",
-    "py1": "zěn",
-    "char2": "么",
-    "py2": "me",
-    "fullHz": "怎么",
-    "fullPy": "zěn me",
-    "explain": "怎 (zěn) + 么 (me) = 怎么 (zěnme - bagaimana).",
-    "options": [
-      {
-        "char": "么",
-        "py": "me",
-        "isCorrect": true
-      },
-      {
-        "char": "样",
-        "py": "yàng",
-        "isCorrect": false
-      },
-      {
-        "char": "样",
-        "py": "yàng",
-        "isCorrect": false
-      },
-      {
-        "char": "做",
-        "py": "zuò",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "saiz besar (L)",
-    "char1": "大",
-    "py1": "dà",
-    "char2": "号",
-    "py2": "hào",
-    "fullHz": "大号",
-    "fullPy": "dà hào",
-    "explain": "大 (dà - besar) + 号 (hào - saiz/nombor) = 大号 (dàhào - saiz besar).",
-    "options": [
-      {
-        "char": "号",
-        "py": "hào",
-        "isCorrect": true
-      },
-      {
-        "char": "码",
-        "py": "mǎ",
-        "isCorrect": false
-      },
-      {
-        "char": "件",
-        "py": "jiàn",
-        "isCorrect": false
-      },
-      {
-        "char": "量",
-        "py": "liàng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "saiz sederhana (M)",
-    "char1": "中",
-    "py1": "zhōng",
-    "char2": "号",
-    "py2": "hào",
-    "fullHz": "中号",
-    "fullPy": "zhōng hào",
-    "explain": "中 (zhōng - tengah) + 号 (hào - saiz) = 中号 (zhōnghào - saiz sederhana).",
-    "options": [
-      {
-        "char": "号",
-        "py": "hào",
-        "isCorrect": true
-      },
-      {
-        "char": "型",
-        "py": "xíng",
-        "isCorrect": false
-      },
-      {
-        "char": "等",
-        "py": "děng",
-        "isCorrect": false
-      },
-      {
-        "char": "心",
-        "py": "xīn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "saiz kecil (S)",
-    "char1": "小",
-    "py1": "xiǎo",
-    "char2": "号",
-    "py2": "hào",
-    "fullHz": "小号",
-    "fullPy": "xiǎo hào",
-    "explain": "小 (xiǎo - kecil) + 号 (hào - saiz) = 小号 (xiǎohào - saiz kecil).",
-    "options": [
-      {
-        "char": "号",
-        "py": "hào",
-        "isCorrect": true
-      },
-      {
-        "char": "寸",
-        "py": "cùn",
-        "isCorrect": false
-      },
-      {
-        "char": "码",
-        "py": "mǎ",
-        "isCorrect": false
-      },
-      {
-        "char": "条",
-        "py": "tiáo",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "cantik",
-    "char1": "漂",
-    "py1": "piào",
-    "char2": "亮",
-    "py2": "liang",
-    "fullHz": "漂亮",
-    "fullPy": "piào liang",
-    "explain": "漂 (piào) + 亮 (liang) = 漂亮 (piàoliang - cantik/menawan).",
-    "options": [
-      {
-        "char": "亮",
-        "py": "liang",
-        "isCorrect": true
-      },
-      {
-        "char": "明",
-        "py": "míng",
-        "isCorrect": false
-      },
-      {
-        "char": "光",
-        "py": "guāng",
-        "isCorrect": false
-      },
-      {
-        "char": "美",
-        "py": "měi",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "sesuai / padan",
-    "char1": "合",
-    "py1": "hé",
-    "char2": "适",
-    "py2": "shì",
-    "fullHz": "合适",
-    "fullPy": "hé shì",
-    "explain": "合 (hé - pas) + 适 (shì - sesuai) = 合适 (héshì - padan/sesuai).",
-    "options": [
-      {
-        "char": "适",
-        "py": "shì",
-        "isCorrect": true
-      },
-      {
-        "char": "宜",
-        "py": "yí",
-        "isCorrect": false
-      },
-      {
-        "char": "好",
-        "py": "hǎo",
-        "isCorrect": false
-      },
-      {
-        "char": "身",
-        "py": "shēn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "diskaun (potongan)",
-    "char1": "折",
-    "py1": "zhé",
-    "char2": "扣",
-    "py2": "kòu",
-    "fullHz": "折扣",
-    "fullPy": "zhé kòu",
-    "explain": "折 (zhé) + 扣 (kòu) = 折扣 (zhékòu - diskaun).",
-    "options": [
-      {
-        "char": "扣",
-        "py": "kòu",
-        "isCorrect": true
-      },
-      {
-        "char": "价",
-        "py": "jià",
-        "isCorrect": false
-      },
-      {
-        "char": "钱",
-        "py": "qián",
-        "isCorrect": false
-      },
-      {
-        "char": "减",
-        "py": "jiǎn",
-        "isCorrect": false
-      }
-    ]
-  }
-];
+    ];
 
     const SENTENCE_CHALLENGES = [
   {
@@ -2559,17 +2223,13 @@
 
 
 
-    /* ========== 2. AUDIO & FX ENGINE ========== */
+        /* ========== 2. AUDIO & FX ENGINE ========== */
 
-    let audioRate = 0.95;
+    let audioRate = 1.0;
+    const rates = [0.25, 0.5, 0.75, 1.0, 1.25];
+    let ratePointer = 3;
 
-    const rates = [0.75, 0.95, 1.15];
-
-    let ratePointer = 1;
-
-
-
-    function toggleAudioSpeed() {
+function toggleAudioSpeed() {
 
       ratePointer = (ratePointer + 1) % rates.length;
 
@@ -3233,23 +2893,11 @@
 
 
 
-    function speakCurrentQuestionPrompt() {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.fullHz);
-
-    }
+    function speakCurrentQuestionPrompt() { /* Audio disembunyikan sebelum menjawab */ }
 
 
 
-    function speakCurrentPart(part) {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.char1);
-
-    }
+    function speakCurrentPart(part) { /* Audio disembunyikan sebelum menjawab */ }
 
 
 

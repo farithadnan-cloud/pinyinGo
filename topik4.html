@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=22" defer></script>
+  <script src="js/certificate.js?v=23" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -486,13 +486,7 @@
 
 
 
-            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
-
-              <span>🔊</span>
-
-              <span>Dengar Audio</span>
-
-            </button>
+            
 
           </div>
 
@@ -518,21 +512,11 @@
 
             <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
 
-            <button onclick="speakCurrentPart(1)" class="group w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
-
+            <div class="w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 shadow-sm flex flex-col items-center justify-center relative">
               <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
-
-              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
-
-              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
-
-                <span>🔊</span>
-
-                <span>Dengar</span>
-
-              </span>
-
-            </button>
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5" id="capsule-char1">职</span>
+              <span class="text-[10px] text-slate-400 mt-1 font-semibold">Bahagian 1</span>
+            </div>
 
 
 
@@ -863,647 +847,326 @@
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
     const VOCAB_20_QUESTIONS = [
-
       {
-
         targetMy: "pekerja / staf",
-
         char1: "职",
-
         py1: "zhí",
-
         char2: "员",
-
         py2: "yuán",
-
         fullHz: "职员",
-
         fullPy: "zhí yuán",
-
-        explain: "职 (zhí - tugas) + 员 (yuán - anggota) = 职员 (zhíyuán - pekerja/staf).",
-
+        explain: "职 (zhí) + 员 (yuán) = 职员 (zhí yuán - pekerja / staf).",
         options: [
-
-          { char: "员", py: "yuán", isCorrect: true },
-
-          { char: "事", py: "shì", isCorrect: false },
-
+          { char: "理", py: "lǐ", isCorrect: false },
           { char: "位", py: "wèi", isCorrect: false },
-
-          { char: "理", py: "lǐ", isCorrect: false }
-
+          { char: "事", py: "shì", isCorrect: false },
+          { char: "员", py: "yuán", isCorrect: true }
         ]
-
       },
-
       {
-
         targetMy: "rakan sekerja",
-
         char1: "同",
-
         py1: "tóng",
-
         char2: "事",
-
         py2: "shì",
-
         fullHz: "同事",
-
         fullPy: "tóng shì",
-
-        explain: "同 (tóng - bersama) + 事 (shì - urusan kerja) = 同事 (tóngshì - rakan kerja).",
-
+        explain: "同 (tóng) + 事 (shì) = 同事 (tóng shì - rakan sekerja).",
         options: [
-
-          { char: "学", py: "xué", isCorrect: false },
-
+          { char: "具", py: "jù", isCorrect: false },
           { char: "事", py: "shì", isCorrect: true },
-
-          { char: "子", py: "zi", isCorrect: false },
-
-          { char: "面", py: "miàn", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "tempat duduk",
-
-        char1: "座",
-
-        py1: "zuò",
-
-        char2: "位",
-
-        py2: "wèi",
-
-        fullHz: "座位",
-
-        fullPy: "zuò wèi",
-
-        explain: "座 (zuò - duduk) + 位 (wèi - tempat) = 座位 (zuòwèi - tempat duduk).",
-
-        options: [
-
-          { char: "位", py: "wèi", isCorrect: true },
-
-          { char: "子", py: "zi", isCorrect: false },
-
-          { char: "边", py: "biān", isCorrect: false },
-
-          { char: "机", py: "jī", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "bahagian hadapan (depan)",
-
-        char1: "前",
-
-        py1: "qián",
-
-        char2: "面",
-
-        py2: "miàn",
-
-        fullHz: "前面",
-
-        fullPy: "qián miàn",
-
-        explain: "前 (qián - depan) + 面 (miàn - bahagian) = 前面 (qiánmiàn - bahagian depan).",
-
-        options: [
-
-          { char: "边", py: "biān", isCorrect: false },
-
-          { char: "面", py: "miàn", isCorrect: true },
-
-          { char: "子", py: "zi", isCorrect: false },
-
-          { char: "脑", py: "nǎo", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "bahagian belakang",
-
-        char1: "后",
-
-        py1: "hòu",
-
-        char2: "面",
-
-        py2: "miàn",
-
-        fullHz: "后面",
-
-        fullPy: "hòu miàn",
-
-        explain: "后 (hòu - belakang) + 面 (miàn - bahagian) = 后面 (hòumiàn - bahagian belakang).",
-
-        options: [
-
-          { char: "面", py: "miàn", isCorrect: true },
-
-          { char: "具", py: "jù", isCorrect: false },
-
-          { char: "里", py: "lǐ", isCorrect: false },
-
-          { char: "员", py: "yuán", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "bahagian dalam",
-
-        char1: "里",
-
-        py1: "lǐ",
-
-        char2: "面",
-
-        py2: "miàn",
-
-        fullHz: "里面",
-
-        fullPy: "lǐ miàn",
-
-        explain: "里 (lǐ - dalam) + 面 (miàn - bahagian) = 里面 (lǐmiàn - bahagian dalam).",
-
-        options: [
-
-          { char: "面", py: "miàn", isCorrect: true },
-
-          { char: "边", py: "biān", isCorrect: false },
-
-          { char: "夹", py: "jiā", isCorrect: false },
-
-          { char: "子", py: "zi", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "bahagian atas",
-
-        char1: "上",
-
-        py1: "shàng",
-
-        char2: "面",
-
-        py2: "miàn",
-
-        fullHz: "上面",
-
-        fullPy: "shàng miàn",
-
-        explain: "上 (shàng - atas) + 面 (miàn - bahagian) = 上面 (shàngmiàn - bahagian atas).",
-
-        options: [
-
-          { char: "面", py: "miàn", isCorrect: true },
-
-          { char: "下", py: "xià", isCorrect: false },
-
-          { char: "子", py: "zi", isCorrect: false },
-
-          { char: "位", py: "wèi", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "bahagian bawah",
-
-        char1: "下",
-
-        py1: "xià",
-
-        char2: "面",
-
-        py2: "miàn",
-
-        fullHz: "下面",
-
-        fullPy: "xià miàn",
-
-        explain: "下 (xià - bawah) + 面 (miàn - bahagian) = 下面 (xiàmiàn - bahagian bawah).",
-
-        options: [
-
-          { char: "面", py: "miàn", isCorrect: true },
-
-          { char: "边", py: "biān", isCorrect: false },
-
-          { char: "事", py: "shì", isCorrect: false },
-
-          { char: "脑", py: "nǎo", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "sebelah / tepi",
-
-        char1: "旁",
-
-        py1: "páng",
-
-        char2: "边",
-
-        py2: "biān",
-
-        fullHz: "旁边",
-
-        fullPy: "páng biān",
-
-        explain: "旁 (páng - sisi) + 边 (biān - tepi) = 旁边 (pángbiān - sebelah / tepi).",
-
-        options: [
-
-          { char: "边", py: "biān", isCorrect: true },
-
-          { char: "面", py: "miàn", isCorrect: false },
-
-          { char: "子", py: "zi", isCorrect: false },
-
-          { char: "机", py: "jī", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "meja pejabat",
-
-        char1: "桌",
-
-        py1: "zhuō",
-
-        char2: "子",
-
-        py2: "zi",
-
-        fullHz: "桌子",
-
-        fullPy: "zhuō zi",
-
-        explain: "桌 (zhuō - meja) + 子 (zi) = 桌子 (zhuōzi - meja).",
-
-        options: [
-
-          { char: "子", py: "zi", isCorrect: true },
-
-          { char: "面", py: "miàn", isCorrect: false },
-
-          { char: "边", py: "biān", isCorrect: false },
-
-          { char: "理", py: "lǐ", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "kerusi pejabat",
-
-        char1: "椅",
-
-        py1: "yǐ",
-
-        char2: "子",
-
-        py2: "zi",
-
-        fullHz: "椅子",
-
-        fullPy: "yǐ zi",
-
-        explain: "椅 (yǐ - kerusi) + 子 (zi) = 椅子 (yǐzi - kerusi).",
-
-        options: [
-
-          { char: "子", py: "zi", isCorrect: true },
-
-          { char: "具", py: "jù", isCorrect: false },
-
-          { char: "位", py: "wèi", isCorrect: false },
-
-          { char: "员", py: "yuán", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "almari",
-
-        char1: "柜",
-
-        py1: "guì",
-
-        char2: "子",
-
-        py2: "zi",
-
-        fullHz: "柜子",
-
-        fullPy: "guì zi",
-
-        explain: "柜 (guì - kabinet) + 子 (zi) = 柜子 (guìzi - almari pejabat).",
-
-        options: [
-
-          { char: "子", py: "zi", isCorrect: true },
-
-          { char: "机", py: "jī", isCorrect: false },
-
-          { char: "面", py: "miàn", isCorrect: false },
-
-          { char: "夹", py: "jiā", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "alat tulis",
-
-        char1: "文",
-
-        py1: "wén",
-
-        char2: "具",
-
-        py2: "jù",
-
-        fullHz: "文具",
-
-        fullPy: "wén jù",
-
-        explain: "文 (wén - tulisan) + 具 (jù - perkakas) = 文具 (wénjù - alat tulis).",
-
-        options: [
-
-          { char: "具", py: "jù", isCorrect: true },
-
-          { char: "子", py: "zi", isCorrect: false },
-
-          { char: "面", py: "miàn", isCorrect: false },
-
-          { char: "脑", py: "nǎo", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "komputer",
-
-        char1: "电",
-
-        py1: "diàn",
-
-        char2: "脑",
-
-        py2: "nǎo",
-
-        fullHz: "电脑",
-
-        fullPy: "diàn nǎo",
-
-        explain: "电 (diàn - elektrik) + 脑 (nǎo - otak) = 电脑 (diànnǎo - komputer).",
-
-        options: [
-
-          { char: "脑", py: "nǎo", isCorrect: true },
-
-          { char: "话", py: "huà", isCorrect: false },
-
-          { char: "机", py: "jī", isCorrect: false },
-
-          { char: "子", py: "zi", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "mesin cetak (printer)",
-
-        char1: "打印",
-
-        py1: "dǎ yìn",
-
-        char2: "机",
-
-        py2: "jī",
-
-        fullHz: "打印机",
-
-        fullPy: "dǎ yìn jī",
-
-        explain: "打印 (dǎyìn - mencetak) + 机 (jī - mesin) = 打印机 (dǎyìnjī - printer).",
-
-        options: [
-
-          { char: "机", py: "jī", isCorrect: true },
-
-          { char: "具", py: "jù", isCorrect: false },
-
-          { char: "夹", py: "jiā", isCorrect: false },
-
-          { char: "子", py: "zi", isCorrect: false }
-
-        ]
-
-      },
-
-      {
-
-        targetMy: "mesin fotostat",
-
-        char1: "复印",
-
-        py1: "fù yìn",
-
-        char2: "机",
-
-        py2: "jī",
-
-        fullHz: "复印机",
-
-        fullPy: "fù yìn jī",
-
-        explain: "复印 (fùyìn - salinan fotostat) + 机 (jī) = 复印机 (fùyìnjī).",
-
-        options: [
-
-          { char: "机", py: "jī", isCorrect: true },
-
           { char: "脑", py: "nǎo", isCorrect: false },
-
-          { char: "子", py: "zi", isCorrect: false },
-
+          { char: "员", py: "yuán", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "tempat duduk",
+        char1: "座",
+        py1: "zuò",
+        char2: "位",
+        py2: "wèi",
+        fullHz: "座位",
+        fullPy: "zuò wèi",
+        explain: "座 (zuò) + 位 (wèi) = 座位 (zuò wèi - tempat duduk).",
+        options: [
+          { char: "位", py: "wèi", isCorrect: true },
+          { char: "椅", py: "yǐ", isCorrect: false },
+          { char: "桌", py: "zhuō", isCorrect: false },
           { char: "面", py: "miàn", isCorrect: false }
-
         ]
-
       },
-
       {
-
-        targetMy: "fail dokumen",
-
-        char1: "文件",
-
-        py1: "wén jiàn",
-
-        char2: "夹",
-
-        py2: "jiā",
-
-        fullHz: "文件夹",
-
-        fullPy: "wén jiàn jiā",
-
-        explain: "文件 (wénjiàn - dokumen) + 夹 (jiā - pengepit) = 文件夹 (wénjiànjiā - fail).",
-
+        targetMy: "bahagian depan",
+        char1: "前",
+        py1: "qián",
+        char2: "面",
+        py2: "miàn",
+        fullHz: "前面",
+        fullPy: "qián miàn",
+        explain: "前 (qián) + 面 (miàn) = 前面 (qián miàn - bahagian depan).",
         options: [
-
-          { char: "夹", py: "jiā", isCorrect: true },
-
-          { char: "机", py: "jī", isCorrect: false },
-
-          { char: "箱", py: "xiāng", isCorrect: false },
-
-          { char: "子", py: "zi", isCorrect: false }
-
+          { char: "后", py: "hòu", isCorrect: false },
+          { char: "里", py: "lǐ", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "上", py: "shàng", isCorrect: false }
         ]
-
       },
-
       {
-
-        targetMy: "pengurus (manager)",
-
-        char1: "经",
-
-        py1: "jīng",
-
-        char2: "理",
-
-        py2: "lǐ",
-
-        fullHz: "经理",
-
-        fullPy: "jīng lǐ",
-
-        explain: "经 (jīng) + 理 (lǐ) = 经理 (jīnglǐ - pengurus).",
-
+        targetMy: "bahagian belakang",
+        char1: "后",
+        py1: "hòu",
+        char2: "面",
+        py2: "miàn",
+        fullHz: "后面",
+        fullPy: "hòu miàn",
+        explain: "后 (hòu) + 面 (miàn) = 后面 (hòu miàn - bahagian belakang).",
         options: [
-
-          { char: "理", py: "lǐ", isCorrect: true },
-
-          { char: "人", py: "rén", isCorrect: false },
-
+          { char: "下", py: "xià", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "里", py: "lǐ", isCorrect: false },
+          { char: "前", py: "qián", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "bahagian dalam",
+        char1: "里",
+        py1: "lǐ",
+        char2: "面",
+        py2: "miàn",
+        fullHz: "里面",
+        fullPy: "lǐ miàn",
+        explain: "里 (lǐ) + 面 (miàn) = 里面 (lǐ miàn - bahagian dalam).",
+        options: [
+          { char: "上", py: "shàng", isCorrect: false },
+          { char: "旁", py: "páng", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "前", py: "qián", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "bahagian atas",
+        char1: "上",
+        py1: "shàng",
+        char2: "面",
+        py2: "miàn",
+        fullHz: "上面",
+        fullPy: "shàng miàn",
+        explain: "上 (shàng) + 面 (miàn) = 上面 (shàng miàn - bahagian atas).",
+        options: [
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "里", py: "lǐ", isCorrect: false },
+          { char: "下", py: "xià", isCorrect: false },
+          { char: "后", py: "hòu", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "bahagian bawah",
+        char1: "下",
+        py1: "xià",
+        char2: "面",
+        py2: "miàn",
+        fullHz: "下面",
+        fullPy: "xià miàn",
+        explain: "下 (xià) + 面 (miàn) = 下面 (xià miàn - bahagian bawah).",
+        options: [
+          { char: "前", py: "qián", isCorrect: false },
+          { char: "上", py: "shàng", isCorrect: false },
+          { char: "旁", py: "páng", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true }
+        ]
+      },
+      {
+        targetMy: "sebelah / tepi",
+        char1: "旁",
+        py1: "páng",
+        char2: "边",
+        py2: "biān",
+        fullHz: "旁边",
+        fullPy: "páng biān",
+        explain: "旁 (páng) + 边 (biān) = 旁边 (páng biān - sebelah / tepi).",
+        options: [
+          { char: "边", py: "biān", isCorrect: true },
+          { char: "位", py: "wèi", isCorrect: false },
+          { char: "角", py: "jiǎo", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "meja",
+        char1: "桌",
+        py1: "zhuō",
+        char2: "子",
+        py2: "zi",
+        fullHz: "桌子",
+        fullPy: "zhuō zi",
+        explain: "桌 (zhuō) + 子 (zi) = 桌子 (zhuō zi - meja).",
+        options: [
+          { char: "椅", py: "yǐ", isCorrect: false },
+          { char: "柜", py: "guì", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: true },
+          { char: "面", py: "miàn", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "kerusi",
+        char1: "椅",
+        py1: "yǐ",
+        char2: "子",
+        py2: "zi",
+        fullHz: "椅子",
+        fullPy: "yǐ zi",
+        explain: "椅 (yǐ) + 子 (zi) = 椅子 (yǐ zi - kerusi).",
+        options: [
+          { char: "柜", py: "guì", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: true },
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "桌", py: "zhuō", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "almari",
+        char1: "柜",
+        py1: "guì",
+        char2: "子",
+        py2: "zi",
+        fullHz: "柜子",
+        fullPy: "guì zi",
+        explain: "柜 (guì) + 子 (zi) = 柜子 (guì zi - almari).",
+        options: [
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: true },
+          { char: "椅", py: "yǐ", isCorrect: false },
+          { char: "桌", py: "zhuō", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "alat tulis",
+        char1: "文",
+        py1: "wén",
+        char2: "具",
+        py2: "jù",
+        fullHz: "文具",
+        fullPy: "wén jù",
+        explain: "文 (wén) + 具 (jù) = 文具 (wén jù - alat tulis).",
+        options: [
           { char: "员", py: "yuán", isCorrect: false },
-
-          { char: "事", py: "shì", isCorrect: false }
-
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "件", py: "jiàn", isCorrect: false },
+          { char: "具", py: "jù", isCorrect: true }
         ]
-
       },
-
       {
-
-        targetMy: "ruang pejabat",
-
-        char1: "办公",
-
-        py1: "bàn gōng",
-
-        char2: "室",
-
-        py2: "shì",
-
-        fullHz: "办公室",
-
-        fullPy: "bàn gōng shì",
-
-        explain: "办公 (urusan kerja) + 室 (bilik) = 办公室 (bàngōngshì - pejabat).",
-
+        targetMy: "komputer / laptop",
+        char1: "电",
+        py1: "diàn",
+        char2: "脑",
+        py2: "nǎo",
+        fullHz: "电脑",
+        fullPy: "diàn nǎo",
+        explain: "电 (diàn) + 脑 (nǎo) = 电脑 (diàn nǎo - komputer / laptop).",
         options: [
-
-          { char: "室", py: "shì", isCorrect: true },
-
-          { char: "房", py: "fáng", isCorrect: false },
-
-          { char: "局", py: "jú", isCorrect: false },
-
-          { char: "馆", py: "guǎn", isCorrect: false }
-
+          { char: "话", py: "huà", isCorrect: false },
+          { char: "脑", py: "nǎo", isCorrect: true },
+          { char: "机", py: "jī", isCorrect: false },
+          { char: "视", py: "shì", isCorrect: false }
         ]
-
       },
-
       {
-
+        targetMy: "mesin cetak (printer)",
+        char1: "打印",
+        py1: "dǎ yìn",
+        char2: "机",
+        py2: "jī",
+        fullHz: "打印机",
+        fullPy: "dǎ yìn jī",
+        explain: "打印 (dǎ yìn) + 机 (jī) = 打印机 (dǎ yìn jī - mesin cetak (printer)).",
+        options: [
+          { char: "器", py: "qì", isCorrect: false },
+          { char: "纸", py: "zhǐ", isCorrect: false },
+          { char: "柜", py: "guì", isCorrect: false },
+          { char: "机", py: "jī", isCorrect: true }
+        ]
+      },
+      {
+        targetMy: "mesin fotostat",
+        char1: "复印",
+        py1: "fù yìn",
+        char2: "机",
+        py2: "jī",
+        fullHz: "复印机",
+        fullPy: "fù yìn jī",
+        explain: "复印 (fù yìn) + 机 (jī) = 复印机 (fù yìn jī - mesin fotostat).",
+        options: [
+          { char: "纸", py: "zhǐ", isCorrect: false },
+          { char: "具", py: "jù", isCorrect: false },
+          { char: "器", py: "qì", isCorrect: false },
+          { char: "机", py: "jī", isCorrect: true }
+        ]
+      },
+      {
+        targetMy: "fail dokumen",
+        char1: "文件",
+        py1: "wén jiàn",
+        char2: "夹",
+        py2: "jiā",
+        fullHz: "文件夹",
+        fullPy: "wén jiàn jiā",
+        explain: "文件 (wén jiàn) + 夹 (jiā) = 文件夹 (wén jiàn jiā - fail dokumen).",
+        options: [
+          { char: "夹", py: "jiā", isCorrect: true },
+          { char: "包", py: "bāo", isCorrect: false },
+          { char: "机", py: "jī", isCorrect: false },
+          { char: "盒", py: "hé", isCorrect: false }
+        ]
+      },
+      {
+        targetMy: "pengurus",
+        char1: "经",
+        py1: "jīng",
+        char2: "理",
+        py2: "lǐ",
+        fullHz: "经理",
+        fullPy: "jīng lǐ",
+        explain: "经 (jīng) + 理 (lǐ) = 经理 (jīng lǐ - pengurus).",
+        options: [
+          { char: "理", py: "lǐ", isCorrect: true },
+          { char: "员", py: "yuán", isCorrect: false },
+          { char: "长", py: "zhǎng", isCorrect: false },
+          { char: "师", py: "shī", isCorrect: false }
+        ]
+      },
+      {
         targetMy: "menelefon",
-
         char1: "打",
-
         py1: "dǎ",
-
         char2: "电话",
-
         py2: "diàn huà",
-
         fullHz: "打电话",
-
         fullPy: "dǎ diàn huà",
-
-        explain: "打 (dǎ - membuat) + 电话 (diànhuà - panggilan telefon) = 打电话 (dǎ diànhuà).",
-
+        explain: "打 (dǎ) + 电话 (diàn huà) = 打电话 (dǎ diàn huà - menelefon).",
         options: [
-
-          { char: "电话", py: "diàn huà", isCorrect: true },
-
           { char: "电脑", py: "diàn nǎo", isCorrect: false },
-
-          { char: "文字", py: "wén zì", isCorrect: false },
-
-          { char: "文件", py: "wén jiàn", isCorrect: false }
-
+          { char: "电话", py: "diàn huà", isCorrect: true },
+          { char: "文件", py: "wén jiàn", isCorrect: false },
+          { char: "文具", py: "wén jù", isCorrect: false }
         ]
-
-      }
-
+      },
+      {
+        targetMy: "rakan sekerja baru",
+        char1: "新",
+        py1: "xīn",
+        char2: "同事",
+        py2: "tóng shì",
+        fullHz: "新同事",
+        fullPy: "xīn tóng shì",
+        explain: "新 (xīn) + 同事 (tóng shì) = 新同事 (xīn tóng shì - rakan sekerja baru).",
+        options: [
+          { char: "朋友", py: "péng you", isCorrect: false },
+          { char: "同事", py: "tóng shì", isCorrect: true },
+          { char: "经理", py: "jīng lǐ", isCorrect: false },
+          { char: "职员", py: "zhí yuán", isCorrect: false }
+        ]
+      },
     ];
 
 
@@ -2594,17 +2257,13 @@
 
 
 
-    /* ========== 2. AUDIO & FX ENGINE ========== */
+        /* ========== 2. AUDIO & FX ENGINE ========== */
 
-    let audioRate = 0.95;
+    let audioRate = 1.0;
+    const rates = [0.25, 0.5, 0.75, 1.0, 1.25];
+    let ratePointer = 3;
 
-    const rates = [0.75, 0.95, 1.15];
-
-    let ratePointer = 1;
-
-
-
-    function toggleAudioSpeed() {
+function toggleAudioSpeed() {
 
       ratePointer = (ratePointer + 1) % rates.length;
 
@@ -3268,23 +2927,11 @@
 
 
 
-    function speakCurrentQuestionPrompt() {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.fullHz);
-
-    }
+    function speakCurrentQuestionPrompt() { /* Audio disembunyikan sebelum menjawab */ }
 
 
 
-    function speakCurrentPart(part) {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.char1);
-
-    }
+    function speakCurrentPart(part) { /* Audio disembunyikan sebelum menjawab */ }
 
 
 

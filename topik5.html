@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=22" defer></script>
+  <script src="js/certificate.js?v=23" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -486,13 +486,7 @@
 
 
 
-            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
-
-              <span>🔊</span>
-
-              <span>Dengar Audio</span>
-
-            </button>
+            
 
           </div>
 
@@ -518,21 +512,11 @@
 
             <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
 
-            <button onclick="speakCurrentPart(1)" class="group w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
-
+            <div class="w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 shadow-sm flex flex-col items-center justify-center relative">
               <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
-
-              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
-
-              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
-
-                <span>🔊</span>
-
-                <span>Dengar</span>
-
-              </span>
-
-            </button>
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5" id="capsule-char1">职</span>
+              <span class="text-[10px] text-slate-400 mt-1 font-semibold">Bahagian 1</span>
+            </div>
 
 
 
@@ -863,647 +847,327 @@
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
     const VOCAB_20_QUESTIONS = [
-  {
-    "targetMy": "berasal dari",
-    "char1": "来",
-    "py1": "lái",
-    "char2": "自",
-    "py2": "zì",
-    "fullHz": "来自",
-    "fullPy": "lái zì",
-    "explain": "来 (lái - datang) + 自 (zì - dari) = 来自 (láizì - berasal dari).",
-    "options": [
       {
-        "char": "自",
-        "py": "zì",
-        "isCorrect": true
+        targetMy: "berasal dari",
+        char1: "来",
+        py1: "lái",
+        char2: "自",
+        py2: "zì",
+        fullHz: "来自",
+        fullPy: "lái zì",
+        explain: "来 (lái) + 自 (zì) = 来自 (lái zì - berasal dari).",
+        options: [
+          { char: "到", py: "dào", isCorrect: false },
+          { char: "去", py: "qù", isCorrect: false },
+          { char: "在", py: "zài", isCorrect: false },
+          { char: "自", py: "zì", isCorrect: true }
+        ]
       },
       {
-        "char": "去",
-        "py": "qù",
-        "isCorrect": false
+        targetMy: "negeri (wilayah)",
+        char1: "州",
+        py1: "zhōu",
+        char2: "属",
+        py2: "shǔ",
+        fullHz: "州属",
+        fullPy: "zhōu shǔ",
+        explain: "州 (zhōu) + 属 (shǔ) = 州属 (zhōu shǔ - negeri (wilayah)).",
+        options: [
+          { char: "府", py: "fǔ", isCorrect: false },
+          { char: "市", py: "shì", isCorrect: false },
+          { char: "属", py: "shǔ", isCorrect: true },
+          { char: "国", py: "guó", isCorrect: false }
+        ]
       },
       {
-        "char": "到",
-        "py": "dào",
-        "isCorrect": false
+        targetMy: "ibu negeri",
+        char1: "首",
+        py1: "shǒu",
+        char2: "府",
+        py2: "fǔ",
+        fullHz: "首府",
+        fullPy: "shǒu fǔ",
+        explain: "首 (shǒu) + 府 (fǔ) = 首府 (shǒu fǔ - ibu negeri).",
+        options: [
+          { char: "府", py: "fǔ", isCorrect: true },
+          { char: "市", py: "shì", isCorrect: false },
+          { char: "局", py: "jú", isCorrect: false },
+          { char: "都", py: "dū", isCorrect: false }
+        ]
       },
       {
-        "char": "出",
-        "py": "chū",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "negeri (wilayah)",
-    "char1": "州",
-    "py1": "zhōu",
-    "char2": "属",
-    "py2": "shǔ",
-    "fullHz": "州属",
-    "fullPy": "zhōu shǔ",
-    "explain": "州 (zhōu - negeri) + 属 (shǔ) = 州属 (zhōushǔ - negeri di Malaysia).",
-    "options": [
-      {
-        "char": "属",
-        "py": "shǔ",
-        "isCorrect": true
+        targetMy: "balai polis",
+        char1: "警察",
+        py1: "jǐng chá",
+        char2: "局",
+        py2: "jú",
+        fullHz: "警察局",
+        fullPy: "jǐng chá jú",
+        explain: "警察 (jǐng chá) + 局 (jú) = 警察局 (jǐng chá jú - balai polis).",
+        options: [
+          { char: "行", py: "háng", isCorrect: false },
+          { char: "站", py: "zhàn", isCorrect: false },
+          { char: "局", py: "jú", isCorrect: true },
+          { char: "院", py: "yuàn", isCorrect: false }
+        ]
       },
       {
-        "char": "市",
-        "py": "shì",
-        "isCorrect": false
+        targetMy: "pejabat pos",
+        char1: "邮政",
+        py1: "yóu zhèng",
+        char2: "局",
+        py2: "jú",
+        fullHz: "邮政局",
+        fullPy: "yóu zhèng jú",
+        explain: "邮政 (yóu zhèng) + 局 (jú) = 邮政局 (yóu zhèng jú - pejabat pos).",
+        options: [
+          { char: "店", py: "diàn", isCorrect: false },
+          { char: "院", py: "yuàn", isCorrect: false },
+          { char: "局", py: "jú", isCorrect: true },
+          { char: "行", py: "háng", isCorrect: false }
+        ]
       },
       {
-        "char": "区",
-        "py": "qū",
-        "isCorrect": false
+        targetMy: "balai bomba",
+        char1: "消防",
+        py1: "xiāo fáng",
+        char2: "局",
+        py2: "jú",
+        fullHz: "消防局",
+        fullPy: "xiāo fáng jú",
+        explain: "消防 (xiāo fáng) + 局 (jú) = 消防局 (xiāo fáng jú - balai bomba).",
+        options: [
+          { char: "行", py: "háng", isCorrect: false },
+          { char: "站", py: "zhàn", isCorrect: false },
+          { char: "院", py: "yuàn", isCorrect: false },
+          { char: "局", py: "jú", isCorrect: true }
+        ]
       },
       {
-        "char": "国",
-        "py": "guó",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "ibu negeri",
-    "char1": "首",
-    "py1": "shǒu",
-    "char2": "府",
-    "py2": "fǔ",
-    "fullHz": "首府",
-    "fullPy": "shǒu fǔ",
-    "explain": "首 (shǒu - utama) + 府 (fǔ - pusat) = 首府 (shǒufǔ - ibu negeri).",
-    "options": [
-      {
-        "char": "府",
-        "py": "fǔ",
-        "isCorrect": true
+        targetMy: "bank",
+        char1: "银",
+        py1: "yín",
+        char2: "行",
+        py2: "háng",
+        fullHz: "银行",
+        fullPy: "yín háng",
+        explain: "银 (yín) + 行 (háng) = 银行 (yín háng - bank).",
+        options: [
+          { char: "局", py: "jú", isCorrect: false },
+          { char: "店", py: "diàn", isCorrect: false },
+          { char: "院", py: "yuàn", isCorrect: false },
+          { char: "行", py: "háng", isCorrect: true }
+        ]
       },
       {
-        "char": "都",
-        "py": "dū",
-        "isCorrect": false
+        targetMy: "sekolah",
+        char1: "学",
+        py1: "xué",
+        char2: "校",
+        py2: "xiào",
+        fullHz: "学校",
+        fullPy: "xué xiào",
+        explain: "学 (xué) + 校 (xiào) = 学校 (xué xiào - sekolah).",
+        options: [
+          { char: "校", py: "xiào", isCorrect: true },
+          { char: "场", py: "chǎng", isCorrect: false },
+          { char: "堂", py: "táng", isCorrect: false },
+          { char: "院", py: "yuàn", isCorrect: false }
+        ]
       },
       {
-        "char": "城",
-        "py": "chéng",
-        "isCorrect": false
+        targetMy: "hospital",
+        char1: "医",
+        py1: "yī",
+        char2: "院",
+        py2: "yuàn",
+        fullHz: "医院",
+        fullPy: "yī yuàn",
+        explain: "医 (yī) + 院 (yuàn) = 医院 (yī yuàn - hospital).",
+        options: [
+          { char: "院", py: "yuàn", isCorrect: true },
+          { char: "校", py: "xiào", isCorrect: false },
+          { char: "局", py: "jú", isCorrect: false },
+          { char: "行", py: "háng", isCorrect: false }
+        ]
       },
       {
-        "char": "市",
-        "py": "shì",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "anggota polis",
-    "char1": "警",
-    "py1": "jǐng",
-    "char2": "察",
-    "py2": "chá",
-    "fullHz": "警察",
-    "fullPy": "jǐng chá",
-    "explain": "警 (jǐng) + 察 (chá - siasat) = 警察 (jǐngchá - polis).",
-    "options": [
-      {
-        "char": "察",
-        "py": "chá",
-        "isCorrect": true
+        targetMy: "kedai perniagaan",
+        char1: "商",
+        py1: "shāng",
+        char2: "店",
+        py2: "diàn",
+        fullHz: "商店",
+        fullPy: "shāng diàn",
+        explain: "商 (shāng) + 店 (diàn) = 商店 (shāng diàn - kedai perniagaan).",
+        options: [
+          { char: "局", py: "jú", isCorrect: false },
+          { char: "场", py: "chǎng", isCorrect: false },
+          { char: "院", py: "yuàn", isCorrect: false },
+          { char: "店", py: "diàn", isCorrect: true }
+        ]
       },
       {
-        "char": "方",
-        "py": "fāng",
-        "isCorrect": false
+        targetMy: "padang sukan",
+        char1: "操",
+        py1: "cāo",
+        char2: "场",
+        py2: "chǎng",
+        fullHz: "操场",
+        fullPy: "cāo chǎng",
+        explain: "操 (cāo) + 场 (chǎng) = 操场 (cāo chǎng - padang sukan).",
+        options: [
+          { char: "院", py: "yuàn", isCorrect: false },
+          { char: "场", py: "chǎng", isCorrect: true },
+          { char: "店", py: "diàn", isCorrect: false },
+          { char: "校", py: "xiào", isCorrect: false }
+        ]
       },
       {
-        "char": "署",
-        "py": "shǔ",
-        "isCorrect": false
+        targetMy: "Malaysia",
+        char1: "马来",
+        py1: "Mǎ lái",
+        char2: "西亚",
+        py2: "xī yà",
+        fullHz: "马来西亚",
+        fullPy: "Mǎ lái xī yà",
+        explain: "马来 (Mǎ lái) + 西亚 (xī yà) = 马来西亚 (Mǎ lái xī yà - Malaysia).",
+        options: [
+          { char: "府", py: "fǔ", isCorrect: false },
+          { char: "州", py: "zhōu", isCorrect: false },
+          { char: "西亚", py: "xī yà", isCorrect: true },
+          { char: "坡", py: "pō", isCorrect: false }
+        ]
       },
       {
-        "char": "官",
-        "py": "guān",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "perkhidmatan pos",
-    "char1": "邮",
-    "py1": "yóu",
-    "char2": "政",
-    "py2": "zhèng",
-    "fullHz": "邮政",
-    "fullPy": "yóu zhèng",
-    "explain": "邮 (yóu - kiriman) + 政 (zhèng) = 邮政 (yóuzhèng - pos).",
-    "options": [
-      {
-        "char": "政",
-        "py": "zhèng",
-        "isCorrect": true
+        targetMy: "Kuala Lumpur",
+        char1: "吉隆",
+        py1: "Jí lóng",
+        char2: "坡",
+        py2: "pō",
+        fullHz: "吉隆坡",
+        fullPy: "Jí lóng pō",
+        explain: "吉隆 (Jí lóng) + 坡 (pō) = 吉隆坡 (Jí lóng pō - Kuala Lumpur).",
+        options: [
+          { char: "市", py: "shì", isCorrect: false },
+          { char: "城", py: "chéng", isCorrect: false },
+          { char: "坡", py: "pō", isCorrect: true },
+          { char: "州", py: "zhōu", isCorrect: false }
+        ]
       },
       {
-        "char": "局",
-        "py": "jú",
-        "isCorrect": false
+        targetMy: "Johor",
+        char1: "柔",
+        py1: "Róu",
+        char2: "佛",
+        py2: "fó",
+        fullHz: "柔佛",
+        fullPy: "Róu fó",
+        explain: "柔 (Róu) + 佛 (fó) = 柔佛 (Róu fó - Johor).",
+        options: [
+          { char: "府", py: "fǔ", isCorrect: false },
+          { char: "佛", py: "fó", isCorrect: true },
+          { char: "州", py: "zhōu", isCorrect: false },
+          { char: "城", py: "chéng", isCorrect: false }
+        ]
       },
       {
-        "char": "信",
-        "py": "xìn",
-        "isCorrect": false
+        targetMy: "Pulau Pinang",
+        char1: "槟",
+        py1: "Bīn",
+        char2: "城",
+        py2: "chéng",
+        fullHz: "槟城",
+        fullPy: "Bīn chéng",
+        explain: "槟 (Bīn) + 城 (chéng) = 槟城 (Bīn chéng - Pulau Pinang).",
+        options: [
+          { char: "城", py: "chéng", isCorrect: true },
+          { char: "市", py: "shì", isCorrect: false },
+          { char: "岛", py: "dǎo", isCorrect: false },
+          { char: "州", py: "zhōu", isCorrect: false }
+        ]
       },
       {
-        "char": "包",
-        "py": "bāo",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "ahli bomba",
-    "char1": "消",
-    "py1": "xiāo",
-    "char2": "防",
-    "py2": "fáng",
-    "fullHz": "消防",
-    "fullPy": "xiāo fáng",
-    "explain": "消 (xiāo - padam) + 防 (fáng - cegah) = 消防 (xiāofáng - bomba).",
-    "options": [
-      {
-        "char": "防",
-        "py": "fáng",
-        "isCorrect": true
+        targetMy: "Selangor",
+        char1: "雪兰",
+        py1: "Xuě lán",
+        char2: "莪",
+        py2: "é",
+        fullHz: "雪兰莪",
+        fullPy: "Xuě lán é",
+        explain: "雪兰 (Xuě lán) + 莪 (é) = 雪兰莪 (Xuě lán é - Selangor).",
+        options: [
+          { char: "府", py: "fǔ", isCorrect: false },
+          { char: "州", py: "zhōu", isCorrect: false },
+          { char: "莪", py: "é", isCorrect: true },
+          { char: "市", py: "shì", isCorrect: false }
+        ]
       },
       {
-        "char": "火",
-        "py": "huǒ",
-        "isCorrect": false
+        targetMy: "berdekatan / sekitar",
+        char1: "附",
+        py1: "fù",
+        char2: "近",
+        py2: "jìn",
+        fullHz: "附近",
+        fullPy: "fù jìn",
+        explain: "附 (fù) + 近 (jìn) = 附近 (fù jìn - berdekatan / sekitar).",
+        options: [
+          { char: "近", py: "jìn", isCorrect: true },
+          { char: "处", py: "chù", isCorrect: false },
+          { char: "边", py: "biān", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false }
+        ]
       },
       {
-        "char": "水",
-        "py": "shuǐ",
-        "isCorrect": false
+        targetMy: "bertentangan / seberang",
+        char1: "对",
+        py1: "duì",
+        char2: "面",
+        py2: "miàn",
+        fullHz: "对面",
+        fullPy: "duì miàn",
+        explain: "对 (duì) + 面 (miàn) = 对面 (duì miàn - bertentangan / seberang).",
+        options: [
+          { char: "后", py: "hòu", isCorrect: false },
+          { char: "旁", py: "páng", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "前", py: "qián", isCorrect: false }
+        ]
       },
       {
-        "char": "局",
-        "py": "jú",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "institusi bank",
-    "char1": "银",
-    "py1": "yín",
-    "char2": "行",
-    "py2": "háng",
-    "fullHz": "银行",
-    "fullPy": "yín háng",
-    "explain": "银 (yín - perak/wang) + 行 (háng - firma) = 银行 (yínháng - bank).",
-    "options": [
-      {
-        "char": "行",
-        "py": "háng",
-        "isCorrect": true
+        targetMy: "sebelah / tepi",
+        char1: "旁",
+        py1: "páng",
+        char2: "边",
+        py2: "biān",
+        fullHz: "旁边",
+        fullPy: "páng biān",
+        explain: "旁 (páng) + 边 (biān) = 旁边 (páng biān - sebelah / tepi).",
+        options: [
+          { char: "边", py: "biān", isCorrect: true },
+          { char: "位", py: "wèi", isCorrect: false },
+          { char: "处", py: "chù", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false }
+        ]
       },
       {
-        "char": "号",
-        "py": "hào",
-        "isCorrect": false
+        targetMy: "barang keperluan harian",
+        char1: "日常",
+        py1: "rì cháng",
+        char2: "用品",
+        py2: "yòng pǐn",
+        fullHz: "日常用品",
+        fullPy: "rì cháng yòng pǐn",
+        explain: "日常 (rì cháng) + 用品 (yòng pǐn) = 日常用品 (rì cháng yòng pǐn - barang keperluan harian).",
+        options: [
+          { char: "物品", py: "wù pǐn", isCorrect: false },
+          { char: "食物", py: "shí wù", isCorrect: false },
+          { char: "用品", py: "yòng pǐn", isCorrect: true },
+          { char: "文具", py: "wén jù", isCorrect: false }
+        ]
       },
-      {
-        "char": "库",
-        "py": "kù",
-        "isCorrect": false
-      },
-      {
-        "char": "店",
-        "py": "diàn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "sekolah",
-    "char1": "学",
-    "py1": "xué",
-    "char2": "校",
-    "py2": "xiào",
-    "fullHz": "学校",
-    "fullPy": "xué xiào",
-    "explain": "学 (xué - belajar) + 校 (xiào - institusi) = 学校 (xuéxiào - sekolah).",
-    "options": [
-      {
-        "char": "校",
-        "py": "xiào",
-        "isCorrect": true
-      },
-      {
-        "char": "院",
-        "py": "yuàn",
-        "isCorrect": false
-      },
-      {
-        "char": "堂",
-        "py": "táng",
-        "isCorrect": false
-      },
-      {
-        "char": "生",
-        "py": "shēng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "hospital",
-    "char1": "医",
-    "py1": "yī",
-    "char2": "院",
-    "py2": "yuàn",
-    "fullHz": "医院",
-    "fullPy": "yī yuàn",
-    "explain": "医 (yī - perubatan) + 院 (yuàn - kompleks) = 医院 (yīyuàn - hospital).",
-    "options": [
-      {
-        "char": "院",
-        "py": "yuàn",
-        "isCorrect": true
-      },
-      {
-        "char": "生",
-        "py": "shēng",
-        "isCorrect": false
-      },
-      {
-        "char": "室",
-        "py": "shì",
-        "isCorrect": false
-      },
-      {
-        "char": "所",
-        "py": "suǒ",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kedai perniagaan",
-    "char1": "商",
-    "py1": "shāng",
-    "char2": "店",
-    "py2": "diàn",
-    "fullHz": "商店",
-    "fullPy": "shāng diàn",
-    "explain": "商 (shāng - niaga) + 店 (diàn - premis) = 商店 (shāngdiàn - kedai).",
-    "options": [
-      {
-        "char": "店",
-        "py": "diàn",
-        "isCorrect": true
-      },
-      {
-        "char": "铺",
-        "py": "pù",
-        "isCorrect": false
-      },
-      {
-        "char": "场",
-        "py": "chǎng",
-        "isCorrect": false
-      },
-      {
-        "char": "家",
-        "py": "jiā",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "padang sukan",
-    "char1": "操",
-    "py1": "cāo",
-    "char2": "场",
-    "py2": "chǎng",
-    "fullHz": "操场",
-    "fullPy": "cāo chǎng",
-    "explain": "操 (cāo - riadah) + 场 (chǎng - medan) = 操场 (cāochǎng - padang).",
-    "options": [
-      {
-        "char": "场",
-        "py": "chǎng",
-        "isCorrect": true
-      },
-      {
-        "char": "地",
-        "py": "dì",
-        "isCorrect": false
-      },
-      {
-        "char": "草",
-        "py": "cǎo",
-        "isCorrect": false
-      },
-      {
-        "char": "馆",
-        "py": "guǎn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "berhampiran / berdekatan",
-    "char1": "附",
-    "py1": "fù",
-    "char2": "近",
-    "py2": "jìn",
-    "fullHz": "附近",
-    "fullPy": "fù jìn",
-    "explain": "附 (fù) + 近 (jìn - dekat) = 附近 (fùjìn - berdekatan).",
-    "options": [
-      {
-        "char": "近",
-        "py": "jìn",
-        "isCorrect": true
-      },
-      {
-        "char": "旁",
-        "py": "páng",
-        "isCorrect": false
-      },
-      {
-        "char": "边",
-        "py": "biān",
-        "isCorrect": false
-      },
-      {
-        "char": "邻",
-        "py": "lín",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bertentangan / seberang",
-    "char1": "对",
-    "py1": "duì",
-    "char2": "面",
-    "py2": "miàn",
-    "fullHz": "对面",
-    "fullPy": "duì miàn",
-    "explain": "对 (duì - hadap) + 面 (miàn - arah) = 对面 (duìmiàn - seberang).",
-    "options": [
-      {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": true
-      },
-      {
-        "char": "方",
-        "py": "fāng",
-        "isCorrect": false
-      },
-      {
-        "char": "边",
-        "py": "biān",
-        "isCorrect": false
-      },
-      {
-        "char": "头",
-        "py": "tóu",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "sebelah",
-    "char1": "旁",
-    "py1": "páng",
-    "char2": "边",
-    "py2": "biān",
-    "fullHz": "旁边",
-    "fullPy": "páng biān",
-    "explain": "旁 (páng - sisi) + 边 (biān - tepi) = 旁边 (pángbiān - sebelah/tepi).",
-    "options": [
-      {
-        "char": "边",
-        "py": "biān",
-        "isCorrect": true
-      },
-      {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": false
-      },
-      {
-        "char": "角",
-        "py": "jiǎo",
-        "isCorrect": false
-      },
-      {
-        "char": "侧",
-        "py": "cè",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bahagian hadapan",
-    "char1": "前",
-    "py1": "qián",
-    "char2": "面",
-    "py2": "miàn",
-    "fullHz": "前面",
-    "fullPy": "qián miàn",
-    "explain": "前 (qián - depan) + 面 (miàn) = 前面 (qiánmiàn - hadapan).",
-    "options": [
-      {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": true
-      },
-      {
-        "char": "边",
-        "py": "biān",
-        "isCorrect": false
-      },
-      {
-        "char": "头",
-        "py": "tóu",
-        "isCorrect": false
-      },
-      {
-        "char": "方",
-        "py": "fāng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bahagian belakang",
-    "char1": "后",
-    "py1": "hòu",
-    "char2": "面",
-    "py2": "miàn",
-    "fullHz": "后面",
-    "fullPy": "hòu miàn",
-    "explain": "后 (hòu - belakang) + 面 (miàn) = 后面 (hòumiàn - belakang).",
-    "options": [
-      {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": true
-      },
-      {
-        "char": "边",
-        "py": "biān",
-        "isCorrect": false
-      },
-      {
-        "char": "尾",
-        "py": "wěi",
-        "isCorrect": false
-      },
-      {
-        "char": "背",
-        "py": "bèi",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "pulang ke rumah",
-    "char1": "回",
-    "py1": "huí",
-    "char2": "家",
-    "py2": "jiā",
-    "fullHz": "回家",
-    "fullPy": "huí jiā",
-    "explain": "回 (huí - balik) + 家 (jiā - rumah) = 回家 (huíjiā - balik rumah).",
-    "options": [
-      {
-        "char": "家",
-        "py": "jiā",
-        "isCorrect": true
-      },
-      {
-        "char": "屋",
-        "py": "wū",
-        "isCorrect": false
-      },
-      {
-        "char": "门",
-        "py": "mén",
-        "isCorrect": false
-      },
-      {
-        "char": "室",
-        "py": "shì",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "barang keperluan",
-    "char1": "用",
-    "py1": "yòng",
-    "char2": "品",
-    "py2": "pǐn",
-    "fullHz": "用品",
-    "fullPy": "yòng pǐn",
-    "explain": "用 (yòng - guna) + 品 (pǐn - barangan) = 用品 (yòngpǐn - keperluan).",
-    "options": [
-      {
-        "char": "品",
-        "py": "pǐn",
-        "isCorrect": true
-      },
-      {
-        "char": "物",
-        "py": "wù",
-        "isCorrect": false
-      },
-      {
-        "char": "具",
-        "py": "jù",
-        "isCorrect": false
-      },
-      {
-        "char": "件",
-        "py": "jiàn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "Malaysia",
-    "char1": "马",
-    "py1": "mǎ",
-    "char2": "来",
-    "py2": "lái",
-    "fullHz": "马来",
-    "fullPy": "mǎ lái",
-    "explain": "马来 (Mǎlái) + 西亚 = 马来西亚 (Mǎláixīyà - Malaysia).",
-    "options": [
-      {
-        "char": "来",
-        "py": "lái",
-        "isCorrect": true
-      },
-      {
-        "char": "国",
-        "py": "guó",
-        "isCorrect": false
-      },
-      {
-        "char": "西",
-        "py": "xī",
-        "isCorrect": false
-      },
-      {
-        "char": "亚",
-        "py": "yà",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "Kuala Lumpur",
-    "char1": "吉",
-    "py1": "jí",
-    "char2": "隆",
-    "py2": "lóng",
-    "fullHz": "吉隆",
-    "fullPy": "jí lóng",
-    "explain": "吉隆 (Jílóng) + 坡 (pō) = 吉隆坡 (Jílóngpō - Kuala Lumpur).",
-    "options": [
-      {
-        "char": "隆",
-        "py": "lóng",
-        "isCorrect": true
-      },
-      {
-        "char": "打",
-        "py": "dǎ",
-        "isCorrect": false
-      },
-      {
-        "char": "兰",
-        "py": "lán",
-        "isCorrect": false
-      },
-      {
-        "char": "新",
-        "py": "xīn",
-        "isCorrect": false
-      }
-    ]
-  }
-];
+    ];
 
     const SENTENCE_CHALLENGES = [
   {
@@ -2567,17 +2231,13 @@
 
 
 
-    /* ========== 2. AUDIO & FX ENGINE ========== */
+        /* ========== 2. AUDIO & FX ENGINE ========== */
 
-    let audioRate = 0.95;
+    let audioRate = 1.0;
+    const rates = [0.25, 0.5, 0.75, 1.0, 1.25];
+    let ratePointer = 3;
 
-    const rates = [0.75, 0.95, 1.15];
-
-    let ratePointer = 1;
-
-
-
-    function toggleAudioSpeed() {
+function toggleAudioSpeed() {
 
       ratePointer = (ratePointer + 1) % rates.length;
 
@@ -3241,23 +2901,11 @@
 
 
 
-    function speakCurrentQuestionPrompt() {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.fullHz);
-
-    }
+    function speakCurrentQuestionPrompt() { /* Audio disembunyikan sebelum menjawab */ }
 
 
 
-    function speakCurrentPart(part) {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.char1);
-
-    }
+    function speakCurrentPart(part) { /* Audio disembunyikan sebelum menjawab */ }
 
 
 

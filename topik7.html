@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=22" defer></script>
+  <script src="js/certificate.js?v=23" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -486,13 +486,7 @@
 
 
 
-            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
-
-              <span>🔊</span>
-
-              <span>Dengar Audio</span>
-
-            </button>
+            
 
           </div>
 
@@ -518,21 +512,11 @@
 
             <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
 
-            <button onclick="speakCurrentPart(1)" class="group w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
-
+            <div class="w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 shadow-sm flex flex-col items-center justify-center relative">
               <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
-
-              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
-
-              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
-
-                <span>🔊</span>
-
-                <span>Dengar</span>
-
-              </span>
-
-            </button>
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5" id="capsule-char1">职</span>
+              <span class="text-[10px] text-slate-400 mt-1 font-semibold">Bahagian 1</span>
+            </div>
 
 
 
@@ -863,647 +847,327 @@
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
     const VOCAB_20_QUESTIONS = [
-  {
-    "targetMy": "temuduga kerja",
-    "char1": "面",
-    "py1": "miàn",
-    "char2": "试",
-    "py2": "shì",
-    "fullHz": "面试",
-    "fullPy": "miàn shì",
-    "explain": "面 (miàn - bersemuka) + 试 (shì - ujian) = 面试 (miànshì - temuduga).",
-    "options": [
       {
-        "char": "试",
-        "py": "shì",
-        "isCorrect": true
+        targetMy: "temuduga kerja",
+        char1: "面",
+        py1: "miàn",
+        char2: "试",
+        py2: "shì",
+        fullHz: "面试",
+        fullPy: "miàn shì",
+        explain: "面 (miàn) + 试 (shì) = 面试 (miàn shì - temuduga kerja).",
+        options: [
+          { char: "习", py: "xí", isCorrect: false },
+          { char: "试", py: "shì", isCorrect: true },
+          { char: "业", py: "yè", isCorrect: false },
+          { char: "作", py: "zuò", isCorrect: false }
+        ]
       },
       {
-        "char": "谈",
-        "py": "tán",
-        "isCorrect": false
+        targetMy: "memperkenalkan diri",
+        char1: "自我",
+        py1: "zì wǒ",
+        char2: "介绍",
+        py2: "jiè shào",
+        fullHz: "自我介绍",
+        fullPy: "zì wǒ jiè shào",
+        explain: "自我 (zì wǒ) + 介绍 (jiè shào) = 自我介绍 (zì wǒ jiè shào - memperkenalkan diri).",
+        options: [
+          { char: "介绍", py: "jiè shào", isCorrect: true },
+          { char: "工作", py: "gōng zuò", isCorrect: false },
+          { char: "实习", py: "shí xí", isCorrect: false },
+          { char: "学习", py: "xué xí", isCorrect: false }
+        ]
       },
       {
-        "char": "会",
-        "py": "huì",
-        "isCorrect": false
+        targetMy: "graduasi / tamat belajar",
+        char1: "毕",
+        py1: "bì",
+        char2: "业",
+        py2: "yè",
+        fullHz: "毕业",
+        fullPy: "bì yè",
+        explain: "毕 (bì) + 业 (yè) = 毕业 (bì yè - graduasi / tamat belajar).",
+        options: [
+          { char: "生", py: "shēng", isCorrect: false },
+          { char: "课", py: "kè", isCorrect: false },
+          { char: "业", py: "yè", isCorrect: true },
+          { char: "习", py: "xí", isCorrect: false }
+        ]
       },
       {
-        "char": "考",
-        "py": "kǎo",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "memperkenalkan",
-    "char1": "介",
-    "py1": "jiè",
-    "char2": "绍",
-    "py2": "shào",
-    "fullHz": "介绍",
-    "fullPy": "jiè shào",
-    "explain": "介 (jiè) + 绍 (shào) = 介绍 (jièshào - memperkenalkan).",
-    "options": [
-      {
-        "char": "绍",
-        "py": "shào",
-        "isCorrect": true
+        targetMy: "belajar",
+        char1: "学",
+        py1: "xué",
+        char2: "习",
+        py2: "xí",
+        fullHz: "学习",
+        fullPy: "xué xí",
+        explain: "学 (xué) + 习 (xí) = 学习 (xué xí - belajar).",
+        options: [
+          { char: "业", py: "yè", isCorrect: false },
+          { char: "作", py: "zuò", isCorrect: false },
+          { char: "校", py: "xiào", isCorrect: false },
+          { char: "习", py: "xí", isCorrect: true }
+        ]
       },
       {
-        "char": "说",
-        "py": "shuō",
-        "isCorrect": false
+        targetMy: "jurusan / kepakaran",
+        char1: "专",
+        py1: "zhuān",
+        char2: "业",
+        py2: "yè",
+        fullHz: "专业",
+        fullPy: "zhuān yè",
+        explain: "专 (zhuān) + 业 (yè) = 专业 (zhuān yè - jurusan / kepakaran).",
+        options: [
+          { char: "业", py: "yè", isCorrect: true },
+          { char: "门", py: "mén", isCorrect: false },
+          { char: "位", py: "wèi", isCorrect: false },
+          { char: "科", py: "kē", isCorrect: false }
+        ]
       },
       {
-        "char": "讲",
-        "py": "jiǎng",
-        "isCorrect": false
+        targetMy: "resume / CV",
+        char1: "履历",
+        py1: "lǚ lì",
+        char2: "表",
+        py2: "biǎo",
+        fullHz: "履历表",
+        fullPy: "lǚ lì biǎo",
+        explain: "履历 (lǚ lì) + 表 (biǎo) = 履历表 (lǚ lì biǎo - resume / CV).",
+        options: [
+          { char: "纸", py: "zhǐ", isCorrect: false },
+          { char: "书", py: "shū", isCorrect: false },
+          { char: "单", py: "dān", isCorrect: false },
+          { char: "表", py: "biǎo", isCorrect: true }
+        ]
       },
       {
-        "char": "明",
-        "py": "míng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "tamat belajar / graduasi",
-    "char1": "毕",
-    "py1": "bì",
-    "char2": "业",
-    "py2": "yè",
-    "fullHz": "毕业",
-    "fullPy": "bì yè",
-    "explain": "毕 (bì - tamat) + 业 (yè - pengajian) = 毕业 (bìyè - tamat belajar).",
-    "options": [
-      {
-        "char": "业",
-        "py": "yè",
-        "isCorrect": true
+        targetMy: "bekerja / pekerjaan",
+        char1: "工",
+        py1: "gōng",
+        char2: "作",
+        py2: "zuò",
+        fullHz: "工作",
+        fullPy: "gōng zuò",
+        explain: "工 (gōng) + 作 (zuò) = 工作 (gōng zuò - bekerja / pekerjaan).",
+        options: [
+          { char: "场", py: "chǎng", isCorrect: false },
+          { char: "作", py: "zuò", isCorrect: true },
+          { char: "资", py: "zī", isCorrect: false },
+          { char: "人", py: "rén", isCorrect: false }
+        ]
       },
       {
-        "char": "生",
-        "py": "shēng",
-        "isCorrect": false
+        targetMy: "pengalaman",
+        char1: "经",
+        py1: "jīng",
+        char2: "验",
+        py2: "yàn",
+        fullHz: "经验",
+        fullPy: "jīng yàn",
+        explain: "经 (jīng) + 验 (yàn) = 经验 (jīng yàn - pengalaman).",
+        options: [
+          { char: "验", py: "yàn", isCorrect: true },
+          { char: "理", py: "lǐ", isCorrect: false },
+          { char: "历", py: "lì", isCorrect: false },
+          { char: "常", py: "cháng", isCorrect: false }
+        ]
       },
       {
-        "char": "学",
-        "py": "xué",
-        "isCorrect": false
+        targetMy: "syarikat",
+        char1: "公",
+        py1: "gōng",
+        char2: "司",
+        py2: "sī",
+        fullHz: "公司",
+        fullPy: "gōng sī",
+        explain: "公 (gōng) + 司 (sī) = 公司 (gōng sī - syarikat).",
+        options: [
+          { char: "室", py: "shì", isCorrect: false },
+          { char: "园", py: "yuán", isCorrect: false },
+          { char: "厂", py: "chǎng", isCorrect: false },
+          { char: "司", py: "sī", isCorrect: true }
+        ]
       },
       {
-        "char": "完",
-        "py": "wán",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bidang jurusan",
-    "char1": "专",
-    "py1": "zhuān",
-    "char2": "业",
-    "py2": "yè",
-    "fullHz": "专业",
-    "fullPy": "zhuān yè",
-    "explain": "专 (zhuān - khusus) + 业 (yè - bidang) = 专业 (zhuānyè - jurusan kepakaran).",
-    "options": [
-      {
-        "char": "业",
-        "py": "yè",
-        "isCorrect": true
+        targetMy: "latihan industri / praktikal",
+        char1: "实",
+        py1: "shí",
+        char2: "习",
+        py2: "xí",
+        fullHz: "实习",
+        fullPy: "shí xí",
+        explain: "实 (shí) + 习 (xí) = 实习 (shí xí - latihan industri / praktikal).",
+        options: [
+          { char: "践", py: "jiàn", isCorrect: false },
+          { char: "业", py: "yè", isCorrect: false },
+          { char: "作", py: "zuò", isCorrect: false },
+          { char: "习", py: "xí", isCorrect: true }
+        ]
       },
       {
-        "char": "门",
-        "py": "mén",
-        "isCorrect": false
+        targetMy: "boleh bercakap",
+        char1: "会",
+        py1: "huì",
+        char2: "说",
+        py2: "shuō",
+        fullHz: "会说",
+        fullPy: "huì shuō",
+        explain: "会 (huì) + 说 (shuō) = 会说 (huì shuō - boleh bercakap).",
+        options: [
+          { char: "看", py: "kàn", isCorrect: false },
+          { char: "说", py: "shuō", isCorrect: true },
+          { char: "做", py: "zuò", isCorrect: false },
+          { char: "写", py: "xiě", isCorrect: false }
+        ]
       },
       {
-        "char": "项",
-        "py": "xiàng",
-        "isCorrect": false
+        targetMy: "kelebihan diri",
+        char1: "优",
+        py1: "yōu",
+        char2: "点",
+        py2: "diǎn",
+        fullHz: "优点",
+        fullPy: "yōu diǎn",
+        explain: "优 (yōu) + 点 (diǎn) = 优点 (yōu diǎn - kelebihan diri).",
+        options: [
+          { char: "良", py: "liáng", isCorrect: false },
+          { char: "点", py: "diǎn", isCorrect: true },
+          { char: "心", py: "xīn", isCorrect: false },
+          { char: "势", py: "shì", isCorrect: false }
+        ]
       },
       {
-        "char": "科",
-        "py": "kē",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "resume / riwayat hidup",
-    "char1": "履",
-    "py1": "lǚ",
-    "char2": "历",
-    "py2": "lì",
-    "fullHz": "履历",
-    "fullPy": "lǚ lì",
-    "explain": "履 (lǚ) + 历 (lì) + 表 = 履历表 (lǚlìbiǎo - resume / CV).",
-    "options": [
-      {
-        "char": "历",
-        "py": "lì",
-        "isCorrect": true
+        targetMy: "pengetahuan",
+        char1: "知",
+        py1: "zhī",
+        char2: "识",
+        py2: "shi",
+        fullHz: "知识",
+        fullPy: "zhī shi",
+        explain: "知 (zhī) + 识 (shi) = 知识 (zhī shi - pengetahuan).",
+        options: [
+          { char: "明", py: "míng", isCorrect: false },
+          { char: "能", py: "néng", isCorrect: false },
+          { char: "道", py: "dào", isCorrect: false },
+          { char: "识", py: "shi", isCorrect: true }
+        ]
       },
       {
-        "char": "行",
-        "py": "xíng",
-        "isCorrect": false
+        targetMy: "gaji pendapatan",
+        char1: "工",
+        py1: "gōng",
+        char2: "资",
+        py2: "zī",
+        fullHz: "工资",
+        fullPy: "gōng zī",
+        explain: "工 (gōng) + 资 (zī) = 工资 (gōng zī - gaji pendapatan).",
+        options: [
+          { char: "资", py: "zī", isCorrect: true },
+          { char: "金", py: "jīn", isCorrect: false },
+          { char: "作", py: "zuò", isCorrect: false },
+          { char: "钱", py: "qián", isCorrect: false }
+        ]
       },
       {
-        "char": "单",
-        "py": "dān",
-        "isCorrect": false
+        targetMy: "jawatan",
+        char1: "职",
+        py1: "zhí",
+        char2: "位",
+        py2: "wèi",
+        fullHz: "职位",
+        fullPy: "zhí wèi",
+        explain: "职 (zhí) + 位 (wèi) = 职位 (zhí wèi - jawatan).",
+        options: [
+          { char: "员", py: "yuán", isCorrect: false },
+          { char: "位", py: "wèi", isCorrect: true },
+          { char: "务", py: "wù", isCorrect: false },
+          { char: "业", py: "yè", isCorrect: false }
+        ]
       },
       {
-        "char": "记",
-        "py": "jì",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "pengalaman",
-    "char1": "经",
-    "py1": "jīng",
-    "char2": "验",
-    "py2": "yàn",
-    "fullHz": "经验",
-    "fullPy": "jīng yàn",
-    "explain": "经 (jīng - lalui) + 验 (yàn - uji) = 经验 (jīngyàn - pengalaman kerja).",
-    "options": [
-      {
-        "char": "验",
-        "py": "yàn",
-        "isCorrect": true
+        targetMy: "bila masa",
+        char1: "什么",
+        py1: "shén me",
+        char2: "时候",
+        py2: "shí hou",
+        fullHz: "什么时候",
+        fullPy: "shén me shí hou",
+        explain: "什么 (shén me) + 时候 (shí hou) = 什么时候 (shén me shí hou - bila masa).",
+        options: [
+          { char: "地方", py: "dì fang", isCorrect: false },
+          { char: "时候", py: "shí hou", isCorrect: true },
+          { char: "原因", py: "yuán yīn", isCorrect: false },
+          { char: "时间", py: "shí jiān", isCorrect: false }
+        ]
       },
       {
-        "char": "历",
-        "py": "lì",
-        "isCorrect": false
+        targetMy: "bermula",
+        char1: "开",
+        py1: "kāi",
+        char2: "始",
+        py2: "shǐ",
+        fullHz: "开始",
+        fullPy: "kāi shǐ",
+        explain: "开 (kāi) + 始 (shǐ) = 开始 (kāi shǐ - bermula).",
+        options: [
+          { char: "动", py: "dòng", isCorrect: false },
+          { char: "工", py: "gōng", isCorrect: false },
+          { char: "始", py: "shǐ", isCorrect: true },
+          { char: "关", py: "guān", isCorrect: false }
+        ]
       },
       {
-        "char": "理",
-        "py": "lǐ",
-        "isCorrect": false
+        targetMy: "masuk kerja",
+        char1: "上",
+        py1: "shàng",
+        char2: "班",
+        py2: "bān",
+        fullHz: "上班",
+        fullPy: "shàng bān",
+        explain: "上 (shàng) + 班 (bān) = 上班 (shàng bān - masuk kerja).",
+        options: [
+          { char: "岗", py: "gǎng", isCorrect: false },
+          { char: "工", py: "gōng", isCorrect: false },
+          { char: "下", py: "xià", isCorrect: false },
+          { char: "班", py: "bān", isCorrect: true }
+        ]
       },
       {
-        "char": "常",
-        "py": "cháng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "latihan praktikal",
-    "char1": "实",
-    "py1": "shí",
-    "char2": "习",
-    "py2": "xí",
-    "fullHz": "实习",
-    "fullPy": "shí xí",
-    "explain": "实 (shí - amali) + 习 (xí - latihan) = 实习 (shíxí - latihan industri/praktikal).",
-    "options": [
-      {
-        "char": "习",
-        "py": "xí",
-        "isCorrect": true
+        targetMy: "rasa tanggungjawab",
+        char1: "责任",
+        py1: "zé rèn",
+        char2: "心",
+        py2: "xīn",
+        fullHz: "责任心",
+        fullPy: "zé rèn xīn",
+        explain: "责任 (zé rèn) + 心 (xīn) = 责任心 (zé rèn xīn - rasa tanggungjawab).",
+        options: [
+          { char: "情", py: "qíng", isCorrect: false },
+          { char: "感", py: "gǎn", isCorrect: false },
+          { char: "心", py: "xīn", isCorrect: true },
+          { char: "力", py: "lì", isCorrect: false }
+        ]
       },
       {
-        "char": "践",
-        "py": "jiàn",
-        "isCorrect": false
+        targetMy: "tepat masa",
+        char1: "准",
+        py1: "zhǔn",
+        char2: "时",
+        py2: "shí",
+        fullHz: "准时",
+        fullPy: "zhǔn shí",
+        explain: "准 (zhǔn) + 时 (shí) = 准时 (zhǔn shí - tepat masa).",
+        options: [
+          { char: "点", py: "diǎn", isCorrect: false },
+          { char: "时", py: "shí", isCorrect: true },
+          { char: "钟", py: "zhōng", isCorrect: false },
+          { char: "分", py: "fēn", isCorrect: false }
+        ]
       },
-      {
-        "char": "干",
-        "py": "gàn",
-        "isCorrect": false
-      },
-      {
-        "char": "练",
-        "py": "liàn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "syarikat korporat",
-    "char1": "公",
-    "py1": "gōng",
-    "char2": "司",
-    "py2": "sī",
-    "fullHz": "公司",
-    "fullPy": "gōng sī",
-    "explain": "公 (gōng) + 司 (sī - kelola) = 公司 (gōngsī - syarikat).",
-    "options": [
-      {
-        "char": "司",
-        "py": "sī",
-        "isCorrect": true
-      },
-      {
-        "char": "行",
-        "py": "háng",
-        "isCorrect": false
-      },
-      {
-        "char": "企",
-        "py": "qǐ",
-        "isCorrect": false
-      },
-      {
-        "char": "厂",
-        "py": "chǎng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kelebihan / kekuatan",
-    "char1": "优",
-    "py1": "yōu",
-    "char2": "点",
-    "py2": "diǎn",
-    "fullHz": "优点",
-    "fullPy": "yōu diǎn",
-    "explain": "优 (yōu - cemerlang) + 点 (diǎn - sudut) = 优点 (yōudiǎn - kelebihan diri).",
-    "options": [
-      {
-        "char": "点",
-        "py": "diǎn",
-        "isCorrect": true
-      },
-      {
-        "char": "势",
-        "py": "shì",
-        "isCorrect": false
-      },
-      {
-        "char": "良",
-        "py": "liáng",
-        "isCorrect": false
-      },
-      {
-        "char": "长",
-        "py": "cháng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "ilmu pengetahuan",
-    "char1": "知",
-    "py1": "zhī",
-    "char2": "识",
-    "py2": "shi",
-    "fullHz": "知识",
-    "fullPy": "zhī shi",
-    "explain": "知 (zhī - tahu) + 识 (shí - faham) = 知识 (zhīshi - pengetahuan).",
-    "options": [
-      {
-        "char": "识",
-        "py": "shi",
-        "isCorrect": true
-      },
-      {
-        "char": "道",
-        "py": "dào",
-        "isCorrect": false
-      },
-      {
-        "char": "能",
-        "py": "néng",
-        "isCorrect": false
-      },
-      {
-        "char": "学",
-        "py": "xué",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "gaji pendapatan",
-    "char1": "工",
-    "py1": "gōng",
-    "char2": "资",
-    "py2": "zī",
-    "fullHz": "工资",
-    "fullPy": "gōng zī",
-    "explain": "工 (gōng - kerja) + 资 (zī - imbuhan) = 工资 (gōngzī - gaji kerja).",
-    "options": [
-      {
-        "char": "资",
-        "py": "zī",
-        "isCorrect": true
-      },
-      {
-        "char": "钱",
-        "py": "qián",
-        "isCorrect": false
-      },
-      {
-        "char": "酬",
-        "py": "chóu",
-        "isCorrect": false
-      },
-      {
-        "char": "金",
-        "py": "jīn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "jawatan pekerjaan",
-    "char1": "职",
-    "py1": "zhí",
-    "char2": "位",
-    "py2": "wèi",
-    "fullHz": "职位",
-    "fullPy": "zhí wèi",
-    "explain": "职 (zhí - tugas) + 位 (wèi - tempat) = 职位 (zhíwèi - jawatan).",
-    "options": [
-      {
-        "char": "位",
-        "py": "wèi",
-        "isCorrect": true
-      },
-      {
-        "char": "业",
-        "py": "yè",
-        "isCorrect": false
-      },
-      {
-        "char": "名",
-        "py": "míng",
-        "isCorrect": false
-      },
-      {
-        "char": "级",
-        "py": "jí",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "masuk kerja",
-    "char1": "上",
-    "py1": "shàng",
-    "char2": "班",
-    "py2": "bān",
-    "fullHz": "上班",
-    "fullPy": "shàng bān",
-    "explain": "上 (shàng - mula) + 班 (bān - syif kerja) = 上班 (shàngbān - masuk kerja).",
-    "options": [
-      {
-        "char": "班",
-        "py": "bān",
-        "isCorrect": true
-      },
-      {
-        "char": "工",
-        "py": "gōng",
-        "isCorrect": false
-      },
-      {
-        "char": "职",
-        "py": "zhí",
-        "isCorrect": false
-      },
-      {
-        "char": "岗",
-        "py": "gǎng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bermula",
-    "char1": "开",
-    "py1": "kāi",
-    "char2": "始",
-    "py2": "shǐ",
-    "fullHz": "开始",
-    "fullPy": "kāi shǐ",
-    "explain": "开 (kāi - buka) + 始 (shǐ - awal) = 开始 (kāishǐ - bermula).",
-    "options": [
-      {
-        "char": "始",
-        "py": "shǐ",
-        "isCorrect": true
-      },
-      {
-        "char": "端",
-        "py": "duān",
-        "isCorrect": false
-      },
-      {
-        "char": "初",
-        "py": "chū",
-        "isCorrect": false
-      },
-      {
-        "char": "工",
-        "py": "gōng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "tanggungjawab",
-    "char1": "责",
-    "py1": "zé",
-    "char2": "任",
-    "py2": "rèn",
-    "fullHz": "责任",
-    "fullPy": "zé rèn",
-    "explain": "责 (zé) + 任 (rèn - amanah) = 责任 (zérèn - tanggungjawab).",
-    "options": [
-      {
-        "char": "任",
-        "py": "rèn",
-        "isCorrect": true
-      },
-      {
-        "char": "分",
-        "py": "fèn",
-        "isCorrect": false
-      },
-      {
-        "char": "务",
-        "py": "wù",
-        "isCorrect": false
-      },
-      {
-        "char": "心",
-        "py": "xīn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "menepati masa",
-    "char1": "准",
-    "py1": "zhǔn",
-    "char2": "时",
-    "py2": "shí",
-    "fullHz": "准时",
-    "fullPy": "zhǔn shí",
-    "explain": "准 (zhǔn - tepat) + 时 (shí - masa) = 准时 (zhǔnshí - tepat pada masa).",
-    "options": [
-      {
-        "char": "时",
-        "py": "shí",
-        "isCorrect": true
-      },
-      {
-        "char": "点",
-        "py": "diǎn",
-        "isCorrect": false
-      },
-      {
-        "char": "分",
-        "py": "fēn",
-        "isCorrect": false
-      },
-      {
-        "char": "候",
-        "py": "hòu",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "pengurus",
-    "char1": "经",
-    "py1": "jīng",
-    "char2": "理",
-    "py2": "lǐ",
-    "fullHz": "经理",
-    "fullPy": "jīng lǐ",
-    "explain": "经 (jīng - tadbir) + 理 (lǐ - urus) = 经理 (jīnglǐ - pengurus).",
-    "options": [
-      {
-        "char": "理",
-        "py": "lǐ",
-        "isCorrect": true
-      },
-      {
-        "char": "办",
-        "py": "bàn",
-        "isCorrect": false
-      },
-      {
-        "char": "长",
-        "py": "zhǎng",
-        "isCorrect": false
-      },
-      {
-        "char": "管",
-        "py": "guǎn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "belajar / menimba ilmu",
-    "char1": "学",
-    "py1": "xué",
-    "char2": "习",
-    "py2": "xí",
-    "fullHz": "学习",
-    "fullPy": "xué xí",
-    "explain": "学 (xué) + 习 (xí) = 学习 (xuéxí - belajar).",
-    "options": [
-      {
-        "char": "习",
-        "py": "xí",
-        "isCorrect": true
-      },
-      {
-        "char": "业",
-        "py": "yè",
-        "isCorrect": false
-      },
-      {
-        "char": "问",
-        "py": "wèn",
-        "isCorrect": false
-      },
-      {
-        "char": "校",
-        "py": "xiào",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kebolehan / kompetensi",
-    "char1": "能",
-    "py1": "néng",
-    "char2": "力",
-    "py2": "lì",
-    "fullHz": "能力",
-    "fullPy": "néng lì",
-    "explain": "能 (néng - boleh) + 力 (lì - daya) = 能力 (nénglì - kebolehan).",
-    "options": [
-      {
-        "char": "力",
-        "py": "lì",
-        "isCorrect": true
-      },
-      {
-        "char": "干",
-        "py": "gàn",
-        "isCorrect": false
-      },
-      {
-        "char": "技",
-        "py": "jì",
-        "isCorrect": false
-      },
-      {
-        "char": "量",
-        "py": "liàng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kerjasama",
-    "char1": "合",
-    "py1": "hé",
-    "char2": "作",
-    "py2": "zuò",
-    "fullHz": "合作",
-    "fullPy": "hé zuò",
-    "explain": "合 (hé - bersama) + 作 (zuò - buat) = 合作 (hézuò - bekerjasama).",
-    "options": [
-      {
-        "char": "作",
-        "py": "zuò",
-        "isCorrect": true
-      },
-      {
-        "char": "力",
-        "py": "lì",
-        "isCorrect": false
-      },
-      {
-        "char": "同",
-        "py": "tóng",
-        "isCorrect": false
-      },
-      {
-        "char": "伴",
-        "py": "bàn",
-        "isCorrect": false
-      }
-    ]
-  }
-];
+    ];
 
     const SENTENCE_CHALLENGES = [
   {
@@ -2711,17 +2375,13 @@
 
 
 
-    /* ========== 2. AUDIO & FX ENGINE ========== */
+        /* ========== 2. AUDIO & FX ENGINE ========== */
 
-    let audioRate = 0.95;
+    let audioRate = 1.0;
+    const rates = [0.25, 0.5, 0.75, 1.0, 1.25];
+    let ratePointer = 3;
 
-    const rates = [0.75, 0.95, 1.15];
-
-    let ratePointer = 1;
-
-
-
-    function toggleAudioSpeed() {
+function toggleAudioSpeed() {
 
       ratePointer = (ratePointer + 1) % rates.length;
 
@@ -3385,23 +3045,11 @@
 
 
 
-    function speakCurrentQuestionPrompt() {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.fullHz);
-
-    }
+    function speakCurrentQuestionPrompt() { /* Audio disembunyikan sebelum menjawab */ }
 
 
 
-    function speakCurrentPart(part) {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.char1);
-
-    }
+    function speakCurrentPart(part) { /* Audio disembunyikan sebelum menjawab */ }
 
 
 

@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=22" defer></script>
+  <script src="js/certificate.js?v=23" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -486,13 +486,7 @@
 
 
 
-            <button onclick="speakCurrentQuestionPrompt()" class="px-3 py-1 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center space-x-1.5 shadow-sm transition active:scale-95" title="Dengar Audio">
-
-              <span>🔊</span>
-
-              <span>Dengar Audio</span>
-
-            </button>
+            
 
           </div>
 
@@ -518,21 +512,11 @@
 
             <!-- Capsule 1: First Character with Clear Hanzi & Pinyin & Audio -->
 
-            <button onclick="speakCurrentPart(1)" class="group w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 shadow-sm flex flex-col items-center justify-center transition active:scale-95 relative">
-
+            <div class="w-20 h-24 sm:w-28 sm:h-32 bg-white rounded-2xl border-2 border-indigo-200 shadow-sm flex flex-col items-center justify-center relative">
               <span class="text-xs font-black text-indigo-600 font-sans tracking-wide" id="capsule-pinyin1">zhí</span>
-
-              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5 group-hover:text-indigo-600 transition" id="capsule-char1">职</span>
-
-              <span class="text-[10px] text-slate-400 mt-1 flex items-center space-x-0.5">
-
-                <span>🔊</span>
-
-                <span>Dengar</span>
-
-              </span>
-
-            </button>
+              <span class="text-3xl sm:text-4xl font-black text-slate-900 font-hanzi mt-0.5" id="capsule-char1">职</span>
+              <span class="text-[10px] text-slate-400 mt-1 font-semibold">Bahagian 1</span>
+            </div>
 
 
 
@@ -863,647 +847,327 @@
     /* ========== 1. 20 SOALAN BINA KATA DENGAN HANZI & PINYIN TEPAT ========== */
 
     const VOCAB_20_QUESTIONS = [
-  {
-    "targetMy": "buah epal",
-    "char1": "苹",
-    "py1": "píng",
-    "char2": "果",
-    "py2": "guǒ",
-    "fullHz": "苹果",
-    "fullPy": "píng guǒ",
-    "explain": "苹 (píng) + 果 (guǒ - buah) = 苹果 (píngguǒ - epal).",
-    "options": [
       {
-        "char": "果",
-        "py": "guǒ",
-        "isCorrect": true
+        targetMy: "buah epal",
+        char1: "苹",
+        py1: "píng",
+        char2: "果",
+        py2: "guǒ",
+        fullHz: "苹果",
+        fullPy: "píng guǒ",
+        explain: "苹 (píng) + 果 (guǒ) = 苹果 (píng guǒ - buah epal).",
+        options: [
+          { char: "蕉", py: "jiāo", isCorrect: false },
+          { char: "瓜", py: "guā", isCorrect: false },
+          { char: "汁", py: "zhī", isCorrect: false },
+          { char: "果", py: "guǒ", isCorrect: true }
+        ]
       },
       {
-        "char": "瓜",
-        "py": "guā",
-        "isCorrect": false
+        targetMy: "buah anggur",
+        char1: "葡",
+        py1: "pú",
+        char2: "萄",
+        py2: "tao",
+        fullHz: "葡萄",
+        fullPy: "pú tao",
+        explain: "葡 (pú) + 萄 (tao) = 葡萄 (pú tao - buah anggur).",
+        options: [
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "萄", py: "tao", isCorrect: true },
+          { char: "果", py: "guǒ", isCorrect: false }
+        ]
       },
       {
-        "char": "蕉",
-        "py": "jiāo",
-        "isCorrect": false
+        targetMy: "buah mangga",
+        char1: "芒",
+        py1: "máng",
+        char2: "果",
+        py2: "guǒ",
+        fullHz: "芒果",
+        fullPy: "máng guǒ",
+        explain: "芒 (máng) + 果 (guǒ) = 芒果 (máng guǒ - buah mangga).",
+        options: [
+          { char: "肉", py: "ròu", isCorrect: false },
+          { char: "瓜", py: "guā", isCorrect: false },
+          { char: "板", py: "bǎn", isCorrect: false },
+          { char: "果", py: "guǒ", isCorrect: true }
+        ]
       },
       {
-        "char": "肉",
-        "py": "ròu",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "buah anggur",
-    "char1": "葡",
-    "py1": "pú",
-    "char2": "萄",
-    "py2": "tao",
-    "fullHz": "葡萄",
-    "fullPy": "pú tao",
-    "explain": "葡 (pú) + 萄 (tao) = 葡萄 (pútao - anggur).",
-    "options": [
-      {
-        "char": "萄",
-        "py": "tao",
-        "isCorrect": true
+        targetMy: "buah tembikai",
+        char1: "西",
+        py1: "xī",
+        char2: "瓜",
+        py2: "guā",
+        fullHz: "西瓜",
+        fullPy: "xī guā",
+        explain: "西 (xī) + 瓜 (guā) = 西瓜 (xī guā - buah tembikai).",
+        options: [
+          { char: "饭", py: "fàn", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "瓜", py: "guā", isCorrect: true },
+          { char: "果", py: "guǒ", isCorrect: false }
+        ]
       },
       {
-        "char": "果",
-        "py": "guǒ",
-        "isCorrect": false
+        targetMy: "buah pisang",
+        char1: "香",
+        py1: "xiāng",
+        char2: "蕉",
+        py2: "jiāo",
+        fullHz: "香蕉",
+        fullPy: "xiāng jiāo",
+        explain: "香 (xiāng) + 蕉 (jiāo) = 香蕉 (xiāng jiāo - buah pisang).",
+        options: [
+          { char: "瓜", py: "guā", isCorrect: false },
+          { char: "蕉", py: "jiāo", isCorrect: true },
+          { char: "茶", py: "chá", isCorrect: false },
+          { char: "果", py: "guǒ", isCorrect: false }
+        ]
       },
       {
-        "char": "汁",
-        "py": "zhī",
-        "isCorrect": false
+        targetMy: "buah oren",
+        char1: "橙",
+        py1: "chéng",
+        char2: "子",
+        py2: "zi",
+        fullHz: "橙子",
+        fullPy: "chéng zi",
+        explain: "橙 (chéng) + 子 (zi) = 橙子 (chéng zi - buah oren).",
+        options: [
+          { char: "子", py: "zi", isCorrect: true },
+          { char: "饭", py: "fàn", isCorrect: false },
+          { char: "果", py: "guǒ", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false }
+        ]
       },
       {
-        "char": "菜",
-        "py": "cài",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "buah mangga",
-    "char1": "芒",
-    "py1": "máng",
-    "char2": "果",
-    "py2": "guǒ",
-    "fullHz": "芒果",
-    "fullPy": "máng guǒ",
-    "explain": "芒 (máng) + 果 (guǒ) = 芒果 (mángguǒ - mangga).",
-    "options": [
-      {
-        "char": "果",
-        "py": "guǒ",
-        "isCorrect": true
+        targetMy: "nasi goreng",
+        char1: "炒",
+        py1: "chǎo",
+        char2: "饭",
+        py2: "fàn",
+        fullHz: "炒饭",
+        fullPy: "chǎo fàn",
+        explain: "炒 (chǎo) + 饭 (fàn) = 炒饭 (chǎo fàn - nasi goreng).",
+        options: [
+          { char: "肉", py: "ròu", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "鱼", py: "yú", isCorrect: false },
+          { char: "饭", py: "fàn", isCorrect: true }
+        ]
       },
       {
-        "char": "子",
-        "py": "zi",
-        "isCorrect": false
+        targetMy: "mee goreng",
+        char1: "炒",
+        py1: "chǎo",
+        char2: "面",
+        py2: "miàn",
+        fullHz: "炒面",
+        fullPy: "chǎo miàn",
+        explain: "炒 (chǎo) + 面 (miàn) = 炒面 (chǎo miàn - mee goreng).",
+        options: [
+          { char: "瓜", py: "guā", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: true },
+          { char: "肉", py: "ròu", isCorrect: false },
+          { char: "饭", py: "fàn", isCorrect: false }
+        ]
       },
       {
-        "char": "板",
-        "py": "bǎn",
-        "isCorrect": false
+        targetMy: "daging ayam",
+        char1: "鸡",
+        py1: "jī",
+        char2: "肉",
+        py2: "ròu",
+        fullHz: "鸡肉",
+        fullPy: "jī ròu",
+        explain: "鸡 (jī) + 肉 (ròu) = 鸡肉 (jī ròu - daging ayam).",
+        options: [
+          { char: "饭", py: "fàn", isCorrect: false },
+          { char: "面", py: "miàn", isCorrect: false },
+          { char: "鱼", py: "yú", isCorrect: false },
+          { char: "肉", py: "ròu", isCorrect: true }
+        ]
       },
       {
-        "char": "厅",
-        "py": "tīng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "buah tembikai",
-    "char1": "西",
-    "py1": "xī",
-    "char2": "瓜",
-    "py2": "guā",
-    "fullHz": "西瓜",
-    "fullPy": "xī guā",
-    "explain": "西 (xī - barat) + 瓜 (guā - labu/tembikai) = 西瓜 (xīguā - tembikai).",
-    "options": [
-      {
-        "char": "瓜",
-        "py": "guā",
-        "isCorrect": true
+        targetMy: "jus buah",
+        char1: "果",
+        py1: "guǒ",
+        char2: "汁",
+        py2: "zhī",
+        fullHz: "果汁",
+        fullPy: "guǒ zhī",
+        explain: "果 (guǒ) + 汁 (zhī) = 果汁 (guǒ zhī - jus buah).",
+        options: [
+          { char: "肉", py: "ròu", isCorrect: false },
+          { char: "茶", py: "chá", isCorrect: false },
+          { char: "子", py: "zi", isCorrect: false },
+          { char: "汁", py: "zhī", isCorrect: true }
+        ]
       },
       {
-        "char": "果",
-        "py": "guǒ",
-        "isCorrect": false
+        targetMy: "restoran",
+        char1: "餐",
+        py1: "cān",
+        char2: "厅",
+        py2: "tīng",
+        fullHz: "餐厅",
+        fullPy: "cān tīng",
+        explain: "餐 (cān) + 厅 (tīng) = 餐厅 (cān tīng - restoran).",
+        options: [
+          { char: "厅", py: "tīng", isCorrect: true },
+          { char: "板", py: "bǎn", isCorrect: false },
+          { char: "房", py: "fáng", isCorrect: false },
+          { char: "馆", py: "guǎn", isCorrect: false }
+        ]
       },
       {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": false
+        targetMy: "pelayan restoran",
+        char1: "服务",
+        py1: "fú wù",
+        char2: "员",
+        py2: "yuán",
+        fullHz: "服务员",
+        fullPy: "fú wù yuán",
+        explain: "服务 (fú wù) + 员 (yuán) = 服务员 (fú wù yuán - pelayan restoran).",
+        options: [
+          { char: "人", py: "rén", isCorrect: false },
+          { char: "生", py: "shēng", isCorrect: false },
+          { char: "师", py: "shī", isCorrect: false },
+          { char: "员", py: "yuán", isCorrect: true }
+        ]
       },
       {
-        "char": "饭",
-        "py": "fàn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "buah pisang",
-    "char1": "香",
-    "py1": "xiāng",
-    "char2": "蕉",
-    "py2": "jiāo",
-    "fullHz": "香蕉",
-    "fullPy": "xiāng jiāo",
-    "explain": "香 (xiāng - harum) + 蕉 (jiāo - pisang) = 香蕉 (xiāngjiāo - pisang).",
-    "options": [
-      {
-        "char": "蕉",
-        "py": "jiāo",
-        "isCorrect": true
+        targetMy: "bos / peniaga",
+        char1: "老",
+        py1: "lǎo",
+        char2: "板",
+        py2: "bǎn",
+        fullHz: "老板",
+        fullPy: "lǎo bǎn",
+        explain: "老 (lǎo) + 板 (bǎn) = 老板 (lǎo bǎn - bos / peniaga).",
+        options: [
+          { char: "公", py: "gōng", isCorrect: false },
+          { char: "板", py: "bǎn", isCorrect: true },
+          { char: "人", py: "rén", isCorrect: false },
+          { char: "师", py: "shī", isCorrect: false }
+        ]
       },
       {
-        "char": "瓜",
-        "py": "guā",
-        "isCorrect": false
+        targetMy: "berapa (banyak / harga)",
+        char1: "多",
+        py1: "duō",
+        char2: "少",
+        py2: "shao",
+        fullHz: "多少",
+        fullPy: "duō shao",
+        explain: "多 (duō) + 少 (shao) = 多少 (duō shao - berapa (banyak / harga)).",
+        options: [
+          { char: "斤", py: "jīn", isCorrect: false },
+          { char: "点", py: "diǎn", isCorrect: false },
+          { char: "少", py: "shao", isCorrect: true },
+          { char: "钱", py: "qián", isCorrect: false }
+        ]
       },
       {
-        "char": "肉",
-        "py": "ròu",
-        "isCorrect": false
+        targetMy: "kilogram (kg)",
+        char1: "公",
+        py1: "gōng",
+        char2: "斤",
+        py2: "jīn",
+        fullHz: "公斤",
+        fullPy: "gōng jīn",
+        explain: "公 (gōng) + 斤 (jīn) = 公斤 (gōng jīn - kilogram (kg)).",
+        options: [
+          { char: "斤", py: "jīn", isCorrect: true },
+          { char: "两", py: "liǎng", isCorrect: false },
+          { char: "钱", py: "qián", isCorrect: false },
+          { char: "盒", py: "hé", isCorrect: false }
+        ]
       },
       {
-        "char": "菜",
-        "py": "cài",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "buah oren",
-    "char1": "橙",
-    "py1": "chéng",
-    "char2": "子",
-    "py2": "zi",
-    "fullHz": "橙子",
-    "fullPy": "chéng zi",
-    "explain": "橙 (chéng) + 子 (zi) = 橙子 (chéngzi - oren).",
-    "options": [
-      {
-        "char": "子",
-        "py": "zi",
-        "isCorrect": true
+        targetMy: "yang lain",
+        char1: "别",
+        py1: "bié",
+        char2: "的",
+        py2: "de",
+        fullHz: "别的",
+        fullPy: "bié de",
+        explain: "别 (bié) + 的 (de) = 别的 (bié de - yang lain).",
+        options: [
+          { char: "的", py: "de", isCorrect: true },
+          { char: "事", py: "shì", isCorrect: false },
+          { char: "人", py: "rén", isCorrect: false },
+          { char: "物", py: "wù", isCorrect: false }
+        ]
       },
       {
-        "char": "果",
-        "py": "guǒ",
-        "isCorrect": false
+        targetMy: "ingin beli",
+        char1: "想",
+        py1: "xiǎng",
+        char2: "买",
+        py2: "mǎi",
+        fullHz: "想买",
+        fullPy: "xiǎng mǎi",
+        explain: "想 (xiǎng) + 买 (mǎi) = 想买 (xiǎng mǎi - ingin beli).",
+        options: [
+          { char: "吃", py: "chī", isCorrect: false },
+          { char: "喝", py: "hē", isCorrect: false },
+          { char: "看", py: "kàn", isCorrect: false },
+          { char: "买", py: "mǎi", isCorrect: true }
+        ]
       },
       {
-        "char": "盒",
-        "py": "hé",
-        "isCorrect": false
+        targetMy: "minum teh",
+        char1: "喝",
+        py1: "hē",
+        char2: "茶",
+        py2: "chá",
+        fullHz: "喝茶",
+        fullPy: "hē chá",
+        explain: "喝 (hē) + 茶 (chá) = 喝茶 (hē chá - minum teh).",
+        options: [
+          { char: "水", py: "shuǐ", isCorrect: false },
+          { char: "茶", py: "chá", isCorrect: true },
+          { char: "汤", py: "tāng", isCorrect: false },
+          { char: "汁", py: "zhī", isCorrect: false }
+        ]
       },
       {
-        "char": "斤",
-        "py": "jīn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "bos / pekedai",
-    "char1": "老",
-    "py1": "lǎo",
-    "char2": "板",
-    "py2": "bǎn",
-    "fullHz": "老板",
-    "fullPy": "lǎo bǎn",
-    "explain": "老 (lǎo) + 板 (bǎn) = 老板 (lǎobǎn - bos kedai).",
-    "options": [
-      {
-        "char": "板",
-        "py": "bǎn",
-        "isCorrect": true
+        targetMy: "bayar / beri duit",
+        char1: "给",
+        py1: "gěi",
+        char2: "钱",
+        py2: "qián",
+        fullHz: "给钱",
+        fullPy: "gěi qián",
+        explain: "给 (gěi) + 钱 (qián) = 给钱 (gěi qián - bayar / beri duit).",
+        options: [
+          { char: "物", py: "wù", isCorrect: false },
+          { char: "盒", py: "hé", isCorrect: false },
+          { char: "钱", py: "qián", isCorrect: true },
+          { char: "手", py: "shǒu", isCorrect: false }
+        ]
       },
       {
-        "char": "师",
-        "py": "shī",
-        "isCorrect": false
+        targetMy: "sekotak",
+        char1: "一",
+        py1: "yī",
+        char2: "盒",
+        py2: "hé",
+        fullHz: "一盒",
+        fullPy: "yī盒",
+        explain: "一 (yī) + 盒 (hé) = 一盒 (yī盒 - sekotak).",
+        options: [
+          { char: "碗", py: "wǎn", isCorrect: false },
+          { char: "包", py: "bāo", isCorrect: false },
+          { char: "斤", py: "jīn", isCorrect: false },
+          { char: "盒", py: "hé", isCorrect: true }
+        ]
       },
-      {
-        "char": "人",
-        "py": "rén",
-        "isCorrect": false
-      },
-      {
-        "char": "员",
-        "py": "yuán",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "berapa (harga / kuantiti)",
-    "char1": "多",
-    "py1": "duō",
-    "char2": "少",
-    "py2": "shao",
-    "fullHz": "多少",
-    "fullPy": "duō shao",
-    "explain": "多 (duō - banyak) + 少 (shǎo - sedikit) = 多少 (duōshao - berapa).",
-    "options": [
-      {
-        "char": "少",
-        "py": "shao",
-        "isCorrect": true
-      },
-      {
-        "char": "钱",
-        "py": "qián",
-        "isCorrect": false
-      },
-      {
-        "char": "斤",
-        "py": "jīn",
-        "isCorrect": false
-      },
-      {
-        "char": "点",
-        "py": "diǎn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "kilogram (kg)",
-    "char1": "公",
-    "py1": "gōng",
-    "char2": "斤",
-    "py2": "jīn",
-    "fullHz": "公斤",
-    "fullPy": "gōng jīn",
-    "explain": "公 (gōng) + 斤 (jīn) = 公斤 (gōngjīn - kilogram).",
-    "options": [
-      {
-        "char": "斤",
-        "py": "jīn",
-        "isCorrect": true
-      },
-      {
-        "char": "里",
-        "py": "lǐ",
-        "isCorrect": false
-      },
-      {
-        "char": "克",
-        "py": "kè",
-        "isCorrect": false
-      },
-      {
-        "char": "分",
-        "py": "fēn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "yang lain",
-    "char1": "别",
-    "py1": "bié",
-    "char2": "的",
-    "py2": "de",
-    "fullHz": "别的",
-    "fullPy": "bié de",
-    "explain": "别 (bié - lain) + 的 (de) = 别的 (biéde - yang lain).",
-    "options": [
-      {
-        "char": "的",
-        "py": "de",
-        "isCorrect": true
-      },
-      {
-        "char": "人",
-        "py": "rén",
-        "isCorrect": false
-      },
-      {
-        "char": "处",
-        "py": "chù",
-        "isCorrect": false
-      },
-      {
-        "char": "样",
-        "py": "yàng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "restoran",
-    "char1": "餐",
-    "py1": "cān",
-    "char2": "厅",
-    "py2": "tīng",
-    "fullHz": "餐厅",
-    "fullPy": "cān tīng",
-    "explain": "餐 (cān - santapan) + 厅 (tīng - dewan) = 餐厅 (cāntīng - restoran).",
-    "options": [
-      {
-        "char": "厅",
-        "py": "tīng",
-        "isCorrect": true
-      },
-      {
-        "char": "馆",
-        "py": "guǎn",
-        "isCorrect": false
-      },
-      {
-        "char": "室",
-        "py": "shì",
-        "isCorrect": false
-      },
-      {
-        "char": "店",
-        "py": "diàn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "pelayan restoran",
-    "char1": "服务",
-    "py1": "fú wù",
-    "char2": "员",
-    "py2": "yuán",
-    "fullHz": "服务员",
-    "fullPy": "fú wù yuán",
-    "explain": "服务 (fúwù - perkhidmatan) + 员 (yuán - staf) = 服务员 (fúwùyuán - pelayan).",
-    "options": [
-      {
-        "char": "员",
-        "py": "yuán",
-        "isCorrect": true
-      },
-      {
-        "char": "生",
-        "py": "shēng",
-        "isCorrect": false
-      },
-      {
-        "char": "工",
-        "py": "gōng",
-        "isCorrect": false
-      },
-      {
-        "char": "人",
-        "py": "rén",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "nasi goreng",
-    "char1": "炒",
-    "py1": "chǎo",
-    "char2": "饭",
-    "py2": "fàn",
-    "fullHz": "炒饭",
-    "fullPy": "chǎo fàn",
-    "explain": "炒 (chǎo - goreng) + 饭 (fàn - nasi) = 炒饭 (chǎofàn - nasi goreng).",
-    "options": [
-      {
-        "char": "饭",
-        "py": "fàn",
-        "isCorrect": true
-      },
-      {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": false
-      },
-      {
-        "char": "菜",
-        "py": "cài",
-        "isCorrect": false
-      },
-      {
-        "char": "肉",
-        "py": "ròu",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "mee goreng",
-    "char1": "炒",
-    "py1": "chǎo",
-    "char2": "面",
-    "py2": "miàn",
-    "fullHz": "炒面",
-    "fullPy": "chǎo miàn",
-    "explain": "炒 (chǎo - goreng) + 面 (miàn - mee) = 炒面 (chǎomiàn - mee goreng).",
-    "options": [
-      {
-        "char": "面",
-        "py": "miàn",
-        "isCorrect": true
-      },
-      {
-        "char": "饭",
-        "py": "fàn",
-        "isCorrect": false
-      },
-      {
-        "char": "汤",
-        "py": "tāng",
-        "isCorrect": false
-      },
-      {
-        "char": "粉",
-        "py": "fěn",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "daging ayam",
-    "char1": "鸡",
-    "py1": "jī",
-    "char2": "肉",
-    "py2": "ròu",
-    "fullHz": "鸡肉",
-    "fullPy": "jī ròu",
-    "explain": "鸡 (jī - ayam) + 肉 (ròu - daging) = 鸡肉 (jīròu - daging ayam).",
-    "options": [
-      {
-        "char": "肉",
-        "py": "ròu",
-        "isCorrect": true
-      },
-      {
-        "char": "蛋",
-        "py": "dàn",
-        "isCorrect": false
-      },
-      {
-        "char": "骨",
-        "py": "gǔ",
-        "isCorrect": false
-      },
-      {
-        "char": "皮",
-        "py": "pí",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "jus buah",
-    "char1": "果",
-    "py1": "guǒ",
-    "char2": "汁",
-    "py2": "zhī",
-    "fullHz": "果汁",
-    "fullPy": "guǒ zhī",
-    "explain": "果 (guǒ - buah) + 汁 (zhī - jus) = 果汁 (guǒzhī - jus buah).",
-    "options": [
-      {
-        "char": "汁",
-        "py": "zhī",
-        "isCorrect": true
-      },
-      {
-        "char": "水",
-        "py": "shuǐ",
-        "isCorrect": false
-      },
-      {
-        "char": "汤",
-        "py": "tāng",
-        "isCorrect": false
-      },
-      {
-        "char": "茶",
-        "py": "chá",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "minum teh",
-    "char1": "喝",
-    "py1": "hē",
-    "char2": "茶",
-    "py2": "chá",
-    "fullHz": "喝茶",
-    "fullPy": "hē chá",
-    "explain": "喝 (hē - minum) + 茶 (chá - teh) = 喝茶 (hēchá - minum teh).",
-    "options": [
-      {
-        "char": "茶",
-        "py": "chá",
-        "isCorrect": true
-      },
-      {
-        "char": "水",
-        "py": "shuǐ",
-        "isCorrect": false
-      },
-      {
-        "char": "酒",
-        "py": "jiǔ",
-        "isCorrect": false
-      },
-      {
-        "char": "汤",
-        "py": "tāng",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "jumlah semua",
-    "char1": "一",
-    "py1": "yí",
-    "char2": "共",
-    "py2": "gòng",
-    "fullHz": "一共",
-    "fullPy": "yí gòng",
-    "explain": "一 (yī) + 共 (gòng - bersama) = 一共 (yígòng - jumlah semua).",
-    "options": [
-      {
-        "char": "共",
-        "py": "gòng",
-        "isCorrect": true
-      },
-      {
-        "char": "起",
-        "py": "qǐ",
-        "isCorrect": false
-      },
-      {
-        "char": "同",
-        "py": "tóng",
-        "isCorrect": false
-      },
-      {
-        "char": "齐",
-        "py": "qí",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "terlalu mahal",
-    "char1": "太",
-    "py1": "tài",
-    "char2": "贵",
-    "py2": "guì",
-    "fullHz": "太贵",
-    "fullPy": "tài guì",
-    "explain": "太 (tài - terlalu) + 贵 (guì - mahal) = 太贵 (tàiguì - terlalu mahal).",
-    "options": [
-      {
-        "char": "贵",
-        "py": "guì",
-        "isCorrect": true
-      },
-      {
-        "char": "甜",
-        "py": "tián",
-        "isCorrect": false
-      },
-      {
-        "char": "酸",
-        "py": "suān",
-        "isCorrect": false
-      },
-      {
-        "char": "大",
-        "py": "dà",
-        "isCorrect": false
-      }
-    ]
-  },
-  {
-    "targetMy": "wang baki pulangan",
-    "char1": "找",
-    "py1": "zhǎo",
-    "char2": "钱",
-    "py2": "qián",
-    "fullHz": "找钱",
-    "fullPy": "zhǎo qián",
-    "explain": "找 (zhǎo - pulangkan) + 钱 (qián - wang) = 找钱 (zhǎoqián - pulangkan wang baki).",
-    "options": [
-      {
-        "char": "钱",
-        "py": "qián",
-        "isCorrect": true
-      },
-      {
-        "char": "币",
-        "py": "bì",
-        "isCorrect": false
-      },
-      {
-        "char": "票",
-        "py": "piào",
-        "isCorrect": false
-      },
-      {
-        "char": "物",
-        "py": "wù",
-        "isCorrect": false
-      }
-    ]
-  }
-];
+    ];
 
     const SENTENCE_CHALLENGES = [
   {
@@ -2532,17 +2196,13 @@
 
 
 
-    /* ========== 2. AUDIO & FX ENGINE ========== */
+        /* ========== 2. AUDIO & FX ENGINE ========== */
 
-    let audioRate = 0.95;
+    let audioRate = 1.0;
+    const rates = [0.25, 0.5, 0.75, 1.0, 1.25];
+    let ratePointer = 3;
 
-    const rates = [0.75, 0.95, 1.15];
-
-    let ratePointer = 1;
-
-
-
-    function toggleAudioSpeed() {
+function toggleAudioSpeed() {
 
       ratePointer = (ratePointer + 1) % rates.length;
 
@@ -3206,23 +2866,11 @@
 
 
 
-    function speakCurrentQuestionPrompt() {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.fullHz);
-
-    }
+    function speakCurrentQuestionPrompt() { /* Audio disembunyikan sebelum menjawab */ }
 
 
 
-    function speakCurrentPart(part) {
-
-      const q = VOCAB_20_QUESTIONS[currentVocabQIdx];
-
-      speakChinese(q.char1);
-
-    }
+    function speakCurrentPart(part) { /* Audio disembunyikan sebelum menjawab */ }
 
 
 
