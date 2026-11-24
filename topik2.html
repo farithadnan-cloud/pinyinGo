@@ -3934,9 +3934,15 @@
 
       if (!SpeechRecognition) {
         feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-amber-50 text-amber-900 border border-amber-300 text-xs";
-        feedbackEl.innerHTML = "⚠️ Pelayar peranti anda belum menyokong Web Speech Recognition secara langsung. Sila gunakan Google Chrome atau Safari terkini untuk fungsi mikrofon ini.";
+        feedbackEl.innerHTML = "⚠️ Pelayar peranti anda belum menyokong Web Speech Recognition secara langsung. Sila gunakan Google Chrome atau Safari (dengan fungsi Dictation aktif) untuk fungsi mikrofon ini.";
         return;
       }
+
+      // Hentikan sebarang audio/speechSynthesis yang sedang dimainkan agar tidak mengganggu audio unit Safari/iOS
+      try {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (typeof stopFullChatAudio === 'function') stopFullChatAudio();
+      } catch (e) {}
 
       // Bersihkan sesi pengecaman sebelumnya
       if (silenceTimer) { clearTimeout(silenceTimer); silenceTimer = null; }
@@ -3946,6 +3952,9 @@
         activeSpeechRecognizer = null;
       }
 
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || isIOS;
+
       const recognition = new SpeechRecognition();
       activeSpeechRecognizer = recognition;
       activeEvaluatingIndex = idx;
@@ -3954,9 +3963,10 @@
       let hasEvaluated = false;
 
       recognition.lang = 'zh-CN';
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.maxAlternatives = 3;
+      // Safari iOS TIDAK menyokong continuous=true (akan gagalkan rakaman serta-merta)
+      recognition.continuous = false;
+      recognition.interimResults = !isSafari;
+      recognition.maxAlternatives = 1;
 
       // Status UI - Berdenyut lembut menandakan sedia mendengar
       micBtn.className = "px-3 py-1 rounded-xl bg-rose-600 text-white text-[11px] font-black flex items-center space-x-1 shadow-md animate-pulse ring-2 ring-rose-400 transition active:scale-95";
@@ -3971,7 +3981,7 @@
           <span class="w-2.5 h-2.5 rounded-full bg-rose-600 animate-ping inline-block shrink-0"></span>
           <div>
             <span class="font-bold text-indigo-950 block">🎙️ Sedang mendengar... Sila sebut sekarang!</span>
-            <span class="text-[10px] text-indigo-700">Semakan auto akan dibuat selepas 3 saat senyap (tidak perlu tekan butang).</span>
+            <span class="text-[10px] text-indigo-700">Semakan auto akan dibuat sebaik sahaja anda selesai menyebut ayat.</span>
           </div>
         </div>
       `;
@@ -3995,16 +4005,9 @@
         evaluateSpeechResult(latestSpoken, targetText, idx, feedbackEl);
       }
 
-      function resetSilenceTimer() {
-        if (silenceTimer) clearTimeout(silenceTimer);
-        silenceTimer = setTimeout(() => {
-          finalizeEvaluation();
-        }, 3000);
-      }
-
-      // Pemasa 8 saat pertama jika pelajar tidak menyebut apa-apa langsung
+      // Pemasa 8 saat jika pelajar tidak menyebut apa-apa
       initialSilenceTimer = setTimeout(() => {
-        if (!latestSpoken && !hasEvaluated) {
+        if (!hasEvaluated) {
           finalizeEvaluation();
         }
       }, 8000);
@@ -4027,25 +4030,31 @@
               <span class="text-base animate-pulse">🎙️</span>
               <div>
                 <div class="font-black text-emerald-950">Dikesan: "<strong>${latestSpoken}</strong>"</div>
-                <div class="text-[10px] text-emerald-700 font-semibold mt-0.5">⏳ Menyemak automatik selepas 3 saat senyap...</div>
+                <div class="text-[10px] text-emerald-700 font-semibold mt-0.5">⏳ Menyemak sebutan...</div>
               </div>
             </div>
           `;
 
-          // Reset pemasa hening 3 saat setiap kali perkataan baharu diterima
-          resetSilenceTimer();
+          // Pada mod continuous=false (Safari & Chrome), semak segera selepas hening singkat (1.2s)
+          if (silenceTimer) clearTimeout(silenceTimer);
+          silenceTimer = setTimeout(() => {
+            finalizeEvaluation();
+          }, 1200);
         }
       };
 
       recognition.onspeechend = () => {
         if (latestSpoken) {
-          resetSilenceTimer();
+          if (silenceTimer) clearTimeout(silenceTimer);
+          silenceTimer = setTimeout(() => {
+            finalizeEvaluation();
+          }, 600);
         }
       };
 
       recognition.onerror = (event) => {
-        // Jika sudah ada perkataan dikesan, abaikan ralat teknikal dan teruskan penilaian
-        if (latestSpoken && (event.error === 'no-speech' || event.error === 'network')) {
+        // Jika sudah ada perkataan dikesan, abaikan ralat teknikal penutupan dan teruskan penilaian
+        if (latestSpoken && (event.error === 'no-speech' || event.error === 'network' || event.error === 'aborted')) {
           finalizeEvaluation();
           return;
         }
@@ -4055,13 +4064,17 @@
         if (initialSilenceTimer) clearTimeout(initialSilenceTimer);
         resetMicButton(idx, targetText);
 
-        feedbackEl.className = "block mt-2 p-2.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs";
+        feedbackEl.className = "block mt-2 p-3 rounded-2xl bg-amber-50 text-amber-950 border border-amber-300 text-xs shadow-xs";
         if (event.error === 'not-allowed') {
-          feedbackEl.innerText = "⚠️ Sila benarkan akses mikrofon pelayar telefon anda (Settings > Safari > Microphone > Allow).";
+          feedbackEl.innerHTML = "<strong>⚠️ Akses Mikrofon Disekat:</strong><br>Sila benarkan akses mikrofon di <em>Settings > Safari > Microphone > Allow</em>.";
+        } else if (event.error === 'service-not-allowed') {
+          feedbackEl.innerHTML = "<strong>⚠️ Fungsi Dictation Safari Belum Aktif di iPhone:</strong><br>Safari memerlukan ciri Dictation Apple aktif. Sila semak di <em>Settings > General > Keyboard > hidupkan 'Enable Dictation' (Aktifkan Dikte)</em>.<br><span class='text-[10px] text-amber-800 mt-1 block'>💡 Anda juga boleh menggunakan <strong>Google Chrome</strong> untuk pengecaman suara tanpa tetapan tambahan.</span>";
+        } else if (event.error === 'audio-capture') {
+          feedbackEl.innerHTML = "<strong>⚠️ Mikrofon Terhalang:</strong><br>Sila pastikan tiada audio lain sedang dimainkan dan cuba tekan semula.";
         } else if (event.error === 'no-speech') {
-          feedbackEl.innerText = "⚠️ Tiada sebutan dikesan. Sila cuba tekan dan sebut berhampiran mikrofon.";
+          feedbackEl.innerHTML = "<strong>⚠️ Tiada Sebutan Dikesan:</strong><br>Sila rapatkan mikrofon ke mulut dan cuba sebut semula.";
         } else {
-          feedbackEl.innerText = "⚠️ Tidak dapat mendengar dengan jelas. Sila cuba tekan dan sebut sekali lagi.";
+          feedbackEl.innerHTML = `<strong>⚠️ Ralat Mikrofon (${event.error || 'tidak dikesan'}):</strong><br>Sila sebut semula, atau gunakan <strong>Google Chrome</strong> untuk sokongan suara paling lancar.`;
         }
       };
 
