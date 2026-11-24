@@ -295,7 +295,7 @@
 
   <!-- Confetti & Certificate Module -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="js/certificate.js?v=21" defer></script>
+  <script src="js/certificate.js?v=22" defer></script>
 </head>
 
 <body class="min-h-screen min-h-[100dvh] flex flex-col justify-between text-slate-800 antialiased selection:bg-indigo-500 selection:text-white pb-3 sm:pb-6">
@@ -3816,8 +3816,8 @@
       const correctWordsCount = tokens.length - wrongTokens.length;
       const accuracyPct = Math.max(0, Math.round((correctWordsCount / tokens.length) * 100));
 
-      if (accuracyPct >= 70) {
-        // LULUS AYAT (>= 70% KETEPATAN)
+      if (accuracyPct >= 50) {
+        // LULUS AYAT (>= 50% KETEPATAN)
         playBeep('success');
         totalXp += 25;
         document.getElementById('xp-counter').innerText = `+${totalXp} XP`;
@@ -3844,7 +3844,7 @@
         if (passBadge) passBadge.classList.remove('hidden');
 
       } else {
-        // KETEPATAN KURANG DARIPADA 70% (BELUM LULUS)
+        // KETEPATAN KURANG DARIPADA 50% (BELUM LULUS)
         playBeep('wrong');
         if (passBadge) passBadge.classList.add('hidden');
 
@@ -3883,7 +3883,7 @@
           <div class="mt-2.5 p-2.5 rounded-xl bg-amber-100/90 border border-amber-300 text-amber-950 text-[11px] font-bold flex items-start space-x-2">
             <span class="text-base leading-none">📌</span>
             <div>
-              <span>Status Ayat: <strong>Belum Lulus (${accuracyPct}% Tepat - Perlu sekurang-kurangnya 70%)</strong></span>
+              <span>Status Ayat: <strong>Belum Lulus (${accuracyPct}% Tepat - Perlu sekurang-kurangnya 50%)</strong></span>
               <div class="font-normal text-amber-900 mt-1">
                 Anda baru menyebut <strong>${correctWordsCount}</strong> daripada <strong>${tokens.length}</strong> perkataan. Sila sebut <strong>KESELURUHAN AYAT</strong>: <em>"${targetText}"</em> untuk lulus ayat ini dan menaikkan markah.
               </div>

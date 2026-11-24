@@ -567,8 +567,8 @@ function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, t
     progress = JSON.parse(localStorage.getItem(progressKey) || '{}');
   } catch (e) {}
 
-  // Ayat dikira lulus jika capai 70% ketepatan perkataan
-  const isPassed = totalWords > 0 && ((correctWords / totalWords) >= 0.70 || correctWords >= totalWords);
+  // Ayat dikira lulus jika capai 50% ketepatan perkataan
+  const isPassed = totalWords > 0 && ((correctWords / totalWords) >= 0.50 || correctWords >= totalWords);
   const prev = progress[msgIdx] || { correct: 0, total: totalWords, isPassed: false };
   if (!progress[msgIdx] || correctWords >= (prev.correct || 0)) {
     progress[msgIdx] = {
@@ -595,7 +595,7 @@ function recordSentenceSpeechScore(topicNum, scenarioId, msgIdx, correctWords, t
     const p = progress[i];
     if (p) {
       totalWordsCorrect += Math.min(p.correct || 0, tCount);
-      if (p.isPassed || (tCount > 0 && (p.correct / tCount) >= 0.70)) {
+      if (p.isPassed || (tCount > 0 && (p.correct / tCount) >= 0.50)) {
         sentencesPassed++;
       }
     }
